@@ -236,7 +236,7 @@ class SuggestController < ApplicationController
   end
 
 
-  
+
 
 
 
