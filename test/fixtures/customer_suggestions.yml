@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  from_str: MyText
+  from_lat: 1.5
+  from_lng: 1.5
+  to_lat: 1.5
+  to_lng: 1.5
+  to_str: MyText
+  customer_number: MyText
+  from_time: MyText
+  to_time: MyText
+  from_mode: MyText
+  to_mode: MyText
+
+two:
+  from_str: MyText
+  from_lat: 1.5
+  from_lng: 1.5
+  to_lat: 1.5
+  to_lng: 1.5
+  to_str: MyText
+  customer_number: MyText
+  from_time: MyText
+  to_time: MyText
+  from_mode: MyText
+  to_mode: MyText

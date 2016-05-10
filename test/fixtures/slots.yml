@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  routeid: 1
+  timeinmins: 1
+  locationid: 1
+  deleted: 1
+  distanceinmeters: 1
+
+two:
+  routeid: 1
+  timeinmins: 1
+  locationid: 1
+  deleted: 1
+  distanceinmeters: 1

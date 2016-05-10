@@ -1,0 +1,168 @@
+.input-group-addon{
+	background-color: transparent;
+}
+.input-group .form-control[type="text"]{
+	padding: 10px 30px 10px 10px;
+}
+.form-group-wrapper{
+	position: relative;
+}
+.input-group-addon.remove{
+	border: 0 none;
+    position: absolute;
+    right: 1px;
+    z-index: 99;
+    cursor: pointer;
+    display: none;
+    padding: 10px 20px 10px 10px;
+}
+.header{
+	padding: 0px 15px 15px;
+    display: table;
+    width: 100%;
+}
+.header .logo{
+    margin-top: 5px;
+	width: 50px;
+}
+.grey{
+	color: #c0c0c0;
+}
+.header .text{
+    vertical-align: middle;
+    font-weight: 600;
+    display: table-cell;
+    padding: 0 21px;
+    text-align: center;
+    font-size: 1.8rem;
+}
+.screenWrapper{
+	overflow: hidden;
+	position: relative;
+}
+.screen{
+	display: table;
+	width: 100%;
+	transition-duration: 0.3s;
+	transition-timing-function: ease;
+    position: absolute;
+	top: 0;
+	padding: 20px 0;
+}
+.upArr, .downArr{
+	text-align: center;
+	clear: both;
+}
+.upArr{
+	display: table-header-group;
+}
+.downArr{
+	display: table-footer-group;
+}
+fieldset{
+	padding: 0;
+    margin: 0;
+    border: 1px solid silver;
+}
+legend{
+	width: auto;
+	padding: 0 20px;
+    font-size: 16px;
+	border-bottom: 0 none;
+    margin-bottom: 5px;
+}
+.routeHeading{
+	padding: 0;
+	font-weight: 600;
+}
+.routeHeading .routeCreated{
+	text-decoration: underline;
+	color: #337ab7;
+	display: block;
+	margin-bottom: 10px;
+	font-weight: 400;
+}
+.slotHeading{
+	font-weight: 600;
+	cursor: pointer;
+}
+.slotRow{
+    padding: 10px 0 0 0px;
+	cursor: pointer;
+}
+.routeCount{
+	margin-top: 10px;
+}
+.row.social {
+    position: absolute;
+    width: 100%;
+}
+.social > div {
+    background-color: #428bca;
+}
+.social > div > span {
+    color: #ffffff;
+    padding: 15px;
+	cursor: pointer;
+}
+em {
+    font-size: 12px;
+    font-style: normal;
+}
+
+.fa-angle-double-up, .fa-angle-double-down{
+	padding: 10px 12px;
+    border-radius: 50%;
+    border: 1px solid #c0c0c0;
+    margin-bottom: 15px;
+	cursor: pointer;
+}
+.bounce{
+    text-decoration: underline;
+    position: absolute;
+    bottom: 10px;
+    text-align: center;
+    width: 100%;
+    z-index: 99;
+    font-size: 10px;
+	cursor: pointer;
+}
+.submitsurvey {
+    
+}
+.headText{
+	padding: 0 58px;
+	font-size: 18px;
+}
+.headText.headText2{
+	padding: 0 15px;
+}
+.headText.headText3{
+	padding: 0 44px;
+}
+.headText .highlight{
+	font-size: 1.8rem;
+    font-weight: 600;
+}
+.headText.headText2 .highlight{
+	line-height: 10rem;
+}
+.headText.headText3 .highlight{
+	line-height: 7rem;
+}
+span.slots {
+    text-decoration: underline;
+}
+.loader{
+	display: none;
+	text-align: center;
+	width: 100%;
+}
+.error{
+	color: #a94442;
+	font-size: 12px;
+}
+.modal-body .bounce{
+	position: relative;
+	margin-top: 30px;
+}

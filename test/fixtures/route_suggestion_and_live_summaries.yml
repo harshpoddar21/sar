@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  route_type: 1
+  routeid: 1
+  timeslot: 1
+  people_interested: 1
+
+two:
+  route_type: 1
+  routeid: 1
+  timeslot: 1
+  people_interested: 1

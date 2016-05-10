@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fromtime: 2016-05-06 15:03:00
+  totime: 2016-05-06 15:03:00
+  interval: 1
+  deleted: 1
+
+two:
+  fromtime: 2016-05-06 15:03:00
+  totime: 2016-05-06 15:03:00
+  interval: 1
+  deleted: 1
