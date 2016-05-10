@@ -10,6 +10,7 @@ get 'nps/submitNps'
   post 'suggest/makePhoneCall'
   post 'suggest/verifyPhoneCall'
 
+  get 'suggest/confirmUser'
   get 'suggest/index'
   get 'suggest/insertLiveRoutes' =>"suggest#insertLiveRoutes"
 

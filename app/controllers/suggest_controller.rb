@@ -215,6 +215,30 @@ class SuggestController < ApplicationController
 
 
 
+  def confirmUser
+    keypress=params[:keypress]
+    phoneNumber=params[:caller]
+    if (keypress==nil || phoneNumber==nil)
+      render :text=>"error"
+      return
+    end
+
+    if (keypress.to_i==1)
+      callLog=IvrCallLog.where(:phone_number => phoneNumber).last
+      if (callLog!=nil)
+        callLog.success=1
+        callLog.save
+
+      end
+    end
+    render :text=>"OK"
+
+  end
+
+
+  
+
+
 
 
 
