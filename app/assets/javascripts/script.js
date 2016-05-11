@@ -3,6 +3,7 @@
 var px = 0;
 var refer = {};
 var info = {};
+
 function initAutocomplete() {
     if( (document.getElementById('officeLocation') != null) && (document.getElementById('homeLocation') != null) ){
         var homelocation = new google.maps.places.Autocomplete(
@@ -170,6 +171,9 @@ function validatePhone(){
 var tries=0;
 function validateMobileInput(num){
     tries++;
+    onMobileVerified(num);
+    return;
+
     $.ajax({
             url : 'verifyPhoneCall?phone_number='+num+"&try="+tries,
             type : 'GET',
@@ -188,27 +192,7 @@ function validateMobileInput(num){
                     clearInterval(interval);
                     return;
                 }
-                $('.loader').fadeOut();
-                clearInterval(interval);
-                submitDataToServer(num);
-                $('#phoneModal').modal('hide');
-                refer.stage = stage;
-                refer.click = 'down';
-                stage++;
-                if(stage > 11){stage = 11};
-                window.location.hash = 'stage'+stage;
-                $('.screen').outerHeight();
-                var handle = $('.screen');
-                var px = $(handle).outerHeight();
-                var newHandle = createScreenBox(handle, 'after', px);
-                setHeight();
-                $(handle).css('top','-'+px+'px')
-                setTimeout(function(){
-                    $(newHandle).css('top','0');
-                },0);
-                setTimeout(function(){
-                    $(handle).remove();
-                },300);
+                onMobileVerified();
             }else{
                 $('#phoneModal .error').html('invalid mobile number').fadeIn();
                 clearInterval(interval);
@@ -218,6 +202,31 @@ function validateMobileInput(num){
             $('#phoneModal .error').html(err).fadeIn();
             clearInterval(interval);
         });
+}
+
+function onMobileVerified(num){
+
+    $('.loader').fadeOut();
+    clearInterval(interval);
+    submitDataToServer(num);
+    $('#phoneModal').modal('hide');
+    refer.stage = stage;
+    refer.click = 'down';
+    stage++;
+    if(stage > 11){stage = 11};
+    window.location.hash = 'stage'+stage;
+    $('.screen').outerHeight();
+    var handle = $('.screen');
+    var px = $(handle).outerHeight();
+    var newHandle = createScreenBox(handle, 'after', px);
+    setHeight();
+    $(handle).css('top','-'+px+'px')
+    setTimeout(function(){
+        $(newHandle).css('top','0');
+    },0);
+    setTimeout(function(){
+        $(handle).remove();
+    },300);
 }
 
 function notInterested(){
@@ -381,6 +390,7 @@ function createScreenBox(handle, position,px){
 }
 
 function switchScreen(scrno, obj){
+    ga('send', 'event', 'screen', 'displayed', 'screen_no', scrno);
     switch(scrno){
         case 1:
             var html =  '<br /><br /><br /><div class="headText text-center">To <span class="highlight">#MakeYourOwnRoute</span></div>';
@@ -567,7 +577,7 @@ function switchScreen(scrno, obj){
             html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
             html += '<div class="modal-dialog modal-sm">';
             html += '<div class="modal-content">';
-            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class="loader"><em>You will receive a missed call on <i></i>. Press 1 to confirm</em><img src="resources/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
+            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class="loader"><em>You will receive a missed call. Press 1 to confirm</em><img src="resources/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
             html += '</div></div></div>';
             $('#phoneModal .error').html('').hide();
             $(obj).html(html)
@@ -655,6 +665,7 @@ function switchScreen(scrno, obj){
                 .find('.eslots').html(eSlots).end()
                 .find('.social').css('top',topPx).end();
 
+            jQuery('.bounce').css("display","none");
             routeSummary();
             break;
 
@@ -686,7 +697,7 @@ function   submitDataToServer(phone_number){
 
     $.ajax({
             url : 'saveNewSuggestion',
-            type : 'POST',
+            type : 'GET',
             data:{phone_number:phone_number,data:info},
             dataType : 'json',
             contentType : "application/json; charset=utf-8",

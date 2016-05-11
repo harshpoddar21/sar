@@ -230,16 +230,15 @@ class SuggestController < ApplicationController
       return
     end
 
-    if (keypress.to_i==1)
+    if keypress.to_i==1
       callLog=IvrCallLog.where(:phone_number => phoneNumber).last
-      if (callLog!=nil)
+      if callLog!=nil
         callLog.success=1
         callLog.save
 
       end
     end
     render :text=>"OK"
-
   end
 
 
