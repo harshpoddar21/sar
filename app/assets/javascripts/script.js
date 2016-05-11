@@ -390,7 +390,7 @@ function createScreenBox(handle, position,px){
 }
 
 function switchScreen(scrno, obj){
-    ga('send', 'event', 'screen', 'displayed', 'screen_no', scrno);
+    ga('send', 'event', 'screen_no', scrno);
     switch(scrno){
         case 1:
             var html =  '<br /><br /><br /><div class="headText text-center">To <span class="highlight">#MakeYourOwnRoute</span></div>';
@@ -577,7 +577,7 @@ function switchScreen(scrno, obj){
             html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
             html += '<div class="modal-dialog modal-sm">';
             html += '<div class="modal-content">';
-            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class="loader"><em>You will receive a missed call. Press 1 to confirm</em><img src="resources/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
+            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class="loader"><em>You will receive a missed call. Press 1 to confirm</em><img src="images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
             html += '</div></div></div>';
             $('#phoneModal .error').html('').hide();
             $(obj).html(html)
