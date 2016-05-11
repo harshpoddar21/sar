@@ -105,19 +105,21 @@ class SuggestController < ApplicationController
 
   def saveNewSuggestion
 
-    customer_number=params[:number]
-    from_lat=params[:from_lat]
-    to_lat=params[:to_lat]
-    from_lng=params[:from_lng]
-    to_lng=params[:to_lng]
-    from_str=params[:from_str]
-    to_str=params[:to_str]
-    from_mode=params[:from_mode]
-    to_mode=params[:to_mode]
-    from_time=params[:from_time]
-    to_time=params[:to_time]
-    route_type=params[:route_type]
-    routeid=params[:routeid]
+
+    customer_number=params[:phone_number]
+    data=params[:data]
+    from_lat=data[:homelat]
+    to_lat=data[:officelat]
+    from_lng=data[:homelng]
+    to_lng=data[:officelng]
+    from_str=data[:homeAddress]
+    to_str=data[:officeAddress]
+    from_mode=data[:commutework].join(",")
+    to_mode=data[:commutework].join(",")
+    from_time=data[:reachwork].join(",")
+    to_time=data[:leavework].join(",")
+    route_type=1
+    routeid=0
     if customer_number!=nil && from_lat!=nil && to_lat!=nil && from_lng!=nil  && to_lng!=nil && from_mode!=nil && to_mode!=nil && from_time!=nil && to_time!=nil && from_str!=nil && to_str!=nil
 
       suggestion=CustomerSuggestion.new
@@ -137,6 +139,7 @@ class SuggestController < ApplicationController
       suggestion.route_type=route_type
       suggestion.routeid=routeid
       suggestion.save
+      if (routeid>0)
       from_time.split(",").each do |timeslot|
 
         summ=RouteSuggestionAndLiveSummary.where(:routid=>routeid).where(:timeslot=>timeslot.to_i).where(:route_type=>route_type)
@@ -153,7 +156,11 @@ class SuggestController < ApplicationController
           summ.first.save
         end
       end
+      end
 
+      render :text=>"OK"
+    else
+      render :text=>"Error"
     end
 
   end

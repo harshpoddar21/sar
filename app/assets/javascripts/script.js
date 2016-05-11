@@ -1,4 +1,5 @@
 /* google auto suggestor */
+
 var px = 0;
 var refer = {};
 var info = {};
@@ -128,6 +129,7 @@ function nextPrevVlickEvents(){
 
     $('.submitsurvey').on('click', function(){
         $('#phoneModal').modal('show');
+
     });
 }
 
@@ -138,6 +140,7 @@ function validatePhone(){
     if(inputtxt.match(phoneno)) {
         $('#phoneModal .error').html('').hide();
         $('.loader').fadeIn();
+        $('#userPhoneNumber').attr('readonly', 'readonly');
         $.ajax({
                 url : 'makePhoneCall?phone_number='+inputtxt,
                 type : 'GET',
@@ -146,7 +149,6 @@ function validatePhone(){
                 header : 'x-requested-with'
             })
             .done(function(result){
-                $('.loader').fadeOut();
                 if(result.success){
                     //checking userinput after every 2 seconds
                     interval = setInterval(function(){
@@ -186,8 +188,9 @@ function validateMobileInput(num){
                     clearInterval(interval);
                     return;
                 }
-
+                $('.loader').fadeOut();
                 clearInterval(interval);
+                submitDataToServer(num);
                 $('#phoneModal').modal('hide');
                 refer.stage = stage;
                 refer.click = 'down';
@@ -611,9 +614,10 @@ function switchScreen(scrno, obj){
             html += '<div class="row social">';
             html += '<div class="col-md-12">';
             html += '<span class="fa fa-google-plus col-md-3"></span>';
-            html += '<span class="fa fa-facebook col-md-3"></span>';
-            html += '<span class="fa fa-linkedin col-md-3"></span>';
-            html += '<span class="fa fa-whatsapp col-md-3"></span>';
+            /*html += '<span class="fa fa-facebook col-md-3"></span>';
+             html += '<span class="fa fa-linkedin col-md-3"></span>';
+             */
+            html += '<a class="fa-social" href="whatsapp://send?text=Hello%20World!"><span class="fa fa-whatsapp col-md-3"></span></a>';
             html += '</div></div></div>';
 
             var mSlots = '';
@@ -676,4 +680,21 @@ function switchScreen(scrno, obj){
     }
     nextPrevVlickEvents();
     return true;
+}
+
+function   submitDataToServer(phone_number){
+
+    $.ajax({
+            url : 'saveNewSuggestion',
+            type : 'POST',
+            data:{phone_number:phone_number,data:info},
+            dataType : 'json',
+            contentType : "application/json; charset=utf-8",
+            header : 'x-requested-with'
+        })
+        .done(function(result){
+
+        })
+        .fail(function(err){
+        });
 }
