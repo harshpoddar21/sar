@@ -5,6 +5,30 @@ var refer = {};
 var info = {};
 
 function initAutocomplete() {
+    if (window.location.search!="" && window.location.search.match(/paths=([^\&]*)/g).length>0 && window.location.search.match(/paths=([^\&]*)/g)[0].split("=")[1]!=""){
+
+        var polyline=window.location.search.match(/paths=([^\&]*)/g)[0].split("=")[1];
+        var points=google.maps.geometry.encoding.decodePath(polyline);
+        if (points.length==2) {
+            var fromAdd = getGeoCodedAddress(points[0],function(result){
+
+                info.homeAddress = result.formatted_address;
+                info.homelat = points[0]["lat"];
+                info.homelng = points[0]["lng"];
+                jQuery("#homeLocation").val(info.homeAddress);
+
+            });
+            var toAddress = getGeoCodedAddress(points[1],function(result){
+
+                info.officeAddress = result.formatted_address;
+                info.officelat=points[1]["lat"];
+                info.officelng=points[1]["lng"];
+                jQuery("#officeLocation").val(info.officeAddress);
+            });
+
+        }
+
+    }
     if( (document.getElementById('officeLocation') != null) && (document.getElementById('homeLocation') != null) ){
         var homelocation = new google.maps.places.Autocomplete(
             (document.getElementById('homeLocation')),
@@ -153,6 +177,7 @@ function validatePhone(){
                 if(result.success){
                     //checking userinput after every 2 seconds
                     interval = setInterval(function(){
+
                         validateMobileInput(inputtxt);
                     }, 2000);
                 }else{
@@ -163,6 +188,7 @@ function validatePhone(){
                 $('.loader').fadeOut();
                 $('#phoneModal .error').html('invalid mobile number').fadeIn();
             });
+        validateMobileInput(inputtxt);
     }else {
         $('#phoneModal .error').html('invalid mobile number').fadeIn();
         return false;
@@ -171,9 +197,9 @@ function validatePhone(){
 var tries=0;
 function validateMobileInput(num){
     tries++;
-    onMobileVerified(num);
-    return;
-
+    if (stage==4) {
+        onMobileVerified(num);
+    }
     $.ajax({
             url : 'verifyPhoneCall?phone_number='+num+"&try="+tries,
             type : 'GET',
@@ -192,7 +218,10 @@ function validateMobileInput(num){
                     clearInterval(interval);
                     return;
                 }
-                onMobileVerified();
+                if (stage==5){
+
+                    jQuery('#share_heading').html("Congratulations!! Your route has been created.");
+                }
             }else{
                 $('#phoneModal .error').html('invalid mobile number').fadeIn();
                 clearInterval(interval);
@@ -393,7 +422,7 @@ function switchScreen(scrno, obj){
     ga('send', 'event', 'screen_no', scrno);
     switch(scrno){
         case 1:
-            var html =  '<br /><br /><br /><div class="headText text-center">To <span class="highlight">#MakeYourOwnRoute</span></div>';
+            var html =  '<br /><br /><br /><div class="headText text-center">To<br> <span class="highlight">#MakeYourOwnRoute</span></div>';
             html += '<div class="col-md-12"><br /><br />';
             html += '<div class="form-group form-group-wrapper">';
             html += '<div class="input-group">';
@@ -413,8 +442,7 @@ function switchScreen(scrno, obj){
             html += '<div class="input-group-addon remove"><span class="fa fa-remove"></span></div>';
             html += '</div></div></div>';
             html += '<div class="downArr"><span class="fa fa-angle-double-down"></span></div>';
-            $(obj).html(html)
-                .find('.downArr').hide();
+            $(obj).html(html);
 
 
             if(refer.hasOwnProperty('click')){
@@ -428,7 +456,7 @@ function switchScreen(scrno, obj){
 
         case 2:
             var html = '<div class="upArr"><span class="fa fa-angle-double-up"></span></div>';
-            html += '<div class="headText headText2 text-center">To help us serve you on time, please tell us what time do you <span class="highlight">#ReachWork</span></div>';
+            html += '<div class="headText headText2 text-center">To help us serve you on time, please tell us what time do you<br> <span class="highlight">#ReachWork</span></div>';
             html += '<div class="col-md-12"><br /><br />';
             html += '<div class="btn-group btn-group-justified reachwork" role="group" data-roletype="reachwork">';
             html += '<div class="btn-group" role="group">';
@@ -481,7 +509,7 @@ function switchScreen(scrno, obj){
 
         case 3:
             var html = '<div class="upArr"><span class="fa fa-angle-double-up"></span></div>';
-            html += '<div class="headText headText2 text-center">And also, what time do you <span class="highlight">#LeaveFromWork</span></div>';
+            html += '<div class="headText headText2 text-center">And also, what time do you<br> <span class="highlight">#LeaveFromWork</span></div>';
             html += '<div class="col-md-12"><br /><br />';
             html += '<div class="btn-group btn-group-justified leavework" role="group" data-roletype="leavework">';
             html += '<div class="btn-group" role="group">';
@@ -536,7 +564,7 @@ function switchScreen(scrno, obj){
 
         case 4:
             var html = '<div class="upArr"><span class="fa fa-angle-double-up"></span></div>';
-            html += '<div class="headText headText3 text-center">Oh wait!! we almost forgot to ask how you <span class="highlight">#TravelToWork</span></div>';
+            html += '<div class="headText headText3 text-center">Oh wait!! we almost forgot to ask how you<br> <span class="highlight">#TravelToWork</span></div>';
             html += '<div class="col-md-12"><br />';
             html += '<div class="btn-group btn-group-justified commutework" role="group" data-roletype="commutework">';
             html += '<div class="btn-group" role="group">';
@@ -603,7 +631,7 @@ function switchScreen(scrno, obj){
 
         case 5:
             var html = '<div class="col-md-12 text-center">';
-            html += '<h4 style="margin:0;" class="text-center">Great! you have successfully made</h4><br />';
+            html += '<h4 style="margin:0;" class="text-center" id="share_heading">Awaiting confirmation for mobile no:<a onclick="changeMobileNo();"></a></h4><br />';
             html += '<fieldset>';
             html += '<legend>#Your Own Route</legend>';
             html += '<div class="col-md-12 routeHeading text-capitalize">';
@@ -620,14 +648,14 @@ function switchScreen(scrno, obj){
             html += '<h6 class="text-center">( Click above to change info )</h6>';
             html += '</fieldset>';
             html += '<p class="routeCount"><span class="count">3</span> Other people have made same route</p><br/>';
-            html += '<div class="headText headText3 text-center">To launch the route soon <span class="highlight">#JustSpreadTheWord</span></div>';
+            html += '<div class="headText headText3 text-center">To launch the route soon<br> <span class="highlight">#JustSpreadTheWord</span></div>';
             html += '<div class="row social">';
             html += '<div class="col-md-12">';
             html += '<span class="fa fa-google-plus col-md-3"></span>';
             /*html += '<span class="fa fa-facebook col-md-3"></span>';
              html += '<span class="fa fa-linkedin col-md-3"></span>';
              */
-            html += '<a class="fa-social" href="whatsapp://send?text=Hello%20World!"><span class="fa fa-whatsapp col-md-3"></span></a>';
+            html += '<a class="fa-social" id="whatsapp" href="whatsapp://send?text="><span class="fa fa-whatsapp col-md-3"></span></a>';
             html += '</div></div></div>';
 
             var mSlots = '';
@@ -654,6 +682,10 @@ function switchScreen(scrno, obj){
                 });
             }
 
+            if (info.homeAddress!=undefined && info.officeAddress!=undefined){
+
+                fillWhatsAppLink();
+            }
             var topPx = $('.screenWrapper').css('height');
             topPx = topPx.replace('px', '');
             topPx = Number(topPx)-64;
@@ -708,4 +740,36 @@ function   submitDataToServer(phone_number){
         })
         .fail(function(err){
         });
+}
+
+function changeMobileNo(){
+
+
+
+
+}
+
+function getGeoCodedAddress(latlng,callback){
+    geocoder = new google.maps.Geocoder();
+    geocoder.geocode({'location': latlng}, function(results, status) {
+        if (status === google.maps.GeocoderStatus.OK) {
+            if (results[1]) {
+
+                callback(results[1]);
+            } else {
+            }
+        } else {
+
+        }
+    });
+}
+
+function fillWhatsAppLink(){
+    var encodedPoints=google.maps.geometry.encoding.encodePath([{lat:info.homelat,lng:info.homelng}
+        ,{lat:info.officelat,lng:info.officelng}]);
+
+
+    jQuery('#whatsapp').attr("href","whatsapp://send?text="+"Start your shuttl at Rs 3/Km.Just log on to http://myor.shuttl.com/suggest/index?paths="+encodedPoints);
+
+
 }
