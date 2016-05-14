@@ -684,10 +684,7 @@ function switchScreen(scrno, obj){
                 });
             }
 
-            if (info.homeAddress!=undefined && info.officeAddress!=undefined){
 
-                fillWhatsAppLink();
-            }
             var topPx = $('.screenWrapper').css('height');
             topPx = topPx.replace('px', '');
             topPx = Number(topPx)-64;
@@ -701,6 +698,10 @@ function switchScreen(scrno, obj){
 
             jQuery('.bounce').css("display","none");
             routeSummary();
+            if (info.homeAddress!=undefined && info.officeAddress!=undefined){
+
+                fillWhatsAppLink();
+            }
             break;
 
         case 10:
