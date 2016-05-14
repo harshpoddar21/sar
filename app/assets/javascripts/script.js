@@ -220,7 +220,9 @@ function validateMobileInput(num){
                 }
                 if (stage==5){
 
-                    jQuery('#share_heading').html("Congratulations!! Your route has been created.");
+                    if (jQuery("#share_heading")!=undefined) {
+                        jQuery('#share_heading').html("Congratulations!! Your route has been created.");
+                    }
                 }
             }else{
                 $('#phoneModal .error').html('invalid mobile number').fadeIn();
@@ -765,10 +767,16 @@ function getGeoCodedAddress(latlng,callback){
 }
 
 function fillWhatsAppLink(){
-    var encodedPoints=google.maps.geometry.encoding.encodePath([{lat:info.homelat,lng:info.homelng}
-        ,{lat:info.officelat,lng:info.officelng}]);
+    var poly = new google.maps.Polyline({
+        strokeColor: '#000000',
+        strokeOpacity: 1,
+        strokeWeight: 3
+    });
 
-
+    var path=poly.getPath();
+    path.push(new google.maps.LatLng(info.homelat,info.homelng));
+    path.push(new google.maps.LatLng(info.officelat,info.officelng));
+    var encodedPoints=google.maps.geometry.encoding.encodePath(path);
     jQuery('#whatsapp').attr("href","whatsapp://send?text="+"Start your shuttl at Rs 3/Km.Just log on to http://myor.shuttl.com/suggest/index?paths="+encodedPoints);
 
 
