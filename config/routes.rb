@@ -5,6 +5,7 @@ get 'nps/submitNps'
   get 'suggest/getSlots'
   get 'suggest/getFromTo'
 
+  get 'suggest/getLink'
   get 'suggest/saveNewSuggestion' =>"suggest#saveNewSuggestion"
 
   get 'suggest/verifyPhoneCall'
