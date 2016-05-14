@@ -13,16 +13,16 @@ function initAutocomplete() {
             var fromAdd = getGeoCodedAddress(points[0],function(result){
 
                 info.homeAddress = result.formatted_address;
-                info.homelat = points[0]["lat"];
-                info.homelng = points[0]["lng"];
+                info.homelat = points[0].lat();
+                info.homelng = points[0].lng();
                 jQuery("#homeLocation").val(info.homeAddress);
 
             });
             var toAddress = getGeoCodedAddress(points[1],function(result){
 
                 info.officeAddress = result.formatted_address;
-                info.officelat=points[1]["lat"];
-                info.officelng=points[1]["lng"];
+                info.officelat=points[1].lat();
+                info.officelng=points[1].lng();
                 jQuery("#officeLocation").val(info.officeAddress);
             });
 
@@ -603,7 +603,7 @@ function switchScreen(scrno, obj){
             html += '<button type="button" class="btn btn-default" data-value="office-cab">Office Cab</button>';
             html += '</div></div></div>';
             html += '<br/><h6 class="text-center">( select all modes that you use )</h6>';
-            html += '<div class="downArr"><div class="col-md-12"><span class="btn btn-primary submitsurvey col-md-12">submit</span></div></div>';
+            html += '<div class="submitBut"><div class="col-md-12"><span class="btn btn-primary submitsurvey col-md-12">submit</span></div></div>';
             html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
             html += '<div class="modal-dialog modal-sm">';
             html += '<div class="modal-content">';
@@ -687,7 +687,7 @@ function switchScreen(scrno, obj){
 
             var topPx = $('.screenWrapper').css('height');
             topPx = topPx.replace('px', '');
-            topPx = Number(topPx)-64;
+            topPx = Number(topPx)-100;
             $(obj).html(html)
                 .find('.home').html(info.homeAddress).end()
                 .find('.office').html(info.officeAddress).end()

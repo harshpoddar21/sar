@@ -57,7 +57,11 @@
     display: table-header-group;
 }
 .downArr{
-    display: table-footer-group;
+    position: absolute;
+    bottom: 52px;
+    left: 50%;
+    margin-left: -21px;
+
 }
 fieldset{
     padding: 0;
@@ -96,9 +100,12 @@ legend{
 .row.social {
     position: absolute;
     width: 100%;
+    height:100px;
 }
 .social > div {
     background-color: #428bca;
+    height:100px;
+
 }
 .social > div > span {
     color: #ffffff;
@@ -120,7 +127,7 @@ em {
 .bounce{
     text-decoration: underline;
     position: absolute;
-    bottom: 10px;
+    bottom: 0px;
     text-align: center;
     width: 100%;
     z-index: 99;
