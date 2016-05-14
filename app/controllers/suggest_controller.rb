@@ -251,7 +251,7 @@ class SuggestController < ApplicationController
     to=params[:to]
     result=Polylines::Encoder.encode_points([[from.split(",")[0].to_f,from.split(",")[1].to_f],[to.split(",")[0].to_f,to.split(",")[1].to_f]])
 
-    render :text=>"http://myor.shuttl.com?paths="+result
+    render :text=>"http://myor.shuttl.com/suggest/index?paths="+result
 
 
   end
