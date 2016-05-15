@@ -774,11 +774,14 @@ function fillWhatsAppLink(){
         strokeWeight: 3
     });
 
+
     var path=poly.getPath();
     path.push(new google.maps.LatLng(info.homelat,info.homelng));
     path.push(new google.maps.LatLng(info.officelat,info.officelng));
     var encodedPoints=google.maps.geometry.encoding.encodePath(path);
-    jQuery('#whatsapp').attr("href","whatsapp://send?text="+"Start your shuttl at Rs 3/Km.Just log on to http://myor.shuttl.com/suggest/index?paths="+encodedPoints);
+    ga('send', 'event', 'whatsappshare',encodedPoints);
+
+    jQuery('#whatsapp').attr("href","whatsapp://send?text="+"Start your shuttl at Rs 3/Km.Just log on to http://myor.shuttl.com/suggest/index?paths="+encodedPoints+"&utm_source=whatsapp");
 
 
 }
