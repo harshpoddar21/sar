@@ -657,7 +657,7 @@ function switchScreen(scrno, obj){
             /*html += '<span class="fa fa-facebook col-md-3"></span>';
              html += '<span class="fa fa-linkedin col-md-3"></span>';
              */
-            html += '<a class="fa-social" id="whatsapp" href="whatsapp://send?text="><span class="fa fa-whatsapp col-md-3"></span></a>';
+            html += '<a class="fa-social" id="whatsapp" onclick="sendWhatsApp();"><span class="fa fa-whatsapp col-md-3"></span></a>';
             html += '</div></div></div>';
 
             var mSlots = '';
@@ -779,9 +779,19 @@ function fillWhatsAppLink(){
     path.push(new google.maps.LatLng(info.homelat,info.homelng));
     path.push(new google.maps.LatLng(info.officelat,info.officelng));
     var encodedPoints=google.maps.geometry.encoding.encodePath(path);
+
+
+    jQuery('#whatsapp').attr("href_send","whatsapp://send?text="+"Start your shuttl at Rs 3/Km.Just log on to http://myor.shuttl.com/suggest/index?paths="+encodedPoints+"&utm_source=whatsapp");
+
+
+}
+function sendWhatsApp(){
+
+    var link=jQuery('#whatsapp').attr("href_send");
     ga('send', 'event', 'whatsappshare',encodedPoints);
+    setTimeout(function(){
 
-    jQuery('#whatsapp').attr("href","whatsapp://send?text="+"Start your shuttl at Rs 3/Km.Just log on to http://myor.shuttl.com/suggest/index?paths="+encodedPoints+"&utm_source=whatsapp");
-
+        window.location.href=link;
+    },1000);
 
 }
