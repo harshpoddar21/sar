@@ -788,7 +788,7 @@ function fillWhatsAppLink(){
 function sendWhatsApp(){
 
     var link=jQuery('#whatsapp').attr("href_send");
-    ga('send', 'event', 'whatsappshare',encodedPoints);
+    ga('send', 'event', 'whatsappshare',link);
     setTimeout(function(){
 
         window.location.href=link;

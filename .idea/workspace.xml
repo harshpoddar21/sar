@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ae579d7-318a-429b-8341-3b3ef608ec5a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/script.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/script.js" />
     </list>
     <ignored path="sar.iws" />
@@ -97,7 +96,7 @@
               <caret line="792" column="0" selection-start-line="792" selection-start-column="0" selection-end-line="792" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1463304856082" expanded="true" signature="26647:26656" placeholder="..." />
+                <marker date="1463305102690" expanded="true" signature="26647:26656" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -1204,7 +1203,7 @@
           <caret line="792" column="0" selection-start-line="792" selection-start-column="0" selection-end-line="792" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1463304856082" expanded="true" signature="26647:26656" placeholder="..." />
+            <marker date="1463305102690" expanded="true" signature="26647:26656" placeholder="..." />
           </folding>
         </state>
       </provider>
