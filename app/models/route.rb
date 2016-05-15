@@ -55,8 +55,8 @@ class Route
 
 
     slots.each do |slot|
-      timeFrom=slot.fromtime.to_i%86400
-      timeTo=slot.totime.to_i%86400
+      timeFrom=slot.fromtime.to_i%1440
+      timeTo=slot.totime.to_i%1440
       (timeFrom..timeTo).step(slot.interval).each do |time|
 
         slotsFinal.push time

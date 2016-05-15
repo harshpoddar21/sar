@@ -1,0 +1,232 @@
+<div id="checkout-otp">
+    <div class="container-fluid nopadding">
+
+        <header>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <div class="col-lg-7 col-md-6 col-sm-6 col-xs-12 logo-container nopadding">
+                    <img class="logo" src="/assets/Logo-01.svg" alt="logo">
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12 text-right contact-details nopadding">
+                    <p id="user-Email-add" style="display:none">jonnalagaddabharat@gmail.com</p>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </header>
+
+
+        <div class="main">
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-10 nopadding">
+                <!--benefits pannel starts-->
+                <div id="benefits-pannel" class="trans">
+
+                    <div class="checkout-title">
+                        <h1>LazyPay, always <span>buying you time</span>.</h1>
+                    </div>
+
+                    <div id="buy-benefits">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="buy-benefits-img"><img src="/assets/otp-icon.png" alt="icon" /></div>
+                                <div class="buy-benefits-text">
+                                    <p>Checkout 7 times faster!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="buy-benefits-img"><img src="/assets/pay-icon.png" alt="icon" /></div>
+                                <div class="buy-benefits-text">
+                                    <p>We'll pay for you at no extra cost.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="buy-benefits-img"><img src="/assets/payback-icon.png" alt="icon" /></div>
+                                <div class="buy-benefits-text">
+                                    <p>You have up to 14 days to pay us back.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!--benefits pannel end-->
+            </div>
+
+            <div class="lazy_pay_btn trans" id="slideLeftButton" >LazyPay Now</div>
+
+            <div  id="slideRightButton" ><img src="/assets/mobile-2.png" alt="button" /></div>
+
+            <div id="slider-dots">
+                <ul>
+                    <li><span id="slider-child-1" class="active"></span></li>
+                    <li><span id="slider-child-2"></span></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 nopadding">
+                <div id="otp-container" class="card-section">
+                    <!--otp pannel starts-->
+                    <div id="otp-screen" class="otp-content trans">
+                        <div class="otp-animation">
+                            <div id="mobile-screen" class="vibe-animation"></div>
+                        </div>
+
+                        <div class="otp-text" style="display: none">
+                            Validate details sent on <span id="ph-no">9018294010</span> <br/> for your order of <span class="rs-icon">`</span><span id="price">350</span> with <span id="vender">Grofers</span>.
+                        </div>
+
+                        <form>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="input-otp" >
+                                        <input type="tel" id="otp-number" onKeyDown="onlyNumbers(event)" value=""  maxlength="4" placeholder="Enter OTP" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter OTP'" >
+                                        <input type="button" class="resend" value="RESEND">
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="input-otp ">
+                                        <input type="text" id="email-address" value="" placeholder="Please enter your email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Please enter your email address'">
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <input type="button" onKeyDown="disbleTab()" id="lazyPayNow" value="LazyPay Now" class="lazy_pay_btn  trans">
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <div class="otp-text">
+                            <p>By proceeding, you agree to our <a href="#">Terms & Conditions</a></p>
+                        </div>
+
+                        <div class="footer-img">
+                            <div class="citrus-secure"></div>
+
+                            <div class="pay-partner">
+                                <ul>
+                                    <li class="pcj"></li>
+                                    <li class="visa"></li>
+                                    <li class="master"></li>
+                                    <li class="geotrust"></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--otp pannel end-->
+
+                    <!--card pannel start-->
+                    <div id="card-screen" class="otp-content trans">
+                        <div class="otp-animation">
+                            <div id="card-image">
+                            	<span class="input-group-addon">
+                                  <strong id="ccnum-type"></strong>
+                            </span>
+                            </div>
+
+                        </div>
+
+                        <div class="otp-text">
+                            This transaction will be charged to your credit card.<br/> Don't worry, it's just a one time thing.
+                        </div>
+
+                        <form>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="input-otp row">
+                                        <input type="text" class="trans" value="" id="card-number" onKeyDown="onlyNumbers(event)" placeholder="Enter Card Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your credit card number'">
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                                    <label for="card-expire">Valid till</label>
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-4 nopadding">
+                                    <div class="input-otp row">
+                                        <input type="text" id="card-expire" value="" onKeyDown="onlyNumbers(event)" size="7" placeholder="MM/YY" onfocus="this.placeholder = ''" onblur="this.placeholder = 'MM/YY'">
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <div class="input-otp row">
+                                        <input type="text" id="card-cvv" value="" onKeyDown="onlyNumbers(event)" maxlength="3"   placeholder="CVV" onfocus="this.placeholder = ''" onblur="this.placeholder = 'CVV'">
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <input type="button" id="submit" value="Save & Pay" class="lazy_pay_btn trans">
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <div class="otp-text">
+                            <p>By proceeding, you agree to our <a href="#">Terms & Conditions</a></p>
+                        </div>
+
+
+                        <div class="footer-img">
+                            <div class="citrus-secure"></div>
+
+                            <div class="pay-partner">
+                                <ul>
+                                    <li class="pcj"></li>
+                                    <li class="visa"></li>
+                                    <li class="master"></li>
+                                    <li class="geotrust"></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--card pannel end-->
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="demo_bg trans" ></div>
+        <div class="error-popup js-fade fade-in is-paused">
+            <div class="error-png"></div>
+            <h1 class="error-head">Error!</h1>
+
+            <div class="error-text" id="error-otp"> </div>
+
+            <div class="lazy_pay_btn trans" id="fadeOut">OK</div>
+        </div>
+
+
+
+
+    </div>
+    <!-- start javascript -->
+    <script src="/assets/payform.min.js"></script>
+    <script src="/assets/lazypay_script.js"></script>
+    <!-- end javascript -->
+</div>
