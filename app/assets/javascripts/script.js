@@ -657,7 +657,7 @@ function switchScreen(scrno, obj){
             html += '<input type="text" class="form-control loc" onfocus="inpclicked();" onblur="inpremoved();" name="officeLocation" id="officeLocation" placeholder="Enter Office Address" autocomplete="off" />';
             html += '<div class="input-group-addon remove"><span class="fa fa-remove"></span></div>';
             html += '</div></div></div>';
-            html += '<div class="downArr"><span class="fa fa-angle-double-down"></span></div>';
+            html += '<div class="downArr dowfirst"><span class="fa fa-angle-double-down"></span></div>';
             $(obj).html(html)
 	    .find('.downArr').hide();
 
