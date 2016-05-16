@@ -28,6 +28,8 @@ function initAutocomplete() {
                 jQuery("#officeLocation").val(info.officeAddress);
             });
 
+            jQuery('.downArr').show();
+
             fillAdministrativeLevelDetails();
         }
 
