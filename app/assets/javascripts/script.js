@@ -127,7 +127,7 @@ $(window).resize(function(){
 function initMap(response) {
 	$('#gMap').html('');
 	var wpx = $('.screen .col-md-12').width();
-	var hpx = $('.screen').height()/2;
+	var hpx = $('.screen').height()/2+0;
 	$('#gMap').css({'width':wpx+'px', 'height':hpx+'px'});
 
 	var map = new google.maps.Map(document.getElementById('gMap'), {
