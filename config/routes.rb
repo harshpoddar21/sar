@@ -8,6 +8,8 @@ get 'nps/submitNps'
   get 'suggest/getLink'
   get 'suggest/saveNewSuggestion' =>"suggest#saveNewSuggestion"
 
+  get 'suggest/getWhatsAppShareLink'
+
   get 'suggest/verifyPhoneCall'
   get 'suggest/makePhoneCall'
   post 'suggest/makePhoneCall'
