@@ -337,3 +337,37 @@ fieldset.pay{
 span.highlight.lesshighlight {
     line-height: 4rem !important;
 }
+.nextBtnMap {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+.bouncebtn,.backBtnMap {
+    position: absolute;
+    bottom: 0px;
+}
+.container_fluid{
+
+    height:100%;
+}
+.fullheight,.screen{
+
+
+    height:100%;
+    display:block;
+
+}
+
+.paynow {
+    bottom: 41px;
+    position: absolute;
+    left: 0px;
+}
+.not-int{
+
+    bottom:0px;
+    position: absolute;
+    left:0px;
+
+}
+

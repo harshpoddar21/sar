@@ -127,7 +127,7 @@ $(window).resize(function(){
 function initMap(response) {
 	$('#gMap').html('');
 	var wpx = $('.screen .col-md-12').width();
-	var hpx = $('.screen').height()/2+0;
+	var hpx = $('.screen').height()/2.5+0;
 	$('#gMap').css({'width':wpx+'px', 'height':hpx+'px'});
 
 	var map = new google.maps.Map(document.getElementById('gMap'), {
@@ -173,7 +173,7 @@ function initMap(response) {
 		position: latlng,     
 		map: map,      
 		title: Math.round(Number(mindist)*1000) + " meters",
-		icon: '/images/near.png'
+		icon: '/images/bus-stop.png'
 	});
 
 	var contentString = Math.round(Number(mindist)*1000) + " meters";    // HTML text to display in the InfoWindow
@@ -293,7 +293,7 @@ $(function() {
 	//screenHeight = screen.availHeight-50;
 	screenHeight = window.innerHeight;
 	var height = $('.header')[0].offsetHeight;
-	screenHeight = screenHeight-height;
+	screenHeight = screenHeight-height-jQuery('.screen').css("padding-top").match(/\d+/)[0];
 	setHeight();
 	$('.screenWrapper').css('height', screenHeight+'px');
 });
@@ -918,7 +918,7 @@ function switchScreen(scrno, obj){
             break;
 
         case 8:
-			var html = '<div class="col-md-12">';
+			var html = '<div class="col-md-12 fullheight">';
 			html += '<div class="fieldset">';
 			html += '<div class="routeInfo"><span class="routePtName">'+info.homeAddressShortened+'</span><span class="routePtName">'+info.officeAddressShortened+'</span></div>';
 			html += '<div id="gMap"></div>';
@@ -962,7 +962,7 @@ function switchScreen(scrno, obj){
 		break;
 		
 		case 9:
-			var html = '<div class="col-md-12">';
+			var html = '<div class="col-md-12 fullheight">';
 			html += '<div class="fieldset">';
 			html += '<div class="routeInfo"><span class="routePtName">'+info.officeAddressShortened+'</span><span class="routePtName">'+info.homeAddressShortened+'</span></div>';
 			html += '<div id="gMap"></div>';
@@ -1004,7 +1004,7 @@ function switchScreen(scrno, obj){
 		break;
 		
 		case 10:
-			var html = '<div class="col-md-12 text-center">';
+			var html = '<div class="col-md-12 text-center fullheight">';
 			html += '<h4 style="margin:0;" class="text-center">Hey! Your Routes are almost LIVE..</h4><br />';
 			html += '<fieldset class="pay">';
 			html += '<legend class="payments"><span class="home">'+info.homeAddressShortened+'</span> <> <span class="office">'+info.officeAddressShortened+'</span></legend>';
@@ -1036,7 +1036,7 @@ function switchScreen(scrno, obj){
 			html += '<div class="fillingfast">(we\'ll charge your wallet just before launching the service)</div>';
 			*/
 			html += '<br /><div class="btn btn-primary full paynow col-md-12">I Am Interested</div><br />';
-			html += '<br /><div class="btn btn-primary full bouncebtn col-md-12">Not Interested</div>';
+			html += '<br /><div class="btn btn-primary full bouncebtn not-int col-md-12">Not Interested</div>';
 			html += '</div>';
 			$(obj).html(html);
 			notInterested();
@@ -1046,7 +1046,7 @@ function switchScreen(scrno, obj){
 		break;
 		
 		case 11:
-			var html = '<div class="col-md-12 text-center">';
+			var html = '<div class="col-md-12 text-center fullheight">';
 			html += '<h4 style="margin:0;" class="text-center">Hey! Your Routes are almost LIVE..</h4><br />';
 			html += '<fieldset class="pay">';
 			html += '<legend class="payments"><span class="home">Vasant kunj</span> <> <span class="office">Udyog vihar</span></legend>';
@@ -1074,7 +1074,7 @@ function switchScreen(scrno, obj){
 			
 			html += '</fieldset>';
 			html += '<div class="headText headText3 text-center">To launch the route soon <span class="highlight">#JustSpreadTheWord</span></div>';
-			html += '<div class="row social">';
+			html += '<div class="row social" id="whatsapp" onclick="sendWhatsApp()">';
 			html += '<div class="col-md-12">';
 			/*
 			html += '<span class="fa fa-google-plus col-md-3"></span>';
@@ -1085,6 +1085,7 @@ function switchScreen(scrno, obj){
 			html += '<span class="full" style="padding:20px;display:table;">Share Via WhatsApp</span>';
 			html += '</div></div></div>';
 			$(obj).html(html);
+            fillWhatsAppLink();
 		break;
 		//offline sharing screen
 		case 12:
