@@ -2,19 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ae579d7-318a-429b-8341-3b3ef608ec5a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/images/home.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/images/near.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/home.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/near.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/utility/bitly_utils.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/sar.iml" afterPath="$PROJECT_DIR$/.idea/sar.iml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/models/route_old.rb" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/script.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/script.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/style.css" afterPath="$PROJECT_DIR$/app/assets/stylesheets/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/suggest_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/suggest_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
     </list>
     <ignored path="sar.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,7 +22,7 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/sar@Development__sar.coverage" NAME="Development: sar Coverage Results" MODIFIED="1463403445035" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="sar" />
+    <SUITE FILE_PATH="coverage/sar@Development__sar.coverage" NAME="Development: sar Coverage Results" MODIFIED="1463409974296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="sar" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -104,20 +93,20 @@
       <file leaf-file-name="script.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/script.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.26790452">
-              <caret line="167" column="7" selection-start-line="167" selection-start-column="7" selection-end-line="167" selection-end-column="7" />
+            <state vertical-scroll-proportion="0.4111406">
+              <caret line="132" column="53" selection-start-line="132" selection-start-column="53" selection-end-line="132" selection-end-column="53" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1463403408534" expanded="true" signature="32159:32189" placeholder="..." />
-                <marker date="1463403408534" expanded="true" signature="32217:32226" placeholder="..." />
-                <marker date="1463403408534" expanded="true" signature="34145:34172" placeholder="..." />
-                <marker date="1463403408534" expanded="true" signature="40439:40448" placeholder="..." />
-                <marker date="1463403408534" expanded="true" signature="41194:41207" placeholder="..." />
-                <marker date="1463403408534" expanded="true" signature="41721:41734" placeholder="..." />
-                <marker date="1463403408534" expanded="true" signature="42734:42743" placeholder="..." />
-                <marker date="1463403408534" expanded="true" signature="43397:43410" placeholder="..." />
-                <marker date="1463403408534" expanded="true" signature="43894:43907" placeholder="..." />
-                <marker date="1463403408534" expanded="true" signature="44594:44621" placeholder="..." />
+                <marker date="1463410219194" expanded="true" signature="32159:32189" placeholder="..." />
+                <marker date="1463410219194" expanded="true" signature="32217:32226" placeholder="..." />
+                <marker date="1463410219194" expanded="true" signature="34145:34172" placeholder="..." />
+                <marker date="1463410219194" expanded="true" signature="40439:40448" placeholder="..." />
+                <marker date="1463410219194" expanded="true" signature="41194:41207" placeholder="..." />
+                <marker date="1463410219194" expanded="true" signature="41721:41734" placeholder="..." />
+                <marker date="1463410219194" expanded="true" signature="42734:42743" placeholder="..." />
+                <marker date="1463410219194" expanded="true" signature="43397:43410" placeholder="..." />
+                <marker date="1463410219194" expanded="true" signature="43894:43907" placeholder="..." />
+                <marker date="1463410219194" expanded="true" signature="44594:44621" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -220,9 +209,9 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="-4" />
+    <option name="y" value="24" />
     <option name="width" value="1366" />
-    <option name="height" value="772" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -249,6 +238,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="RailsProjectView" />
       <pane id="ProjectPane">
         <subPane>
@@ -432,6 +423,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -508,8 +517,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -733,15 +740,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-4" width="1366" height="772" extended-state="6" />
+    <frame x="0" y="24" width="1366" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40558913" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4116314" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290735" sideWeight="0.49697885" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30990416" sideWeight="0.597432" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30990416" sideWeight="0.60196376" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930514" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290735" sideWeight="0.4939577" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30990416" sideWeight="0.40256798" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30990416" sideWeight="0.39803624" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31629393" sideWeight="0.44561934" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -784,6 +791,14 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/app/models/route.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="57" column="52" selection-start-line="57" selection-start-column="52" selection-end-line="57" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/route.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -865,13 +880,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.62406015">
           <caret line="27" column="6" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/route_old.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -1145,20 +1153,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/script.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26790452">
-          <caret line="167" column="7" selection-start-line="167" selection-start-column="7" selection-end-line="167" selection-end-column="7" />
+        <state vertical-scroll-proportion="0.4111406">
+          <caret line="132" column="53" selection-start-line="132" selection-start-column="53" selection-end-line="132" selection-end-column="53" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1463403408534" expanded="true" signature="32159:32189" placeholder="..." />
-            <marker date="1463403408534" expanded="true" signature="32217:32226" placeholder="..." />
-            <marker date="1463403408534" expanded="true" signature="34145:34172" placeholder="..." />
-            <marker date="1463403408534" expanded="true" signature="40439:40448" placeholder="..." />
-            <marker date="1463403408534" expanded="true" signature="41194:41207" placeholder="..." />
-            <marker date="1463403408534" expanded="true" signature="41721:41734" placeholder="..." />
-            <marker date="1463403408534" expanded="true" signature="42734:42743" placeholder="..." />
-            <marker date="1463403408534" expanded="true" signature="43397:43410" placeholder="..." />
-            <marker date="1463403408534" expanded="true" signature="43894:43907" placeholder="..." />
-            <marker date="1463403408534" expanded="true" signature="44594:44621" placeholder="..." />
+            <marker date="1463410219194" expanded="true" signature="32159:32189" placeholder="..." />
+            <marker date="1463410219194" expanded="true" signature="32217:32226" placeholder="..." />
+            <marker date="1463410219194" expanded="true" signature="34145:34172" placeholder="..." />
+            <marker date="1463410219194" expanded="true" signature="40439:40448" placeholder="..." />
+            <marker date="1463410219194" expanded="true" signature="41194:41207" placeholder="..." />
+            <marker date="1463410219194" expanded="true" signature="41721:41734" placeholder="..." />
+            <marker date="1463410219194" expanded="true" signature="42734:42743" placeholder="..." />
+            <marker date="1463410219194" expanded="true" signature="43397:43410" placeholder="..." />
+            <marker date="1463410219194" expanded="true" signature="43894:43907" placeholder="..." />
+            <marker date="1463410219194" expanded="true" signature="44594:44621" placeholder="..." />
           </folding>
         </state>
       </provider>
