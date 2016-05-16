@@ -370,4 +370,22 @@ span.highlight.lesshighlight {
     left:0px;
 
 }
+.submit-butt{
 
+    display: table-footer-group;
+    width: 100%;
+    display: block !important;
+    position: absolute;
+    bottom: 0px;
+}
+.downArr{
+
+    position: absolute;
+    bottom:10px;
+
+}
+.upArr{
+
+    display:block !important;
+
+}

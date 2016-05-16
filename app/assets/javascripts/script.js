@@ -426,7 +426,7 @@ function validateMobileInput(num){
                 if (stage==5){
 
                     if (jQuery("#share_heading")!=undefined) {
-                        jQuery('#share_heading').html("Congratulations!! Your route has been created.");
+                        jQuery('#share_heading').html("Congratulations!! You have successfully made");
                     }
                 }
             }else{
@@ -636,12 +636,12 @@ function switchScreen(scrno, obj){
     ga('send', 'event', 'screen_no', scrno);
     switch(scrno){
         case 1:
-            var html =  '<br /><br /><br /><br /><div class="headText text-center">To <span class="highlight"><br/>#MakeYourOwnRoute</span></div>';
+            var html =  '<br /><br /><div class="headText text-center">To <span class="highlight"><br/>#MakeYourOwnRoute</span></div>';
             html += '<div class="col-md-12"><br /><br />';
             html += '<div class="form-group form-group-wrapper">';
             html += '<div class="input-group">';
             html += '<div class="input-group-addon"><span class="fa fa-home"></span></div>';
-            html += '<input type="text" class="form-control loc" name="homeLocation" id="homeLocation" placeholder="Enter Home Address" autocomplete="off" />';
+            html += '<input type="text" class="form-control loc" onfocus="inpclicked();" onblur="inpremoved();" name="homeLocation" id="homeLocation" placeholder="Enter Home Address" autocomplete="off" />';
             html += '<div class="input-group-addon remove"><span class="fa fa-remove"></span></div>';
             html += '</div></div></div>';
 
@@ -652,7 +652,7 @@ function switchScreen(scrno, obj){
             html += '<div class="form-group form-group-wrapper">';
             html += '<div class="input-group">';
             html += '<div class="input-group-addon"><span class="fa fa-suitcase"></span></div>';
-            html += '<input type="text" class="form-control loc" name="officeLocation" id="officeLocation" placeholder="Enter Office Address" autocomplete="off" />';
+            html += '<input type="text" class="form-control loc" onfocus="inpclicked();" onblur="inpremoved();" name="officeLocation" id="officeLocation" placeholder="Enter Office Address" autocomplete="off" />';
             html += '<div class="input-group-addon remove"><span class="fa fa-remove"></span></div>';
             html += '</div></div></div>';
             html += '<div class="downArr"><span class="fa fa-angle-double-down"></span></div>';
@@ -815,7 +815,7 @@ function switchScreen(scrno, obj){
             html += '<button type="button" class="btn btn-default" data-value="office-cab">Office Cab</button>';
             html += '</div></div></div>';
             html += '<br/><h6 class="text-center">( select all modes that you use )</h6>';
-            html += '<div class="downArr"><div class="row col-md-12"><span class="btn btn-primary submitsurvey text-uppercase col-md-12">Submit</span></div></div>';
+            html += '<div class="downArr submit-butt"><div class="row col-md-12"><span class="btn btn-primary submitsurvey text-uppercase col-md-12">Submit</span></div></div>';
             html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
             html += '<div class="modal-dialog modal-sm">';
             html += '<div class="modal-content">';
@@ -845,11 +845,11 @@ function switchScreen(scrno, obj){
 
         case 5:
             var html = '<div class="col-md-12 text-center" style="height: 100%;position: static;">';
-			html += '<h4 style="margin:0;" class="text-center">Great! you have successfully made</h4><br />';
+			html += '<h4 style="margin:0;" id="share_heading" class="text-center sharetext">Awaiting Missed Call Confirmation</h4><br />';
             html += '<fieldset>';
-            html += '<legend>#Your Own Route</legend>';
+            html += '<legend>#YourRoute</legend>';
             html += '<div class="col-md-12 routeHeading text-capitalize">';
-            html += '<div class="routeCreated"><span class="home">Vasant kunj</span> <> <span class="office">Udyog vihar</span></div>';
+            html += '<div class="routeCreated"><span class="home">'+info.homeAddressShortened+'</span> <> <span class="office">'+info.officeAddressShortened+'</span></div>';
             html += '</div>';
             html += '<div class="col-md-12 slotRow ">';
             html += '<span class="slotHeading">Morning Slots: </span>';
@@ -920,7 +920,7 @@ function switchScreen(scrno, obj){
         case 8:
 			var html = '<div class="col-md-12 fullheight">';
 			html += '<div class="fieldset">';
-			html += '<div class="routeInfo"><span class="routePtName">'+info.homeAddressShortened+'</span><span class="routePtName">'+info.officeAddressShortened+'</span></div>';
+			html += '<div class="routeInfo"><span class="routePtName">'+info.homeAddressShortened+' To </span><span class="routePtName">'+info.officeAddressShortened+'</span></div>';
 			html += '<div id="gMap"></div>';
 			html += '<div class="mapMsg"><span class="seats"><span class="cur">14</span>/<span class="total">20</span></span> seats are full</div>';
 			html += '<div class="fillingfast">4 more ppl required to launch route in 8 days</div>';
@@ -964,7 +964,7 @@ function switchScreen(scrno, obj){
 		case 9:
 			var html = '<div class="col-md-12 fullheight">';
 			html += '<div class="fieldset">';
-			html += '<div class="routeInfo"><span class="routePtName">'+info.officeAddressShortened+'</span><span class="routePtName">'+info.homeAddressShortened+'</span></div>';
+			html += '<div class="routeInfo"><span class="routePtName">'+info.officeAddressShortened+' To </span><span class="routePtName">'+info.homeAddressShortened+'</span></div>';
 			html += '<div id="gMap"></div>';
 			html += '<div class="mapMsg"><span class="seats"><span class="cur">14</span>/<span class="total">20</span></span> seats are full</div>';
 			html += '<div class="fillingfast">4 more ppl required to launch route in 8 days</div>';
@@ -1049,7 +1049,7 @@ function switchScreen(scrno, obj){
 			var html = '<div class="col-md-12 text-center fullheight">';
 			html += '<h4 style="margin:0;" class="text-center">Hey! Your Routes are almost LIVE..</h4><br />';
 			html += '<fieldset class="pay">';
-			html += '<legend class="payments"><span class="home">Vasant kunj</span> <> <span class="office">Udyog vihar</span></legend>';
+			html += '<legend class="payments"><span class="home">'+info.homeAddressShortened+'</span> <> <span class="office">'+info.officeAddressShortened+'</span></legend>';
 				html += '<div class="box">';
 					html += '<div class="boxrow">';
 						html += '<span class="heading">Going To Work</span>';
@@ -1195,7 +1195,7 @@ function fillWhatsAppLink(){
     jQuery.ajax({url:"/suggest/getWhatsAppShareLink?url="+"http://myor.shuttl.com/suggest/index?paths="+encodedPoints}).done(function(result){
 
         var url=result["whatsapp_url"];
-        jQuery('#whatsapp').attr("href_send","whatsapp://send?text="+url);
+        jQuery('#whatsapp').attr("href_send","whatsapp://send?text=Start your shuttl at Rs 3/Km.Just log on to "+url);
 
 
 
@@ -1340,4 +1340,15 @@ function fillAdministrativeLevelDetails(){
     }
 
 
+}
+
+function inpclicked(){
+
+    jQuery('.bounce').hide();
+}
+
+function inpremoved(){
+
+
+    jQuery('.bounce').show();
 }
