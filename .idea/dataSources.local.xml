@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Rails sar: test" uuid="57f726ad-d54c-4d57-8d18-a6a2a0b4d589">
+      <first-sync>true</first-sync>
+      <user-name>root</user-name>
+      <user-password>dfd9dfc2dfdfdfdedfdedfc6dfeadf9bdf98df99df9edf9f</user-password>
+    </data-source>
+    <data-source name="Rails sar: production" uuid="a4fb28b0-1140-4bee-8eb8-500df3fbb0bf">
+      <first-sync>true</first-sync>
+      <user-name>root</user-name>
+      <user-password>dfd9dfc2dfdfdfdedfdedfc6dfeadf9bdf98df99df9edf9f</user-password>
+    </data-source>
+    <data-source name="Rails sar: development" uuid="82345ab1-e401-4474-afe4-a87e428fb2b9">
+      <first-sync>true</first-sync>
+      <user-name>root</user-name>
+      <user-password>dfd9dfc2dfdfdfdedfdedfc6dfeadf9bdf98df99df9edf9f</user-password>
+    </data-source>
+    <data-source name="Rails sar: old_db" uuid="cfcf3a33-bf50-4929-be4c-1e7917157992">
+      <user-name>shuttl</user-name>
+      <user-password>dfc2dfcbdfc1dfdfdfc4dfcbdfc7dfcbdfdedfcbdfdedfcb</user-password>
+      <schema-pattern>shuttl.*</schema-pattern>
+      <default-schemas>shuttl.*</default-schemas>
+    </data-source>
+  </component>
+</project>
