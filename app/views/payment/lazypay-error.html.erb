@@ -1,0 +1,138 @@
+<div class="app-wrapper">
+    <!--app header start-->
+    <div class="header">
+        <div class="lazypaysectionheader">
+            <p class="logo"><img src="/images/lazypayLogo.png" alt="logo"></p>
+
+            <p class="email">test@gmail.com</p>
+        </div>
+    </div>
+
+    <!--left info start-->
+    <div class="lazypay-info-wrapper close">
+        <p class="pay-now overlayBtn">
+            <button type="submit" id="slideLeft" style="margin-left: 70px;" class="lazy-pay btnMobile">LazyPay Now <span
+                    class="btnArrow"><img src="/images/button-arrow.png" alt="arrow"></span></button>
+        </p>
+        <div class="lazypayinfo-container floatLeft">
+            <div class="title">LazyPay,always <span>buying you time</span></div>
+            <div class="steps">
+                <p>
+                    <span class="img"><img src="/images/step1.png" alt="step1" class="step1Img"></span><span
+                        class="checkoutSpan stepsSpanTxt">Checkout 7 times faster! </span></p>
+
+                <p><span class="img"><img src="/images/step2.png" alt="step2" class="step2Img"></span><span
+                        class="stepsSpanTxt"> We'll pay for you
+                        at no extra cost.</span></p>
+
+                <p><span class="img"><img src="/images/step3.png" alt="step3" class="step3Img"></span> <span
+                        class="stepsSpanTxt">Yoy have 14 days<br> to pay us back. </span></p>
+            </div>
+
+        </div>
+        <div class="rightOverlay"></div>
+    </div>
+
+    <!--lazypaysection-container starts-->
+    <div class="lazypaysection-container">
+        <!--step 1-->
+        <div class="lazypaysection lazyPasySecConfirm">
+            <div class="mobilebanner">
+                <img src="/images/mobile-banner.jpg" alt="banner">
+            </div>
+
+            <div class="step-two">
+                <p class="">Validate details sent on <b>9850971730</b></p>
+
+                <p class="">for your order of <b>₹350</b> with <b>Grofers.</b></p>
+
+                <p class="enter-otp">
+                    <input type="text" id="otp" placeholder="Enter OTP">
+                </p>
+
+                <p class="enter-otp emailId">
+                    <input type="text" id="email" placeholder="john@gmail.com">
+                </p>
+
+                <p class="pay-now lazyPayNow">
+                    <button type="submit" class="lazy-pay" id="confirm">Confirm</button>
+                </p>
+                <p class="terms-span">By Proceeding, you agree to our <a class="terms">Terms &amp; Conditions</a></p>
+            </div>
+            <div class="active-state">
+                <ul>
+                    <li class="activestage">
+
+                    </li>
+                    <li>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--step 2-->
+        <div class="lazypaysection lazyPaySecSave" style="display:none">
+            <div class="mobilebanner">
+                <img src="//images/card-banner.jpg" alt="banner">
+            </div>
+
+            <div class="step-two">
+                <p>This transaction will be charged to your credit card.</p>
+
+                <p>Don't worry, <span class="fontBold">it's just a one time thing.</span></p>
+
+                <p class="enter-otp marginB">
+                    <input type="text" id="otpforLaypay" placeholder="Enter your credit card number">
+                    <!--<span class="resend"><button type="button"><img src="/images/resendicon.png" alt="resend">Resend</button> </span>-->
+                </p>
+
+                <div class="dateDetails">
+                    <span>Valid till</span>
+                    <p class="enter-otp cvvNo">
+                        <input type="text" placeholder="CVV">
+                    </p>
+                    <p class="enter-otp validTill">
+                        <input type="text" placeholder="MM/YY">
+                    </p>
+                </div>
+                <p class="pay-now lazyPayNow">
+                    <button type="submit" class="lazy-pay">Save &amp; Pay</button>
+                </p>
+                <p class="terms-span">By Proceeding, you agree to our <a class="terms">Terms &amp; Conditions</a></p>
+            </div>
+            <div class="active-state">
+                <ul>
+                    <li class="activestage">
+
+                    </li>
+                    <li class="activestage">
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!--image to open sidebar-->
+        <img class="openSidebar" id="openSidebar" src="/images/slider-img.png" alt="lock">
+
+        <div class="footer">
+            <div class="secure-citrus">
+                <p><img src="/images/lockIcon.png" alt="lock">
+                    <span>Secured With Citrus</span></p>
+
+                <p class="merchant-logo cards"><img class="cardTypes" src="/images/cardtypes.png" alt="merchant logo"></p>
+            </div>
+        </div>
+    </div>
+
+    <!--Error-->
+    <div class="popup">
+        <p><img src="/images/Error-img.png" alt=""/></p>
+        <p class="errorTxt">Error!</p>
+        <p class="messageTxt">You have entered an invalid OTP.</p>
+        <p class="pay-now">
+            <button type="submit" class="lazy-pay">OK</button>
+        </p>
+    </div>
+
+    <!--Overlay and popup starts-->
+    <div class="overlay"></div>
+</div>

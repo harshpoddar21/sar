@@ -1,0 +1,585 @@
+/* Common CSS */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+input,
+button {
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.floatLeft {
+    float: left
+}
+
+.fontBold {
+    font-weight: bold;
+}
+
+.pay-now {
+    clear: both;
+    margin: 20px 0;
+    float: left;
+    width: 100%;
+    text-align: center;
+}
+
+.marginB {
+    margin-bottom: 10px;
+}
+
+.pay-now .lazy-pay {
+    background: #e1224e;
+    border-radius: 0;
+    padding: 9px 0;
+    min-width: 80%;
+    font-size: 16px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.btnArrow img {
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+.overlayBtn {
+    position: absolute;
+    z-index: 99;
+    bottom: 50px;
+}
+
+p.terms-span {
+    clear: both;
+    font-size: 10px;
+    padding: 15px 0;
+    color: #4c4c4c;
+}
+
+p.terms-span b {
+    color: #4c4c4c;
+    font-weight: bold;
+    border-bottom: 1px solid #4c4c4c;
+}
+
+.terms {
+    font-weight: bold;
+    text-decoration: underline;
+    line-height: 10px;
+}
+
+.openSidebar {
+    position: fixed;
+    left: 0;
+    top: 70vh;
+}
+
+.active-state {
+    clear: both;
+    position: absolute;
+    top: -55px;
+    right: 14px;
+}
+
+.active-state li {
+    background: #d7d7d7;
+    height: 7px;
+    width: 7px;
+    border-radius: 50%;
+    list-style: none;
+    float: left;
+    margin: 4px;
+}
+
+.active-state li.activestage {
+    background: #4d4d4d;
+}
+
+
+/* Page Header CSS */
+.app-wrapper {
+    height: 100vh;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.header {
+    background-color: #fff;
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+}
+
+.lazypaysectionheader {
+    border-bottom: 1px solid #e1e1e1;
+    padding: 2px 19px 47px 19px;
+}
+
+.logo {
+    width: 50%;
+    float: left;
+    font-size: 32px;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+}
+
+.logo img {
+    vertical-align: middle;
+    margin-right: 20px;
+    width: 121px;
+}
+
+.email {
+    text-align: right;
+    color: #757575;
+    font-size: 12px;
+    margin: 14px 0 0 0;
+    float: right;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    width: 50%;
+
+}
+
+
+/* Left Info Section */
+.lazypay-info-wrapper {
+    left: 0;
+    position: absolute;
+    -webkit-transition: left ease 0.3s;
+    -moz-transition: left ease 0.3s;
+    -o-transition: left ease 0.3s;
+    transition: left ease 0.3s;
+    width: 100%;
+}
+
+.lazypay-info-wrapper.close {
+    left: -100%;
+    -webkit-transition: left ease 0.3s;
+    -moz-transition: left ease 0.3s;
+    -o-transition: left ease 0.3s;
+    transition: left ease 0.3s;
+}
+
+.lazypay-info-wrapper .pay-now .lazy-pay {
+    min-width: 50px;
+    padding: 10px 15px;
+    position: absolute;
+    right: 10%;
+    white-space: nowrap;
+    width: auto;
+}
+
+.lazypayinfo-container {
+    position: relative;
+    left: 0;
+    background: #0e0e34;
+    color: white;
+    width: 81%;
+    z-index: 1;
+    padding-top: 2em;
+    height: calc(100vh - 50px - 2em);
+    margin-top: 50px;
+}
+
+.title {
+    font-size: 22px;
+    font-weight: normal;
+    padding: 10px 0;
+    width: 81%;
+    margin: 0 auto;
+}
+
+.title span {
+    font-weight: 600;
+}
+
+.steps {
+    text-align: left;
+    padding: 8px 20px;
+    font-size: 14px;
+}
+
+.steps p:first-child {
+    margin: 2em 0;
+}
+
+.steps p {
+    margin: 4em 0;
+}
+
+.steps span {
+    display: inline-block;
+    width: 74%;
+}
+
+.steps span.img {
+    width: 23%;
+    float: left;
+    text-align: center;
+}
+
+.steps span.checkoutSpan {
+    margin-top: 4px;
+}
+
+.steps span.stepsSpanTxt {
+    padding-left: 6px;
+}
+
+.steps img {
+    vertical-align: middle;
+    margin-right: 20px;
+}
+
+.steps .step1Img {
+    width: 28px;
+    height: 29px;
+}
+
+.steps .step2Img {
+    width: 44px;
+    height: 19px;
+}
+
+.steps .step3Img {
+    width: 38px;
+    height: 26px;
+}
+
+.rightOverlay {
+    float: right;
+    width: 19%;
+    height: calc(100vh - 50px);
+    z-index: 1;
+    left: 0;
+    top: 0;
+    background-color: #000;
+    overflow: hidden;
+    opacity: 0.4;
+    position: relative;
+    margin-top: 50px;
+}
+
+
+/* Main Content CSS */
+.lazypaysection-container {
+    height: calc(100vh - 110px);
+    margin-top: 50px;
+    padding-top: 3em;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    overflow-y: auto;
+}
+
+.lazypaysection {
+    position: relative;
+}
+
+.mobilebanner img {
+    margin-bottom:15px;
+    width: 70%
+}
+
+.step-one,
+.step-two,
+.step-three {
+    clear: both;
+    padding: 0 20px;
+    color: #4d4d4d;
+    font-size: 12px;
+}
+
+.step-two p {
+    line-height: 5px
+}
+
+.step-one p span {
+    height: 80px;
+    text-align: center;
+    display: block;
+}
+
+.enter-otp {
+    width: 80%;
+    background: #f5f5f5;
+    border: 1px solid #e1e1e1;
+    text-align: left;
+    position: relative;
+    margin: 25px auto;
+}
+
+.enter-otp input {
+    background: transparent;
+    box-sizing: border-box;
+    padding: 7px 10px;
+    width: 100%;
+    border: 0 none;
+    font-size: 12px;
+}
+
+span.resend {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    height: 100%;
+    padding: 5px 0;
+}
+
+span.resend button {
+    background: transparent;
+    color: #a3a3a3;
+    font-weight: normal;
+    text-transform: uppercase;
+    border: 0 none;
+}
+
+.resend img {
+    vertical-align: middle;
+    margin-right: 7px;
+}
+
+.lazypaysection .emailId {
+    margin-top: -15px;
+}
+
+.step-two .lazyPayNow {
+    margin: 0
+}
+
+.dateDetails {
+    margin: -15px auto 0;
+    position: relative;
+    width: 80%;
+}
+
+.dateDetails span {
+    float: left;
+    padding-top: 8px;
+    color: #818181;
+    font-size: 12px;
+}
+
+.lazypaysection .validTill {
+    width: 30%;
+    float: right;
+    margin: 0 0 23px 17px
+}
+
+.lazypaysection .cvvNo {
+    float: right;
+    width: 62px;
+    margin: 0 0 0 10px;
+}
+
+/* Footer CSS */
+.secure-citrus {
+    color: #ababab;
+    font-weight: bold;
+    margin-top: 50px;
+}
+
+.secure-citrus p {
+    display: inline-block;
+}
+
+.secure-citrus p + p {
+    margin-left: 20px;
+}
+
+.secure-citrus img {
+    vertical-align: top;
+    width: 13px;
+    height: 18px;
+}
+
+.secure-citrus span {
+    display: inline-block;
+    font-size: 10px;
+}
+
+.footer .cards {
+    margin-top: 5px;
+    padding-left: 0;
+    border-left: none
+}
+
+.merchant-logo {
+    margin: 0;
+    padding: 0 0 0 20px;
+    vertical-align: middle;
+    border-left: 1px solid #cccccc;
+}
+
+.merchant-logo img {
+    width: 50px;
+    height: 18px;
+}
+
+.footer .merchant-logo .cardTypes {
+    width: 160px;
+}
+
+
+/* Popup CSS */
+.overlay {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 101;
+    left: 0;
+    top: 0;
+    background-color: #000;
+    overflow-x: hidden;
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+}
+
+.popup {
+    width: 294px;
+    height: 274px;
+    background: #fff;
+    border-radius: 10px;
+    margin: -137px auto 0;
+    position: fixed;
+    z-index: 102;
+    top: 50%;
+    left: 0;
+    right: 0;
+}
+
+.popup .errorTxt {
+    font-size: 24px;
+    color: #e3234e;
+}
+
+.popup .successTxt {
+    font-size: 24px;
+    color: #58ba57;
+}
+
+.popup .messageTxt {
+    font-size: 12px
+}
+
+.popup p {
+    text-align: center;
+}
+
+.popup .redirectingTxt {
+    margin-top: 80px;
+    font-size: 12px;
+}
+
+/* Media Queries for different devices*/
+
+/* Small Devices (iPhone 4 / 4s) */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px)
+and (orientation : portrait) {
+    .overlayBtn {
+        bottom: 20px;
+    }
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px)
+and (orientation : landscape) {
+    .overlayBtn {
+        bottom: 20px;
+    }
+
+    .openSidebar {
+        top: 50vh;
+    }
+}
+
+/* Medium Devices (iPhone 5 / 5s) */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation : portrait) {
+    .overlayBtn {
+        bottom: 80px;
+    }
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation : landscape) {
+    .steps p {
+        margin: 2em 0;
+    }
+}
+
+/*.lazy-pay .footerTextCitrus {
+    color: #aeaeae;
+}
+
+.footer.lazy-pay .securityIcons {
+    float: right;
+    margin-right: 20px;
+    width: auto;
+    margin-left: 0;
+}
+
+.footer.lazy-pay {
+    border-top: 1px solid #f1f2f2;
+    padding-top: 15px;
+}
+
+
+.sslMainContainer {
+    padding-bottom: 0;
+}
+
+.cardInfo input {
+    background: #f5f5f5;
+    border: 1px solid #e1e1e1;
+    position: relative;
+    padding: 15px 10px;
+    width: 30%;
+    text-align: center;
+}
+
+p.cardInfo {
+    margin: 20px auto;
+    text-align: left;
+    width: 500px;
+}
+
+span.spanlabel {
+    display: inline-block;
+    width: 20%;
+    text-align: center;
+}
+
+input#dateExp {
+    width: 38.7%;
+}
+
+.lazypayinfo-container .pay-now {
+    margin: 0;
+}
+
+.lazypayinfo-container .pay-now .btnMobile {
+    position: absolute;
+    min-width: 157px;
+    padding: 8px 0
+}
+
+.lazypaysection-container .secureblock {
+    margin-top: 6em
+}
+*/

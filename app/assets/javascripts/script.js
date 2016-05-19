@@ -71,15 +71,17 @@ $('.bounce').hide();
 			path.push(new google.maps.LatLng(info.officelat,info.officelng));
 			var encodedPoints=google.maps.geometry.encoding.encodePath(path);
 			
+            showLoader();
             $.ajax({
 				url:'getSlots?path='+encodedPoints
 			}).done(function(response){
 				responseJson = response;
+                hideLoader();
 				if(response.route_type == 'Live_route'){
 					var slot = response.slots;
 					$.each(slot, function(key, value){
 						var time = formatSectoIST(value*60);
-						slotBtns += '<button type="button" class="btn btn-default btnTime" data-value="'+time+'">'+time+'<span class="live">(live)</span></button>';
+						slotBtns += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="'+time+'">'+time+'<span class="live">(live)</span></button></div>';
 					});
 					stage = 8;
 					window.location.hash = 'stage'+stage;
@@ -248,6 +250,29 @@ var stage = 1;
 })();
 
 function setCarousel(){
+
+    jQuery(".item").first().addClass("active");
+    $('#mycarousel').carousel({
+        interval: false
+    });
+    $('#mycarousel .item').each(function(){
+        var next = $(this).next();
+        if (!next.length) {
+            next = $(this).siblings(':first');
+        }
+        next.children(':first-child').clone().appendTo($(this));
+
+        if (next.next().length>0) {
+            next.next().children(':first-child').clone().appendTo($(this));
+        }
+        else {
+            $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
+        }
+    });
+
+// for every slide in carousel, copy the next slide's item in the slide.
+// Do the same for the next, next item.
+    /*
 	var wd = $('.carousel').width();
 	var wd2 = 2*($('.leftbtn')[0].offsetWidth);
 	wd = wd-wd2-10;
@@ -280,6 +305,29 @@ function setCarousel(){
 			$('.btnsWrapper .btns').css('left', lt+'px');
 		}
 	});
+	*/
+}
+
+function setCarousel2() {
+
+    jQuery("#mycarousel2 .item").first().addClass("active");
+    $('#mycarousel2').carousel({
+        interval: false
+    });
+    $('#mycarousel2 .item').each(function () {
+        var next = $(this).next();
+        if (!next.length) {
+            next = $(this).siblings(':first');
+        }
+        next.children(':first-child').clone().appendTo($(this));
+
+        if (next.next().length > 0) {
+            next.next().children(':first-child').clone().appendTo($(this));
+        }
+        else {
+            $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
+        }
+    });
 }
 
 
@@ -295,7 +343,7 @@ $(function() {
 	//screenHeight = screen.availHeight-50;
 	screenHeight = window.innerHeight;
 	var height = $('.header')[0].offsetHeight;
-	screenHeight = screenHeight-height-jQuery('.screen').css("padding-top").match(/\d+/)[0];
+	screenHeight = screenHeight-height;
 	setHeight();
 	$('.screenWrapper').css('height', screenHeight+'px');
 });
@@ -317,7 +365,7 @@ $('.remove').on('click', function(){
 });
 
 function nextPrevVlickEvents(){
-    $('.fa-angle-double-down, .nextBtnMap, .paynow').on('click', function(){
+    $('.fa-angle-double-down, .nextBtnMap').on('click', function(){
         refer.stage = stage;
         refer.click = 'down';
         stage++;
@@ -430,6 +478,10 @@ function validateMobileInput(num){
                     if (jQuery("#share_heading")!=undefined) {
                         jQuery('#share_heading').html("Congratulations!! You have successfully made");
                     }
+                }else if (stage==10){
+                    
+                    onForPaymentMobileVerified();
+                    
                 }
             }else{
                 $('#phoneModal .error').html('invalid mobile number').fadeIn();
@@ -487,7 +539,8 @@ function notInterested(){
 notInterested();
 
 function timeCapture(){
-	$('.reachwork button, .leavework button, .commutework button, .btnTime').on('click', function(){
+    jQuery(document).off(".timecapture");
+	$(document).on('click.timecapture','.reachwork button, .leavework button, .commutework button, .btnTime', function(){
 		var obj = $(this);
 		var type = $(obj).closest('.btn-group-justified').attr('data-roletype');
 		if($(obj).hasClass('btn-default')){
@@ -638,23 +691,23 @@ function switchScreen(scrno, obj){
     ga('send', 'event', 'screen_no', scrno);
     switch(scrno){
         case 1:
-            var html =  '<br /><br /><div class="headText text-center">To <span class="highlight"><br/>#MakeYourOwnRoute</span></div>';
-            html += '<div class="col-md-12"><br /><br />';
+            var html =  '<div class="headText text-center">To <span class="highlight"><br/>#MakeYourOwnRoute</span></div>';
+            html += '<div class="col-md-12 homeL"><br /><br />';
             html += '<div class="form-group form-group-wrapper">';
             html += '<div class="input-group">';
             html += '<div class="input-group-addon"><span class="fa fa-home"></span></div>';
-            html += '<input type="text" class="form-control loc" onfocus="inpclicked();" onblur="inpremoved();" name="homeLocation" id="homeLocation" placeholder="Enter Home Address" autocomplete="off" />';
+            html += '<input type="text" class="form-control loc" onfocus="inpclicked(this);" onblur="inpremoved(this);" name="homeLocation" id="homeLocation" placeholder="Enter Home Address" autocomplete="off" />';
             html += '<div class="input-group-addon remove"><span class="fa fa-remove"></span></div>';
             html += '</div></div></div>';
 
 
             html += '<br /><h4 class="text-center">AND</h4><br />';
 
-            html += '<div class="col-md-12">';
+            html += '<div class="col-md-12 officeL">';
             html += '<div class="form-group form-group-wrapper">';
             html += '<div class="input-group">';
             html += '<div class="input-group-addon"><span class="fa fa-suitcase"></span></div>';
-            html += '<input type="text" class="form-control loc" onfocus="inpclicked();" onblur="inpremoved();" name="officeLocation" id="officeLocation" placeholder="Enter Office Address" autocomplete="off" />';
+            html += '<input type="text" class="form-control loc" onfocus="inpclicked(this);" onblur="inpremoved(this);" name="officeLocation" id="officeLocation" placeholder="Enter Office Address" autocomplete="off" />';
             html += '<div class="input-group-addon remove"><span class="fa fa-remove"></span></div>';
             html += '</div></div></div>';
             html += '<div class="downArr dowfirst"><span class="fa fa-angle-double-down"></span></div>';
@@ -904,9 +957,9 @@ function switchScreen(scrno, obj){
             topPx = topPx.replace('px', '');
             topPx = Number(topPx)-100;
             $(obj).html(html)
-                .find('.home').html(info.homeAddress).end()
-                .find('.office').html(info.officeAddress).end()
-                .find('.office').html(info.officeAddress).end()
+                .find('.home').html(info.homeAddressShortened).end()
+                .find('.office').html(info.officeAddressShortened).end()
+                .find('.office').html(info.officeAddressShortened).end()
                 .find('.mslots').html(mSlots).end()
                 .find('.eslots').html(eSlots).end()
                 .find('.social').css('top',topPx).end();
@@ -929,10 +982,10 @@ function switchScreen(scrno, obj){
 			html += '</div>';
 			html += '<div class="line1">To Travel on this route, tell us</div>';
 			html += '<div class="line2">What time do you have to reach work?</div>';
-			html += '<div class="carousel">';
-			html += '<span class="btn btn-default leftbtn">&lt;</span>';
-			html += '<span class="btnsWrapper">';
-			html += '<span class="btns btn-group-justified" data-roletype="reachwork">';
+			html += '<div class="carousel slide" id="mycarousel">';
+
+			//html += '<span class="btnsWrapper">';
+			html += '<div class="carousel-inner btns btn-group-justified" data-roletype="reachwork">';
 			
 			html += slotBtns;
 			/*
@@ -944,22 +997,35 @@ function switchScreen(scrno, obj){
 			html += '<button type="button" class="btn btn-default btnTime" data-value="10:30">10:30</button>';
 			*/
 			
-			html += '</span>';
-			html += '</span>';
-			html += '<span class="btn btn-default rightbtn">&gt;</span>';
 			html += '</div>';
-			html += '<div class="fillingfast">leave blank if you don\'t wish to use shuttl in the morning</div>';
+            html += '<a class="left carousel-control" href="#mycarousel" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
+            html += '<a class="right carousel-control" href="#mycarousel" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span></a>';
+		//	html += '</span>';
+			//html += '<span class="btn btn-default rightbtn">&gt;</span>';
+			html += '</div>';
+			html += '<div class="fillingfast">(leave blank if you don\'t wish to use shuttl in the morning)</div>';
 			html += '<div class="text-capitalize btn btn-default col-xs-6 bouncebtn">not interested</div>';
 			html += '<div class="text-capitalize btn btn-primary col-xs-6 nextBtnMap">next&gt;</div>';
 			html += '</div>';
 			$(obj).html(html);
 			notInterested();
-			timeCapture();
-			setCarousel();
+
 			$('.bounce').addClass('hidden');
 			fw = true;
 			setTimeout(function(){
-				initMap(responseJson);
+                timeCapture();
+                setCarousel();
+                if (info.reachwork!=undefined && info.reachwork.length>0){
+
+                    jQuery(".item button").each(function(){
+
+                        if (jQuery(this).attr("data-value")==info.reachwork[0]){
+
+                            jQuery(this).removeClass("btn-default").addClass("btn-info");
+                        }
+                    });
+                }
+					initMap(responseJson);
 			},310);
 		break;
 		
@@ -972,32 +1038,50 @@ function switchScreen(scrno, obj){
 			html += '<div class="fillingfast">4 more ppl required to launch route in 8 days</div>';
 			html += '</div>';
 			html += '<div class="line2">What time do you leave from work?</div>';
-			html += '<div class="carousel">';
-			html += '<span class="btn btn-default leftbtn">&lt;</span>';
-			html += '<span class="btnsWrapper">';
-			html += '<span class="btns btn-group-justified" data-roletype="leavework">';
-			
-			html += slotBtns;
-			/*
-			html += '<button type="button" class="btn btn-default btnTime" data-value="99:99">99:99<span class="live">(live)</span></button>';
-			html += '<button type="button" class="btn btn-default btnTime" data-value="8:30">8:30</button>';
-			html += '<button type="button" class="btn btn-default btnTime" data-value="9:00">9:00</button>';
-			html += '<button type="button" class="btn btn-default btnTime" data-value="9:30">9:30<span class="live">(filling fast)</span></button>';
-			html += '<button type="button" class="btn btn-default btnTime" data-value="10:00">10:00</button>';
-			html += '<button type="button" class="btn btn-default btnTime" data-value="10:30">10:30</button>';
-			*/
-			
-			html += '</span>';
-			html += '</span>';
-			html += '<span class="btn btn-default rightbtn">&gt;</span>';
-			html += '</div>';
-			html += '<div class="fillingfast">leave blank if you don\'t wish to use shuttl in the evening</div>';
+            html += '<div class="carousel slide" id="mycarousel2">';
+
+            //html += '<span class="btnsWrapper">';
+            html += '<div class="carousel-inner btns btn-group-justified" data-roletype="leavework">';
+
+            html += slotBtns;
+            /*
+             html += '<button type="button" class="btn btn-default btnTime" data-value="99:99">99:99<span class="live">(live)</span></button>';
+             html += '<button type="button" class="btn btn-default btnTime" data-value="8:30">8:30</button>';
+             html += '<button type="button" class="btn btn-default btnTime" data-value="9:00">9:00</button>';
+             html += '<button type="button" class="btn btn-default btnTime" data-value="9:30">9:30<span class="live">(filling fast)</span></button>';
+             html += '<button type="button" class="btn btn-default btnTime" data-value="10:00">10:00</button>';
+             html += '<button type="button" class="btn btn-default btnTime" data-value="10:30">10:30</button>';
+             */
+
+            html += '</div>';
+            html += '<a class="left carousel-control" href="#mycarousel2" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
+            html += '<a class="right carousel-control" href="#mycarousel2" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span></a>';
+            //	html += '</span>';
+            //html += '<span class="btn btn-default rightbtn">&gt;</span>';
+            html += '</div>';
+            html += '<div class="fillingfast">leave blank if you don\'t wish to use shuttl in the evening</div>';
 			html += '<div class="text-capitalize btn btn-primary col-xs-6 backBtnMap">&lt;back</div>';
 			html += '<div class="text-capitalize btn btn-primary col-xs-6 nextBtnMap">next&gt;</div>';
 			html += '</div>';
 			$(obj).html(html);
-			timeCapture();
-			setCarousel();
+
+            setTimeout(function () {
+
+
+                setCarousel2();
+                timeCapture();
+                if (info.leavework!=undefined && info.leavework.length>0){
+
+                    jQuery(".item button").each(function(){
+
+                        if (jQuery(this).attr("data-value")==info.leavework[0]){
+
+                            jQuery(this).removeClass("btn-default").addClass("btn-info");
+                        }
+                    });
+                }
+            },310);
+            
 			fw = false;
 			$('.bounce').addClass('hidden');
 			setTimeout(function(){
@@ -1013,7 +1097,7 @@ function switchScreen(scrno, obj){
 				html += '<div class="box">';
 					html += '<div class="boxrow">';
 						html += '<span class="heading">Going To Work</span>';
-						html += '<span class="change">change</span>';
+						html += '<span class="change" onclick="goToReachWorkScreen(this);">change</span>';
 					html += '</div>';
 					html += '<div class="routeinfo">Departs: '+info.homeAddressShortened+'</div>';
 					html += '<div class="routeinfo">Arrives: '+info.officeAddressShortened+' @'+(info.reachwork!=undefined?info.reachwork:"")+'</div>';
@@ -1023,7 +1107,7 @@ function switchScreen(scrno, obj){
 				html += '<div class="box">';
 					html += '<div class="boxrow">';
 						html += '<span class="heading">Return From Work</span>';
-						html += '<span class="change">change</span>';
+						html += '<span class="change"  onclick="goToLeaveWorkScreen(this);">change</span>';
 					html += '</div>';
 					html += '<div class="routeinfo">Departs:'+info.officeAddressShortened+' @'+info.leavework+'</div>';
 					html += '<div class="routeinfo">Arrives:'+info.homeAddressShortened+'</div>';
@@ -1037,9 +1121,14 @@ function switchScreen(scrno, obj){
 			html += '<div class="text-capitalize paynow btn btn-primary col-xs-6" data-value="1800">Promo Monthly @ Rs 1800</div>';
 			html += '<div class="fillingfast">(we\'ll charge your wallet just before launching the service)</div>';
 			*/
-			html += '<br /><div class="btn btn-primary full paynow col-md-12">I Am Interested</div><br />';
+			html += '<br /><div class="btn btn-primary full paynow col-md-12" onclick="initiatePaymentProcess();">I Am Interested</div><br />';
 			html += '<br /><div class="btn btn-primary full bouncebtn not-int col-md-12">Not Interested</div>';
 			html += '</div>';
+            html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
+            html += '<div class="modal-dialog modal-sm">';
+            html += '<div class="modal-content">';
+            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class="loader"><em>You will receive a missed call on <i></i>. Press 1 to confirm</em><img src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
+            html += '</div></div></div>';
 			$(obj).html(html);
 			notInterested();
 			$('.paynow').on('click', function(){
@@ -1344,8 +1433,18 @@ function fillAdministrativeLevelDetails(){
 
 }
 
-function inpclicked(){
+function inpclicked(obj){
 
+    if (jQuery(obj).attr("id")=="homeLocation"){
+
+        jQuery(".screenWrapper").addClass("inputClicked_homeLocation");
+        
+    }else{
+
+        jQuery(".screenWrapper").addClass("inputClicked_officeLocation");
+    }
+   
+    
     jQuery('.bounce').hide();
 }
 
@@ -1353,4 +1452,109 @@ function inpremoved(){
 
 
     jQuery('.bounce').show();
+    jQuery(".screenWrapper").removeClass("inputClicked_homeLocation");
+    jQuery(".screenWrapper").removeClass("inputClicked_officeLocation");
+    
+}
+
+
+function initiatePaymentProcess(){
+
+
+    if (paymentFlow==1) {
+        jQuery('#phoneModal').modal("show");
+    }else{
+
+        changeToStage(11);
+    }
+}
+
+function onForPaymentMobileVerified(phoneNumber){
+    
+    jQuery.ajax({url:"/payment/checkUserEligibilityForPayment?phoneNumber="+phoneNumber}).done(function(result){
+        
+        if (result.success){
+            
+            if (result.redirect!=undefined){
+                
+                window.location.href=result.redirect;
+                
+            }else{
+                
+                alert("We are sorry.But something went wrong.Please try again.");
+            }
+            
+        }else{
+            
+            alert(result.message);
+            
+        }
+        jQuery("#phoneModal").modal("hide");
+        
+    });
+
+}
+
+function showLoader(){
+
+    jQuery(".loader_wrapper").show();
+
+}
+function hideLoader(){
+
+    jQuery(".loader_wrapper").hide();
+}
+
+function goToLeaveWorkScreen(obj){
+
+    stage = 9;
+    window.location.hash = 'stage'+stage;
+    $(obj).closest('.screen').outerHeight();
+    var handle = $(obj).closest('.screen');
+    var px = $(handle).outerHeight();
+    var newHandle = createScreenBox(handle, 'before', '-'+px);
+    setHeight();
+    $(handle).css('top',px+'px')
+    setTimeout(function(){
+        $(newHandle).css('top','0');
+    },0);
+    setTimeout(function(){
+        $(handle).remove();
+    },300);
+
+}
+
+function goToReachWorkScreen(obj){
+    stage = 8;
+    window.location.hash = 'stage'+stage;
+    $(obj).closest('.screen').outerHeight();
+    var handle = $(obj).closest('.screen');
+    var px = $(handle).outerHeight();
+    var newHandle = createScreenBox(handle, 'before', '-'+px);
+    setHeight();
+    $(handle).css('top',px+'px')
+    setTimeout(function(){
+        $(newHandle).css('top','0');
+    },0);
+    setTimeout(function(){
+        $(handle).remove();
+    },300);
+}
+
+function changeToStage(stageNo){
+
+
+    stage = stageNo;
+    window.location.hash = 'stage'+stage;
+    var handle = $('.screenWrapper').find('.screen');
+    var px = $(handle).outerHeight();
+    var newHandle = createScreenBox(handle, 'after', px);
+    setHeight();
+    $(handle).css('top','-'+px+'px')
+    setTimeout(function(){
+        $(newHandle).css('top','0');
+    },0);
+    setTimeout(function(){
+        $(handle).remove();
+    },300);
 }

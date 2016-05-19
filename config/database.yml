@@ -9,6 +9,7 @@ default: &default
   pool: 5
   username: root
   password: shuttl@12345
+  host: myor.shuttl.com
   timeout: 5000
 
 development:

@@ -1,0 +1,34 @@
+<html lang="en" ng-app>
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <title>Shuttl-Payment</title>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-77497361-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,500' rel='stylesheet' type='text/css'>
+
+
+
+  <%= stylesheet_link_tag    'style_payment', media: 'all', 'data-turbolinks-track' => true %>
+
+
+  <%= csrf_meta_tags %>
+
+
+</head>
+<body>
+
+<%= yield %>
+<%= javascript_include_tag 'jquery-2.1.3.min', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'script_payment', 'data-turbolinks-track' => true %>
+</body>
+</html>

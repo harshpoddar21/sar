@@ -20,6 +20,7 @@
   <%= stylesheet_link_tag    'font-awesome.min', media: 'all', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag    'style', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'bootstrap.min', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'jcarousel.min', 'data-turbolinks-track' => true %>
 
   <%= csrf_meta_tags %>
 
@@ -28,5 +29,8 @@
 <body>
 
 <%= yield %>
+<div class="loader_wrapper">
+<div class="loader_inner"></div>
+</div>
 </body>
 </html>

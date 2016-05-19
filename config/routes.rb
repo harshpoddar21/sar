@@ -5,10 +5,13 @@ get 'nps/submitNps'
   get 'suggest/getSlots'
   get 'suggest/getFromTo'
 
+  get 'payment/setSessionVar'
+
   get 'suggest/getLink'
   get 'suggest/saveNewSuggestion' =>"suggest#saveNewSuggestion"
 
   get 'suggest/getWhatsAppShareLink'
+
 
   get 'suggest/verifyPhoneCall'
   get 'suggest/makePhoneCall'
@@ -18,8 +21,24 @@ get 'nps/submitNps'
   get 'suggest/confirmUser'
   get 'suggest/index'
   get 'suggest/insertLiveRoutes' =>"suggest#insertLiveRoutes"
+  get 'suggest/redirectToPlayStore'
 
+  get 'payment/initiatePayment'
+  post 'payment/initiatePayment'
   get 'suggest/refreshRouteCache'
+
+
+  get 'payment/notifyPayment'
+  get 'payment/paymentComplete'
+
+  get 'payment/checkUserEligibilityForPayment'
+
+  get 'payment/paymentError'
+  get 'payment/paymentSuccess'
+  get 'payment/makePaymentOtpCall'
+  get 'payment/newUserPayment'
+  get 'payment/paymentUnsuccessful'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
