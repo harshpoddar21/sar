@@ -133,7 +133,7 @@ em {
 	cursor: pointer;
 }
 .submitsurvey {
-    
+
 }
 .headText{
 	padding: 0 58px;
@@ -371,7 +371,6 @@ span.highlight.lesshighlight {
 
 }
 .submit-butt{
-
     display: table-footer-group;
     width: 100%;
     display: block !important;

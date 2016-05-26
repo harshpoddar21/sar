@@ -875,13 +875,14 @@ function switchScreen(scrno, obj){
             html += '<button type="button" class="btn btn-default" data-value="office-cab">Office Cab</button>';
             html += '</div></div></div>';
             html += '<br/><h6 class="text-center">( select all modes that you use )</h6>';
-            html += '<div class="downArr submit-butt"><div class="row col-md-12"><span class="btn btn-primary submitsurvey text-uppercase col-md-12">Submit</span></div></div>';
+            html += '<div class="downArr submit-butt"><div class="row col-md-12"><span class="btn btn-primary submitsurvey text-uppercase col-md-12 text-center">Submit</span></div></div>';
             html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
             html += '<div class="modal-dialog modal-sm">';
             html += '<div class="modal-content">';
             html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class="loader"><em>You will receive a missed call on <i></i>. Press 1 to confirm</em><img src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
             html += '</div></div></div>';
             $('#phoneModal .error').html('').hide();
+            $("div.notInterested").hide();
             $(obj).html(html)
                 .find('.downArr').hide().end()
                 .find('.upArr').hide();
