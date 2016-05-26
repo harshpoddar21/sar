@@ -40,6 +40,8 @@ get 'nps/submitNps'
   get 'payment/newUserPayment'
   get 'payment/paymentUnsuccessful'
 
+  get 'poster/generate' => "poster#generateNewPoster"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
