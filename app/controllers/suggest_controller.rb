@@ -280,6 +280,9 @@ class SuggestController < ApplicationController
 
 
 
+  def getmapview
+
+  end
 
 
 end

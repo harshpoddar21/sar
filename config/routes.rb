@@ -33,6 +33,7 @@ get 'nps/submitNps'
 
   get 'payment/checkUserEligibilityForPayment'
 
+  get 'suggest/mapview'
   get 'payment/paymentError'
   get 'payment/paymentSuccess'
   get 'payment/makePaymentOtpCall'
