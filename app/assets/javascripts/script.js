@@ -5,6 +5,9 @@ var info = {};
 var fw = true;
 var responseJson;
 var slotBtns = '';
+var morningSlot = 0;
+var eveningSlot = 88;
+
 
 function initAutocomplete() {
     if (window.location.search!="" && window.location.search.match(/paths=([^\&]*)/g)!=null && window.location.search.match(/paths=([^\&]*)/g).length>0 && window.location.search.match(/paths=([^\&]*)/g)[0].split("=")[1]!=""){
@@ -44,7 +47,7 @@ function initAutocomplete() {
             {types: ['geocode']});
 
         homelocation.addListener('place_changed', function() {
-$('.bounce').hide();
+            $('.bounce').hide();
             var place1 = homelocation.getPlace();
             info.homeAddress = place1.formatted_address;
             info.homelat = place1.geometry.location.lat();
@@ -251,9 +254,10 @@ var stage = 1;
 
 function setCarousel(){
 
-    jQuery(".item").first().addClass("active");
+    jQuery(".item").eq(morningSlot).addClass("active");
     $('#mycarousel').carousel({
         interval: false
+        wrap: false
     });
     $('#mycarousel .item').each(function(){
         var next = $(this).next();
@@ -310,7 +314,7 @@ function setCarousel(){
 
 function setCarousel2() {
 
-    jQuery("#mycarousel2 .item").first().addClass("active");
+    jQuery(".item").eq(eveningSlot).addClass("active");
     $('#mycarousel2').carousel({
         interval: false
     });
@@ -508,7 +512,13 @@ function onMobileVerified(num){
     $('#phoneModal').modal('hide');
     refer.stage = stage;
     refer.click = 'down';
-    stage=14;
+    console.log("Before Safari skip case!");
+    if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1){
+        console.log("Skip for safari case!");
+        stage = 5;
+    }
+    else
+        stage=14;
     window.location.hash = 'stage'+stage;
     $('.screen').outerHeight();
     var handle = $('.screen');
@@ -574,10 +584,17 @@ function timeCapture(){
 					info.leavework = []
 				}
 				info.leavework.push(value);
-				$.unique(info.leavework);
+                $.unique(info.leavework);
+                if($(obj).hasClass('btnTime')) {
+                    if (info.leavework.length > 1) {
+                        $(obj).closest('.btn-group-justified').find('button[data-value="' + info.leavework[0] + '"]').addClass('btn-default').removeClass('btn-info');
+                        info.leavework.splice(0, 1);
+                    }
+                }else{
 				if(info.leavework.length > 2){
 					$(obj).closest('.btn-group-justified').find('button[data-value="'+info.leavework[1]+'"]').addClass('btn-default').removeClass('btn-info');
 					info.leavework.splice(1, 1);
+                    }
 				}
 			}else if(type == 'commutework'){
 				if(info.commutework === undefined){
@@ -976,7 +993,7 @@ function switchScreen(scrno, obj){
             if (info.is_mobile_verified){
 
 
-                jQuery(obj).find("#share_heading").html("Congratulations!! You have successfully made");
+                jQuery(obj).find("#share_heading").html("We'll contact you when the route is ready for launch");
             }
             if (info.homeAddress!=undefined && info.officeAddress!=undefined){
 
@@ -996,30 +1013,31 @@ function switchScreen(scrno, obj){
 			html += '<div class="line2">What time do you have to reach work?</div>';
 			html += '<div class="carousel slide" id="mycarousel">';
 
-			//html += '<span class="btnsWrapper">';
-			html += '<div class="carousel-inner btns btn-group-justified" data-roletype="reachwork">';
-			
-			html += slotBtns;
-			/*
-			html += '<button type="button" class="btn btn-default btnTime" data-value="99:99">99:99<span class="live">(live)</span></button>';
-			html += '<button type="button" class="btn btn-default btnTime" data-value="8:30">8:30</button>';
-			html += '<button type="button" class="btn btn-default btnTime" data-value="9:00">9:00</button>';
-			html += '<button type="button" class="btn btn-default btnTime" data-value="9:30">9:30<span class="live">(filling fast)</span></button>';
-			html += '<button type="button" class="btn btn-default btnTime" data-value="10:00">10:00</button>';
-			html += '<button type="button" class="btn btn-default btnTime" data-value="10:30">10:30</button>';
-			*/
-			
-			html += '</div>';
-            html += '<a class="left carousel-control" href="#mycarousel" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
-            html += '<a class="right carousel-control" href="#mycarousel" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span></a>';
-		//	html += '</span>';
-			//html += '<span class="btn btn-default rightbtn">&gt;</span>';
-			html += '</div>';
-			html += '<div class="fillingfast">(leave blank if you don\'t wish to use shuttl in the morning)</div>';
-			html += '<div class="text-capitalize btn btn-default col-xs-6 bouncebtn">not interested</div>';
-			html += '<div class="text-capitalize btn btn-primary col-xs-6 nextBtnMap">next&gt;</div>';
-			html += '</div>';
-			$(obj).html(html);
+            //html += '<span class="btnsWrapper">';
+            html += '<div class="col-md-12 text center">'
+            html += '<div class="carousel-inner btns btn-group-justified" data-roletype="reachwork">';
+            html += slotBtns;
+
+            /* html += '<button type="button" class="btn btn-default btnTime" data-value="99:99">99:99<span class="live">(live)</span></button>';
+             html += '<button type="button" class="btn btn-default btnTime" data-value="8:30">8:30</button>';
+             html += '<button type="button" class="btn btn-default btnTime" data-value="9:00">9:00</button>';
+             html += '<button type="button" class="btn btn-default btnTime" data-value="9:30">9:30<span class="live">(filling fast)</span></button>';
+             html += '<button type="button" class="btn btn-default btnTime" data-value="10:00">10:00</button>';
+             html += '<button type="button" class="btn btn-default btnTime" data-value="10:30">10:30</button>'; */
+
+            html += '</div></div>';
+            html += '<a class="left carousel-control" href="#mycarousel" role="button" data-slide-to=0 onClick=carouselSlide(this,"previous",morningSlot) > <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
+            html += '<a class="right carousel-control" href="#mycarousel" role="button"  data-slide-to=0 onClick=carouselSlide(this,"next",morningSlot)> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span></a>';
+            //	html += '</span>';
+            //html += '<span class="btn btn-default rightbtn">&gt;</span>';
+            html += '</div>';
+            html += '<div class="fillingfast">(leave blank if you don\'t wish to use shuttl in the morning)</div>';
+            html += '<div class="text-capitalize btn btn-default col-xs-6 bouncebtn">not interested</div>';
+            html += '<div class="text-capitalize btn btn-primary col-xs-6 nextBtnMap">next&gt;</div>';
+            html += '</div>';
+            $(obj).html(html);
+
+
 			notInterested();
 
 			$('.bounce').addClass('hidden');
@@ -1066,8 +1084,8 @@ function switchScreen(scrno, obj){
              */
 
             html += '</div>';
-            html += '<a class="left carousel-control" href="#mycarousel2" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
-            html += '<a class="right carousel-control" href="#mycarousel2" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span></a>';
+            html += '<a class="left carousel-control" href="#mycarousel2" role="button" onClick=carouselSlide(this,"previous",eveningSlot) data-slide-to="0"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
+            html += '<a class="right carousel-control" href="#mycarousel2" role="button" onClick=carouselSlide(this,"next",eveningSlot) data-slide-to="0"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span></a>';
             //	html += '</span>';
             //html += '<span class="btn btn-default rightbtn">&gt;</span>';
             html += '</div>';
@@ -1141,52 +1159,52 @@ function switchScreen(scrno, obj){
             html += '<div class="modal-content">';
             html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class="loader"><em>You will receive a missed call on <i></i>. Press 1 to confirm</em><img src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
             html += '</div></div></div>';
-			$(obj).html(html);
-			notInterested();
-			$('.paynow').on('click', function(){
-				var rs = $(this).attr('data-value');
-			});
-		break;
-		
-		case 11:
-			var html = '<div class="col-md-12 text-center fullheight">';
-			html += '<h4 style="margin:0;" class="text-center">Hey! Your Routes are almost LIVE..</h4><br />';
-			html += '<fieldset class="pay">';
-			html += '<legend class="payments"><span class="home">'+info.homeAddressShortened+'</span> <> <span class="office">'+info.officeAddressShortened+'</span></legend>';
-				html += '<div class="box">';
-					html += '<div class="boxrow">';
-						html += '<span class="heading">Going To Work</span>';
-						//html += '<span class="change">change</span>';
-					html += '</div>';
-					html += '<div class="routeinfo">'+info.homeAddressShortened+'</div>';
-					html += '<div class="routeinfo">Arrives: TCS, Main Gate @ '+info.reachwork+'</div>';
-					html += '<div class="fillingfast" style="display:none;">8 more ppl required to launch route</div>';
-				html += '</div>';
-			
-				html += '<div class="box">';
-					html += '<div class="boxrow">';
-						html += '<span class="heading">Return From Work</span>';
-						//html += '<span class="change">change</span>';
-					html += '</div>';
-					html += '<div class="routeinfo">'+info.officeAddressShortened+'</div>';
-					html += '<div class="routeinfo">Arrives: TCS, Main Gate @ 8:55 AM</div>';
-					html += '<div class="fillingfast" style="display:none;">4 more ppl required to launch route</div>';
-				html += '</div>';
-				
-				html += '<div class="fillingfast">8 more days left to launch route</div>';
-			
-			html += '</fieldset>';
-			html += '<div class="headText headText3 text-center">To launch the route soon <span class="highlight">#JustSpreadTheWord</span></div>';
-			html += '<div class="row social" id="whatsapp" onclick="sendWhatsApp()">';
-			html += '<div class="col-md-12">';
-			/*
-			html += '<span class="fa fa-google-plus col-md-3"></span>';
-			html += '<span class="fa fa-facebook col-md-3"></span>';
-			html += '<span class="fa fa-linkedin col-md-3"></span>';
-			html += '<span class="fa fa-whatsapp full"></span>';
-			*/
-			html += '<span class="full" style="padding:20px;display:table;">Share Via WhatsApp</span>';
-			html += '</div></div></div>';
+            $(obj).html(html);
+            notInterested();
+            $('.paynow').on('click', function(){
+                var rs = $(this).attr('data-value');
+            });
+            break;
+
+        case 11:
+            var html = '<div class="col-md-12 text-center fullheight">';
+            html += '<h4 style="margin:0;" class="text-center">Hey! Your Routes are almost LIVE..</h4><br />';
+            html += '<fieldset class="pay">';
+            html += '<legend class="payments"><span class="home">'+info.homeAddressShortened+'</span> <> <span class="office">'+info.officeAddressShortened+'</span></legend>';
+            html += '<div class="box">';
+            html += '<div class="boxrow">';
+            html += '<span class="heading">Going To Work</span>';
+            //html += '<span class="change">change</span>';
+            html += '</div>';
+            html += '<div class="routeinfo">' + routeDetailsToWork("departure")+'</div>';
+            html += '<div class="routeinfo">' + routeDetailsToWork("arrival")+ '</div>';
+            html += '<div class="fillingfast" style="display:none;">8 more ppl required to launch route</div>';
+            html += '</div>';
+
+            html += '<div class="box">';
+            html += '<div class="boxrow">';
+            html += '<span class="heading">Return From Work</span>';
+            //html += '<span class="change">change</span>';
+            html += '</div>';
+            html += '<div class="routeinfo">'+ routeDetailsFromWork("departure") +'</div>';
+            html += '<div class="routeinfo">'+ routeDetailsFromWork("arrival")+'</div>';
+            html += '<div class="fillingfast" style="display:none;">4 more ppl required to launch route</div>';
+            html += '</div>';
+
+            html += '<div class="fillingfast">8 more days left to launch route</div>';
+
+            html += '</fieldset>';
+            html += '<div class="headText headText3 text-center">To launch the route sooner <span class="highlight">#KeepSpredinTheWord</span></div>';
+            html += '<div class="row social" id="whatsapp" onclick="sendWhatsApp()">';
+            html += '<div class="col-md-12">';
+            /*
+             html += '<span class="fa fa-google-plus col-md-3"></span>';
+             html += '<span class="fa fa-facebook col-md-3"></span>';
+             html += '<span class="fa fa-linkedin col-md-3"></span>';
+             html += '<span class="fa fa-whatsapp full"></span>';
+             */
+            html += '<span class="full" style="padding:20px;display:table;">Share Via WhatsApp</span>';
+            html += '</div></div></div>';
 			$(obj).html(html);
             fillWhatsAppLink();
 		break;
@@ -1677,4 +1695,34 @@ function changeToStage(stageNo){
 
 }
 
+function routeDetailsToWork(status){
+    var routeSelected = (info.reachwork && info.reachwork[0] != null);
+    if (status == "departure") return (routeSelected ? ('Departs: ' +info.homeAddressShortened): "");
+    else if (status == "arrival") return (routeSelected ? ('Arrives: '+info.officeAddressShortened+' @ '+ info.reachwork) : "You have chosen not to Shuttl to work");
+}
+function routeDetailsFromWork(status){
+    var routeSelected = (info.leavework && info.leavework[0] != null);
+    if (status == "departure") return (routeSelected ? ('Departs: '+info.officeAddressShortened+' @ '+ info.leavework) : "You have chosen not to Shuttl home");
+    else if (status == "arrival") return (routeSelected ? ('Arrives: '+info.homeAddressShortened): "" );
+}
 
+
+function carouselSlide(obj, status, slot) {
+    var NUMBER_OF_SLOTS = 342;
+    if (slot == morningSlot) {
+        if (status == "next" && morningSlot < NUMBER_OF_SLOTS / 3)
+            morningSlot = morningSlot + 3;
+        else if (status == "previous" && morningSlot > 0)
+            morningSlot = morningSlot - 3;
+        $(obj).attr("data-slide-to", morningSlot);
+    }
+    else if (slot == eveningSlot) {
+        if (status == "next" && eveningSlot < NUMBER_OF_SLOTS / 3)
+            eveningSlot = eveningSlot + 3;
+        else if (status == "previous" && eveningSlot > 0)
+            eveningSlot = eveningSlot - 3;
+        $(obj).attr("data-slide-to", eveningSlot);
+    }
+}
+
+window.screen.orientation.lock("portrait");

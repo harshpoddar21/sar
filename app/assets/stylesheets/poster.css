@@ -10,10 +10,9 @@
 
 div#wrapper{
 	position: relative;
-	border: 1px solid red;
 	width: 3508px;
 	height: 4961px;
-	background-image: url(<%= asset_path 'bg-poster.png' %>);
+	background-image: url('images/bg-poster.png');
 	margin: 0 auto;
 	font-family: Lato;
 }
@@ -26,14 +25,14 @@ span#topMsgPart1{
 	text-transform: uppercase;
 	font-size: 250px;
 	position: relative;
-	top: 1100px;
+	top: 1000px;
 	font-weight: bold;
 }
 
 span#topMsgPart2{
 	font-size: 250px;
 	position: relative;
-	top: 1100px;
+	top: 1000px;
 }
 
 div#routeDiagram{
@@ -41,14 +40,43 @@ div#routeDiagram{
 	height: 811px;
 	margin: 0 auto;
 	position: relative;
-	top: 1204px;
+	top: 1000px;
 	background: url("images/bg-route.png");
+}
+
+div.pickupIcon{
+	width: 69px;
+	height: 68px;
+	background: url("images/pickup-icon.png");
+	position: absolute;
+	top: 377px;
+}
+
+div.milestoneName{
+	writing-mode: tb-rl;
+    font-size: 50px;
+    position: absolute;
+    height: 255px;
+}
+
+div#ms1{
+	
+	top: 100px;
+	left: 178px;
+	
+	text-align: right;
+}
+
+div#msTest{
+	bottom: 70px;
+	left: 3078px;
+	text-align: left;
 }
 
 div#mainText{
 	text-align: center;
 	position: relative;
-	top: 1281px;
+	top: 1081px;
 }
 
 span#mainBeginning{
@@ -65,7 +93,7 @@ span#smsMessage{
 	display: block;
 	padding: 70px;
 	font-size: 150px;
-	width: 1500px;
+	width: 1650px;
 	border: 10px dotted white;
 	text-align: center;
 	margin: 0 auto;

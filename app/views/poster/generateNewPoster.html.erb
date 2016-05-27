@@ -6,7 +6,14 @@
 			<span id="topMsgPart2" class="textStyle2">Your Home To Office</span>
 		</div>
 		<div id="routeDiagram">
-			
+			<div class="pickupIcons">
+				
+			</div>
+			<div class="milestones">
+				<% @pickupPoints.each do |t| %>
+				<div class="milestoneName"><%= t %></div>
+				<% end %>
+			</div>
 		</div>
 		<div id="mainText">
 			<span id="mainBeginning" class="textStyle1">To buy a pass on this route or to</span>
@@ -15,3 +22,21 @@
 			<span id="mainEnd" class="textStyle2">Hurry! Limited Passes Available</span>
 		</div>
 	</div>
+	<script>
+		$( document ).ready(function(){
+			var numMilestones = $('.milestoneName').length;
+			var base = 178;
+			var multiplier = 2900 / (numMilestones - 1);
+			var leftValues = [];
+			for(i=0;i < numMilestones; i++){
+				leftValues[i] = base + (multiplier * i);
+				j = i + 1;	// because nth of type is one-indexed
+				$(".pickupIcons").append("<div class='pickupIcon' style='left: " + leftValues[i] + "'px></div>");
+				if(i%2 == 0)
+					$(".milestones div:nth-of-type("+ j +")").css({"text-align": "right", "top": "100px", "left": leftValues[i] + "px"});
+				else
+					$(".milestones div:nth-of-type("+ j +")").css({"text-align": "left", "bottom": "70px", "left": leftValues[i] + "px"});
+			}
+			console.log("Test with 5 :: I was called with " + numMilestones + " milestones and left values are: " + leftValues);
+		});
+	</script>
