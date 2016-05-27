@@ -1194,7 +1194,7 @@ function switchScreen(scrno, obj){
             html += '<div class="fillingfast">8 more days left to launch route</div>';
 
             html += '</fieldset>';
-            html += '<div class="headText headText3 text-center">To launch the route sooner <span class="highlight">#KeepSpredinTheWord</span></div>';
+            html += '<div class="headText headText3 text-center">To launch the route sooner <span class="highlight">#KeepSpreadinTheWord</span></div>';
             html += '<div class="row social" id="whatsapp" onclick="sendWhatsApp()">';
             html += '<div class="col-md-12">';
             /*
@@ -1298,7 +1298,7 @@ function switchScreen(scrno, obj){
             html += '<h6 class="text-center">( Click above to change info )</h6>';
             html += '</fieldset>';
             html += '<p class="routeCount"><span class="count">3</span> Other people have made same route</p><br/>';
-            html += '<div class="headText headText3 text-center">To launch the route soon <span class="highlight">#JustSpreadTheWord</span></div>';
+            html += '<div class="headText headText3 text-center">To launch the route sooner <span class="highlight">#KeepSpreadinTheWord</span></div>';
             html += '<div class="row social">';
             html += '<div class="col-md-12">';
             /*html += '<span class="fa fa-google-plus col-md-3"></span>';*/
