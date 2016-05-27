@@ -256,7 +256,7 @@ function setCarousel(){
 
     jQuery(".item").eq(morningSlot).addClass("active");
     $('#mycarousel').carousel({
-        interval: false
+        interval: false,
         wrap: false
     });
     $('#mycarousel .item').each(function(){
