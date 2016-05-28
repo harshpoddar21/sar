@@ -24,6 +24,7 @@
 			<span id="mainEnd" class="textStyle2">Hurry! Limited Passes Available</span>
 		</div>
 	</div>
+	<!-- <div id="generateImageButton">Generate Image</div> -->
 	<script>
 		$( document ).ready(function(){
 			var numMilestones = $('.milestoneName').length;
@@ -37,17 +38,19 @@
 				if(i%2 == 0)
 					$(".milestones div:nth-of-type("+ j +")").css({"text-align": "right", "top": "100px", "left": leftValues[i] + "px"});
 				else
-					$(".milestones div:nth-of-type("+ j +")").css({"text-align": "left", "bottom": "70px", "left": leftValues[i] + "px"});
+					$(".milestones div:nth-of-type("+ j +")").css({"text-align": "right", "bottom": "70px", "left": leftValues[i] + "px"});
 			}
 			
-			html2canvas($("#wrapper"), {
-	            onrendered: function(canvas) {
-	                theCanvas = canvas;
+		// 	$("#generateImageButton").click(function(){
+		// 		html2canvas($(document), {
+		//             onrendered: function(canvas) {
+		//                 theCanvas = canvas;
 
-	                canvas.toBlob(function(blob) {
-	                    saveAs(blob, "Poster.png"); 
-	                });
-	            }
-	        });
+		//                 canvas.toBlob(function(blob) {
+		//                     saveAs(blob, "Poster.png"); 
+		//                 });
+		//             }
+	 //        	});
+	 //        });
 		});
 	</script>

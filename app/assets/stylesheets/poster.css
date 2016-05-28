@@ -53,10 +53,21 @@ div.pickupIcon{
 }
 
 div.milestoneName{
-	writing-mode: tb-rl;
+	/*writing-mode: tb-rl;*/
+	-ms-transform:rotate(270deg); /* IE 9 */
+	-moz-transform:rotate(270deg); /* Firefox */
+	-webkit-transform:rotate(270deg); /* Safari and Chrome */
+	-o-transform:rotate(270deg); /* Opera */
     font-size: 50px;
     position: absolute;
     height: 255px;
+    width: 255px;
+}
+
+div#generateImageButton{
+	padding: 10px;
+	border: 1px solid black;
+	border-radius: 5px;
 }
 
 div#ms1{

@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ae579d7-318a-429b-8341-3b3ef608ec5a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/style.css" afterPath="$PROJECT_DIR$/app/assets/stylesheets/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/poster.css" afterPath="$PROJECT_DIR$/app/assets/stylesheets/poster.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/poster/generateNewPoster.html.erb" afterPath="$PROJECT_DIR$/app/views/poster/generateNewPoster.html.erb" />
     </list>
     <ignored path="sar.iws" />
@@ -22,7 +23,7 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/sar@Development__sar.coverage" NAME="Development: sar Coverage Results" MODIFIED="1464414411655" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="sar" />
+    <SUITE FILE_PATH="coverage/sar@Development__sar.coverage" NAME="Development: sar Coverage Results" MODIFIED="1464416933458" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="sar" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
