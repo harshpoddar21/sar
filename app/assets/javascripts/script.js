@@ -7,6 +7,9 @@ var responseJson;
 var slotBtns = '';
 var morningSlot = 0;
 var eveningSlot = 88;
+var reg;
+var sub;
+var isSubscribed = false;
 
 
 function initAutocomplete() {
@@ -374,7 +377,7 @@ function nextPrevVlickEvents(){
         refer.stage = stage;
         refer.click = 'down';
         stage++;
-        if(stage > 13){stage = 13};
+        if(stage > 14){stage = 14};
         window.location.hash = 'stage'+stage;
         $(this).closest('.screen').outerHeight();
         var handle = $(this).closest('.screen');
@@ -517,7 +520,7 @@ function onMobileVerified(num){
         stage = 5;
     }
     else
-        stage=14;
+        stage=15;
     window.location.hash = 'stage'+stage;
     $('.screen').outerHeight();
     var handle = $('.screen');
@@ -535,7 +538,7 @@ function onMobileVerified(num){
 
 function notInterested(){
 	$('.bounce, .bouncebtn').on('click', function(){
-		stage = 13;
+		stage = 14;
 		window.location.hash = 'stage'+stage;
 		var handle = $('.screenWrapper').find('.screen');
 		var px = $(handle).outerHeight();
@@ -964,6 +967,8 @@ function switchScreen(scrno, obj){
             }
             var eSlots = '';
 
+            info.pushSubscriptionStatus = window.Notification.permission;
+
             if(info.leavework != undefined){
                 $.each(info.leavework, function(key, value){
                     if(key != info.leavework.length-1){
@@ -1166,6 +1171,8 @@ function switchScreen(scrno, obj){
             break;
 
         case 11:
+
+        case 12:
             var html = '<div class="col-md-12 text-center fullheight">';
             html += '<h4 style="margin:0;" class="text-center">Hey! Your Routes are almost LIVE..</h4><br />';
             html += '<fieldset class="pay">';
@@ -1208,7 +1215,7 @@ function switchScreen(scrno, obj){
             fillWhatsAppLink();
 		break;
 		//offline sharing screen
-		case 12:
+		case 13:
 			var html = '<div class="col-md-12">';
 			html += '<div class="fieldset">';
 			html += '<div class="routeInfo"><span class="ambassador routePtName">Become the Route Ambassador</span></div>';
@@ -1233,7 +1240,7 @@ function switchScreen(scrno, obj){
 			$('.bounce').remove();
 		break;
 		
-		case 13:
+		case 14:
 			var html = '<div class="col-md-12">';
 			html += '<h4>I am not interested in using Shuttl service because:</h4>';
 			html += '<form>';
@@ -1249,36 +1256,65 @@ function switchScreen(scrno, obj){
 			$('.bounce').remove();
 		break;
 
-        case 14:
+        case 15:
             var html ='<div class="col-md-12 text-center fullheight">';
             html += '<h4 style="margin:0;" class="text-center allow-notification">To track your Shuttl and its arrival at your doorstep please click on "Allow"</h4><br />';
             html += '';
             html += '</div>';
             $(obj).html(html);
-            var trial=1;
 
-            initIzooto();
-            var notificationTimer = setInterval( function () {
+            // var urlBase = window.location.href;
+            // if (urlBase.indexOf("://") > -1) {
+            //     domain = urlBase.split('/')[2];
+            // }
+            // else {
+            //     domain = urlBase.split('/')[0];
+            // }            
 
-                trial++;
-                if (trial%20==0) {
+            if ('serviceWorker' in navigator) {
+              console.log('Service Worker is supported');
+              navigator.serviceWorker.register('/sw.js').then(function() {
+                return navigator.serviceWorker.ready;
+              }).then(function(serviceWorkerRegistration) {
+                reg = serviceWorkerRegistration;
+                console.log('Service Worker is ready :^)', reg);
+                reg.pushManager.subscribe({userVisibleOnly: true}).
+                then(function(pushSubscription) {
+                sub = pushSubscription;
+                console.log('Subscribed! Endpoint:', sub.endpoint);
+                info.subscriberID = sub.endpoint;
+                changeToStage(5);
+                //isSubscribed = true;
+                });                 
+              }).catch(function(error) {
+                console.log('Service Worker Error :^(', error);
+              });
+            }
+  
+            // var trial=1;
 
-                    clearInterval(notificationTimer);
-                    changeToStage(5);
-                }
-                if (Notification.permission === 'granted' || Notification.permission === 'denied') {
+            // initIzooto();
+            // var notificationTimer = setInterval( function () {
+
+            //     trial++;
+            //     if (trial%20==0) {
+
+            //         clearInterval(notificationTimer);
+            //         changeToStage(5);
+            //     }
+            //     if (Notification.permission === 'granted' || Notification.permission === 'denied') {
                     
-                    clearInterval(notificationTimer);
+            //         clearInterval(notificationTimer);
 
-                    ga('send', 'event', 'chromeNotificationStatus',Notification.permission);
-                    changeToStage(5);
-                }else if (trial%10==0){
-                   // initIzooto();
-                }
-            }, 500);
+            //         ga('send', 'event', 'chromeNotificationStatus',Notification.permission);
+            //         changeToStage(5);
+            //     }else if (trial%10==0){
+            //        // initIzooto();
+            //     }
+            // }, 500);
             break;
 
-        case 15:
+        case 16:
             var html = '<div class="col-md-12 text-center" style="height: 100%;position: static;">';
             html += '<h4 style="margin:0;" id="share_heading" class="text-center sharetext">"Congratulations!! You have successfully made"</h4><br />';
             html += '<fieldset>';
