@@ -247,6 +247,7 @@ var stage = 1;
             stage = 1;
         }
     }
+
     window.location.hash = 'stage'+stage;
     var handle = $('.screenWrapper');
     createScreenBox(handle, 'append', 0);
@@ -512,9 +513,7 @@ function onMobileVerified(num){
     $('#phoneModal').modal('hide');
     refer.stage = stage;
     refer.click = 'down';
-    console.log("Before Safari skip case!");
     if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1){
-        console.log("Skip for safari case!");
         stage = 5;
     }
     else
@@ -1725,4 +1724,10 @@ function carouselSlide(obj, status, slot) {
     }
 }
 
-window.screen.orientation.lock("portrait");
+
+$('input, select, textarea').on('focus blur', function(event) {
+    $('meta[name=viewport]').attr('content', 'width=device-width,initial-scale=1,maximum-scale=' + (event.type == 'blur' ? 10 : 1));
+});
+
+if(window.screen.orientation.lock)
+    window.screen.orientation.lock("portrait");
