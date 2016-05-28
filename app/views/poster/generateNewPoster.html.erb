@@ -1,5 +1,7 @@
 	<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 	<%= stylesheet_link_tag "poster", media: "all" %>
+	<%= javascript_include_tag('FileSaver.min.js') %>
+	<%= javascript_include_tag('html2canvas.js') %>
 	<div id="wrapper">
 		<div id="topMessage">
 			<span id="topMsgPart1" class="textStyle1">Now Connecting</span><br>
@@ -37,6 +39,15 @@
 				else
 					$(".milestones div:nth-of-type("+ j +")").css({"text-align": "left", "bottom": "70px", "left": leftValues[i] + "px"});
 			}
-			console.log("Test with 5 :: I was called with " + numMilestones + " milestones and left values are: " + leftValues);
+			
+			html2canvas($("#wrapper"), {
+	            onrendered: function(canvas) {
+	                theCanvas = canvas;
+
+	                canvas.toBlob(function(blob) {
+	                    saveAs(blob, "Poster.png"); 
+	                });
+	            }
+	        });
 		});
 	</script>
