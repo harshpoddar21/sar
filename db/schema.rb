@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160519080618) do
+ActiveRecord::Schema.define(version: 20160529135943) do
 
   create_table "customer_suggestions", force: :cascade do |t|
     t.text     "from_str",        limit: 65535
@@ -29,6 +29,22 @@ ActiveRecord::Schema.define(version: 20160519080618) do
     t.datetime "updated_at",                    null: false
     t.integer  "routeid",         limit: 4
     t.integer  "route_type",      limit: 4
+    t.text     "sub_status",      limit: 65535
+    t.text     "sub_id",          limit: 65535
+  end
+
+  create_table "graph_coordinates", force: :cascade do |t|
+    t.integer "x",   limit: 4
+    t.integer "y",   limit: 4
+    t.decimal "lat",           precision: 8, scale: 6
+    t.decimal "lon",           precision: 8, scale: 6
+  end
+
+  create_table "graph_dist_times", id: false, force: :cascade do |t|
+    t.integer "origin_id", limit: 4, default: 0, null: false
+    t.integer "dest_id",   limit: 4, default: 0, null: false
+    t.integer "dist",      limit: 4
+    t.integer "duration",  limit: 4
   end
 
   create_table "ivr_call_logs", force: :cascade do |t|

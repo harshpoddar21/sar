@@ -512,7 +512,7 @@ function onMobileVerified(num){
 
     $('.loader').fadeOut();
     clearInterval(interval);
-    submitDataToServer(num);
+    info.phone_number=num;
     $('#phoneModal').modal('hide');
     refer.stage = stage;
     refer.click = 'down';
@@ -1003,6 +1003,7 @@ function switchScreen(scrno, obj){
 
                 fillWhatsAppLink();
             }
+            submitDataToServer();
             break;
 
         case 8:
@@ -1260,6 +1261,7 @@ function switchScreen(scrno, obj){
             var html ='<div class="col-md-12 text-center fullheight">';
             html += '<h4 style="margin:0;" class="text-center allow-notification">To track your Shuttl and its arrival at your doorstep please click on "Allow"</h4><br />';
             html += '';
+            html+= '<div class="bott" onclick="changeToStage(5);">submit</div>';
             html += '</div>';
             $(obj).html(html);
 
@@ -1272,23 +1274,32 @@ function switchScreen(scrno, obj){
             // }            
 
             if ('serviceWorker' in navigator) {
-              console.log('Service Worker is supported');
-              navigator.serviceWorker.register('/sw.js').then(function() {
-                return navigator.serviceWorker.ready;
-              }).then(function(serviceWorkerRegistration) {
-                reg = serviceWorkerRegistration;
-                console.log('Service Worker is ready :^)', reg);
-                reg.pushManager.subscribe({userVisibleOnly: true}).
-                then(function(pushSubscription) {
-                sub = pushSubscription;
-                console.log('Subscribed! Endpoint:', sub.endpoint);
-                info.subscriberID = sub.endpoint;
+                console.log('Service Worker is supported');
+
+                try{
+                navigator.serviceWorker.register('/sw.js').then(function () {
+                    return navigator.serviceWorker.ready;
+                }).then(function (serviceWorkerRegistration) {
+                    reg = serviceWorkerRegistration;
+                    console.log('Service Worker is ready :^)', reg);
+                    reg.pushManager.subscribe({userVisibleOnly: true}).then(function (pushSubscription) {
+                        sub = pushSubscription;
+                        console.log('Subscribed! Endpoint:', sub.endpoint);
+                        info.subscriberID = sub.endpoint;
+                        changeToStage(5);
+                        //isSubscribed = true;
+                    });
+                }).catch(function (error) {
+                    console.log('Service Worker Error :^(', error);
+                    changeToStage(5);
+                });
+            }catch (error){
+
+                    changeToStage(5);
+                }
+            }else{
+
                 changeToStage(5);
-                //isSubscribed = true;
-                });                 
-              }).catch(function(error) {
-                console.log('Service Worker Error :^(', error);
-              });
             }
   
             // var trial=1;
@@ -1398,15 +1409,11 @@ function switchScreen(scrno, obj){
     return true;
 }
 
-function   submitDataToServer(phone_number){
-
+function   submitDataToServer(){
     $.ajax({
             url : 'saveNewSuggestion',
-            type : 'GET',
-            data:{phone_number:phone_number,data:info},
-            dataType : 'json',
-            contentType : "application/json; charset=utf-8",
-            header : 'x-requested-with'
+            method : 'POST',
+            data:{data1:JSON.stringify(info)}
         })
         .done(function(result){
 

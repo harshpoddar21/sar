@@ -491,4 +491,19 @@ span.highlight.lesshighlight {
     width: 15px !important;
 
 }
+.bott{
+
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    background: rgb(70, 184, 218);
+    width: 100%;
+    height: 32px;
+    font-size: 20px;
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 32px;
+}
 

@@ -8,7 +8,7 @@ get 'nps/submitNps'
   get 'payment/setSessionVar'
 
   get 'suggest/getLink'
-  get 'suggest/saveNewSuggestion' =>"suggest#saveNewSuggestion"
+  post 'suggest/saveNewSuggestion' =>"suggest#saveNewSuggestion"
 
   get 'suggest/getWhatsAppShareLink'
 

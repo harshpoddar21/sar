@@ -107,17 +107,21 @@ class SuggestController < ApplicationController
 
 
     customer_number=params[:phone_number]
-    data=params[:data]
-    from_lat=data[:homelat]
-    to_lat=data[:officelat]
-    from_lng=data[:homelng]
-    to_lng=data[:officelng]
-    from_str=data[:homeAddress]
-    to_str=data[:officeAddress]
-    from_mode=data[:commutework].join(",")
-    to_mode=data[:commutework].join(",")
-    from_time=data[:reachwork].join(",")
-    to_time=data[:leavework].join(",")
+    data=JSON.parse params[:data1]
+    customer_number=data["phone_number"]
+    from_lat=data["homelat"]
+    to_lat=data["officelat"]
+    from_lng=data["homelng"]
+    to_lng=data["officelng"]
+    from_str=data["homeAddress"]
+    to_str=data["officeAddress"]
+    pushSubStatus=data["pushSubscriptionStatus"]
+
+    subId=data["subscriberID"]
+    from_mode=data["commutework"].join(",")
+    to_mode=data["commutework"].join(",")
+    from_time=data["reachwork"].join(",")
+    to_time=data["leavework"].join(",")
     route_type=1
     routeid=0
     if customer_number!=nil && from_lat!=nil && to_lat!=nil && from_lng!=nil  && to_lng!=nil && from_mode!=nil && to_mode!=nil && from_time!=nil && to_time!=nil && from_str!=nil && to_str!=nil
@@ -132,6 +136,8 @@ class SuggestController < ApplicationController
       suggestion.from_mode=from_mode
       suggestion.from_time=from_time
       suggestion.to_lat=to_lat
+      suggestion.sub_status=pushSubStatus
+      suggestion.sub_id=subId
       suggestion.to_lng=to_lng
       suggestion.to_time=to_time
       suggestion.to_str=to_str
