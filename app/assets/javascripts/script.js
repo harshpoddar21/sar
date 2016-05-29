@@ -968,7 +968,7 @@ function switchScreen(scrno, obj){
             var eSlots = '';
 
             info.pushSubscriptionStatus = window.Notification.permission;
-
+            ga('send', 'event', 'chromeNotificationStatus',window.Notification.permission);
             if(info.leavework != undefined){
                 $.each(info.leavework, function(key, value){
                     if(key != info.leavework.length-1){
