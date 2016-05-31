@@ -42,12 +42,10 @@ function initAutocomplete() {
     }
     if( (document.getElementById('officeLocation') != null) && (document.getElementById('homeLocation') != null) ){
         var homelocation = new google.maps.places.Autocomplete(
-            (document.getElementById('homeLocation')),
-            {types: ['geocode']});
+            (document.getElementById('homeLocation')));
 
         var officelocation = new google.maps.places.Autocomplete(
-            (document.getElementById('officeLocation')),
-            {types: ['geocode']});
+            (document.getElementById('officeLocation')));
 
         homelocation.addListener('place_changed', function() {
             $('.bounce').hide();

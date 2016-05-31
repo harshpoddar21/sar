@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ae579d7-318a-429b-8341-3b3ef608ec5a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/suggest_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/suggest_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/script.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/script.js" />
     </list>
     <ignored path="sar.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,26 +39,26 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="script.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="script.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/script.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="14730">
-              <caret line="982" column="0" selection-start-line="982" selection-start-column="0" selection-end-line="982" selection-end-column="0" />
+            <state relative-caret-position="177">
+              <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
               <folding>
-                <marker date="1464536821842" expanded="true" signature="34774:34804" placeholder="..." />
-                <marker date="1464536821842" expanded="true" signature="34832:34841" placeholder="..." />
-                <marker date="1464536821842" expanded="true" signature="36822:36849" placeholder="..." />
-                <marker date="1464536821842" expanded="true" signature="45862:45871" placeholder="..." />
-                <marker date="1464536821842" expanded="true" signature="46654:46667" placeholder="..." />
-                <marker date="1464536821842" expanded="true" signature="47219:47232" placeholder="..." />
-                <marker date="1464536821842" expanded="true" signature="49030:49039" placeholder="..." />
-                <marker date="1464536821842" expanded="true" signature="49804:49817" placeholder="..." />
-                <marker date="1464536821842" expanded="true" signature="50372:50385" placeholder="..." />
-                <marker date="1464536821842" expanded="true" signature="51228:51255" placeholder="..." />
-                <marker date="1464536821842" expanded="true" signature="53368:53377" placeholder="..." />
-                <marker date="1464536821842" expanded="true" signature="55987:56017" placeholder="..." />
-                <marker date="1464536821842" expanded="true" signature="56054:56063" placeholder="..." />
-                <marker date="1464536821842" expanded="true" signature="58063:58090" placeholder="..." />
+                <marker date="1464677854076" expanded="true" signature="34706:34736" placeholder="..." />
+                <marker date="1464677854076" expanded="true" signature="34764:34773" placeholder="..." />
+                <marker date="1464677854076" expanded="true" signature="36754:36781" placeholder="..." />
+                <marker date="1464677854076" expanded="true" signature="45794:45803" placeholder="..." />
+                <marker date="1464677854076" expanded="true" signature="46586:46599" placeholder="..." />
+                <marker date="1464677854076" expanded="true" signature="47151:47164" placeholder="..." />
+                <marker date="1464677854076" expanded="true" signature="48962:48971" placeholder="..." />
+                <marker date="1464677854076" expanded="true" signature="49736:49749" placeholder="..." />
+                <marker date="1464677854076" expanded="true" signature="50304:50317" placeholder="..." />
+                <marker date="1464677854076" expanded="true" signature="51160:51187" placeholder="..." />
+                <marker date="1464677854076" expanded="true" signature="53300:53309" placeholder="..." />
+                <marker date="1464677854076" expanded="true" signature="55919:55949" placeholder="..." />
+                <marker date="1464677854076" expanded="true" signature="55986:55995" placeholder="..." />
+                <marker date="1464677854076" expanded="true" signature="57995:58022" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -87,10 +84,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="suggest_controller.rb" pinned="false" current-in-tab="true">
+      <file leaf-file-name="suggest_controller.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/suggest_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="492">
+            <state relative-caret-position="4740">
               <caret line="316" column="0" selection-start-line="316" selection-start-column="0" selection-end-line="316" selection-end-column="0" />
               <folding />
             </state>
@@ -200,9 +197,9 @@
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/controllers/application_controller.rb" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/style.css" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/script.js" />
         <option value="$PROJECT_DIR$/app/views/suggest/routeAnalysis.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/suggest_controller.rb" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/script.js" />
       </list>
     </option>
   </component>
@@ -642,7 +639,7 @@
       <workItem from="1464529020340" duration="12585000" />
       <workItem from="1464609523908" duration="1517000" />
       <workItem from="1464677523770" duration="27000" />
-      <workItem from="1464677581530" duration="25000" />
+      <workItem from="1464677581530" duration="273000" />
     </task>
     <task id="LOCAL-00001" summary="UI Fixes">
       <created>1463684556641</created>
@@ -655,7 +652,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88887000" />
+    <option name="totallyTimeSpent" value="89135000" />
   </component>
   <component name="TodoView" selected-index="1">
     <todo-panel id="selected-file">
@@ -668,14 +665,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-4" width="1366" height="772" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31042296" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32819724" sideWeight="0.49086577" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30107528" sideWeight="0.48640484" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3020031" sideWeight="0.48640484" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930514" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32819724" sideWeight="0.47809666" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30107528" sideWeight="0.51359516" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3020031" sideWeight="0.51359516" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33386838" sideWeight="0.505287" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1026,29 +1023,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/script.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14730">
-          <caret line="982" column="0" selection-start-line="982" selection-start-column="0" selection-end-line="982" selection-end-column="0" />
-          <folding>
-            <marker date="1464536821842" expanded="true" signature="34774:34804" placeholder="..." />
-            <marker date="1464536821842" expanded="true" signature="34832:34841" placeholder="..." />
-            <marker date="1464536821842" expanded="true" signature="36822:36849" placeholder="..." />
-            <marker date="1464536821842" expanded="true" signature="45862:45871" placeholder="..." />
-            <marker date="1464536821842" expanded="true" signature="46654:46667" placeholder="..." />
-            <marker date="1464536821842" expanded="true" signature="47219:47232" placeholder="..." />
-            <marker date="1464536821842" expanded="true" signature="49030:49039" placeholder="..." />
-            <marker date="1464536821842" expanded="true" signature="49804:49817" placeholder="..." />
-            <marker date="1464536821842" expanded="true" signature="50372:50385" placeholder="..." />
-            <marker date="1464536821842" expanded="true" signature="51228:51255" placeholder="..." />
-            <marker date="1464536821842" expanded="true" signature="53368:53377" placeholder="..." />
-            <marker date="1464536821842" expanded="true" signature="55987:56017" placeholder="..." />
-            <marker date="1464536821842" expanded="true" signature="56054:56063" placeholder="..." />
-            <marker date="1464536821842" expanded="true" signature="58063:58090" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/suggest/mapview.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="915">
@@ -1060,9 +1034,32 @@
     <entry file="file://$PROJECT_DIR$/app/views/suggest/routeAnalysis.html.erb" />
     <entry file="file://$PROJECT_DIR$/app/controllers/suggest_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
+        <state relative-caret-position="4740">
           <caret line="316" column="0" selection-start-line="316" selection-start-column="0" selection-end-line="316" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/script.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <folding>
+            <marker date="1464677854076" expanded="true" signature="34706:34736" placeholder="..." />
+            <marker date="1464677854076" expanded="true" signature="34764:34773" placeholder="..." />
+            <marker date="1464677854076" expanded="true" signature="36754:36781" placeholder="..." />
+            <marker date="1464677854076" expanded="true" signature="45794:45803" placeholder="..." />
+            <marker date="1464677854076" expanded="true" signature="46586:46599" placeholder="..." />
+            <marker date="1464677854076" expanded="true" signature="47151:47164" placeholder="..." />
+            <marker date="1464677854076" expanded="true" signature="48962:48971" placeholder="..." />
+            <marker date="1464677854076" expanded="true" signature="49736:49749" placeholder="..." />
+            <marker date="1464677854076" expanded="true" signature="50304:50317" placeholder="..." />
+            <marker date="1464677854076" expanded="true" signature="51160:51187" placeholder="..." />
+            <marker date="1464677854076" expanded="true" signature="53300:53309" placeholder="..." />
+            <marker date="1464677854076" expanded="true" signature="55919:55949" placeholder="..." />
+            <marker date="1464677854076" expanded="true" signature="55986:55995" placeholder="..." />
+            <marker date="1464677854076" expanded="true" signature="57995:58022" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
