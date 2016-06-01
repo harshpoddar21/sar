@@ -1849,7 +1849,7 @@ jQuery(document).ready(function(){
 });
 function changeToLastScreen(){
 
-    if (stage!=10) {
+    if (info.route_type=="new") {
         changeToStage(5);
     }else{
 
