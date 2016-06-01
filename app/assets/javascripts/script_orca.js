@@ -460,7 +460,7 @@ function validatePhone(){
 var tries=0;
 function validateMobileInput(num){
     tries++;
-    if (stage==4) {
+    if (stage==4 || stage==10) {
         onMobileVerified(num);
     }
     $.ajax({
@@ -492,7 +492,9 @@ function validateMobileInput(num){
 
                 }else if (stage==10){
 
-                    onForPaymentMobileVerified();
+                    if (paymentFlow==1) {
+                        onForPaymentMobileVerified();
+                    }
 
                 }
             }else{
@@ -515,7 +517,12 @@ function onMobileVerified(num){
     refer.stage = stage;
     refer.click = 'down';
     if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1){
-        stage = 5;
+        if (stage!=10) {
+            stage = 5;
+        }else{
+
+            stage=11;
+        }
     }
     else
         stage=15;
@@ -915,6 +922,7 @@ function switchScreen(scrno, obj){
                 }
             }
 
+            info.route_type="new";
             if(info.commutework != undefined){
                 $.each(info.commutework, function(key, value){
                     $(obj).find('button[data-value = "'+value+'"]').removeClass('btn-default').addClass('btn-info');
@@ -1166,6 +1174,8 @@ function switchScreen(scrno, obj){
             html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class="loader"><em>You will receive a missed call on <i></i>. Press 1 to confirm</em><img src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
             html += '</div></div></div>';
             $(obj).html(html);
+            info.route_type="live";
+            $('#phoneModal .error').html('').hide();
             notInterested();
             $('.paynow').on('click', function(){
                 var rs = $(this).attr('data-value');
@@ -1211,7 +1221,7 @@ function switchScreen(scrno, obj){
              html += '<span class="fa fa-linkedin col-md-3"></span>';
              html += '<span class="fa fa-whatsapp full"></span>';
              */
-            html += '<span class="full" style="padding:20px;display:table;">Share Via WhatsApp</span>';
+            html += '<span class="full" style="padding:15px;display:table;">Share Via WhatsApp</span>';
             html += '</div></div></div>';
             $(obj).html(html);
             fillWhatsAppLink();
@@ -1262,7 +1272,7 @@ function switchScreen(scrno, obj){
             var html ='<div class="col-md-12 text-center fullheight">';
             html += '<h4 style="margin:0;" class="text-center allow-notification">To track your Shuttl and its arrival at your doorstep please click on "Allow"</h4><br />';
             html += '';
-            html+= '<div class="bott" onclick="changeToStage(5);">submit</div>';
+            html+= '<div class="bott" onclick="changeToLastScreen();">submit</div>';
             html += '</div>';
             $(obj).html(html);
 
@@ -1287,20 +1297,40 @@ function switchScreen(scrno, obj){
                             sub = pushSubscription;
                             console.log('Subscribed! Endpoint:', sub.endpoint);
                             info.subscriberID = sub.endpoint;
+                            if (info.route_type=="new"){
                             changeToStage(5);
+                                }else{
+
+                                changeToStage(11);
+                            }
                             //isSubscribed = true;
                         });
                     }).catch(function (error) {
                         console.log('Service Worker Error :^(', error);
-                        changeToStage(5);
+                        if (stage!=10) {
+                            changeToStage(5);
+                        }else{
+
+                            changeToStage(11);
+                        }
                     });
                 }catch (error){
 
-                    changeToStage(5);
+                    if (stage!=10) {
+                        changeToStage(5);
+                    }else{
+
+                        changeToStage(11);
+                    }
                 }
             }else{
 
-                changeToStage(5);
+                if (stage!=10) {
+                    changeToStage(5);
+                }else{
+
+                    changeToStage(11);
+                }
             }
 
             // var trial=1;
@@ -1643,7 +1673,9 @@ function initiatePaymentProcess(){
         jQuery('#phoneModal').modal("show");
     }else{
 
-        changeToStage(11);
+        $('#phoneModal').modal('show');
+
+
     }
 }
 
@@ -1815,6 +1847,15 @@ jQuery(document).ready(function(){
     },2000);
     
 });
+function changeToLastScreen(){
+
+    if (stage!=10) {
+        changeToStage(5);
+    }else{
+
+        changeToStage(11);
+    }
+}
 
 
 if(window.screen.orientation.lock)
