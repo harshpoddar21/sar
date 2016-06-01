@@ -983,7 +983,7 @@ function switchScreen(scrno, obj){
             }
             var eSlots = '';
 
-            if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+            if (!(navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1)) {
                 info.pushSubscriptionStatus = window.Notification.permission;
                 ga('send', 'event', 'chromeNotificationStatus', window.Notification.permission);
             }else{
