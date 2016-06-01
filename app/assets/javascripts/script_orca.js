@@ -1307,7 +1307,7 @@ function switchScreen(scrno, obj){
                         });
                     }).catch(function (error) {
                         console.log('Service Worker Error :^(', error);
-                        if (stage!=10) {
+                        if (info.route_type=="new"){
                             changeToStage(5);
                         }else{
 
@@ -1316,7 +1316,7 @@ function switchScreen(scrno, obj){
                     });
                 }catch (error){
 
-                    if (stage!=10) {
+                    if (info.route_type=="new"){
                         changeToStage(5);
                     }else{
 
@@ -1324,8 +1324,7 @@ function switchScreen(scrno, obj){
                     }
                 }
             }else{
-
-                if (stage!=10) {
+                if (info.route_type=="new"){
                     changeToStage(5);
                 }else{
 
