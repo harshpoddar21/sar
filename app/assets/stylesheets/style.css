@@ -614,7 +614,7 @@ div#pickup-drop{
 
     position: fixed;
     width: 90%;
-    top: 74px;
+    top: 34px;
     left: 5%;
     display:none;
     z-index: 1000;
