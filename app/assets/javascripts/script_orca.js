@@ -496,6 +496,10 @@ function validateMobileInput(num){
                         onForPaymentMobileVerified();
                     }
 
+                }else if (stage==11){
+
+                    alert("Thank you for suggestion.Your number is verfied");
+                    jQuery('#route_live').html("Hey!! Your routes are almost live");
                 }
             }else{
                 $('#phoneModal .error').html('invalid mobile number').fadeIn();
@@ -906,7 +910,7 @@ function switchScreen(scrno, obj){
             html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
             html += '<div class="modal-dialog modal-sm">';
             html += '<div class="modal-content">';
-            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class="loader"><em>You will receive a missed call on <i></i>. Press 1 to confirm</em><img src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
+            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class=""><em>You will receive a missed call on <i></i>. Press 1 to confirm</em><img style="display:none;" src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
             html += '</div></div></div>';
             $('#phoneModal .error').html('').hide();
             $("div.notInterested").hide();
@@ -1171,7 +1175,7 @@ function switchScreen(scrno, obj){
             html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
             html += '<div class="modal-dialog modal-sm">';
             html += '<div class="modal-content">';
-            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class="loader"><em>You will receive a missed call on <i></i>. Press 1 to confirm</em><img src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
+            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class=""><em>You will receive a missed call on <i></i>. Press 1 to confirm</em><img style="display:none;" src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
             html += '</div></div></div>';
             $(obj).html(html);
             info.route_type="live";
@@ -1186,7 +1190,7 @@ function switchScreen(scrno, obj){
 
         case 12:
             var html = '<div class="col-md-12 text-center fullheight">';
-            html += '<h4 style="margin:0;" class="text-center">Hey! Your Routes are almost LIVE..</h4><br />';
+            html += '<h4 style="margin:0;" class="text-center" id="route_live">Awaiting Phone No Confirmation</h4><br />';
             html += '<fieldset class="pay">';
             html += '<legend class="payments"><span class="home">'+info.homeAddressShortened+'</span> <> <span class="office">'+info.officeAddressShortened+'</span></legend>';
             html += '<div class="box">';
