@@ -1843,10 +1843,10 @@ dest_id</columns>
         <data-type>tinyint(4)</data-type>
       </column>
       <key id="342" parent="42" name="PRIMARY">
-        <columns>JOB_ID
-id
-id
-JOB_ID</columns>
+        <columns>id
+JOB_ID
+JOB_ID
+id</columns>
         <primary>1</primary>
       </key>
       <column id="343" parent="43" name="JOB_AUDIT_ID">

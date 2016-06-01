@@ -12,7 +12,7 @@ get 'nps/submitNps'
 
   get 'suggest/getWhatsAppShareLink'
 
-
+get 'suggest/index_orca'
   get 'suggest/verifyPhoneCall'
   get 'suggest/makePhoneCall'
   post 'suggest/makePhoneCall'

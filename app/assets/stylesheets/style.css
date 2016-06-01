@@ -1,14 +1,14 @@
 .input-group-addon{
-	background-color: transparent;
+    background-color: transparent;
 }
 .input-group .form-control[type="text"]{
-	padding: 10px 30px 10px 10px;
+    padding: 10px 30px 10px 10px;
 }
 .form-group-wrapper{
-	position: relative;
+    position: relative;
 }
 .input-group-addon.remove{
-	border: 0 none;
+    border: 0 none;
     position: absolute;
     right: 1px;
     z-index: 99;
@@ -17,16 +17,17 @@
     padding: 10px 20px 10px 10px;
 }
 .header{
-	padding: 0px 15px 15px;
+    padding: 0px 15px 15px;
     display: table;
     width: 100%;
 }
-.header .logo{
-    margin-top: 5px;
-	width: 50px;
+
+.logo {
+    margin-top: 15px;
+    width: 90px;
 }
 .grey{
-	color: #c0c0c0;
+    color: #c0c0c0;
 }
 .header .text{
     vertical-align: middle;
@@ -37,78 +38,80 @@
     font-size: 1.8rem;
 }
 .screenWrapper{
-	overflow: hidden;
-	position: relative;
+    overflow: hidden;
+    position: relative;
 }
 .screen{
-	display: table;
-	width: 100%;
-	transition-duration: 0.3s;
-	transition-timing-function: ease;
+    display: table;
+    width: 100%;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
     position: absolute;
-	top: 0;
-	padding-top: 20px;
+    top: 0;
+    padding-top: 20px;
 }
 .upArr, .downArr{
-	text-align: center;
-	clear: both;
+    text-align: center;
+    clear: both;
 }
 .upArr{
-	display: table-header-group;
+    display: table-header-group;
 }
 .downArr{
-	display: table-footer-group;
+    display: table-footer-group;
 }
 fieldset{
-	padding: 0;
+    padding: 0;
     margin: 0;
     border: 1px solid silver;
 }
 legend{
-	width: auto;
-	padding: 0 20px;
+    width: auto;
+    padding: 0 20px;
     font-size: 16px;
-	border-bottom: 0 none;
+    border-bottom: 0 none;
     margin-bottom: 5px;
 }
 .routeHeading{
-	padding: 0;
-	font-weight: 600;
+    padding: 0;
+    font-weight: 600;
 }
 .routeHeading .routeCreated{
-	text-decoration: underline;
-	color: #337ab7;
-	display: block;
-	margin-bottom: 10px;
-	font-weight: 400;
+    text-decoration: underline;
+    color: #3eb6b5;
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 400;
 }
 .slotHeading{
-	font-weight: 600;
-	cursor: pointer;
+    font-weight: 600;
+    cursor: pointer;
 }
 .slotRow{
     padding: 10px 0 0 0px;
-	cursor: pointer;
+    cursor: pointer;
 }
 .routeCount{
-	margin-top: 10px;
+    margin-top: 10px;
 }
 .row.social {
     position: absolute;
     width: 100%;
-	bottom: 0px;
+    bottom: 0px;
 }
 .social > div {
-    background-color: #428bca;
-	background-color: #428bca;
+    background-color: #3eb6b5;
+    background-color: #3eb6b5;
     position: absolute;
     bottom: 0px;
     width: 100%;
+    background-color: #3eb6b5;
+;
 }
 .social > div > span {
     color: #ffffff;
     padding: 15px;
-	cursor: pointer;
+    cursor: pointer;
 }
 em {
     font-size: 12px;
@@ -116,11 +119,11 @@ em {
 }
 
 .fa-angle-double-up, .fa-angle-double-down{
-	padding: 10px 12px;
+    padding: 10px 12px;
     border-radius: 50%;
     border: 1px solid #c0c0c0;
     margin-bottom: 15px;
-	cursor: pointer;
+    cursor: pointer;
 }
 .bounce{
     text-decoration: underline;
@@ -130,63 +133,64 @@ em {
     width: 100%;
     z-index: -1;
     font-size: 10px;
-	cursor: pointer;
+    cursor: pointer;
+
 }
 .submitsurvey {
 
 }
 .headText{
-	padding: 0 58px;
-	font-size: 18px;
+    padding: 0 58px;
+    font-size: 18px;
 }
 .headText.headText2{
-	padding: 0 15px;
+    padding: 0 15px;
 }
 .headText.headText3{
-	padding: 0 44px;
+    padding: 0 44px;
 }
 .headText .highlight{
-	font-size: 1.8rem;
+    font-size: 1.8rem;
     font-weight: 600;
 }
 .headText.headText2 .highlight{
-	line-height: 6rem;
+    line-height: 6rem;
 }
 .headText.headText3 .highlight{
-	line-height: 7rem;
+    line-height: 7rem;
 }
 span.slots {
     text-decoration: underline;
 }
 .loader{
-	display: none;
-	text-align: center;
-	width: 100%;
+    display: none;
+    text-align: center;
+    width: 100%;
 }
 .error{
-	color: #a94442;
-	font-size: 12px;
+    color: #a94442;
+    font-size: 12px;
 }
 .modal-body .bounce{
-	position: relative;
-	margin-top: 30px;
+    position: relative;
+    margin-top: 30px;
 }
 .submitsurvey {
     width: 100%;
-	font-size: 18px;
+    font-size: 18px;
 }
 .fa-social{
-	color: #ffffff;
+    color: #ffffff;
     text-decoration: none;
 }
 #gMap{
-	
+
 }
 .routeInfo{
-	
+
 }
 .routePtName{
-	display: inline-block;
+    display: inline-block;
     width: 157px;
     white-space: nowrap;
     overflow: hidden !important;
@@ -197,17 +201,17 @@ span.slots {
     padding: 0 6px;
 }
 .carousel{
-	width: 100%;
-	text-align: center;
-	margin: 10px 0;
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
 }
 .carousel .leftbtn,
 .carousel .rightbtn{
-	display: inline-block;
+    display: inline-block;
     vertical-align: middle;
 }
 .carousel .btnsWrapper{
-	width: 254px;
+    width: 254px;
     display: inline-block;
     overflow: hidden;
     vertical-align: top;
@@ -215,103 +219,103 @@ span.slots {
     height: 50px;
 }
 .carousel .btnsWrapper .btns{
-	display: block;
+    display: block;
     position: relative;
-	transition-duration: 0.3s;
-	transition-timing-function: ease;
-	left:0;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    left:0;
 }
 .btnTime{
-	min-width:100px;
-	width:100px;
-	max-width:100px;
-	float: left;
-	margin: 0 2px;
+    min-width:100px;
+    width:100px;
+    max-width:100px;
+    float: left;
+    margin: 0 2px;
 }
 .btn-group-justified .btn{
-	float: left;
-	position: relative;
+    float: left;
+    position: relative;
 }
 .fieldset {
     border: 1px solid #c0c0c0;
-	text-align: center;
+    text-align: center;
 }
 .mapMsg{
-	margin: 5px 0;
+    margin: 5px 0;
 }
 .seats{
-	font-weight: 600;
+    font-weight: 600;
 }
 .fillingfast{
-	margin: 5px 0;
+    margin: 5px 0;
     font-size: 12px;
-	text-align: center;
+    text-align: center;
 }
 .line1{
-	text-align: center;
+    text-align: center;
     margin: 10px 0;
     font-size: 24px;
 }
 .line2{
-	text-align: center;
+    text-align: center;
     margin: 10px 0;
-    font-size: 18px;	
+    font-size: 18px;
 }
 span.live{
-	position: absolute;
+    position: absolute;
     top: 32px;
     left: 0;
     width: 100%;
     font-size: 12px;
 }
 .ambassador{
-	width: 315px;
+    width: 315px;
     text-align: center;
     font-size: 18px;
 }
 .promoMsg{
-	padding: 0 10px;
+    padding: 0 10px;
     font-size: 16px;
 }
 .promoMsg em{
-	font-size: 18px;
+    font-size: 18px;
     text-decoration: underline;
-    color: #2e6da4;
+    color: #3eb6b5;
 }
 .promoMsg .extra{
-	margin-top: 15px;
+    margin-top: 15px;
     font-size: 13px;
     text-decoration: underline;
 }
 .confirmMsg{
-	margin: 15px 10px;
+    margin: 15px 10px;
     text-align: center;
 }
 .confirmMsg em{
-	font-size: 16px;
-    color: #2e6da4;
+    font-size: 16px;
+    color: #3eb6b5;
     text-decoration: underline;
 }
 .payments .home,
 .payments .office{
-	
+
 }
 .box{
-	border: 1px solid #c0c0c0;
+    border: 1px solid #c0c0c0;
     margin-bottom: 10px;
     padding: 10px;
 }
 .boxrow{
-	width: 100%;
+    width: 100%;
     float: left;
     margin-bottom: 5px;
 }
 .boxrow .heading{
-	float: left;
+    float: left;
     font-weight: 600;
 }
 .boxrow .change{
-	float: right;
+    float: right;
     text-decoration: underline;
 }
 .routeinfo {
@@ -326,13 +330,13 @@ span.live{
     display: table;
 }
 fieldset.pay{
-	padding: 10px;
+    padding: 10px;
 }
 .headText.headText4{
-	padding: 10px 0px;
+    padding: 10px 0px;
 }
 .full{
-	width: 100%;
+    width: 100%;
 }
 span.highlight.lesshighlight {
     line-height: 4rem !important;
@@ -371,6 +375,7 @@ span.highlight.lesshighlight {
 
 }
 .submit-butt{
+
     display: table-footer-group;
     width: 100%;
     display: block !important;
@@ -381,6 +386,9 @@ span.highlight.lesshighlight {
 
     position: absolute;
     bottom:10px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
 
 }
 .upArr{
@@ -410,7 +418,7 @@ span.highlight.lesshighlight {
 .inputClicked_officeLocation .officeL{
 
     position: absolute;
-    top:130px;
+    top:0px;
 
 }
 .inputClicked_officeLocation .homeL{
@@ -463,6 +471,7 @@ span.highlight.lesshighlight {
     opacity: 0.8;
     z-index: 10000;
 }
+.
 .carousel-inner .active.left { left: -33%; }
 .carousel-inner .next        { left:  33%; }
 .carousel-inner .prev        { left: -33%; }
@@ -475,11 +484,7 @@ span.highlight.lesshighlight {
     background-color: #000;
     opacity: 0.5;
 }
-.carousel-control{
 
-    width: 15px !important;
-
-}
 .allow-notification {
     position: absolute;
     top: 50%;
@@ -491,19 +496,133 @@ span.highlight.lesshighlight {
     width: 15px !important;
 
 }
-.bott{
 
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    background: rgb(70, 184, 218);
-    width: 100%;
-    height: 32px;
-    font-size: 20px;
-    text-transform: uppercase;
-    color: #fff;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 32px;
+.inline {
+    display:inline;
 }
 
+
+.overlay-logo{
+    border-right: solid;
+    border-right-color: #3eb6b5;
+}
+
+section{
+    width: 100%;
+    height:100px;
+    background: white;
+    padding: 10px;
+}
+div#overlay-logo{
+    text-align: center;
+    margin-top:10px;
+    margin-right:2px;
+}
+
+div#overlay-introduction {
+    margin-left: 10%;
+    border-left: 1px solid #3eb6b5;
+    padding-left: 10px;
+}
+
+.route-information{
+    color: white;
+    margin:12px;
+
+}
+
+.route-information-image {
+    vertical-align:middle;
+    float: left;
+}
+
+section#overlay-one{
+    height:10.87%;
+    display:flex;
+    padding-top:5px;
+}
+
+section#overlay-two{
+    height:41.3%;
+    background-color:#3eb6b5;
+}
+section#overlay-three{
+    width: 80%;
+    height: 42.17%;
+    display:none;
+    background: -webkit-linear-gradient(bottom, grey, grey 30%, white 30%, white);
+}
+
+img#overlay-arrow{
+    float:left;
+    vertical-align:middle;
+    max-height: 20px;
+}
+
+div#home-to-office{
+    display:flex;
+    align-items:center;
+    max-height:15px;
+    margin:5px;
+    margin-top:20px;
+}
+
+.flex{
+    display: -webkit-flex;
+    display:flex;
+    align-items:center;
+}
+
+.flex-columns{
+    display:-webkit-flex;
+    display:flex;
+    flex-direction: column;
+    -webkit-flex-direction:  column;
+    margin: 0px;
+}
+
+p, h1, h2, h3, h4 {
+    font-family: Lato;
+    margin: 5px;
+    font-weight:normal;
+}
+
+div#overlay-starting-at {
+    color: grey;
+    margin-left: 10px;
+    margin-right:10px;
+    margin-top:0px;
+}
+
+hr {
+    border-color: grey;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+div#assured-seats {
+    color:#333333;
+    margin-left:10px;
+}
+
+div#pickup-drop{
+    color:#333333;
+    margin: 10px;
+    margin-left:4px;
+}
+#orcaoverlay{
+
+    position: fixed;
+    width: 90%;
+    top: 74px;
+    left: 5%;
+    display:none;
+    z-index: 1000;
+}
+#orcacross{
+
+    position: absolute;
+    top: 0px;
+    right: 4px;
+    font-size: 23px;
+}
