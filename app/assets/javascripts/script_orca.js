@@ -498,8 +498,11 @@ function validateMobileInput(num){
 
                 }else if (stage==11){
 
-                    alert("Thank you for suggestion.Your number is verfied");
-                    jQuery('#route_live').html("Hey!! Your routes are almost live");
+
+                    if (!info.is_mobile_verified) {
+                        alert("Thank you for suggestion.Your number is verfied");
+                        jQuery('#route_live').html("Hey!! Your routes are almost live");
+                    }
                 }
             }else{
                 $('#phoneModal .error').html('invalid mobile number').fadeIn();
@@ -910,7 +913,7 @@ function switchScreen(scrno, obj){
             html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
             html += '<div class="modal-dialog modal-sm">';
             html += '<div class="modal-content">';
-            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class=""><em>You will receive a missed call on <i></i>. Press 1 to confirm</em><img style="display:none;" src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
+            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class=""><em>You will receive a confirmation call.<i></i>. Press press 1 to confirm</em><img style="display:none;" src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
             html += '</div></div></div>';
             $('#phoneModal .error').html('').hide();
             $("div.notInterested").hide();
@@ -980,8 +983,13 @@ function switchScreen(scrno, obj){
             }
             var eSlots = '';
 
-            info.pushSubscriptionStatus = window.Notification.permission;
-            ga('send', 'event', 'chromeNotificationStatus',window.Notification.permission);
+            if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+                info.pushSubscriptionStatus = window.Notification.permission;
+                ga('send', 'event', 'chromeNotificationStatus', window.Notification.permission);
+            }else{
+
+                info.pushSubscriptionStatus="safari_notpresent";
+            }
             if(info.leavework != undefined){
                 $.each(info.leavework, function(key, value){
                     if(key != info.leavework.length-1){
@@ -1175,7 +1183,7 @@ function switchScreen(scrno, obj){
             html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
             html += '<div class="modal-dialog modal-sm">';
             html += '<div class="modal-content">';
-            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class=""><em>You will receive a missed call on <i></i>. Press 1 to confirm</em><img style="display:none;" src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
+            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class=""><em>You will receive a confirmation call.<i></i>. Press press 1 to confirm</em><img style="display:none;" src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
             html += '</div></div></div>';
             $(obj).html(html);
             info.route_type="live";
@@ -1813,14 +1821,14 @@ function getOrcaOverlay(){
 var html='<div id="orcaoverlay">';
     
     html+='<div id="orcacross">X</div>';
-html+='<section id = "overlay-one" >';
+html+='<section id = "overlay-one" style="display:none;">';
     html+='        <div style="color:#3eb6b5"> <h1 style="font-weight: bold">ORRCA</h1></div>';
     html+=' <div id="overlay-introduction">';
     html+=' <div style="color:#333333"><h4 style="margin-bottom: 2px">Introducing</h4></div>';
     html+=' <div style="color:grey"><h1 style="margin-top:2px;font-size:16px;">#MakeMyRoute</h1></div>';
     html+='</div>';
     html+='</section>';
-    html+='<section id="overlay-two">';
+    html+='<section id="overlay-two" style="margin-top:20px;">';
     html+='<h4 style="font-weight: bold">Outer Ring Road Companies Association</h4>';
     html+='<p>';
     html+='To facilitate home office travel, ORRCA invites you to share your office and home address and preferred time of commute. Using your suggestions we will revert to you shortly with a travel solution that is comfortable and reliable';

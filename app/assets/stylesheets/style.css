@@ -622,7 +622,7 @@ div#pickup-drop{
 #orcacross{
 
     position: absolute;
-    top: 0px;
+    top: 20px;
     right: 4px;
     font-size: 23px;
 }
