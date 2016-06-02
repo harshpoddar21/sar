@@ -350,16 +350,16 @@ span.highlight.lesshighlight {
     position: absolute;
     bottom: 0px;
 }
-.container_fluid{
 
-    height:100%;
-}
 .fullheight,.screen{
 
 
     height:100%;
     display:block;
+}
 
+.screen {
+    padding-top:2px;
 }
 
 .paynow {
@@ -437,8 +437,8 @@ span.highlight.lesshighlight {
 .loader_inner {
     border: 16px solid #f3f3f3;
     border-radius: 50%;
-    border-top: 16px solid blue;
-    border-bottom: 16px solid blue;
+    border-top: 16px solid #3eb6b5;
+    border-bottom: 16px solid #3eb6b5;
     width: 120px;
     position: absolute;
     top:50%;
@@ -497,6 +497,11 @@ span.highlight.lesshighlight {
 
 }
 
+.container_fluid {
+    height:100%;
+    margin-top:-5px;
+}
+
 .inline {
     display:inline;
 }
@@ -511,7 +516,7 @@ section{
     width: 100%;
     height:100px;
     background: white;
-    padding: 10px;
+    padding: 2px;
 }
 div#overlay-logo{
     text-align: center;
@@ -527,7 +532,7 @@ div#overlay-introduction {
 
 .route-information{
     color: white;
-    margin:12px;
+    margin:5px;
 
 }
 
@@ -547,9 +552,8 @@ section#overlay-two{
     background-color:#3eb6b5;
 }
 section#overlay-three{
-    width: 80%;
+    width: 100%;
     height: 42.17%;
-    display:none;
     background: -webkit-linear-gradient(bottom, grey, grey 30%, white 30%, white);
 }
 
@@ -564,7 +568,7 @@ div#home-to-office{
     align-items:center;
     max-height:15px;
     margin:5px;
-    margin-top:20px;
+
 }
 
 .flex{
@@ -596,8 +600,7 @@ div#overlay-starting-at {
 
 hr {
     border-color: grey;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin:5px;
 }
 
 div#assured-seats {
@@ -610,6 +613,20 @@ div#pickup-drop{
     margin: 10px;
     margin-left:4px;
 }
+.btn-primary, .btn-info {
+    background-color: #3eb6b5!important;
+    border-color: #3c5daa!important;
+}
+
+body {
+    font-family: "Lato Normal 400", Lato, "Helvetica Neue",Helvetica,Arial,sans-serif!important;
+    color:#333333!important;
+}
+
+.btn:focus{
+    outline: #ef4050!important;
+}
+
 #orcaoverlay{
 
     position: fixed;
@@ -625,4 +642,33 @@ div#pickup-drop{
     top: 20px;
     right: 4px;
     font-size: 23px;
+}
+#aboutUsOverlay{
+
+    position: fixed;
+    width: 100%;
+    top: 0px;
+    display:none;
+    z-index: 1000;
+}
+#aboutUsCross{
+
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.h1-overlay{
+    font-size: 24px;
+    margin: 2px;
+}
+
+.vanImage {
+    width:100%;
+    margin-top:-30px;
+    margin-bottom:20px;
+}
+
+.carousel-center{
+    padding: 0px!important;
 }

@@ -1835,9 +1835,7 @@ html+='<section id = "overlay-one" style="display:none;">';
     html+='With your support, we can aspire to change the face of commute in bangalore. Shared commute is safe for you and the environment. Our solution will be flexible, and give you several timing options. It will bring you closer to your home for pick up and drop off. Travel with colleagues and like minded people; and use the extra time to relax yourself. Your daily commute is no longer about fighting traffic, but about reaching your destination full of energy and with a smile.';
     html+='</p>';
     html+='</section>';
-    html+='<section id="overlay-three">';
-    html+=' <div><img width="100%" src="myor.shuttl.com/images/van2.png"></div>';
-    html+=' </section></div>';
+    html+='</div>';
 
 return html;
 }
