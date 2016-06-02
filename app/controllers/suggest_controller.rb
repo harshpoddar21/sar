@@ -312,5 +312,13 @@ class SuggestController < ApplicationController
     headers['Access-Control-Max-Age'] = '1728000'
   end
 
+  def base
+    if (/bus2work/=~request.host)
+      redirect_to :controller=>:suggest,:action=>:index_orca
+    else
+      redirect_to :controller=>:suggest,:action=>:index
+    end
+  end
+
 
 end

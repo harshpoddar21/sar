@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'suggest/showRouteFoundFromSlots'
 get 'nps/submitNps'
+  root 'suggest#base'
 
   get 'suggest/getSlots'
   get 'suggest/getFromTo'
