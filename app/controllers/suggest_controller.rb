@@ -274,7 +274,7 @@ class SuggestController < ApplicationController
 
   def redirectToPlayStore
 
-    if ( /ios/=~request.user_agent)
+    if (/iPhone/=~request.user_agent)
       redirect_to "https://itunes.apple.com/in/app/shuttl-cool-smart-bus/id1043422614?mt=8"
     else
       redirect_to "http://play.google.com/store/apps/details?id=app.goplus.in.myapplication"
