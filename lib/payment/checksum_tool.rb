@@ -17,7 +17,7 @@ class ChecksumTool
     return_array = paytmparams
 
     is_valid_checksum = new_pg_verify_checksum(paytmparams, checksum_hash, PAYTM_MERCHANT_KEY)
-    if(is_valid_checksum)
+    if is_valid_checksum
       return_array["IS_CHECKSUM_VALID"] = "Y"
     else
       return_array["IS_CHECKSUM_VALID"] = "N"

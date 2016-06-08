@@ -157,21 +157,27 @@ class PaymentController < ApplicationController
   end
 
   def paymentDone
-    params=ChecksumTool.new.get_checksum_verified_array params
+    checkTool=ChecksumTool.new
+    paytmParams=Hash.new
+    params["payment"].each do |key,value|
+      paytmParams[key]=value
+    end
+    params1=checkTool.get_checksum_verified_array paytmParams
 
-    if (params["IS_CHECKSUM_VALID"]=="Y")
-      order_id=params[:ORDERID]
+
+    if params1["IS_CHECKSUM_VALID"]=="Y"
+      order_id=params1[:ORDERID]
       if /_/=~order_id
         order_id=order_id.split "_"
         order_id=order_id[1]
       end
       transaction=Transaction.find_by(:id=>order_id)
-      if (params[:STATUS]=="TXN_SUCCESS")
+      if params1[:STATUS]=="TXN_SUCCESS"
        transaction.status=1
        transaction.save
        session[PAYMENT_KEY]=PAYMENT_SUCCESS
       else
-        transaction.comments=params.to_json
+        transaction.comments=params1.to_json
         transaction.save
 
         session[PAYMENT_KEY]=PAYMENT_FAILED
