@@ -159,7 +159,10 @@ class PaymentController < ApplicationController
   def paymentDone
     checkTool=ChecksumTool.new
     paytmParams=Hash.new
-    params["payment"].each do |key,value|
+    params.each do |key,value|
+      if key=="controller" || key=="action"
+        next
+      end
       paytmParams[key]=value
     end
     params1=checkTool.get_checksum_verified_array paytmParams
