@@ -1,4 +1,8 @@
+
+
+
 /* google auto suggestor */
+
 var px = 0;
 var refer = {};
 var info = {};
@@ -86,39 +90,38 @@ function initAutocomplete() {
                 strokeOpacity: 1,
                 strokeWeight: 3
             });
-            var path=poly.getPath();
-            path.push(new google.maps.LatLng(info.homelat,info.homelng));
-            path.push(new google.maps.LatLng(info.officelat,info.officelng));
-            var encodedPoints=google.maps.geometry.encoding.encodePath(path);
+            var path = poly.getPath();
+            path.push(new google.maps.LatLng(info.homelat, info.homelng));
+            path.push(new google.maps.LatLng(info.officelat, info.officelng));
+            var encodedPoints = google.maps.geometry.encoding.encodePath(path);
+
 
             showLoader();
             $.ajax({
-                url:'getSlots?path='+encodedPoints
-            }).done(function(response){
+                url: 'http://myor.shuttl.com/suggest/getSlots?path=' + encodedPoints
+            }).done(function (response) {
                 responseJson = response;
                 hideLoader();
-				if(response.route_type == 'Live_route' || response.route_type == 'Shipped_route'){
+                if (response.route_type == 'Live_route') {
                     var slot = response.slots;
-                    info.route_type=response.route_type;
-                    info.routeid=response.route_id;
-                    $.each(slot, function(key, value){
-                        var time = formatSectoIST(value*60);
-                        slotBtns += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="'+time+'">'+time+'<span class="live">(live)</span></button></div>';
+                    $.each(slot, function (key, value) {
+                        var time = formatSectoIST(value * 60);
+                        slotBtns += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="' + time + '">' + time + '<span class="live">(live)</span></button></div>';
                     });
                     stage = 8;
-                    window.location.hash = 'stage'+stage;
+                    window.location.hash = 'stage' + stage;
                     var handle = $('.screenWrapper').find('.screen');
                     var px = $(handle).outerHeight();
                     var newHandle = createScreenBox(handle, 'after', px);
                     setHeight();
-                    $(handle).css('top','-'+px+'px')
-                    setTimeout(function(){
-                        $(newHandle).css('top','0');
-                    },0);
-                    setTimeout(function(){
+                    $(handle).css('top', '-' + px + 'px')
+                    setTimeout(function () {
+                        $(newHandle).css('top', '0');
+                    }, 0);
+                    setTimeout(function () {
                         $(handle).remove();
-                    },300);
-                }else{
+                    }, 300);
+                } else {
                     $('.downArr .fa-angle-double-down').trigger('click');
                 }
             })
@@ -492,7 +495,7 @@ function validatePhone(){
 var tries=0;
 function validateMobileInput(num){
     tries++;
-    if (stage==4 || stage==10) {
+    if (stage==4) {
         onMobileVerified(num);
     }
     $.ajax({
@@ -524,17 +527,8 @@ function validateMobileInput(num){
 
                 }else if (stage==10){
 
-                    if (paymentFlow==1) {
-                        onForPaymentMobileVerified();
-                    }
+                    onForPaymentMobileVerified();
 
-                }else if (stage==11){
-
-
-                    if (!info.is_mobile_verified) {
-                        alert("Thank you for suggestion.Your number is verfied");
-                        jQuery('#route_live').html("Hey!! Your routes are almost live");
-                    }
                 }
             }else{
                 $('#phoneModal .error').html('invalid mobile number').fadeIn();
@@ -556,12 +550,7 @@ function onMobileVerified(num){
     refer.stage = stage;
     refer.click = 'down';
     if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1){
-        if (stage!=10) {
-            stage = 5;
-        }else{
-
-            stage=11;
-        }
+        stage = 5;
     }
     else
         stage=15;
@@ -759,7 +748,8 @@ function switchScreen(scrno, obj){
     ga('send', 'event', 'screen_no', scrno);
     switch(scrno){
         case 1:
-            var html =  '<div class="headText text-center">To <span class="highlight"><br/>#MakeYourOwnRoute</span></div>';
+
+            var html = '<div class="headText text-center"> For daily pickup and drop from <br> Home to Office <span class="highlight"><br/>#MakeYourOwnRoute</span></div>';
             html += '<div class="col-md-12 homeL"><br /><br />';
             html += '<div class="form-group form-group-wrapper">';
             html += '<div class="input-group">';
@@ -779,8 +769,8 @@ function switchScreen(scrno, obj){
             html += '<div class="input-group-addon remove"><span class="fa fa-remove"></span></div>';
             html += '</div></div></div>';
             html += '<div class="downArr dowfirst"><span class="fa fa-angle-double-down"></span></div>';
-         
-            html += aboutUsOrrca();
+            html += '<div class="bounce">I\'m not interested</div>';
+            //html += aboutUsOrrca();
             $(obj).html(html)
                 .find('.downArr').hide();
 
@@ -791,7 +781,7 @@ function switchScreen(scrno, obj){
                         .find('#officeLocation').val(info.officeName);
                 }
             }
-            
+            notInterested();
             break;
 
         case 2:
@@ -830,6 +820,7 @@ function switchScreen(scrno, obj){
             html += '</div></div></div>';
             html += '<br/><h6 class="text-center">( select top 2 )</h6>';
             html += '<div class="downArr"><span class="fa fa-angle-double-down"></span></div>';
+            html += '<div class="bounce">I\'m not interested</div>';
             $(obj).html(html)
                 .find('.downArr').hide().end()
                 .find('.upArr').hide();
@@ -847,6 +838,7 @@ function switchScreen(scrno, obj){
                 });
             }
             timeCapture();
+            notInterested();
             break;
 
         case 3:
@@ -902,6 +894,7 @@ function switchScreen(scrno, obj){
             }
 
             timeCapture();
+            notInterested();
             break;
 
         case 4:
@@ -947,7 +940,7 @@ function switchScreen(scrno, obj){
             html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
             html += '<div class="modal-dialog modal-sm">';
             html += '<div class="modal-content">';
-            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class=""><em>You will receive a confirmation call.<i></i>. Press press 1 to confirm</em><img style="display:none;" src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
+            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class="loader"><em>You will receive a missed call on <i></i>. Press 1 to confirm</em><img src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
             html += '</div></div></div>';
             $('#phoneModal .error').html('').hide();
             $("div.notInterested").hide();
@@ -963,7 +956,6 @@ function switchScreen(scrno, obj){
                 }
             }
 
-            info.route_type="new";
             if(info.commutework != undefined){
                 $.each(info.commutework, function(key, value){
                     $(obj).find('button[data-value = "'+value+'"]').removeClass('btn-default').addClass('btn-info');
@@ -992,7 +984,7 @@ function switchScreen(scrno, obj){
             html += '<h6 class="text-center">( Click above to change info )</h6>';
             html += '</fieldset>';
             html += '<p class="routeCount"><span class="count">3</span> Other people have made same route</p><br/>';
-            html += '<div class="headText headText3 text-center">To launch the route sooner <span class="highlight">#KeepSpreadingTheWord</span></div>';
+            html += '<div class="headText headText3 text-center">To launch the route soon <span class="highlight">#JustSpreadTheWord</span></div>';
             html += '<div class="row social">';
             html += '<div class="col-md-12">';
             /*html += '<span class="fa fa-google-plus col-md-3"></span>';*/
@@ -1017,13 +1009,8 @@ function switchScreen(scrno, obj){
             }
             var eSlots = '';
 
-            if (!(navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1)) {
-                info.pushSubscriptionStatus = window.Notification.permission;
-                ga('send', 'event', 'chromeNotificationStatus', window.Notification.permission);
-            }else{
-
-                info.pushSubscriptionStatus="safari_notpresent";
-            }
+            info.pushSubscriptionStatus = window.Notification.permission;
+            ga('send', 'event', 'chromeNotificationStatus',window.Notification.permission);
             if(info.leavework != undefined){
                 $.each(info.leavework, function(key, value){
                     if(key != info.leavework.length-1){
@@ -1069,12 +1056,12 @@ function switchScreen(scrno, obj){
             html += '<div class="mapMsg"><span class="seats"><span class="cur">123</span>/<span class="total">200</span></span> travellers confirmed </div>';
             html += '<div class="fillingfast">13 days to go live</div>';
             html += '</div>';
-            html += '<div class="line1">To travel on this route, tell us</div>';
+            html += '<div class="line2">To travel on this route, tell us</div>';
             html += '<div class="line2">What time do you have to reach work?</div>';
             html += '<div class="carousel slide" id="mycarousel">';
 
             //html += '<span class="btnsWrapper">';
-            html += '<div class="col-md-12 text center carousel-center">';
+            html += '<div >';
             html += '<div class="carousel-inner btns btn-group-justified" data-roletype="reachwork">';
             html += slotBtns;
 
@@ -1124,16 +1111,15 @@ function switchScreen(scrno, obj){
             html += '<div class="fieldset">';
             html += '<div class="routeInfo"><span class="routePtName">'+info.homeName+' to '+info.officeName +'</span></div>';
             html += '<div id="gMap"></div>';
-            html += '<div class="mapMsg"><span class="seats"><span class="cur">14</span>/<span class="total">20</span></span> seats are full</div>';
-            html += '<div class="fillingfast">4 more ppl required to launch route in 8 days</div>';
+            html += '<div class="mapMsg"><span class="seats"><span class="cur">123</span>/<span class="total">200</span></span> travellers confirmed </div>';
+            html += '<div class="fillingfast">13 days to go live</div>';
             html += '</div>';
             html += '<div class="line2">What time do you leave from work?</div>';
             html += '<div class="carousel slide" id="mycarousel2">';
 
             //html += '<span class="btnsWrapper">';
-            html += '<div class="col-md-12 text center carousel-center">';
+            html += '<div>';
             html += '<div class="carousel-inner btns btn-group-justified" data-roletype="leavework">';
-
             html += slotBtns;
             /*
              html += '<button type="button" class="btn btn-default btnTime" data-value="99:99">99:99<span class="live">(live)</span></button>';
@@ -1185,14 +1171,13 @@ function switchScreen(scrno, obj){
             var html = '<div class="col-md-12 text-center fullheight">';
             html += '<h4 style="margin:0;" class="text-center">Hey! Your Routes are almost LIVE..</h4><br />';
             html += '<fieldset class="pay">';
-            html += '<legend class="payments"><span class="home">'+info.homeAddressShortened+'</span> <> <span class="office">'+info.officeAddressShortened+'</span></legend>';
             html += '<div class="box">';
             html += '<div class="boxrow">';
             html += '<span class="heading">Going To Work</span>';
             html += '<span class="change" onclick="goToReachWorkScreen(this);">change</span>';
             html += '</div>';
-            html += '<div class="routeinfo">' + routeDetailsToWork("departure")+'</div>';
-            html += '<div class="routeinfo">' + routeDetailsToWork("arrival")+ '</div>';
+            html += '<div class="routeinfoPayment">' + routeDetailsToWork("departure")+'</div>';
+            html += '<div class="routeinfoPayment">' + routeDetailsToWork("arrival")+ '</div>';
             html += '<div class="fillingfast" style="display:none;">8 more ppl required to launch route</div>';
             html += '</div>';
 
@@ -1201,30 +1186,25 @@ function switchScreen(scrno, obj){
             html += '<span class="heading">Return From Work</span>';
             html += '<span class="change"  onclick="goToLeaveWorkScreen(this);">change</span>';
             html += '</div>';
-            html += '<div class="routeinfo">'+ routeDetailsFromWork("departure") +'</div>';
-            html += '<div class="routeinfo">'+ routeDetailsFromWork("arrival")+'</div>';
+            html += '<div class="routeinfoPayment">'+ routeDetailsFromWork("departure") +'</div>';
+            html += '<div class="routeinfoPayment">'+ routeDetailsFromWork("arrival")+'</div>';
             html += '<div class="fillingfast" style="display:none;">4 more ppl required to launch route</div>';
             html += '</div>';
 
             html += '</fieldset>';
-            html += '<div class="headText headText4 text-center">To travel on this route select a pass</div>';
+            html += '<div class="headText headText4 text-center">Select a pass to book your spot on this route</div>';
 
-             html += '<div class="text-capitalize paynow btn btn-primary"  data-value="499" style="width:189px">20-Rides @ 499</div>';
-             html += '<div class="text-capitalize paynow btn btn-primary" data-value="1800">Promo Monthly @ Rs 1800</div>';
-             html += '<div class="fillingfast">(we\'ll refund your money if the services aren\'t launched)</div>';
-
-            html += '<div class="row social" id="whatsapp" onclick="sendWhatsApp()">';
-            html += '<div class="col-md-12">';
-            html += '<span class="full" style="padding:20px;display:table;">Share Via WhatsApp</span>';
-            html += '</div></div>';
+            html += '<div class="text-capitalize paynow btn btn-primary col-xs-6 setHeight centerVertical" data-value="899">22 rides @ 899</div>';
+            html += '<div class="text-capitalize paynow btn btn-primary col-xs-6" data-value="3199"><div>Promo Monthly @ Rs 3199</div><div> (Unlimited Rides) </div></div>';
+            html += '<div class="fillingfast">(We will charge your freecharge wallet after 1 week\'s free trial)</div>';
             html += '</div>';
             html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
             html += '<div class="modal-dialog modal-sm">';
             html += '<div class="modal-content">';
-            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class="loader"><em>You will receive a missed call on <slot></slot>. Press 1 to confirm</em><img src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
+            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class="loader"><em>You will receive a missed call on <i></i>. Press 1 to confirm</em><img src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
             html += '</div></div></div>';
             $(obj).html(html);
-            fillWhatsAppLink();
+            notInterested();
             $('.paynow').on('click', function(){
                 var rs = $(this).attr('data-value');
             });
@@ -1234,7 +1214,7 @@ function switchScreen(scrno, obj){
 
         case 12:
             var html = '<div class="col-md-12 text-center fullheight">';
-            html += '<h4 style="margin:0;" class="text-center" id="route_live">Awaiting Phone No Confirmation</h4><br />';
+            html += '<h4 style="margin:0;" class="text-center">Hey! Your Routes are almost LIVE..</h4><br />';
             html += '<fieldset class="pay">';
             html += '<legend class="payments"><span class="home">'+info.homeAddressShortened+'</span> <> <span class="office">'+info.officeAddressShortened+'</span></legend>';
             html += '<div class="box">';
@@ -1320,7 +1300,7 @@ function switchScreen(scrno, obj){
             var html ='<div class="col-md-12 text-center fullheight">';
             html += '<h4 style="margin:0;" class="text-center allow-notification">To track your Shuttl and its arrival at your doorstep please click on "Allow"</h4><br />';
             html += '';
-            html+= '<div class="bott" onclick="changeToLastScreen();">submit</div>';
+            html+= '<div class="bott" onclick="changeToStage(5);">submit</div>';
             html += '</div>';
             $(obj).html(html);
 
@@ -1345,39 +1325,20 @@ function switchScreen(scrno, obj){
                             sub = pushSubscription;
                             console.log('Subscribed! Endpoint:', sub.endpoint);
                             info.subscriberID = sub.endpoint;
-                            if (info.route_type=="new"){
                             changeToStage(5);
-                                }else{
-
-                                changeToStage(11);
-                            }
                             //isSubscribed = true;
                         });
                     }).catch(function (error) {
                         console.log('Service Worker Error :^(', error);
-                        if (info.route_type=="new"){
-                            changeToStage(5);
-                        }else{
-
-                            changeToStage(11);
-                        }
+                        changeToStage(5);
                     });
                 }catch (error){
 
-                    if (info.route_type=="new"){
-                        changeToStage(5);
-                    }else{
-
-                        changeToStage(11);
-                    }
+                    changeToStage(5);
                 }
             }else{
-                if (info.route_type=="new"){
-                    changeToStage(5);
-                }else{
 
-                    changeToStage(11);
-                }
+                changeToStage(5);
             }
 
             // var trial=1;
@@ -1486,20 +1447,20 @@ function switchScreen(scrno, obj){
             html += '<div class="routeInfo"><span class="ambassador routePtName">Become the Route Ambassador</span></div>';
             html += '<p> Share your promo code:' + getOfflineSharePromoCode() + ' by sticking customized posters on your home and office notice boards</p>';
             html += '<div class="incentive"> Earn Rs. 25 credit for every new customer on this route</div>';
-            html += '<div class="mapMsg"><span class="seats"><span class="cur">14</span>/<span class="total">20</span></span> seats are full</div>';
+            html += '<div class="mapMsg"><span class="seats"><span class="cur">123</span>/<span class="total">200</span></span> travellers confi</div>';
             html += '</div>';
             html += '<div class="promoDetails"> Confirm the below details to receive 3 posters by mail within the week</div>';
             html += '<form role="form">';
             html += '<div class="form-group">';
-           // html += '<label for="full-name"> Full Name: </label>';
+            // html += '<label for="full-name"> Full Name: </label>';
             html += '<input type="text" class="form-control" id="full-name" placeholder="Full name">';
             html += '</div>';
             html += '<div class="form-group">';
-           // html += '<label for="email"> Email address: </label>';
+            // html += '<label for="email"> Email address: </label>';
             html += '<input type="email" class="form-control" id="email" placeholder="Email address">';
             html += '</div>';
             html += '<div class="form-group">';
-           // html += '<label for="home-address"> Home Address: </label>';
+            // html += '<label for="home-address"> Home Address: </label>';
             html += '<input readonly type="text" class="form-control" id="home-address" placeholder="Home address">';
             html += '</div>';
             html += '</form>';
@@ -1638,7 +1599,7 @@ function fillAdministrativeLevelDetails(){
 
                                         info["homeAddressShortened"]=results[0].address_components[i].short_name;
                                     }else {
-                                        info["homeAddressShortened"] = info["homeAddressShortened"]+","+results[0].address_components[i].short_name;
+                                        info["homeAddressShortened"] = info["homeAddressShortened"]+", "+results[0].address_components[i].short_name;
                                     }
                                     subLocalityFound=true;
 
@@ -1691,7 +1652,7 @@ function fillAdministrativeLevelDetails(){
 
                                     }else{
 
-                                        info["officeAddressShortened"]=info["officeAddressShortened"]+","+results[0].address_components[i].short_name;
+                                        info["officeAddressShortened"]=info["officeAddressShortened"]+", "+results[0].address_components[i].short_name;
 
                                     }
 
@@ -1750,9 +1711,7 @@ function initiatePaymentProcess(){
         jQuery('#phoneModal').modal("show");
     }else{
 
-        $('#phoneModal').modal('show');
-
-
+        changeToStage(11);
     }
 }
 
@@ -1877,10 +1836,47 @@ function carouselSlide(obj, status, slot) {
     }
 }
 
-
-$('input, select, textarea').on('focus blur', function(event) {
-    $('meta[name=viewport]').attr('content', 'width=device-width,initial-scale=1,maximum-scale=' + (event.type == 'blur' ? 10 : 1));
-});
+/*  function aboutUs() {
+ var html = '<div id="aboutUsOverlay">';
+ html += '<div id="aboutUsCross"> <i class="fa fa-times" aria-hidden="true"> </i> </div>';
+ html += '<section id = "overlay-one">';
+ html += '<div id="overlay-logo" ><img style ="max-width:100px" vertical-align=middle width =175% src="../images/shuttl_logo.png"></div>';
+ html += '<div id="overlay-introduction">';
+ html += '<div style="color:#333333"><h4 style="margin-bottom: 2px">Introducing</h4></div>';
+ html += '<div style="color:grey"><h1 class="h1-overlay" style="margin-top:2px">#MakeMyRoute</h1></div>';
+ html += '</div>';
+ html += '</section>';
+ html += '<section id="overlay-two">';
+ html += '<div id="home-to-office">';
+ html += '<div style="color:white"><h1 class="h1-overlay">Home</h1> </div>';
+ html += '<img id="overlay-arrow" src ="../images/arrow.png" alt="arrow">';
+ html += '<div style="color:white"><h1 class="h1-overlay">Office</h1> </div>';
+ html += '</div>';
+ html += '<div id="pickup-drop"> <p style="font-size:20px"> Pickup - Drop </p></div>';
+ html += '<div id="route-information">';
+ html += '<div class="flex">';
+ html += '<div class="route-information-image"><img style="max-height:40px" src="../images/route_icon.png" alt="icon" /></div>';
+ html += '<span class="route-information">';
+ html += '<p style="font-size:20px"> Direct routes from home to office</p>';
+ html += '</span>';
+ html += '</div>';
+ html += '<div class="flex">';
+ html += '<div class="route-information-image"><img style ="max-height:40px" src="../images/friends_icon.png" alt="icon" /></div>';
+ html += '<span class="route-information">';
+ html += '<p style="font-size:20px"> Travel with friends and colleagues</p>';
+ html += '</span>';
+ html += '</div>';
+ html += '</div>';
+ html += '</section>';
+ html += '<section id="overlay-three">';
+ html += '<div id="overlay-starting-at"> <h1 class="h1-overlay"> Starting @ Rs3/km </h1> </div>';
+ html += '<hr>';
+ html += '<div id="assured-seats"> <h4 style="word-spacing:5px"> AC buses | Assured seats </h4></div>';
+ html += '<div><img class="vanImage" src="../images/van2.png"></div>';
+ html += '</section>';
+ html += '</div>';
+ return html;
+ }*/
 
 
 function aboutUsOrrca(){
@@ -1903,54 +1899,34 @@ function aboutUsOrrca(){
     return html;
 }
 
-jQuery(document).ready(function(){
-    
-    setTimeout(function(){
+if (window.innerWidth< 750)
+{
+    jQuery(document).ready(function(){
 
-        if (jQuery('#orcaoverlay')!=null){
+        /*   setTimeout(function(){
+         if (jQuery('#aboutUsOverlay')!=null){
+         jQuery("#aboutUsOverlay").fadeIn();
+         jQuery('#aboutUsOverlay').click(function(){
+         jQuery('#aboutUsOverlay').fadeOut();
+         });
+         }
 
-            jQuery("#orcaoverlay").show();
+         },2000);*/
 
-            jQuery('#orcacross').click(function(){
+        setTimeout(function () {
+            if (jQuery('#aboutUsOrrcaOverlay') != null) {
+                jQuery("#aboutUsOrrcaOverlay").fadeIn();
+                jQuery("#aboutUsCross").fadeIn();
+                jQuery('#aboutUsCross').click(function () {
+                    jQuery('#aboutUsOrrcaOverlay').fadeOut();
+                    jQuery('#aboutUsCross').fadeOut();
+                });
+            }
 
-                jQuery('#orcaoverlay').hide();
-            });
-        }
-        
-    },2000);
-    
-});
-function changeToLastScreen(){
-
-    if (info.route_type=="new") {
-        changeToStage(5);
-    }else{
-
-        changeToStage(11);
-    }
+        },2000);
+    });
 }
-
-
-jQuery(document).ready(function () {
-
-    setTimeout(function () {
-        if (jQuery('#aboutUsOrrcaOverlay') != null && ('#aboutUsCross') != null) {
-            jQuery("#aboutUsOrrcaOverlay").fadeIn();
-            jQuery("#aboutUsCross").fadeIn();
-            jQuery('#aboutUsCross').click(function () {
-                jQuery('#aboutUsOrrcaOverlay').fadeOut();
-                jQuery('#aboutUsCross').fadeOut();
-            });
-        }
-
-    }, 2000);
-});
 
 function getOfflineSharePromoCode(){
     return "" ;
 }
-if(window.screen.orientation.lock)
-    window.screen.orientation.lock("portrait");
-
-
-

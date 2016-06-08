@@ -1,4 +1,5 @@
 /* google auto suggestor */
+
 var px = 0;
 var refer = {};
 var info = {};
@@ -7,9 +8,6 @@ var responseJson;
 var slotBtns = '';
 var morningSlot = 0;
 var eveningSlot = 88;
-var reg;
-var sub;
-var isSubscribed = false;
 
 
 function initAutocomplete() {
@@ -41,45 +39,29 @@ function initAutocomplete() {
 
     }
     if( (document.getElementById('officeLocation') != null) && (document.getElementById('homeLocation') != null) ){
-        var options = {
-            componentRestrictions:{country: 'in'}
-        };
-
         var homelocation = new google.maps.places.Autocomplete(
-            (document.getElementById('homeLocation')), options);
+            (document.getElementById('homeLocation')));
 
         var officelocation = new google.maps.places.Autocomplete(
-            (document.getElementById('officeLocation')), options);
+            (document.getElementById('officeLocation')));
 
         homelocation.addListener('place_changed', function() {
             $('.bounce').hide();
             var place1 = homelocation.getPlace();
-            info.homeName = place1.name;
             info.homeAddress = place1.formatted_address;
             info.homelat = place1.geometry.location.lat();
             info.homelng = place1.geometry.location.lng();
 
             fillAdministrativeLevelDetails();
 
-            if (info.officeAddress){
-                createRoute();
-            }
         });
         officelocation.addListener('place_changed', function() {
             var place1 = officelocation.getPlace();
-            info.officeName = place1.name;
             info.officeAddress = place1.formatted_address;
             info.officelat = place1.geometry.location.lat();
             info.officelng = place1.geometry.location.lng();
 
             fillAdministrativeLevelDetails();
-            if (info.homeAddress){
-                createRoute();
-            }
-
-        });
-
-        function createRoute() {
             $('.bounce').show();
             var poly = new google.maps.Polyline({
                 strokeColor: '#000000',
@@ -91,16 +73,15 @@ function initAutocomplete() {
             path.push(new google.maps.LatLng(info.officelat,info.officelng));
             var encodedPoints=google.maps.geometry.encoding.encodePath(path);
 
+
             showLoader();
             $.ajax({
-                url:'getSlots?path='+encodedPoints
+                url:'http://myor.shuttl.com/suggest/getSlots?path='+encodedPoints
             }).done(function(response){
                 responseJson = response;
                 hideLoader();
-				if(response.route_type == 'Live_route' || response.route_type == 'Shipped_route'){
+                if(response.route_type == 'Live_route'){
                     var slot = response.slots;
-                    info.route_type=response.route_type;
-                    info.routeid=response.route_id;
                     $.each(slot, function(key, value){
                         var time = formatSectoIST(value*60);
                         slotBtns += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="'+time+'">'+time+'<span class="live">(live)</span></button></div>';
@@ -122,8 +103,7 @@ function initAutocomplete() {
                     $('.downArr .fa-angle-double-down').trigger('click');
                 }
             })
-        }
-
+        });
     }
 }
 /* google auto suggestor */
@@ -158,7 +138,7 @@ function initMap(response) {
     $('#gMap').css({'width':wpx+'px', 'height':hpx+'px'});
 
     var map = new google.maps.Map(document.getElementById('gMap'), {
-        zoomControl: true,
+        zoomControl: false,
         mapTypeControl: false,
         streetViewControl: false
     });
@@ -267,7 +247,6 @@ var stage = 1;
             stage = 1;
         }
     }
-
     window.location.hash = 'stage'+stage;
     var handle = $('.screenWrapper');
     createScreenBox(handle, 'append', 0);
@@ -335,10 +314,14 @@ function setCarousel(){
 
 function setCarousel2() {
 
+    $('#mycarousel2').on('$mycarousel2:createend', function() {
+        $(this).jcarousel(scroll, 10, false);
+    }).jcarousel();
     jQuery(".item").eq(eveningSlot).addClass("active");
     $('#mycarousel2').carousel({
         interval: false
     });
+
     $('#mycarousel2 .item').each(function () {
         var next = $(this).next();
         if (!next.length) {
@@ -355,13 +338,6 @@ function setCarousel2() {
     });
 }
 
-
-function hideAddressBar(){
-    setTimeout(function(){
-        // Hide the address bar!
-        window.scrollTo(0, 1);
-    }, 0);
-}
 
 window.addEventListener("load",function() {
     // Set a timeout...
@@ -394,12 +370,6 @@ $('input[type="text"]').on('input', function(){
 
 $('.remove').on('click', function(){
     $(this).css('display', 'none').prev('input[type="text"]').val('');
-    if (info.homeAddress){
-        info.homeAddress = undefined;
-
-    }
-    else
-        info.officeAddress = undefined;
 });
 
 function nextPrevVlickEvents(){
@@ -407,7 +377,7 @@ function nextPrevVlickEvents(){
         refer.stage = stage;
         refer.click = 'down';
         stage++;
-        if(stage > 14){stage = 14};
+        if(stage > 13){stage = 13};
         window.location.hash = 'stage'+stage;
         $(this).closest('.screen').outerHeight();
         var handle = $(this).closest('.screen');
@@ -492,7 +462,7 @@ function validatePhone(){
 var tries=0;
 function validateMobileInput(num){
     tries++;
-    if (stage==4 || stage==10) {
+    if (stage==4) {
         onMobileVerified(num);
     }
     $.ajax({
@@ -524,17 +494,8 @@ function validateMobileInput(num){
 
                 }else if (stage==10){
 
-                    if (paymentFlow==1) {
-                        onForPaymentMobileVerified();
-                    }
+                    onForPaymentMobileVerified();
 
-                }else if (stage==11){
-
-
-                    if (!info.is_mobile_verified) {
-                        alert("Thank you for suggestion.Your number is verfied");
-                        jQuery('#route_live').html("Hey!! Your routes are almost live");
-                    }
                 }
             }else{
                 $('#phoneModal .error').html('invalid mobile number').fadeIn();
@@ -551,20 +512,11 @@ function onMobileVerified(num){
 
     $('.loader').fadeOut();
     clearInterval(interval);
-    info.phone_number=num;
+    submitDataToServer(num);
     $('#phoneModal').modal('hide');
     refer.stage = stage;
     refer.click = 'down';
-    if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1){
-        if (stage!=10) {
-            stage = 5;
-        }else{
-
-            stage=11;
-        }
-    }
-    else
-        stage=15;
+    stage=14;
     window.location.hash = 'stage'+stage;
     $('.screen').outerHeight();
     var handle = $('.screen');
@@ -582,7 +534,7 @@ function onMobileVerified(num){
 
 function notInterested(){
     $('.bounce, .bouncebtn').on('click', function(){
-        stage = 14;
+        stage = 13;
         window.location.hash = 'stage'+stage;
         var handle = $('.screenWrapper').find('.screen');
         var px = $(handle).outerHeight();
@@ -637,8 +589,8 @@ function timeCapture(){
                         info.leavework.splice(0, 1);
                     }
                 }else{
-                    if(info.leavework.length > 2){
-                        $(obj).closest('.btn-group-justified').find('button[data-value="'+info.leavework[1]+'"]').addClass('btn-default').removeClass('btn-info');
+                    if(info.leavework.length > 2) {
+                        $(obj).closest('.btn-group-justified').find('button[data-value="' + info.leavework[1] + '"]').addClass('btn-default').removeClass('btn-info');
                         info.leavework.splice(1, 1);
                     }
                 }
@@ -758,8 +710,10 @@ function createScreenBox(handle, position,px){
 function switchScreen(scrno, obj){
     ga('send', 'event', 'screen_no', scrno);
     switch(scrno){
+
         case 1:
-            var html =  '<div class="headText text-center">To <span class="highlight"><br/>#MakeYourOwnRoute</span></div>';
+
+            var html = '<div class="headText text-center"> For daily pickup and drop from <br> Home to Office <span class="highlight"><br/>#MakeYourOwnRoute</span></div>';
             html += '<div class="col-md-12 homeL"><br /><br />';
             html += '<div class="form-group form-group-wrapper">';
             html += '<div class="input-group">';
@@ -779,26 +733,24 @@ function switchScreen(scrno, obj){
             html += '<div class="input-group-addon remove"><span class="fa fa-remove"></span></div>';
             html += '</div></div></div>';
             html += '<div class="downArr dowfirst"><span class="fa fa-angle-double-down"></span></div>';
-         
+            html += '<div class="bounce">I\'m not interested</div>';
             html += aboutUsOrrca();
             $(obj).html(html)
                 .find('.downArr').hide();
 
+
             if(refer.hasOwnProperty('click')){
                 if(refer.stage >= 1){
                     $(obj).find('.downArr').fadeIn().end()
-                        .find('#homeLocation').val(info.homeName).end()
-                        .find('#officeLocation').val(info.officeName);
+                        .find('#homeLocation').val(info.homeAddress).end()
+                        .find('#officeLocation').val(info.officeAddress);
                 }
             }
-            
             break;
 
         case 2:
             var html = '<div class="upArr"><span class="fa fa-angle-double-up"></span></div>';
-            html += '<div class="headText headText2 text-center">You have selected to travel from </div>';
-            html += '<div class="headText headText2 text-center" style="color:#3c5daa">' + info.homeName + ' to ' + info.officeName +' </div> <br><br>';
-            html += '<div class="headText headText2 text-center"> Please tell us what time you\'d like to <span class="highlight lesshighlight"><br/>#ReachWork</span></div>';
+            html += '<div class="headText headText2 text-center">You have selected to travel from ' + info.homeAddressShortened + ' to ' + info.officeAddressShortened +' <br><br> Please tell us what time you\'d like to <span class="highlight lesshighlight"><br/>#ReachWork</span></div>';
             html += '<div class="col-md-12"><br /><br />';
             html += '<div class="btn-group btn-group-justified reachwork" role="group" data-roletype="reachwork">';
             html += '<div class="btn-group" role="group">';
@@ -830,6 +782,7 @@ function switchScreen(scrno, obj){
             html += '</div></div></div>';
             html += '<br/><h6 class="text-center">( select top 2 )</h6>';
             html += '<div class="downArr"><span class="fa fa-angle-double-down"></span></div>';
+            html += '<div class="bounce">I\'m not interested</div>';
             $(obj).html(html)
                 .find('.downArr').hide().end()
                 .find('.upArr').hide();
@@ -851,7 +804,7 @@ function switchScreen(scrno, obj){
 
         case 3:
             var html = '<div class="upArr"><span class="fa fa-angle-double-up"></span></div>';
-            html += '<div class="headText headText2 text-center">And also, what time you <span class="highlight lesshighlight"><br/>#LeaveFromWork</span></div>';
+            html += '<div class="headText headText2 text-center">And also, what time you\'d like to <span class="highlight lesshighlight"><br/>#LeaveFromWork</span></div>';
             html += '<div class="col-md-12"><br /><br />';
             html += '<div class="btn-group btn-group-justified leavework" role="group" data-roletype="leavework">';
             html += '<div class="btn-group" role="group">';
@@ -883,6 +836,7 @@ function switchScreen(scrno, obj){
             html += '</div></div></div>';
             html += '<br/><h6 class="text-center">( select top 2 )</h6>';
             html += '<div class="downArr"><span class="fa fa-angle-double-down"></span></div>';
+            html += '<div class="bounce">I\'m not interested</div>';
             $(obj).html(html)
                 .find('.downArr').hide().end()
                 .find('.upArr').hide();
@@ -943,14 +897,13 @@ function switchScreen(scrno, obj){
             html += '<button type="button" class="btn btn-default" data-value="office-cab">Office Cab</button>';
             html += '</div></div></div>';
             html += '<br/><h6 class="text-center">( select all modes that you use )</h6>';
-            html += '<div class="downArr submit-butt"><div class="row col-md-12"><span class="btn btn-primary submitsurvey text-uppercase col-md-12 text-center">Submit</span></div></div>';
+            html += '<div class="downArr submit-butt"><div class="row col-md-12"><span class="btn btn-primary submitsurvey text-uppercase col-md-12" bottom-border>Submit</span></div></div>';
             html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
             html += '<div class="modal-dialog modal-sm">';
             html += '<div class="modal-content">';
-            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class=""><em>You will receive a confirmation call.<i></i>. Press press 1 to confirm</em><img style="display:none;" src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
+            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class="loader"><em>You will receive a missed call on <slot></slot>. Press 1 to confirm</em><img src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
             html += '</div></div></div>';
             $('#phoneModal .error').html('').hide();
-            $("div.notInterested").hide();
             $(obj).html(html)
                 .find('.downArr').hide().end()
                 .find('.upArr').hide();
@@ -963,7 +916,6 @@ function switchScreen(scrno, obj){
                 }
             }
 
-            info.route_type="new";
             if(info.commutework != undefined){
                 $.each(info.commutework, function(key, value){
                     $(obj).find('button[data-value = "'+value+'"]').removeClass('btn-default').addClass('btn-info');
@@ -992,7 +944,7 @@ function switchScreen(scrno, obj){
             html += '<h6 class="text-center">( Click above to change info )</h6>';
             html += '</fieldset>';
             html += '<p class="routeCount"><span class="count">3</span> Other people have made same route</p><br/>';
-            html += '<div class="headText headText3 text-center">To launch the route sooner <span class="highlight">#KeepSpreadingTheWord</span></div>';
+            html += '<div class="headText headText3 text-center">To launch the route soon <span class="highlight">#JustSpreadTheWord</span></div>';
             html += '<div class="row social">';
             html += '<div class="col-md-12">';
             /*html += '<span class="fa fa-google-plus col-md-3"></span>';*/
@@ -1017,13 +969,6 @@ function switchScreen(scrno, obj){
             }
             var eSlots = '';
 
-            if (!(navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1)) {
-                info.pushSubscriptionStatus = window.Notification.permission;
-                ga('send', 'event', 'chromeNotificationStatus', window.Notification.permission);
-            }else{
-
-                info.pushSubscriptionStatus="safari_notpresent";
-            }
             if(info.leavework != undefined){
                 $.each(info.leavework, function(key, value){
                     if(key != info.leavework.length-1){
@@ -1058,23 +1003,22 @@ function switchScreen(scrno, obj){
 
                 fillWhatsAppLink();
             }
-            submitDataToServer();
             break;
 
         case 8:
             var html = '<div class="col-md-12 fullheight">';
             html += '<div class="fieldset">';
-            html += '<div class="routeInfo"><span class="routePtName">'+info.homeName+' to '+info.officeName+'</span></div>';
+            html += '<div class="routeInfo"><span class="routePtName">'+info.homeAddressShortened+' To </span><span class="routePtName">'+info.officeAddressShortened+'</span></div>';
             html += '<div id="gMap"></div>';
-            html += '<div class="mapMsg"><span class="seats"><span class="cur">123</span>/<span class="total">200</span></span> travellers confirmed </div>';
-            html += '<div class="fillingfast">13 days to go live</div>';
+            html += '<div class="mapMsg"><span class="seats"><span class="cur">14</span>/<span class="total">20</span></span> seats are full</div>';
+            html += '<div class="fillingfast">4 more ppl required to launch route in 8 days</div>';
             html += '</div>';
             html += '<div class="line1">To travel on this route, tell us</div>';
             html += '<div class="line2">What time do you have to reach work?</div>';
             html += '<div class="carousel slide" id="mycarousel">';
 
             //html += '<span class="btnsWrapper">';
-            html += '<div class="col-md-12 text center carousel-center">';
+            html += '<div class="col-md-12 text center">';
             html += '<div class="carousel-inner btns btn-group-justified" data-roletype="reachwork">';
             html += slotBtns;
 
@@ -1092,12 +1036,12 @@ function switchScreen(scrno, obj){
             //html += '<span class="btn btn-default rightbtn">&gt;</span>';
             html += '</div>';
             html += '<div class="fillingfast">(leave blank if you don\'t wish to use shuttl in the morning)</div>';
-            html += '<div class="text-capitalize btn btn-default col-xs-6 bouncebtn" style="width:48%">not interested</div>';
-            html += '<div class="text-capitalize btn btn-primary col-xs-6 nextBtnMap" style="width:48%">next&gt;</div>';
+            html += '<div class="text-capitalize btn btn-default col-xs-6 bouncebtn">not interested</div>';
+            html += '<div class="text-capitalize btn btn-primary col-xs-6 nextBtnMap">next&gt;</div>';
             html += '</div>';
             $(obj).html(html);
 
-            hideAddressBar();
+
             notInterested();
 
             $('.bounce').addClass('hidden');
@@ -1122,7 +1066,7 @@ function switchScreen(scrno, obj){
         case 9:
             var html = '<div class="col-md-12 fullheight">';
             html += '<div class="fieldset">';
-            html += '<div class="routeInfo"><span class="routePtName">'+info.homeName+' to '+info.officeName +'</span></div>';
+            html += '<div class="routeInfo"><span class="routePtName">'+info.officeAddressShortened+' To </span><span class="routePtName">'+info.homeAddressShortened+'</span></div>';
             html += '<div id="gMap"></div>';
             html += '<div class="mapMsg"><span class="seats"><span class="cur">14</span>/<span class="total">20</span></span> seats are full</div>';
             html += '<div class="fillingfast">4 more ppl required to launch route in 8 days</div>';
@@ -1131,7 +1075,7 @@ function switchScreen(scrno, obj){
             html += '<div class="carousel slide" id="mycarousel2">';
 
             //html += '<span class="btnsWrapper">';
-            html += '<div class="col-md-12 text center carousel-center">';
+            html += '<div class="col-md-12 text center">';
             html += '<div class="carousel-inner btns btn-group-justified" data-roletype="leavework">';
 
             html += slotBtns;
@@ -1150,13 +1094,12 @@ function switchScreen(scrno, obj){
             //	html += '</span>';
             //html += '<span class="btn btn-default rightbtn">&gt;</span>';
             html += '</div>';
-            html += '<div class="fillingfast">(leave blank if you don\'t wish to use shuttl in the evening)</div>';
-            html += '<div class="text-capitalize btn btn-primary col-xs-6 backBtnMap" style="width:48%">&lt;back</div>';
-            html += '<div class="text-capitalize btn btn-primary col-xs-6 nextBtnMap" style="width:48%">next&gt;</div>';
+            html += '<div class="fillingfast">leave blank if you don\'t wish to use shuttl in the evening</div>';
+            html += '<div class="text-capitalize btn btn-primary col-xs-6 backBtnMap">&lt;back</div>';
+            html += '<div class="text-capitalize btn btn-primary col-xs-6 nextBtnMap">next&gt;</div>';
             html += '</div>';
             $(obj).html(html);
 
-            hideAddressBar();
             setTimeout(function () {
 
 
@@ -1182,6 +1125,7 @@ function switchScreen(scrno, obj){
             break;
 
         case 10:
+
             var html = '<div class="col-md-12 text-center fullheight">';
             html += '<h4 style="margin:0;" class="text-center">Hey! Your Routes are almost LIVE..</h4><br />';
             html += '<fieldset class="pay">';
@@ -1231,10 +1175,8 @@ function switchScreen(scrno, obj){
             break;
 
         case 11:
-
-        case 12:
             var html = '<div class="col-md-12 text-center fullheight">';
-            html += '<h4 style="margin:0;" class="text-center" id="route_live">Awaiting Phone No Confirmation</h4><br />';
+            html += '<h4 style="margin:0;" class="text-center">Hey! Your Routes are almost LIVE..</h4><br />';
             html += '<fieldset class="pay">';
             html += '<legend class="payments"><span class="home">'+info.homeAddressShortened+'</span> <> <span class="office">'+info.officeAddressShortened+'</span></legend>';
             html += '<div class="box">';
@@ -1260,7 +1202,7 @@ function switchScreen(scrno, obj){
             html += '<div class="fillingfast">8 more days left to launch route</div>';
 
             html += '</fieldset>';
-            html += '<div class="headText headText3 text-center">To launch the route sooner <span class="highlight">#KeepSpreadinTheWord</span></div>';
+            html += '<div class="headText headText3 text-center">To launch the route sooner <span class="highlight">#KeepSpredinTheWord</span></div>';
             html += '<div class="row social" id="whatsapp" onclick="sendWhatsApp()">';
             html += '<div class="col-md-12">';
             /*
@@ -1275,7 +1217,7 @@ function switchScreen(scrno, obj){
             fillWhatsAppLink();
             break;
         //offline sharing screen
-        case 13:
+        case 12:
             var html = '<div class="col-md-12">';
             html += '<div class="fieldset">';
             html += '<div class="routeInfo"><span class="ambassador routePtName">Become the Route Ambassador</span></div>';
@@ -1300,7 +1242,7 @@ function switchScreen(scrno, obj){
             $('.bounce').remove();
             break;
 
-        case 14:
+        case 13:
             var html = '<div class="col-md-12">';
             html += '<h4>I am not interested in using Shuttl service because:</h4>';
             html += '<form>';
@@ -1316,94 +1258,36 @@ function switchScreen(scrno, obj){
             $('.bounce').remove();
             break;
 
-        case 15:
+        case 14:
             var html ='<div class="col-md-12 text-center fullheight">';
             html += '<h4 style="margin:0;" class="text-center allow-notification">To track your Shuttl and its arrival at your doorstep please click on "Allow"</h4><br />';
             html += '';
-            html+= '<div class="bott" onclick="changeToLastScreen();">submit</div>';
             html += '</div>';
             $(obj).html(html);
+            var trial=1;
 
-            // var urlBase = window.location.href;
-            // if (urlBase.indexOf("://") > -1) {
-            //     domain = urlBase.split('/')[2];
-            // }
-            // else {
-            //     domain = urlBase.split('/')[0];
-            // }
+            initIzooto();
+            var notificationTimer = setInterval( function () {
 
-            if ('serviceWorker' in navigator) {
-                console.log('Service Worker is supported');
+                trial++;
+                if (trial%20==0) {
 
-                try{
-                    navigator.serviceWorker.register('/sw.js').then(function () {
-                        return navigator.serviceWorker.ready;
-                    }).then(function (serviceWorkerRegistration) {
-                        reg = serviceWorkerRegistration;
-                        console.log('Service Worker is ready :^)', reg);
-                        reg.pushManager.subscribe({userVisibleOnly: true}).then(function (pushSubscription) {
-                            sub = pushSubscription;
-                            console.log('Subscribed! Endpoint:', sub.endpoint);
-                            info.subscriberID = sub.endpoint;
-                            if (info.route_type=="new"){
-                            changeToStage(5);
-                                }else{
-
-                                changeToStage(11);
-                            }
-                            //isSubscribed = true;
-                        });
-                    }).catch(function (error) {
-                        console.log('Service Worker Error :^(', error);
-                        if (info.route_type=="new"){
-                            changeToStage(5);
-                        }else{
-
-                            changeToStage(11);
-                        }
-                    });
-                }catch (error){
-
-                    if (info.route_type=="new"){
-                        changeToStage(5);
-                    }else{
-
-                        changeToStage(11);
-                    }
-                }
-            }else{
-                if (info.route_type=="new"){
+                    clearInterval(notificationTimer);
                     changeToStage(5);
-                }else{
-
-                    changeToStage(11);
                 }
-            }
+                if (Notification.permission === 'granted' || Notification.permission === 'denied') {
 
-            // var trial=1;
+                    clearInterval(notificationTimer);
 
-            // initIzooto();
-            // var notificationTimer = setInterval( function () {
-
-            //     trial++;
-            //     if (trial%20==0) {
-
-            //         clearInterval(notificationTimer);
-            //         changeToStage(5);
-            //     }
-            //     if (Notification.permission === 'granted' || Notification.permission === 'denied') {
-
-            //         clearInterval(notificationTimer);
-
-            //         ga('send', 'event', 'chromeNotificationStatus',Notification.permission);
-            //         changeToStage(5);
-            //     }else if (trial%10==0){
-            //        // initIzooto();
-            //     }
-            // }, 500);
+                    ga('send', 'event', 'chromeNotificationStatus',Notification.permission);
+                    changeToStage(5);
+                }else if (trial%10==0){
+                    // initIzooto();
+                }
+            }, 500);
             break;
 
-        case 16:
+        case 15:
             var html = '<div class="col-md-12 text-center" style="height: 100%;position: static;">';
             html += '<h4 style="margin:0;" id="share_heading" class="text-center sharetext">"Congratulations!! You have successfully made"</h4><br />';
             html += '<fieldset>';
@@ -1422,7 +1306,7 @@ function switchScreen(scrno, obj){
             html += '<h6 class="text-center">( Click above to change info )</h6>';
             html += '</fieldset>';
             html += '<p class="routeCount"><span class="count">3</span> Other people have made same route</p><br/>';
-            html += '<div class="headText headText3 text-center">To launch the route sooner <span class="highlight">#KeepSpreadinTheWord</span></div>';
+            html += '<div class="headText headText3 text-center">To launch the route sooner <span class="highlight">#JustSpreadTheWord</span></div>';
             html += '<div class="row social">';
             html += '<div class="col-md-12">';
             /*html += '<span class="fa fa-google-plus col-md-3"></span>';*/
@@ -1480,7 +1364,7 @@ function switchScreen(scrno, obj){
             break;
 
 
-        case 17:
+        case 16:
             var html = '<div class="col-md-12">';
             html += '<div class="fieldset">';
             html += '<div class="routeInfo"><span class="ambassador routePtName">Become the Route Ambassador</span></div>';
@@ -1517,11 +1401,15 @@ function switchScreen(scrno, obj){
     return true;
 }
 
-function   submitDataToServer(){
+function   submitDataToServer(phone_number){
+
     $.ajax({
-        url : 'saveNewSuggestion',
-        method : 'POST',
-        data:{data1:JSON.stringify(info)}
+        url : 'http://myor.shuttl.com/suggest/saveNewSuggestion',
+        type : 'GET',
+        data:{phone_number:phone_number,data:info},
+        dataType : 'json',
+        contentType : "application/json; charset=utf-8",
+        header : 'x-requested-with'
     })
         .done(function(result){
 
@@ -1721,7 +1609,7 @@ function fillAdministrativeLevelDetails(){
 function inpclicked(obj){
 
     if (jQuery(obj).attr("id")=="homeLocation"){
-
+        var homeAdd = jQuery(obj).val().split(",",1);
         jQuery(".screenWrapper").addClass("inputClicked_homeLocation");
 
     }else{
@@ -1750,9 +1638,7 @@ function initiatePaymentProcess(){
         jQuery('#phoneModal').modal("show");
     }else{
 
-        $('#phoneModal').modal('show');
-
-
+        changeToStage(11);
     }
 }
 
@@ -1877,20 +1763,57 @@ function carouselSlide(obj, status, slot) {
     }
 }
 
+/*function aboutUs() {
+    var html = '<div id="aboutUsOverlay">';
+        html += '<div id="aboutUsCross"> <i class="fa fa-times" aria-hidden="true"> </i> </div>';
+        html += '<section id = "overlay-one">';
+        html += '<div id="overlay-logo" ><img style ="max-width:100px" vertical-align=middle width =175% src="../images/shuttl_logo.png"></div>';
+        html += '<div id="overlay-introduction">';
+        html += '<div style="color:#333333"><h4 style="margin-bottom: 2px">Introducing</h4></div>';
+        html += '<div style="color:grey"><h1 class="h1-overlay" style="margin-top:2px">#MakeMyRoute</h1></div>';
+        html += '</div>';
+        html += '</section>';
+        html += '<section id="overlay-two">';
+        html += '<div id="home-to-office">';
+        html += '<div style="color:white"><h1 class="h1-overlay">Home</h1> </div>';
+        html += '<img id="overlay-arrow" src ="../images/arrow.png" alt="arrow">';
+        html += '<div style="color:white"><h1 class="h1-overlay">Office</h1> </div>';
+        html += '</div>';
+        html += '<div id="pickup-drop"> <p style="font-size:20px"> Pickup - Drop </p></div>';
+        html += '<div id="route-information">';
+        html += '<div class="flex">';
+        html += '<div class="route-information-image"><img style="max-height:40px" src="../images/route_icon.png" alt="icon" /></div>';
+        html += '<span class="route-information">';
+        html += '<p style="font-size:20px"> Direct routes from home to office</p>';
+        html += '</span>';
+        html += '</div>';
+        html += '<div class="flex">';
+        html += '<div class="route-information-image"><img style ="max-height:40px" src="../images/friends_icon.png" alt="icon" /></div>';
+        html += '<span class="route-information">';
+        html += '<p style="font-size:20px"> Travel with friends and colleagues</p>';
+        html += '</span>';
+        html += '</div>';
+        html += '</div>';
+        html += '</section>';
+        html += '<section id="overlay-three">';
+        html += '<div id="overlay-starting-at"> <h1 class="h1-overlay"> Starting @ Rs3/km </h1> </div>';
+        html += '<hr>';
+        html += '<div id="assured-seats"> <h4 style="word-spacing:5px"> AC buses | Assured seats </h4></div>';
+        html += '<div><img class="vanImage" src="../images/van2.png"></div>';
+        html += '</section>';
+        html += '</div>';
+    return html;
+        }*/
 
-$('input, select, textarea').on('focus blur', function(event) {
-    $('meta[name=viewport]').attr('content', 'width=device-width,initial-scale=1,maximum-scale=' + (event.type == 'blur' ? 10 : 1));
-});
 
-
-function aboutUsOrrca(){
+    function aboutUsOrrca(){
     var html ='<div id="aboutUsOrrcaOverlay">';
     html+= '<h4 style="text-align: center; font-weight: bold">OUTER RING ROAD COMPANIES ASSOCIATION</h4>';
-    html+= ' To facilitate home office travel, ORRCA invites you to share your office and home address and preferred time of commute. Using your suggestions we will revert to you shortly with a bus based travel solution that is comfortable and reliable.';
     html+= ' <br><p>';
+    html+= ' To facilitate home office travel, ORRCA invites you to share your office and home address and preferred time of commute. Using your suggestions we will revert to you shortly with a travel solution that is comfortable and reliable.';
     html+= '</p><br><ul>';
     html+= '<li> Shared commute is safe for you and the environment. </li>';
-    html+= '<li> An app will allow you to track your AC bus. No more waiting. No more uncertainty. </li>';
+    html+= '<li> The app based solution  will allow you to track your bus. No more waiting. No more uncertainty. </li>';
     html+= '<li> You have a guaranteed seat, so no more standing. </li>';
     html+= '<li> Our solution will be flexible, and will give you several timing options. It will bring you closer to your home for pick up and drop off. </li>';
     html+= '<li> Travel with colleagues and like minded people; use the extra time to relax. </li> </ul><br>';
@@ -1898,59 +1821,39 @@ function aboutUsOrrca(){
     html+= ' Team ORRCA <br>';
     html+= '</p>';
     html+= '</div>';
-    html+= '<div id="aboutUsCross"> <i class="fa fa-times fa-lg" aria-hidden="true">';
-    html+= '</i> </div>';
+    html+= '<div id="aboutUsCross"> <i class="fa fa-times fa-lg" aria-hidden="true"> </i> </div>';
     return html;
-}
-
-jQuery(document).ready(function(){
-    
-    setTimeout(function(){
-
-        if (jQuery('#orcaoverlay')!=null){
-
-            jQuery("#orcaoverlay").show();
-
-            jQuery('#orcacross').click(function(){
-
-                jQuery('#orcaoverlay').hide();
-            });
-        }
-        
-    },2000);
-    
-});
-function changeToLastScreen(){
-
-    if (info.route_type=="new") {
-        changeToStage(5);
-    }else{
-
-        changeToStage(11);
     }
+
+
+    if (window.innerWidth< 750)
+{
+    jQuery(document).ready(function () {
+
+        /*    setTimeout(function(){
+         if (jQuery('#aboutUsOverlay')!=null){
+         jQuery("#aboutUsOverlay").fadeIn();
+         jQuery('#aboutUsOverlay').click(function(){
+         jQuery('#aboutUsOverlay').fadeOut();
+         });
+         }
+
+         },2000);*/
+
+        setTimeout(function () {
+            if (jQuery('#aboutUsOrrcaOverlay') != null && ('#aboutUsCross') != null) {
+                jQuery("#aboutUsOrrcaOverlay").fadeIn();
+                jQuery("#aboutUsCross").fadeIn();
+                jQuery('#aboutUsCross').click(function () {
+                    jQuery('#aboutUsOrrcaOverlay').fadeOut();
+                    jQuery('#aboutUsCross').fadeOut();
+                });
+            }
+
+        }, 2000);
+    });
 }
 
-
-jQuery(document).ready(function () {
-
-    setTimeout(function () {
-        if (jQuery('#aboutUsOrrcaOverlay') != null && ('#aboutUsCross') != null) {
-            jQuery("#aboutUsOrrcaOverlay").fadeIn();
-            jQuery("#aboutUsCross").fadeIn();
-            jQuery('#aboutUsCross').click(function () {
-                jQuery('#aboutUsOrrcaOverlay').fadeOut();
-                jQuery('#aboutUsCross').fadeOut();
-            });
-        }
-
-    }, 2000);
-});
-
-function getOfflineSharePromoCode(){
-    return "" ;
-}
-if(window.screen.orientation.lock)
-    window.screen.orientation.lock("portrait");
-
-
-
+    function getOfflineSharePromoCode(){
+        return "" ;
+    }
