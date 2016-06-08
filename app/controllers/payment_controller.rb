@@ -148,7 +148,7 @@ class PaymentController < ApplicationController
       @transaction=Transaction.new
       @transaction.phone_number=phoneNumber
       @transaction.status=0
-      @transaction.amount=100
+      @transaction.amount=1
       @transaction.save
 
     end
