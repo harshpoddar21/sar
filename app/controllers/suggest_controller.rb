@@ -399,12 +399,17 @@ class SuggestController < ApplicationController
 
       end
 
-      success=Route.createRoute name,pickA,timestampA,pricingA,Route::SUGGESTED_ROUTE
+      success,route=Route.createRoute name,pickA,timestampA,pricingA,Route::SUGGESTED_ROUTE
+
+      response=Hash.new
 
       if success
-        render :text=>"OK"
+        response["success"]=true
+        response["routeid"]=route.id
+        render :json=>response.to_json
       else
-        render :text=>"Error"
+        response["success"]=false
+        render :text=>response.to_json
       end
     end
   end

@@ -323,10 +323,10 @@ class Route
       Price.create :routeid=>route.id,:price=>pri[0],:pass_type=>pri[1]
     end
 
-    return true
+    return true,route
     end
 
-    return false
+    return false,nil
 
   end
 
