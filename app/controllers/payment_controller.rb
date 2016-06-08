@@ -170,9 +170,10 @@ class PaymentController < ApplicationController
       if /_/=~order_id
         order_id=order_id.split "_"
         order_id=order_id[1]
+        puts order_id
       end
       transaction=Transaction.find_by(:id=>order_id)
-      if params1[:STATUS]=="TXN_SUCCESS"
+      if params1["STATUS"]=="TXN_SUCCESS"
        transaction.status=1
        transaction.save
        session[PAYMENT_KEY]=PAYMENT_SUCCESS
