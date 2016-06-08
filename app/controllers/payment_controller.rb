@@ -186,7 +186,7 @@ class PaymentController < ApplicationController
       else
         transaction.comments=params1.to_json
         transaction.save
-        if session["info"]!=nil 
+        if session["info"]!=nil
         session["info"][PAYMENT_KEY]=PAYMENT_FAILED
         end
 
