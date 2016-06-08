@@ -179,12 +179,16 @@ class PaymentController < ApplicationController
       if params1["STATUS"]=="TXN_SUCCESS"
        transaction.status=1
        transaction.save
-       session[PAYMENT_KEY]=PAYMENT_SUCCESS
+       if session["info"]!=nil
+       session["info"][PAYMENT_KEY]=PAYMENT_SUCCESS
+       end
+
       else
         transaction.comments=params1.to_json
         transaction.save
-
-        session[PAYMENT_KEY]=PAYMENT_FAILED
+        if session["info"]!=nil 
+        session["info"][PAYMENT_KEY]=PAYMENT_FAILED
+        end
 
       end
     else
