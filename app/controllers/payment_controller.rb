@@ -166,11 +166,11 @@ class PaymentController < ApplicationController
 
 
     if params1["IS_CHECKSUM_VALID"]=="Y"
-      order_id=params1[:ORDERID]
+      order_id=params1["ORDERID"]
       if /_/=~order_id
         order_id=order_id.split "_"
         order_id=order_id[1]
-        puts order_id
+        logger.info "order id is "+order_id.to_s
       end
       transaction=Transaction.find_by(:id=>order_id)
       if params1["STATUS"]=="TXN_SUCCESS"
