@@ -4,9 +4,11 @@ class Route
   attr_accessor :routeType,:routePoints,:name,:id
 
   THRESHOLD_DISTANCE_TO_CONSIDER=100
+  GRID_RES=0.001
   ROUTE_DOES_NOT_EXISTS="route_does_not_exists"
   LIVE_ROUTE="Live_route"
   SUGGESTED_ROUTE="suggested_route"
+  ZONAL_WIDTH=1
   @@routeExistMap=Hash.new
   @@routeSuggestMap=Hash.new
 
@@ -70,6 +72,7 @@ class Route
   def self.initializeRouteCache
 
     @@routeExistMap=Hash.new
+    @@routeSuggestMap=Hash.new
     RouteExist.all.each do |route|
       if (route.route_points!=nil)
 
@@ -100,6 +103,44 @@ class Route
                 @@routeExistMap[getMapKeyFor [point["lat"],point["lng"]]][route.id]=Array.new
               end
               @@routeExistMap[getMapKeyFor [point["lat"],point["lng"]]][route.id].push point
+            end
+
+          end
+
+        end
+
+      end
+    end
+    RouteSuggest.all.each do |route|
+      if (route.route_points!=nil)
+
+        routePoints=Polylines::Decoder.decode_polyline(route.route_points)
+        if (routePoints!=nil && routePoints.size>0)
+          totalCoordsCount=1
+          routePoints.each_with_index do |routePo,index|
+
+            if index==routePoints.size-1
+              next
+            end
+            if (@@routeSuggestMap[getMapKeyFor routePo]==nil)
+              @@routeSuggestMap[getMapKeyFor routePo]=Hash.new
+            end
+
+            if (@@routeSuggestMap[getMapKeyFor routePo][route.id]==nil)
+              @@routeSuggestMap[getMapKeyFor routePo][route.id]=Array.new
+            end
+
+            getAllCoordsForLineSeg(routePo,routePoints[index+1]).each do |point|
+              point["id"]=totalCoordsCount
+              totalCoordsCount=totalCoordsCount+1
+              if (@@routeSuggestMap[getMapKeyFor [point["lat"],point["lng"]]]==nil)
+                @@routeSuggestMap[getMapKeyFor [point["lat"],point["lng"]]]=Hash.new
+              end
+
+              if (@@routeSuggestMap[getMapKeyFor [point["lat"],point["lng"]]][route.id]==nil)
+                @@routeSuggestMap[getMapKeyFor [point["lat"],point["lng"]]][route.id]=Array.new
+              end
+              @@routeSuggestMap[getMapKeyFor [point["lat"],point["lng"]]][route.id].push point
             end
 
           end
@@ -205,8 +246,8 @@ class Route
     (-1..1).each do |offset|
       (-1..1).each do |offset2|
         originC=origin
-        originC[0]=originC[0]+0.001*offset
-        originC[1]=originC[1]+0.001*offset
+        originC[0]=originC[0]+GRID_RES*offset
+        originC[1]=originC[1]+GRID_RES*offset2
       if (@@routeExistMap[getMapKeyFor originC]!=nil)
         @@routeExistMap[getMapKeyFor originC].each do |key,value|
           if (possibleOriginRoutes[key]==nil)
@@ -222,8 +263,8 @@ class Route
     (-1..1).each do |offset|
       (-1..1).each do |offset2|
         destinationC=destination
-        destinationC[0]=destinationC[0]+0.001*offset
-        destinationC[1]=destinationC[1]+0.001*offset2
+        destinationC[0]=destinationC[0]+GRID_RES*offset
+        destinationC[1]=destinationC[1]+GRID_RES*offset2
         if (@@routeExistMap[getMapKeyFor destinationC]!=nil)
           @@routeExistMap[getMapKeyFor destinationC].each do |key,value|
             if (possibleDestinationRoutes[key]==nil)
@@ -255,11 +296,11 @@ class Route
     possibleOriginRoutes=Hash.new
     possibleDestinationRoutes=Hash.new
 
-    (-1..1).each do |offset|
-      (-1..1).each do |offset2|
+    (-1*ZONAL_WIDTH..1*ZONAL_WIDTH).each do |offset|
+      (-1*ZONAL_WIDTH..1*ZONAL_WIDTH).each do |offset2|
         originC=origin
-        originC[0]=originC[0]+0.001*offset
-        originC[1]=originC[1]+0.001*offset
+        originC[0]=originC[0]+GRID_RES*offset
+        originC[1]=originC[1]+GRID_RES*offset2
         if (@@routeSuggestMap[getMapKeyFor originC]!=nil)
           @@routeSuggestMap[getMapKeyFor originC].each do |key,value|
             if (possibleOriginRoutes[key]==nil)
@@ -272,11 +313,11 @@ class Route
 
     end
 
-    (-1..1).each do |offset|
-      (-1..1).each do |offset2|
+    (-1*ZONAL_WIDTH..1*ZONAL_WIDTH).each do |offset|
+      (-1*ZONAL_WIDTH..1*ZONAL_WIDTH).each do |offset2|
         destinationC=destination
-        destinationC[0]=destinationC[0]+0.001*offset
-        destinationC[1]=destinationC[1]+0.001*offset2
+        destinationC[0]=destinationC[0]+GRID_RES*offset
+        destinationC[1]=destinationC[1]+GRID_RES*offset2
         if (@@routeSuggestMap[getMapKeyFor destinationC]!=nil)
           @@routeSuggestMap[getMapKeyFor destinationC].each do |key,value|
             if (possibleDestinationRoutes[key]==nil)
@@ -307,7 +348,21 @@ class Route
   def self.createRoute name,pick,timestamp,pricing,routeType
 
     if routeType==SUGGESTED_ROUTE
-    route=RouteSuggest.create(:name=>name)
+       pickPointLatLng=Array.new
+       pick.each do |pi|
+         point=Hash.new
+         point["lat"]=pi[1]
+         point["lng"]=pi[2]
+         pickPointLatLng.push point
+       end
+       dir=GoogleDirection.new(pickPointLatLng)
+       dir.execute
+       routePoints=""
+       if dir.overviewPolyline!=nil
+         routePoints=dir.overviewPolyline
+       end
+      route=RouteSuggest.create(:name=>name,:route_points=>routePoints)
+
     pick.each do |pic|
       if pic.length==3
         PickUp.create(:routeid=>route.id,:name=>pic[0],:lat=>pic[1],:lng=>pic[2])
@@ -329,6 +384,7 @@ class Route
     return false,nil
 
   end
+
 
 
 end

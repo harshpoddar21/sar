@@ -243,10 +243,18 @@ span.slots {
 }
 .mapMsg{
     margin: 5px 0;
+    width:50%;
 }
-.seats{
+.seats, .days{
     font-weight: 600;
 }
+.daysLeft{
+    margin: 5px 0;
+    text-align: center;
+    width:50%;
+    padding-left:20%;
+}
+
 .fillingfast{
     margin: 5px 0;
     font-size: 12px;
@@ -360,6 +368,11 @@ span.highlight.lesshighlight {
 .bouncebtn,.backBtnMap {
     position: absolute;
     bottom: 0px;
+}
+
+.submit-notification {
+    background-color: #3eb6b5;
+    color: white;
 }
 
 .fullheight,.screen{
@@ -549,7 +562,7 @@ div#overlay-introduction {
 .route-information{
     color: white;
     margin:5px;
-
+    margin-top:0px;
 }
 
 .route-information-image {
@@ -561,6 +574,7 @@ section#overlay-one{
     height:10.87%;
     display:flex;
     padding:5px;
+    padding-top:0px;
 }
 
 section#overlay-two{
@@ -634,6 +648,10 @@ div#pickup-drop{
     border-color: #3c5daa!important;
 }
 
+.secondary-blue {
+    border-color: #3c5daa!important;
+}
+
 body {
     font-family: "Lato Normal 400", Lato, "Helvetica Neue",Helvetica,Arial,sans-serif!important;
     color:#333333!important;
@@ -669,10 +687,13 @@ body {
 #aboutUsOverlay{
 
     position: fixed;
-    width: 100%;
-    top: 0px;
+    width: 92%;
+    top: 15px;
+    left: 4%;
+    bottom: 5px;
     display:none;
     z-index: 1000;
+    border: solid 1px #333333;
 }
 #aboutUsOrrcaOverlay{
 
@@ -694,6 +715,7 @@ body {
     top: 25px;
     right: 20px;
     z-index: 1001;
+
 }
 
 .h1-overlay{

@@ -98,7 +98,7 @@ function initAutocomplete() {
 
             showLoader();
             $.ajax({
-                url: 'http://myor.shuttl.com/suggest/getSlots?path=' + encodedPoints
+                url: 'http://bus2work.in/suggest/getSlots?path=' + encodedPoints
             }).done(function (response) {
                 responseJson = response;
                 hideLoader();
@@ -161,10 +161,14 @@ function initMap(response) {
     $('#gMap').css({'width':wpx+'px', 'height':hpx+'px'});
 
     var map = new google.maps.Map(document.getElementById('gMap'), {
-        zoomControl: true,
+        zoomControl: false,
         mapTypeControl: false,
         streetViewControl: false
     });
+
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(
+        FullScreenControl(map, "Full screen",
+            "exit full screen"));
 
     var origin = new google.maps.Marker({
         position: {lat: response.origin.lat, lng: response.origin.lng},
@@ -770,7 +774,7 @@ function switchScreen(scrno, obj){
             html += '</div></div></div>';
             html += '<div class="downArr dowfirst"><span class="fa fa-angle-double-down"></span></div>';
             html += '<div class="bounce">I\'m not interested</div>';
-            //html += aboutUsOrrca();
+            html += aboutUs();
             $(obj).html(html)
                 .find('.downArr').hide();
 
@@ -1051,11 +1055,12 @@ function switchScreen(scrno, obj){
         case 8:
             var html = '<div class="col-md-12 fullheight">';
             html += '<div class="fieldset">';
-            html += '<div class="routeInfo"><span class="routePtName">'+info.homeName+' to '+info.officeName+'</span></div>';
+            html += '<div class="routeInfo"><span class="routePtName">'+ ((info.homeName.length>20)?info.homeName.substring(0,22)+"...":info.homeName)+' to '+info.officeName+'</span></div>';
             html += '<div id="gMap"></div>';
-            html += '<div class="mapMsg"><span class="seats"><span class="cur">123</span>/<span class="total">200</span></span> travellers confirmed </div>';
-            html += '<div class="fillingfast">13 days to go live</div>';
-            html += '</div>';
+            html += '<div class="flex" style="width:90%">';
+            html += '<div class="mapMsg"><span class="seats"><span class="cur">123</span>/<span class="total">200</span></span><br> travellers confirmed </div>';
+            html += '<div class="daysLeft"><span class="days">13</span><br>days to go live</div>';
+            html += '</div></div>';
             html += '<div class="line2">To travel on this route, tell us</div>';
             html += '<div class="line2">What time do you have to reach work?</div>';
             html += '<div class="carousel slide" id="mycarousel">';
@@ -1111,9 +1116,10 @@ function switchScreen(scrno, obj){
             html += '<div class="fieldset">';
             html += '<div class="routeInfo"><span class="routePtName">'+info.homeName+' to '+info.officeName +'</span></div>';
             html += '<div id="gMap"></div>';
-            html += '<div class="mapMsg"><span class="seats"><span class="cur">123</span>/<span class="total">200</span></span> travellers confirmed </div>';
-            html += '<div class="fillingfast">13 days to go live</div>';
-            html += '</div>';
+            html += '<div class="flex" style="width:90%">';
+            html += '<div class="mapMsg"><span class="seats"><span class="cur">123</span>/<span class="total">200</span></span><br> travellers confirmed </div>';
+            html += '<div class="daysLeft"><span class="days">13</span><br>days to go live</div>';
+            html += '</div></div>';
             html += '<div class="line2">What time do you leave from work?</div>';
             html += '<div class="carousel slide" id="mycarousel2">';
 
@@ -1527,9 +1533,9 @@ function fillWhatsAppLink(){
     var encodedPoints=google.maps.geometry.encoding.encodePath(path);
 
 
-    jQuery('#whatsapp').attr("href_send","whatsapp://send?text="+"Start your shuttl at Rs 3/Km.Just log on to http://myor.shuttl.com/suggest/index?paths="+encodedPoints+"&utm_source=whatsapp");
+    jQuery('#whatsapp').attr("href_send","whatsapp://send?text="+"Start your shuttl at Rs 3/Km.Just log on to http://bus2work.in/suggest/index?paths="+encodedPoints+"&utm_source=whatsapp");
 
-    jQuery.ajax({url:"/suggest/getWhatsAppShareLink?url="+"http://myor.shuttl.com/suggest/index?paths="+encodedPoints}).done(function(result){
+    jQuery.ajax({url:"/suggest/getWhatsAppShareLink?url="+"http://bus2work.in/suggest/index?paths="+encodedPoints}).done(function(result){
 
         var url=result["whatsapp_url"];
         jQuery('#whatsapp').attr("href_send","whatsapp://send?text=Start your shuttl at Rs 3/Km.Just log on to "+url);
@@ -1836,47 +1842,47 @@ function carouselSlide(obj, status, slot) {
     }
 }
 
-/*  function aboutUs() {
- var html = '<div id="aboutUsOverlay">';
- html += '<div id="aboutUsCross"> <i class="fa fa-times" aria-hidden="true"> </i> </div>';
- html += '<section id = "overlay-one">';
- html += '<div id="overlay-logo" ><img style ="max-width:100px" vertical-align=middle width =175% src="../images/shuttl_logo.png"></div>';
- html += '<div id="overlay-introduction">';
- html += '<div style="color:#333333"><h4 style="margin-bottom: 2px">Introducing</h4></div>';
- html += '<div style="color:grey"><h1 class="h1-overlay" style="margin-top:2px">#MakeMyRoute</h1></div>';
- html += '</div>';
- html += '</section>';
- html += '<section id="overlay-two">';
- html += '<div id="home-to-office">';
- html += '<div style="color:white"><h1 class="h1-overlay">Home</h1> </div>';
- html += '<img id="overlay-arrow" src ="../images/arrow.png" alt="arrow">';
- html += '<div style="color:white"><h1 class="h1-overlay">Office</h1> </div>';
- html += '</div>';
- html += '<div id="pickup-drop"> <p style="font-size:20px"> Pickup - Drop </p></div>';
- html += '<div id="route-information">';
- html += '<div class="flex">';
- html += '<div class="route-information-image"><img style="max-height:40px" src="../images/route_icon.png" alt="icon" /></div>';
- html += '<span class="route-information">';
- html += '<p style="font-size:20px"> Direct routes from home to office</p>';
- html += '</span>';
- html += '</div>';
- html += '<div class="flex">';
- html += '<div class="route-information-image"><img style ="max-height:40px" src="../images/friends_icon.png" alt="icon" /></div>';
- html += '<span class="route-information">';
- html += '<p style="font-size:20px"> Travel with friends and colleagues</p>';
- html += '</span>';
- html += '</div>';
- html += '</div>';
- html += '</section>';
- html += '<section id="overlay-three">';
- html += '<div id="overlay-starting-at"> <h1 class="h1-overlay"> Starting @ Rs3/km </h1> </div>';
- html += '<hr>';
- html += '<div id="assured-seats"> <h4 style="word-spacing:5px"> AC buses | Assured seats </h4></div>';
- html += '<div><img class="vanImage" src="../images/van2.png"></div>';
- html += '</section>';
- html += '</div>';
- return html;
- }*/
+function aboutUs() {
+    var html = '<div id="aboutUsOverlay">';
+    html += '<div id="aboutUsCross"> <i class="fa fa-times" aria-hidden="true"> </i> </div>';
+    html += '<section id = "overlay-one">';
+    html += '<div id="overlay-logo" ><img style ="max-width:100px" vertical-align=middle width =175% src="../images/shuttl_logo.png"></div>';
+    html += '<div id="overlay-introduction">';
+    html += '<div style="color:#333333"><h4 style="margin-bottom: 2px">Introducing</h4></div>';
+    html += '<div style="color:grey"><h1 class="h1-overlay" style="margin-top:2px">#MakeMyRoute</h1></div>';
+    html += '</div>';
+    html += '</section>';
+    html += '<section id="overlay-two">';
+    html += '<div id="home-to-office">';
+    html += '<div style="color:white"><h1 class="h1-overlay">Home</h1> </div>';
+    html += '<img id="overlay-arrow" src ="../images/arrow.png" alt="arrow">';
+    html += '<div style="color:white"><h1 class="h1-overlay">Office</h1> </div>';
+    html += '</div>';
+    html += '<div id="pickup-drop"> <p style="font-size:20px"> Pickup - Drop </p></div>';
+    html += '<div id="route-information">';
+    html += '<div class="flex">';
+    html += '<div class="route-information-image"><img style="max-height:40px" src="../images/route_icon.png" alt="icon" /></div>';
+    html += '<span class="route-information">';
+    html += '<p style="font-size:20px"> Direct routes from home to office</p>';
+    html += '</span>';
+    html += '</div>';
+    html += '<div class="flex">';
+    html += '<div class="route-information-image"><img style ="max-height:40px" src="../images/friends_icon.png" alt="icon" /></div>';
+    html += '<span class="route-information">';
+    html += '<p style="font-size:20px"> Travel with friends and colleagues</p>';
+    html += '</span>';
+    html += '</div>';
+    html += '</div>';
+    html += '</section>';
+    html += '<section id="overlay-three">';
+    html += '<div id="overlay-starting-at"> <h1 class="h1-overlay"> Starting @ Rs3/km </h1> </div>';
+    html += '<hr>';
+    html += '<div id="assured-seats"> <h4 style="word-spacing:5px"> AC buses | Assured seats </h4></div>';
+    html += '<div><img class="vanImage" src="../images/van2.png"></div>';
+    html += '</section>';
+    html += '</div>';
+    return html;
+}
 
 
 function aboutUsOrrca(){
@@ -1903,27 +1909,27 @@ if (window.innerWidth< 750)
 {
     jQuery(document).ready(function(){
 
-        /*   setTimeout(function(){
-         if (jQuery('#aboutUsOverlay')!=null){
-         jQuery("#aboutUsOverlay").fadeIn();
-         jQuery('#aboutUsOverlay').click(function(){
-         jQuery('#aboutUsOverlay').fadeOut();
-         });
-         }
-
-         },2000);*/
-
-        setTimeout(function () {
-            if (jQuery('#aboutUsOrrcaOverlay') != null) {
-                jQuery("#aboutUsOrrcaOverlay").fadeIn();
-                jQuery("#aboutUsCross").fadeIn();
-                jQuery('#aboutUsCross').click(function () {
-                    jQuery('#aboutUsOrrcaOverlay').fadeOut();
-                    jQuery('#aboutUsCross').fadeOut();
+        setTimeout(function(){
+            if (jQuery('#aboutUsOverlay')!=null){
+                jQuery("#aboutUsOverlay").fadeIn();
+                jQuery('#aboutUsOverlay').click(function(){
+                    jQuery('#aboutUsOverlay').fadeOut();
                 });
             }
 
         },2000);
+
+        /*setTimeout(function () {
+         if (jQuery('#aboutUsOrrcaOverlay') != null) {
+         jQuery("#aboutUsOrrcaOverlay").fadeIn();
+         jQuery("#aboutUsCross").fadeIn();
+         jQuery('#aboutUsCross').click(function () {
+         jQuery('#aboutUsOrrcaOverlay').fadeOut();
+         jQuery('#aboutUsCross').fadeOut();
+         });
+         }
+
+         },2000);*/
     });
 }
 

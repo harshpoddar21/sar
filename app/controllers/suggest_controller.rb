@@ -399,6 +399,8 @@ class SuggestController < ApplicationController
 
       end
 
+
+
       success,route=Route.createRoute name,pickA,timestampA,pricingA,Route::SUGGESTED_ROUTE
 
       response=Hash.new
@@ -412,6 +414,22 @@ class SuggestController < ApplicationController
         render :text=>response.to_json
       end
     end
+  end
+
+
+  def getSlotsWithCoords
+    origin_lat=params[:origin_lat]
+    origin_lng=params[:origin_lng]
+    destination_lat=params[:destination_lat]
+    destination_lng=params[:destination_lng]
+    route=Hash.new
+
+    if origin_lat!=nil && origin_lng!=nil && destination_lat!=nil && destination_lng!=nil
+      route=Route::getRouteBetween(origin,destination)
+    end
+
+    render :json=>route.to_json
+
   end
 
 

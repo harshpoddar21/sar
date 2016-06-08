@@ -14,9 +14,9 @@ module PaytmPaymentHelper
 
   def getWebsite
     if (Rails.env.production?)
-      return "superhighways"
+      return "SUPERweb"
     else
-      return "superhighways"
+      return "SUPERweb"
     end
   end
 

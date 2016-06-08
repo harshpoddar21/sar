@@ -41,30 +41,46 @@ function initAutocomplete() {
 
     }
     if( (document.getElementById('officeLocation') != null) && (document.getElementById('homeLocation') != null) ){
+        var options = {
+            componentRestrictions:{country: 'in'}
+        };
+
         var homelocation = new google.maps.places.Autocomplete(
-            (document.getElementById('homeLocation')));
+            (document.getElementById('homeLocation')), options);
 
         var officelocation = new google.maps.places.Autocomplete(
-            (document.getElementById('officeLocation')));
+            (document.getElementById('officeLocation')), options);
 
         homelocation.addListener('place_changed', function() {
             $('.bounce').hide();
             var place1 = homelocation.getPlace();
+            info.homeName = place1.name;
             info.homeAddress = place1.formatted_address;
             info.homelat = place1.geometry.location.lat();
             info.homelng = place1.geometry.location.lng();
 
             fillAdministrativeLevelDetails();
 
+            if (info.officeAddress){
+                createRoute();
+            }
         });
         officelocation.addListener('place_changed', function() {
             var place1 = officelocation.getPlace();
+            info.officeName = place1.name;
             info.officeAddress = place1.formatted_address;
             info.officelat = place1.geometry.location.lat();
             info.officelng = place1.geometry.location.lng();
 
             fillAdministrativeLevelDetails();
-			$('.bounce').show();	
+            if (info.homeAddress){
+                createRoute();
+            }
+
+        });
+
+        function createRoute() {
+			$('.bounce').show();
 			var poly = new google.maps.Polyline({
 				strokeColor: '#000000',
 				strokeOpacity: 1,
@@ -81,7 +97,7 @@ function initAutocomplete() {
 			}).done(function(response){
 				responseJson = response;
                 hideLoader();
-				if(response.route_type == 'Live_route' || response.route_type == 'Shipped_route'){
+				if(response.route_type == 'Live_route' || response.route_type == 'suggested_route'){
 					var slot = response.slots;
                     info.route_type=response.route_type;
                     info.routeid=response.route_id;
@@ -106,7 +122,8 @@ function initAutocomplete() {
 					$('.downArr .fa-angle-double-down').trigger('click');
 				}
 			})
-        });
+        }
+
     }
 }
 /* google auto suggestor */
@@ -141,11 +158,15 @@ function initMap(response) {
 	$('#gMap').css({'width':wpx+'px', 'height':hpx+'px'});
 
 	var map = new google.maps.Map(document.getElementById('gMap'), {
-		zoomControl: false,
+        zoomControl: false,
 		mapTypeControl: false,
 		streetViewControl: false
 	});
 	
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(
+        FullScreenControl(map, "Full screen",
+            "Exit full screen"));
+
 	var origin = new google.maps.Marker({
 		position: {lat: response.origin.lat, lng: response.origin.lng},
 		map: map,
@@ -339,6 +360,13 @@ function setCarousel2() {
 }
 
 
+function hideAddressBar(){
+    setTimeout(function(){
+        // Hide the address bar!
+        window.scrollTo(0, 1);
+    }, 0);
+}
+
 window.addEventListener("load",function() {
 	// Set a timeout...
 	setTimeout(function(){
@@ -370,6 +398,12 @@ $('input[type="text"]').on('input', function(){
 
 $('.remove').on('click', function(){
     $(this).css('display', 'none').prev('input[type="text"]').val('');
+    if (info.homeAddress){
+        info.homeAddress = undefined;
+
+    }
+    else
+        info.officeAddress = undefined;
 });
 
 function nextPrevVlickEvents(){
@@ -765,15 +799,17 @@ function switchScreen(scrno, obj){
             if(refer.hasOwnProperty('click')){
                 if(refer.stage >= 1){
                     $(obj).find('.downArr').fadeIn().end()
-                        .find('#homeLocation').val(info.homeAddress).end()
-                        .find('#officeLocation').val(info.officeAddress);
+                        .find('#homeLocation').val(info.homeName).end()
+                        .find('#officeLocation').val(info.officeName);
                 }
             }
             break;
 
         case 2:
             var html = '<div class="upArr"><span class="fa fa-angle-double-up"></span></div>';
-            html += '<div class="headText headText2 text-center">To help us serve you on time, please tell us what time you <span class="highlight lesshighlight"><br/>#ReachWork</span></div>';
+            html += '<div class="headText headText2 text-center">You have selected to travel from </div>';
+            html += '<div class="headText headText2 text-center" style="color:#3c5daa">' + info.homeName + ' to ' + info.officeName +' </div> <br><br>';
+            html += '<div class="headText headText2 text-center"> Please tell us what time you\'d like to <span class="highlight lesshighlight"><br/>#ReachWork</span></div>';
             html += '<div class="col-md-12"><br /><br />';
             html += '<div class="btn-group btn-group-justified reachwork" role="group" data-roletype="reachwork">';
             html += '<div class="btn-group" role="group">';
@@ -1041,12 +1077,13 @@ function switchScreen(scrno, obj){
         case 8:
 			var html = '<div class="col-md-12 fullheight">';
 			html += '<div class="fieldset">';
-			html += '<div class="routeInfo"><span class="routePtName">'+info.homeAddressShortened+' To </span><span class="routePtName">'+info.officeAddressShortened+'</span></div>';
+            html += '<div class="routeInfo"><span class="routePtName">'+ ((info.homeName.length>20)?info.homeName.substring(0,22)+"...":info.homeName)+' to '+info.officeName+'</span></div>';
 			html += '<div id="gMap"></div>';
-			html += '<div class="mapMsg"><span class="seats"><span class="cur">14</span>/<span class="total">20</span></span> seats are full</div>';
-			html += '<div class="fillingfast">4 more ppl required to launch route in 8 days</div>';
-			html += '</div>';
-            html += '<div class="line1">To travel on this route, tell us</div>';
+            html += '<div class="flex" style="width:90%">';
+            html += '<div class="mapMsg"><span class="seats"><span class="cur">123</span>/<span class="total">200</span></span><br> travellers confirmed </div>';
+            html += '<div class="daysLeft"><span class="days">13</span><br>days to go live</div>';
+            html += '</div></div>';
+            html += '<div class="line2">To travel on this route, tell us</div>';
 			html += '<div class="line2">What time do you have to reach work?</div>';
 			html += '<div class="carousel slide" id="mycarousel">';
 
@@ -1069,12 +1106,12 @@ function switchScreen(scrno, obj){
             //html += '<span class="btn btn-default rightbtn">&gt;</span>';
             html += '</div>';
             html += '<div class="fillingfast">(leave blank if you don\'t wish to use shuttl in the morning)</div>';
-            html += '<div class="text-capitalize btn btn-default col-xs-6 bouncebtn">not interested</div>';
-            html += '<div class="text-capitalize btn btn-primary col-xs-6 nextBtnMap">next&gt;</div>';
+            html += '<div class="text-capitalize btn btn-default col-xs-6 bouncebtn" style="width:48%">not interested</div>';
+            html += '<div class="text-capitalize btn btn-primary col-xs-6 nextBtnMap" style="width:48%">next&gt;</div>';
             html += '</div>';
             $(obj).html(html);
 
-
+            hideAddressBar();
 			notInterested();
 
 			$('.bounce').addClass('hidden');
@@ -1099,11 +1136,12 @@ function switchScreen(scrno, obj){
 		case 9:
 			var html = '<div class="col-md-12 fullheight">';
 			html += '<div class="fieldset">';
-			html += '<div class="routeInfo"><span class="routePtName">'+info.officeAddressShortened+' To </span><span class="routePtName">'+info.homeAddressShortened+'</span></div>';
+            html += '<div class="routeInfo"><span class="routePtName">'+info.homeName+' to '+info.officeName +'</span></div>';
 			html += '<div id="gMap"></div>';
-			html += '<div class="mapMsg"><span class="seats"><span class="cur">14</span>/<span class="total">20</span></span> seats are full</div>';
-			html += '<div class="fillingfast">4 more ppl required to launch route in 8 days</div>';
-			html += '</div>';
+            html += '<div class="flex" style="width:90%">';
+            html += '<div class="mapMsg"><span class="seats"><span class="cur">123</span>/<span class="total">200</span></span><br> travellers confirmed </div>';
+            html += '<div class="daysLeft"><span class="days">13</span><br>days to go live</div>';
+            html += '</div></div>';
 			html += '<div class="line2">What time do you leave from work?</div>';
             html += '<div class="carousel slide" id="mycarousel2">';
 
@@ -1127,12 +1165,13 @@ function switchScreen(scrno, obj){
             //	html += '</span>';
             //html += '<span class="btn btn-default rightbtn">&gt;</span>';
             html += '</div>';
-            html += '<div class="fillingfast">leave blank if you don\'t wish to use shuttl in the evening</div>';
-			html += '<div class="text-capitalize btn btn-primary col-xs-6 backBtnMap">&lt;back</div>';
-			html += '<div class="text-capitalize btn btn-primary col-xs-6 nextBtnMap">next&gt;</div>';
+            html += '<div class="fillingfast">(leave blank if you don\'t wish to use shuttl in the evening)</div>';
+            html += '<div class="text-capitalize btn btn-primary col-xs-6 backBtnMap" style="width:48%">&lt;back</div>';
+            html += '<div class="text-capitalize btn btn-primary col-xs-6 nextBtnMap" style="width:48%">next&gt;</div>';
 			html += '</div>';
 			$(obj).html(html);
 
+            hideAddressBar();
             setTimeout(function () {
 
 
@@ -1161,14 +1200,14 @@ function switchScreen(scrno, obj){
 			var html = '<div class="col-md-12 text-center fullheight">';
 			html += '<h4 style="margin:0;" class="text-center">Hey! Your Routes are almost LIVE..</h4><br />';
 			html += '<fieldset class="pay">';
-			html += '<legend class="payments"><span class="home">'+info.homeAddressShortened+'</span> <> <span class="office">'+info.officeAddressShortened+'</span></legend>';
+
 				html += '<div class="box">';
 					html += '<div class="boxrow">';
 						html += '<span class="heading">Going To Work</span>';
 						html += '<span class="change" onclick="goToReachWorkScreen(this);">change</span>';
 					html += '</div>';
-            html += '<div class="routeinfo">' + routeDetailsToWork("departure")+'</div>';
-            html += '<div class="routeinfo">' + routeDetailsToWork("arrival")+ '</div>';
+            html += '<div class="routeinfoPayment">' + routeDetailsToWork("departure")+'</div>';
+            html += '<div class="routeinfoPayment">' + routeDetailsToWork("arrival")+ '</div>';
 					html += '<div class="fillingfast" style="display:none;">8 more ppl required to launch route</div>';
 				html += '</div>';
 			
@@ -1177,16 +1216,16 @@ function switchScreen(scrno, obj){
 						html += '<span class="heading">Return From Work</span>';
 						html += '<span class="change"  onclick="goToLeaveWorkScreen(this);">change</span>';
 					html += '</div>';
-            html += '<div class="routeinfo">'+ routeDetailsFromWork("departure") +'</div>';
-            html += '<div class="routeinfo">'+ routeDetailsFromWork("arrival")+'</div>';
+            html += '<div class="routeinfoPayment">'+ routeDetailsFromWork("departure") +'</div>';
+            html += '<div class="routeinfoPayment">'+ routeDetailsFromWork("arrival")+'</div>';
 					html += '<div class="fillingfast" style="display:none;">4 more ppl required to launch route</div>';
 				html += '</div>';
 				
 			html += '</fieldset>';
-			html += '<div class="headText headText4 text-center">To travel on this route select a pass</div>';
+            html += '<div class="headText headText4 text-center">Select a pass to book your spot on this route</div>';
 
-             html += '<div class="text-capitalize paynow btn btn-primary"  onclick="initiatePaymentProcess(1);" data-value="1" style="width:189px">20-Rides @ 499</div>';
-             html += '<div class="text-capitalize paynow btn btn-primary" onclick="initiatePaymentProcess(2);" data-value="2">Promo Monthly @ Rs 1800</div>';
+             html += '<div class="text-capitalize paynow btn btn-primary col-xs-6 setHeight centerVertical"  onclick="initiatePaymentProcess(1);" data-value="1" style="width:189px">20-Rides @ 499</div>';
+             html += '<div class="text-capitalize paynow btn btn-primary col-xs-6" onclick="initiatePaymentProcess(2);" data-value="2">Promo Monthly @ Rs 1800</div>';
              html += '<div class="fillingfast">(we\'ll refund your money if the services aren\'t launched)</div>';
 
             html += '<div class="row social" id="whatsapp" onclick="sendWhatsApp()">';
@@ -1215,7 +1254,7 @@ function switchScreen(scrno, obj){
             var html = '<div class="col-md-12 text-center fullheight">';
             html += '<h3 style="margin:0;" class="text-center" id="route_live">'+((info["payment_status"]==1)?"Payment Successful":"Payment Failed")+'</h3><br />';
             html += '<fieldset class="pay">';
-            html += '<legend class="payments"><span class="home">'+info.homeAddressShortened+'</span> <> <span class="office">'+info.officeAddressShortened+'</span></legend>';
+            html += '<legend class="payments"><span class="home">'+info.homeName+'</span> <> <span class="office">'+info.officeName+'</span></legend>';
             html += '<div class="box">';
             html += '<div class="boxrow">';
             html += '<span class="heading">Going To Work</span>';
@@ -1299,7 +1338,7 @@ function switchScreen(scrno, obj){
             var html ='<div class="col-md-12 text-center fullheight">';
             html += '<h4 style="margin:0;" class="text-center allow-notification">To track your Shuttl and its arrival at your doorstep please click on "Allow"</h4><br />';
             html += '';
-            html+= '<div class="bott" onclick="changeToLastScreen();">submit</div>';
+            html+= '<div class="text-capitalize btn btn-default col-xs-12 bouncebtn submit-notification" onclick="changeToLastScreen();">submit</div>';
             html += '</div>';
             $(obj).html(html);
 
@@ -1465,7 +1504,7 @@ function switchScreen(scrno, obj){
             html += '<div class="routeInfo"><span class="ambassador routePtName">Become the Route Ambassador</span></div>';
             html += '<p> Share your promo code:' + getOfflineSharePromoCode() + ' by sticking customized posters on your home and office notice boards</p>';
             html += '<div class="incentive"> Earn Rs. 25 credit for every new customer on this route</div>';
-            html += '<div class="mapMsg"><span class="seats"><span class="cur">14</span>/<span class="total">20</span></span> seats are full</div>';
+            html += '<div class="mapMsg"><span class="seats"><span class="cur">14</span>/<span class="total">20</span></span> travellers are confirmed</div>';
             html += '</div>';
             html += '<div class="promoDetails"> Confirm the below details to receive 3 posters by mail within the week</div>';
             html += '<form role="form">';
