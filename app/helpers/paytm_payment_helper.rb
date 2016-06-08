@@ -42,7 +42,7 @@ module PaytmPaymentHelper
 
   def getTransactionId(transaction)
 
-    return "myor_"+transaction.id
+    return "myor_"+transaction.id.to_s
 
   end
 
