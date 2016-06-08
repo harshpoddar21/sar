@@ -1,0 +1,17 @@
+
+<form id="paytmform" method="post" action="<%= getActionUrl %>">
+  <input type="hidden" name="REQUEST_TYPE" value="<%= getRequestType %>" />
+  <input type="hidden" name="MID" value="<%= getMID %>" />
+  <input type="hidden" name="ORDER_ID" value="<%= getTransactionId(@transaction) %>" />
+  <input type="hidden" name="CUST_ID" value="<%= getCustomerId(@transaction) %>" />
+  <input type="hidden" name="TXN_AMOUNT" value="<%= getTransactionAmount @transaction %>" />
+  <input type="hidden" name="CHANNEL_ID" value="<%= getChannelId %>" />
+  <input type="hidden" name="INDUSTRY_TYPE_ID" value="<%= getIndustryTypeId %>" />
+  <input type="hidden" name="WEBSITE" value="<%= getWebsite %>" />
+  <input type="hidden" name="CHECKSUMHASH" value="<%= getCheckSumForTransaction @transaction %>" />
+
+</form>
+<script>
+  jQuery("#paytmform").submit();
+</script>
+

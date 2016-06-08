@@ -3,9 +3,16 @@ Rails.application.routes.draw do
 get 'nps/submitNps'
   root 'suggest#base'
 
+  get 'payment/makePayment'
+  post 'payment/makePayment'
+post 'suggest/createRoute'
+  get 'suggest/getInfo'
+  post 'payment/paymentDone'
   get 'suggest/getSlots'
   get 'suggest/getFromTo'
 
+  get 'suggest/sendOtp'
+  get 'suggest/verifyOtp'
   get 'payment/setSessionVar'
 
   get 'suggest/getLink'

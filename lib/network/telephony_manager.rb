@@ -8,4 +8,19 @@ module TelephonyManager
     return response["status"]
   end
 
+
+  def self.sendSms number,message
+
+    if (number!=nil && message!=nil)
+      resp=ConnectionManager.makeHttpRequest "http://alerts.solutionsinfini.com/api/web2sms.php?workingkey=A9b72ac822242669f869659438ea113e2&to=#{number}&sender=SHUTTL&message="+message
+      return true
+    else
+
+      return false
+
+    end
+
+
+  end
+
 end

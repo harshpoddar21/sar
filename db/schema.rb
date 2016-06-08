@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160529135943) do
+ActiveRecord::Schema.define(version: 20160607120509) do
 
   create_table "customer_suggestions", force: :cascade do |t|
     t.text     "from_str",        limit: 65535
@@ -62,6 +62,38 @@ ActiveRecord::Schema.define(version: 20160529135943) do
     t.datetime "updated_at",               null: false
   end
 
+  create_table "otp_messages", force: :cascade do |t|
+    t.integer  "otp",          limit: 4
+    t.text     "phone_number", limit: 65535
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  create_table "pick_ups", force: :cascade do |t|
+    t.text     "name",       limit: 65535
+    t.float    "lat",        limit: 24
+    t.float    "lng",        limit: 24
+    t.integer  "routeid",    limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  create_table "prices", force: :cascade do |t|
+    t.integer  "routeid",    limit: 4
+    t.integer  "price",      limit: 4
+    t.integer  "pass_type",  limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  create_table "route_cybercity", primary_key: "cord_id", force: :cascade do |t|
+    t.integer "row_id",    limit: 4
+    t.decimal "start_lat",           precision: 8, scale: 6
+    t.decimal "start_lon",           precision: 8, scale: 6
+    t.decimal "end_lat",             precision: 8, scale: 6
+    t.decimal "end_lon",             precision: 8, scale: 6
+  end
+
   create_table "route_exists", force: :cascade do |t|
     t.text     "name",         limit: 65535
     t.text     "route_points", limit: 65535
@@ -81,8 +113,8 @@ ActiveRecord::Schema.define(version: 20160529135943) do
   create_table "route_suggests", force: :cascade do |t|
     t.text     "name",         limit: 65535
     t.text     "route_points", limit: 65535
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "slots", force: :cascade do |t|
@@ -113,6 +145,7 @@ ActiveRecord::Schema.define(version: 20160529135943) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "amount",       limit: 4
+    t.text     "comment",      limit: 65535
   end
 
 end

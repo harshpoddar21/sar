@@ -233,6 +233,7 @@ span.slots {
     float: left;
     margin: 0 2px;
 }
+
 .btn-group-justified .btn{
     float: left;
     position: relative;
@@ -380,6 +381,8 @@ span.highlight.lesshighlight {
     margin:2px;
     width: 48%;
 }
+
+
 .not-int{
 
     bottom:0px;
@@ -634,17 +637,14 @@ div#pickup-drop{
     border-color: #3c5daa!important;
 }
 
-body {
-    font-family: "Lato Normal 400", Lato, "Helvetica Neue",Helvetica,Arial,sans-serif!important;
-    color:#333333!important;
-    overflow-y:scroll!important;
-    width:100%;
-    margin: 0 auto;
-}
 .secondary-blue {
     border-color: #3c5daa!important;
 }
 
+body {
+    font-family: "Lato Normal 400", Lato, "Helvetica Neue",Helvetica,Arial,sans-serif!important;
+    color:#333333!important;
+}
 
 .btn:focus{
     outline: #ef4050!important;
@@ -671,7 +671,7 @@ body {
     position: fixed;
     width: 100%;
     top: 0px;
-    display:none;
+
     z-index: 1000;
 }
 #aboutUsOrrcaOverlay{
@@ -694,6 +694,7 @@ body {
     top: 25px;
     right: 20px;
     z-index: 1001;
+    display: none;
 }
 
 .h1-overlay{
@@ -707,15 +708,11 @@ body {
     margin-bottom:20px;
 }
 
-.carousel-center{
-    padding: 0px!important;
-}
-
-
 .incentive {
     text-decoration:underline;
     font-size: 14px;
 }
+
 .setHeight {
     height:42px;
 }
@@ -726,21 +723,7 @@ body {
     justify-content: center;
     flex-direction: column;
 }
-.notInterested{
 
-    display:none;
-
-}
-.otp-entry button{
-    margin-right: 10px;
-    border: 0px;
-    margin-top: 12px;
-}
-.otp-entry{
-
-    text-align: center;
-    padding-bottom: 20px;
-}
 @media only screen and (min-device-width: 750px) {
     body {
         width: 60% !important;

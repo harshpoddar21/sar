@@ -1,4 +1,5 @@
 class SuggestController < ApplicationController
+
   def getFromTo
   
   end
@@ -90,6 +91,7 @@ class SuggestController < ApplicationController
 
 
   def insertSuggestedRoute
+
 
 
   end
@@ -317,6 +319,65 @@ class SuggestController < ApplicationController
       redirect_to :controller=>:suggest,:action=>:index_orca
     else
       redirect_to :controller=>:suggest,:action=>:index
+    end
+  end
+
+  def getInfo
+    render :json=>session["info"].to_json
+  end
+
+
+  def sendOtp
+
+    phoneNumber=params[:phoneNumber]
+    otp=rand(1000..9999)
+    OtpMessage.create(:otp=>otp,:phone_number=>phoneNumber)
+    TelephonyManager.sendSms phoneNumber,"Ahoy! Welcome to Shuttl.Please enter #{otp} to verify your number.The ride begins!"
+    response=Hash.new
+    response["success"]=true
+    render :json=>response.to_json
+  end
+
+  def verifyOtp
+    phoneNumber=params[:phoneNumber]
+    otp_number=params[:otp]
+    otp=OtpMessage.where(:phone_number => phoneNumber).last
+    response=Hash.new
+    if (otp!=nil && otp.otp.to_s==otp_number)
+      response["success"]=true
+    else
+      response["success"]=false
+    end
+    render :json=>response.to_json
+  end
+
+
+
+
+
+  def createRoute
+    a=params
+
+    timestamp=params[:timeStamp]
+    name=params[:name]
+    pick=params[:pickUpPoint]
+    pricing=params[:pricing]
+    if (timestamp==nil || name==nil || pick==nil || pricing==nil)
+      render :text=>"Error"
+    else
+      timestamp=timestamp.split "~"
+      pick=pick.split "~"
+      pricing=pricing.split "~"
+      route=RouteSuggest.create(:name=>name)
+      pick.each do |pic|
+        pic=pic.split ";"
+        if pic.length==3
+          PickUp.create(:routeid=>route.id,:name=>pic[0],:lat=>pic[1],:lng=>pic[2])
+        else
+          render :text=>"Error"
+        end
+      end
+      TimestampSuggest.create()
     end
   end
 

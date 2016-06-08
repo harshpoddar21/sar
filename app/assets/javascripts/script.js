@@ -81,8 +81,10 @@ function initAutocomplete() {
 			}).done(function(response){
 				responseJson = response;
                 hideLoader();
-				if(response.route_type == 'Live_route'){
+				if(response.route_type == 'Live_route' || response.route_type == 'Shipped_route'){
 					var slot = response.slots;
+                    info.route_type=response.route_type;
+                    info.routeid=response.route_id;
 					$.each(slot, function(key, value){
 						var time = formatSectoIST(value*60);
 						slotBtns += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="'+time+'">'+time+'<span class="live">(live)</span></button></div>';
@@ -421,15 +423,13 @@ function nextPrevVlickEvents(){
 
 var interval;
 function validatePhone(){
-    var inputtxt = $('#userPhoneNumber').val();
+    var inputtxt = info.phone_number;
     var phoneno = /^\d{10}$/;
     if(inputtxt.match(phoneno)) {
         $('#phoneModal .error').html('').hide();
         $('.loader').fadeIn();
-        $('#userPhoneNumber').attr('readonly', 'readonly');
-
         $.ajax({
-                url : 'makePhoneCall?phone_number='+inputtxt,
+                url : 'sendOtp?phoneNumber='+inputtxt,
                 type : 'GET',
                 dataType : 'json',
                 contentType : "application/json; charset=utf-8",
@@ -437,12 +437,12 @@ function validatePhone(){
             })
             .done(function(result){
 
+                $('.loader').fadeOut();
                 if(result.success){
-                    //checking userinput after every 2 seconds
-                    interval = setInterval(function(){
 
-                        validateMobileInput(inputtxt);
-                    }, 2000);
+                    jQuery("#phoneModal #userPhoneNumber").hide();
+                    jQuery("#phoneModal .otp-entry").show();
+
                 }else{
                     $('#phoneModal .error').html('invalid mobile number').fadeIn();
                 }
@@ -451,7 +451,6 @@ function validatePhone(){
                 $('.loader').fadeOut();
                 $('#phoneModal .error').html('invalid mobile number').fadeIn();
             });
-        validateMobileInput(inputtxt);
     }else {
         $('#phoneModal .error').html('invalid mobile number').fadeIn();
         return false;
@@ -460,9 +459,8 @@ function validatePhone(){
 var tries=0;
 function validateMobileInput(num){
     tries++;
-    if (stage==4) {
-        onMobileVerified(num);
-    }
+
+    info.phone_number=num;
     $.ajax({
             url : 'verifyPhoneCall?phone_number='+num+"&try="+tries,
             type : 'GET',
@@ -492,8 +490,17 @@ function validateMobileInput(num){
 
                 }else if (stage==10){
                     
+                    if (paymentFlow==1) {
                     onForPaymentMobileVerified();
+                    }
                     
+                }else if (stage==11){
+
+
+                    if (!info.is_mobile_verified) {
+                        alert("Thank you for suggestion.Your number is verfied");
+                        jQuery('#route_live').html("Hey!! Your routes are almost live");
+                    }
                 }
             }else{
                 $('#phoneModal .error').html('invalid mobile number').fadeIn();
@@ -509,16 +516,33 @@ function validateMobileInput(num){
 function onMobileVerified(num){
 
     $('.loader').fadeOut();
-    clearInterval(interval);
-    info.phone_number=num;
     $('#phoneModal').modal('hide');
     refer.stage = stage;
     refer.click = 'down';
     if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1){
-        stage = 5;
+        if (stage!=10) {
+            if (paymentFlow==1){
+
+                onForPaymentMobileVerified(info.phone_number);
+                return;
+            }else {
+                stage = 11;
+            }
+        }else{
+
+            stage=5;
+        }
     }
-    else
-        stage=15;
+    else {
+
+        if (paymentFlow==1 && stage==10){
+
+            onForPaymentMobileVerified(info.phone_number);
+            return;
+        }else {
+            stage = 15;
+        }
+    }
     window.location.hash = 'stage'+stage;
     $('.screen').outerHeight();
     var handle = $('.screen');
@@ -898,7 +922,9 @@ function switchScreen(scrno, obj){
             html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
             html += '<div class="modal-dialog modal-sm">';
             html += '<div class="modal-content">';
-            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class="loader"><em>You will receive a missed call on <i></i>. Press 1 to confirm</em><img src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
+            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="onPhoneNumberEntered();" /><p class="error"></p><div class="loader"><em>Sending Otp</em><img style="display:none;" src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
+            html+='<div class="otp-entry" style="display: none;"><input type="number" class="col-md-12" placeholder="enter otp" maxlength="5" id="otp" onkeyup="otpentered(this)"/>';
+            html+='<div><button class="btn-primary" onclick="validatePhone();">Resend Otp</button><button class="btn-primary" onclick="changePhoneNumber();">Change Number</button></div></div>';
             html += '</div></div></div>';
             $('#phoneModal .error').html('').hide();
             $("div.notInterested").hide();
@@ -914,6 +940,7 @@ function switchScreen(scrno, obj){
                 }
             }
 
+            info.route_type="new";
             if(info.commutework != undefined){
                 $.each(info.commutework, function(key, value){
                     $(obj).find('button[data-value = "'+value+'"]').removeClass('btn-default').addClass('btn-info');
@@ -942,7 +969,7 @@ function switchScreen(scrno, obj){
             html += '<h6 class="text-center">( Click above to change info )</h6>';
             html += '</fieldset>';
             html += '<p class="routeCount"><span class="count">3</span> Other people have made same route</p><br/>';
-            html += '<div class="headText headText3 text-center">To launch the route soon <span class="highlight">#JustSpreadTheWord</span></div>';
+            html += '<div class="headText headText3 text-center">To launch the route sooner <span class="highlight">#KeepSpreadingTheWord</span></div>';
             html += '<div class="row social">';
             html += '<div class="col-md-12">';
            /*html += '<span class="fa fa-google-plus col-md-3"></span>';*/
@@ -967,8 +994,13 @@ function switchScreen(scrno, obj){
             }
             var eSlots = '';
 
+            if (!(navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1)) {
             info.pushSubscriptionStatus = window.Notification.permission;
             ga('send', 'event', 'chromeNotificationStatus',window.Notification.permission);
+            }else{
+
+                info.pushSubscriptionStatus="safari_notpresent";
+            }
             if(info.leavework != undefined){
                 $.each(info.leavework, function(key, value){
                     if(key != info.leavework.length-1){
@@ -1014,7 +1046,7 @@ function switchScreen(scrno, obj){
 			html += '<div class="mapMsg"><span class="seats"><span class="cur">14</span>/<span class="total">20</span></span> seats are full</div>';
 			html += '<div class="fillingfast">4 more ppl required to launch route in 8 days</div>';
 			html += '</div>';
-			html += '<div class="line1">To Travel on this route, tell us</div>';
+            html += '<div class="line1">To travel on this route, tell us</div>';
 			html += '<div class="line2">What time do you have to reach work?</div>';
 			html += '<div class="carousel slide" id="mycarousel">';
 
@@ -1152,22 +1184,26 @@ function switchScreen(scrno, obj){
 				
 			html += '</fieldset>';
 			html += '<div class="headText headText4 text-center">To travel on this route select a pass</div>';
-			/*
-			html += '<div class="text-capitalize paynow btn btn-primary col-xs-6" data-value="499">10-Rides @ 499</div>';
-			html += '<div class="text-capitalize paynow btn btn-primary col-xs-6" data-value="1800">Promo Monthly @ Rs 1800</div>';
-             html += '<div class="fillingfast">(we\'ll refund your money if the services aren't launched)</div>';
-			*/
-			html += '<br /><div class="btn btn-primary full paynow col-md-12" onclick="initiatePaymentProcess();">I Am Interested</div><br />';
-			html += '<br /><div class="btn btn-primary full bouncebtn not-int col-md-12">Not Interested</div>';
+
+             html += '<div class="text-capitalize paynow btn btn-primary"  onclick="initiatePaymentProcess(1);" data-value="1" style="width:189px">20-Rides @ 499</div>';
+             html += '<div class="text-capitalize paynow btn btn-primary" onclick="initiatePaymentProcess(2);" data-value="2">Promo Monthly @ Rs 1800</div>';
+             html += '<div class="fillingfast">(we\'ll refund your money if the services aren\'t launched)</div>';
+
+            html += '<div class="row social" id="whatsapp" onclick="sendWhatsApp()">';
+            html += '<div class="col-md-12">';
+            html += '<span class="full" style="padding:20px;display:table;">Share Via WhatsApp</span>';
+            html += '</div></div>';
 			html += '</div>';
             html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
             html += '<div class="modal-dialog modal-sm">';
             html += '<div class="modal-content">';
-            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="validatePhone()" /><p class="error"></p><div class="loader"><em>You will receive a missed call on <i></i>. Press 1 to confirm</em><img src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
+            html += '<div class="modal-body text-center"><input class="col-md-12" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onKeyup="onPhoneNumberEntered();" /><p class="error"></p><div class="loader"><em>Sending Otp</em><img style="display:none;" src="/images/rolling.gif" /></div><div class="bounce">I\'m not interested</div></div>';
+            html+='<div class="otp-entry" style="display: none;"><input type="number" class="col-md-12" placeholder="enter otp" maxlength="5" id="otp" onkeyup="otpentered(this)"/>';
+            html+='<div><button class="btn-primary" onclick="validatePhone();">Resend Otp</button><button class="btn-primary" onclick="changePhoneNumber();">Change Number</button></div></div>';
             html += '</div></div></div>';
+
             $(obj).html(html);
-            $(obj).html(html);
-            notInterested();
+            fillWhatsAppLink();
             $('.paynow').on('click', function(){
                 var rs = $(this).attr('data-value');
             });
@@ -1177,7 +1213,7 @@ function switchScreen(scrno, obj){
 
         case 12:
             var html = '<div class="col-md-12 text-center fullheight">';
-            html += '<h4 style="margin:0;" class="text-center">Hey! Your Routes are almost LIVE..</h4><br />';
+            html += '<h3 style="margin:0;" class="text-center" id="route_live">'+((info["payment_status"]==1)?"Payment Successful":"Payment Failed")+'</h3><br />';
             html += '<fieldset class="pay">';
             html += '<legend class="payments"><span class="home">'+info.homeAddressShortened+'</span> <> <span class="office">'+info.officeAddressShortened+'</span></legend>';
             html += '<div class="box">';
@@ -1263,7 +1299,7 @@ function switchScreen(scrno, obj){
             var html ='<div class="col-md-12 text-center fullheight">';
             html += '<h4 style="margin:0;" class="text-center allow-notification">To track your Shuttl and its arrival at your doorstep please click on "Allow"</h4><br />';
             html += '';
-            html+= '<div class="bott" onclick="changeToStage(5);">submit</div>';
+            html+= '<div class="bott" onclick="changeToLastScreen();">submit</div>';
             html += '</div>';
             $(obj).html(html);
 
@@ -1273,37 +1309,56 @@ function switchScreen(scrno, obj){
             // }
             // else {
             //     domain = urlBase.split('/')[0];
-            // }            
+            // }
 
             if ('serviceWorker' in navigator) {
                 console.log('Service Worker is supported');
 
                 try{
-                navigator.serviceWorker.register('/sw.js').then(function () {
-                    return navigator.serviceWorker.ready;
-                }).then(function (serviceWorkerRegistration) {
-                    reg = serviceWorkerRegistration;
-                    console.log('Service Worker is ready :^)', reg);
-                    reg.pushManager.subscribe({userVisibleOnly: true}).then(function (pushSubscription) {
-                        sub = pushSubscription;
-                        console.log('Subscribed! Endpoint:', sub.endpoint);
-                        info.subscriberID = sub.endpoint;
-                        changeToStage(5);
-                        //isSubscribed = true;
-                    });
-                }).catch(function (error) {
-                    console.log('Service Worker Error :^(', error);
-                    changeToStage(5);
-                });
-            }catch (error){
+                    navigator.serviceWorker.register('/sw.js').then(function () {
+                        return navigator.serviceWorker.ready;
+                    }).then(function (serviceWorkerRegistration) {
+                        reg = serviceWorkerRegistration;
+                        console.log('Service Worker is ready :^)', reg);
+                        reg.pushManager.subscribe({userVisibleOnly: true}).then(function (pushSubscription) {
+                            sub = pushSubscription;
+                            console.log('Subscribed! Endpoint:', sub.endpoint);
+                            info.subscriberID = sub.endpoint;
+                            if (info.route_type=="new"){
+                                changeToStage(5);
+                            }else{
 
-                    changeToStage(5);
+                                changeToStage(11);
+                            }
+                            //isSubscribed = true;
+                        });
+                    }).catch(function (error) {
+                        console.log('Service Worker Error :^(', error);
+                        if (info.route_type=="new"){
+                            changeToStage(5);
+                        }else{
+
+                            changeToStage(11);
+                        }
+                    });
+                }catch (error){
+
+                    if (info.route_type=="new"){
+                        changeToStage(5);
+                    }else{
+
+                        changeToStage(11);
+                    }
                 }
             }else{
+                if (info.route_type=="new"){
+                    changeToStage(5);
+                }else{
 
-                changeToStage(5);
+                    changeToStage(11);
+                }
             }
-  
+
             // var trial=1;
 
             // initIzooto();
@@ -1316,7 +1371,7 @@ function switchScreen(scrno, obj){
             //         changeToStage(5);
             //     }
             //     if (Notification.permission === 'granted' || Notification.permission === 'denied') {
-                    
+
             //         clearInterval(notificationTimer);
 
             //         ga('send', 'event', 'chromeNotificationStatus',Notification.permission);
@@ -1326,7 +1381,7 @@ function switchScreen(scrno, obj){
             //     }
             // }, 500);
             break;
-
+        
         case 16:
             var html = '<div class="col-md-12 text-center" style="height: 100%;position: static;">';
             html += '<h4 style="margin:0;" id="share_heading" class="text-center sharetext">"Congratulations!! You have successfully made"</h4><br />';
@@ -1401,6 +1456,36 @@ function switchScreen(scrno, obj){
 
                 fillWhatsAppLink();
             }
+            break;
+
+
+        case 17:
+            var html = '<div class="col-md-12">';
+            html += '<div class="fieldset">';
+            html += '<div class="routeInfo"><span class="ambassador routePtName">Become the Route Ambassador</span></div>';
+            html += '<p> Share your promo code:' + getOfflineSharePromoCode() + ' by sticking customized posters on your home and office notice boards</p>';
+            html += '<div class="incentive"> Earn Rs. 25 credit for every new customer on this route</div>';
+            html += '<div class="mapMsg"><span class="seats"><span class="cur">14</span>/<span class="total">20</span></span> seats are full</div>';
+            html += '</div>';
+            html += '<div class="promoDetails"> Confirm the below details to receive 3 posters by mail within the week</div>';
+            html += '<form role="form">';
+            html += '<div class="form-group">';
+           // html += '<label for="full-name"> Full Name: </label>';
+            html += '<input type="text" class="form-control" id="full-name" placeholder="Full name">';
+            html += '</div>';
+            html += '<div class="form-group">';
+           // html += '<label for="email"> Email address: </label>';
+            html += '<input type="email" class="form-control" id="email" placeholder="Email address">';
+            html += '</div>';
+            html += '<div class="form-group">';
+           // html += '<label for="home-address"> Home Address: </label>';
+            html += '<input readonly type="text" class="form-control" id="home-address" placeholder="Home address">';
+            html += '</div>';
+            html += '</form>';
+            html += '<div class="text-capitalize btn btn-default col-xs-6 bouncebtn" style="position:fixed">Cancel</div>';
+            html += '<div class="text-capitalize btn btn-primary col-xs-6 nextBtnMap" style="position:fixed">Submit&gt;</div>';
+            html += '</div>';
+            $(obj).html(html);
             break;
 
         default:
@@ -1637,9 +1722,10 @@ function inpremoved(){
 }
 
 
-function initiatePaymentProcess(){
+function initiatePaymentProcess(orderType){
 
 
+    info.order_type=orderType;
     if (paymentFlow==1) {
         jQuery('#phoneModal').modal("show");
     }else{
@@ -1650,27 +1736,8 @@ function initiatePaymentProcess(){
 
 function onForPaymentMobileVerified(phoneNumber){
     
-    jQuery.ajax({url:"/payment/checkUserEligibilityForPayment?phoneNumber="+phoneNumber}).done(function(result){
-        
-        if (result.success){
-            
-            if (result.redirect!=undefined){
-                
-                window.location.href=result.redirect;
-                
-            }else{
-                
-                alert("We are sorry.But something went wrong.Please try again.");
-            }
-            
-        }else{
-            
-            alert(result.message);
-            
-        }
-        jQuery("#phoneModal").modal("hide");
-        
-    });
+    jQuery("body").append("<form  method='post' action='/payment/makePayment' id='paymentForm'><input type='hidden' name='info' value='"+JSON.stringify(info)+"'></form>");
+    jQuery("#paymentForm").submit();
 
 }
 
@@ -1785,16 +1852,16 @@ function aboutUs() {
     html += '<img id="overlay-arrow" src ="../images/arrow.png" alt="arrow">';
     html += '<div style="color:white"><h1 class="h1-overlay">Office</h1> </div>';
     html += '</div>';
-    html += '<div id="pickup-drop"> <h1 class="h1-overlay">Pickup - Drop </h1></div>';
+        html += '<div id="pickup-drop"> <p style="font-size:20px"> Pickup - Drop </p></div>';
     html += '<div id="route-information">';
     html += '<div class="flex">';
-    html += '<div class="route-information-image"><img style="max-height:50px" src="../images/route_icon.png" alt="icon" /></div>';
+        html += '<div class="route-information-image"><img style="max-height:40px" src="../images/route_icon.png" alt="icon" /></div>';
     html += '<span class="route-information">';
     html += '<p style="font-size:20px"> Direct routes from home to office</p>';
     html += '</span>';
     html += '</div>';
     html += '<div class="flex">';
-    html += '<div class="route-information-image"><img style ="max-height:50px" src="../images/friends_icon.png" alt="icon" /></div>';
+        html += '<div class="route-information-image"><img style ="max-height:40px" src="../images/friends_icon.png" alt="icon" /></div>';
     html += '<span class="route-information">';
     html += '<p style="font-size:20px"> Travel with friends and colleagues</p>';
     html += '</span>';
@@ -1811,16 +1878,68 @@ function aboutUs() {
     return html;
 }
 
-jQuery(document).ready(function(){
 
-    setTimeout(function(){
-        if (jQuery('#aboutUsOverlay')!=null){
+    if (window.innerWidth< 750)
+{jQuery(document).ready(function() {
+    setTimeout(function () {
+        if (jQuery('#aboutUsOverlay') != null) {
             jQuery("#aboutUsOverlay").fadeIn();
-            jQuery('#aboutUsOverlay').click(function(){
+            jQuery('#aboutUsOverlay').click(function () {
                 jQuery('#aboutUsOverlay').fadeOut();
-});
+            });
         }
 
-    },2000);
-
+    }, 2000);
 });
+}
+
+    function getOfflineSharePromoCode(){
+        return "" ;
+    }
+
+
+
+function otpentered(obj) {
+
+
+    if (/\d{4,4}/.test(jQuery(obj).val())) {
+        var otp = jQuery(obj).val();
+
+        jQuery.ajax({url: "/suggest/verifyOtp?otp=" + otp + "&phoneNumber=" + info.phone_number}).done(function (response) {
+
+            if (response["success"]) {
+
+                onMobileVerified(info.phone_number);
+
+
+            } else {
+
+                alert("invalid otp");
+
+                jQuery(obj).val("");
+            }
+        });
+    }
+}
+
+
+
+function changePhoneNumber(){
+
+
+
+    jQuery("#userPhoneNumber").show();
+    jQuery(".otp-entry").hide();
+}
+
+function onPhoneNumberEntered(){
+
+    if (/\d{10,10}/.test(jQuery("#userPhoneNumber").val())){
+
+        info.phone_number=jQuery("#userPhoneNumber").val();
+        validatePhone();
+    }else{
+
+        $('#phoneModal .error').html('invalid mobile number').fadeIn();
+    }
+}

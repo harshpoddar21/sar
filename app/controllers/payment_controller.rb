@@ -1,15 +1,15 @@
 class PaymentController < ApplicationController
-
-
-
+  PAYMENT_SUCCESS=1
+  PAYMENT_FAILED=2
+  PAYMENT_TRIED=3
+  PAYMENT_KEY="payment_status"
   def paymentError
     render "lazypay-error"
   end
 
   def newUserPayment
 
-    if (session["phoneNumber"]!=nil && session["amount"]!=nil)
-
+    if session["phoneNumber"]!=nil && session["amount"]!=nil
       render "lazypay-new-user"
     else
       redirect_to action: "paymentError"
@@ -134,6 +134,54 @@ class PaymentController < ApplicationController
   def paymentComplete
 
   end
+
+
+  def makePayment
+    session["info"]=JSON.parse params[:info]
+
+    session["info"][PAYMENT_KEY]=PAYMENT_TRIED
+    phoneNumber=session["info"]["phone_number"]
+    if (phoneNumber==nil)
+      render :text=>"Something bad has happened.Please try again"
+    else
+
+      @transaction=Transaction.new
+      @transaction.phone_number=phoneNumber
+      @transaction.status=0
+      @transaction.amount=100
+      @transaction.save
+
+    end
+
+
+  end
+
+  def paymentDone
+    params=ChecksumTool.new.get_checksum_verified_array params
+
+    if (params["IS_CHECKSUM_VALID"]=="Y")
+      transaction=Transaction.find_by(:id=>params[:ORDERID])
+      if (params[:STATUS]=="TXN_SUCCESS")
+       transaction.status=1
+       transaction.save
+       session[PAYMENT_KEY]=PAYMENT_SUCCESS
+      else
+        transaction.comments=params.to_json
+        transaction.save
+
+        session[PAYMENT_KEY]=PAYMENT_FAILED
+
+      end
+    else
+      render :text=>"Something bad has happended.Please try again"
+    end
+
+    redirect_to :controller=>"suggest",:action =>"index"
+
+  end
+
+
+
 
 
 
