@@ -160,7 +160,12 @@ class PaymentController < ApplicationController
     params=ChecksumTool.new.get_checksum_verified_array params
 
     if (params["IS_CHECKSUM_VALID"]=="Y")
-      transaction=Transaction.find_by(:id=>params[:ORDERID])
+      order_id=params[:ORDERID]
+      if /_/=~order_id
+        order_id=order_id.split "_"
+        order_id=order_id[1]
+      end
+      transaction=Transaction.find_by(:id=>order_id)
       if (params[:STATUS]=="TXN_SUCCESS")
        transaction.status=1
        transaction.save
