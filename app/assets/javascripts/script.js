@@ -952,7 +952,7 @@ function switchScreen(scrno, obj){
 
         case 5:
             var html = '<div class="col-md-12 text-center" style="height: 100%;position: static;">';
-			html += '<h4 style="margin:0;" id="share_heading" class="text-center sharetext">Awaiting Missed Call Confirmation</h4><br />';
+			html += '<h4 style="margin:0;" id="share_heading" class="text-center sharetext">Congratulations!! You have successfully made</h4><br />';
             html += '<fieldset>';
             html += '<legend>#YourRoute</legend>';
             html += '<div class="col-md-12 routeHeading text-capitalize">';

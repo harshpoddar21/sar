@@ -356,28 +356,56 @@ class SuggestController < ApplicationController
 
 
   def createRoute
-    a=params
 
     timestamp=params[:timeStamp]
     name=params[:name]
     pick=params[:pickUpPoint]
     pricing=params[:pricing]
-    if (timestamp==nil || name==nil || pick==nil || pricing==nil)
+    if timestamp==nil || name==nil || pick==nil || pricing==nil
       render :text=>"Error"
     else
       timestamp=timestamp.split "~"
       pick=pick.split "~"
       pricing=pricing.split "~"
-      route=RouteSuggest.create(:name=>name)
-      pick.each do |pic|
-        pic=pic.split ";"
-        if pic.length==3
-          PickUp.create(:routeid=>route.id,:name=>pic[0],:lat=>pic[1],:lng=>pic[2])
+      timestampA=Array.new
+      pickA=Array.new
+      pricingA=Array.new
+      timestamp.each do |tim|
+
+        if tim.split(";").length==3
+          timestampA.push tim.split(";")
         else
-          render :text=>"Error"
+          raise CustomError::ParamsException,"Invalid Timestamps"
         end
+
       end
-      TimestampSuggest.create()
+
+      pick.each do |pic|
+
+        if pic.split(";").length==3
+          pickA.push pic.split(";")
+        else
+          raise CustomError::ParamsException,"Invalid pick up points"
+        end
+
+      end
+
+      pricing.each do |pri|
+        if pri.split(";").length==2
+          pricingA.push pri.split(";")
+        else
+          raise CustomError::ParamsException,"Invalid pricing"
+        end
+
+      end
+
+      success=Route.createRoute name,pickA,timestampA,pricingA,Route::SUGGESTED_ROUTE
+
+      if success
+        render :text=>"OK"
+      else
+        render :text=>"Error"
+      end
     end
   end
 

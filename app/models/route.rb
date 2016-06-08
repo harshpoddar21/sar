@@ -304,4 +304,31 @@ class Route
   end
 
 
+  def self.createRoute name,pick,timestamp,pricing,routeType
+
+    if routeType==SUGGESTED_ROUTE
+    route=RouteSuggest.create(:name=>name)
+    pick.each do |pic|
+      if pic.length==3
+        PickUp.create(:routeid=>route.id,:name=>pic[0],:lat=>pic[1],:lng=>pic[2])
+      else
+        render :text=>"Error"
+      end
+    end
+    timestamp.each do |tim|
+      TimestampSuggest.create(:routeid=>route.id,:fromtime=>tim[0],:totime=>tim[1],:interval=>tim[2])
+    end
+
+    pricing.each do |pri|
+      Price.create :routeid=>route.id,:price=>pri[0],:pass_type=>pri[1]
+    end
+
+    return true
+    end
+
+    return false
+
+  end
+
+
 end
