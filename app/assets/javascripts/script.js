@@ -101,6 +101,7 @@ function initAutocomplete() {
 					var slot = response.slots;
                     info.route_type=response.route_type;
                     info.routeid=response.route_id;
+                    info.pricing=response.pricing;
 					$.each(slot, function(key, value){
 						var time = formatSectoIST(value*60);
 						slotBtns += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="'+time+'">'+time+'<span class="live">(live)</span></button></div>';
@@ -148,10 +149,10 @@ var closest = 0;
 var mindist = 99999;
 $(window).resize(function(){
 	if($('#gMap').length){
-		initMap(responseJson);
+		initMap(responseJson,"OTD");
 	}
 });
-function initMap(response) {
+function initMap(response,type) {
 	$('#gMap').html('');
 	var wpx = $('.screen .col-md-12').width();
 	var hpx = $('.screen').height()/2.5+0;
@@ -218,7 +219,7 @@ function initMap(response) {
 	directionsDisplay.setMap(map);
 	
 	var originPts;
-	if(fw){
+	if(type=="OTD"){
 		originPts = {lat: response.origin.lat, lng: response.origin.lng};
 	}else{
 		originPts = {lat: response.destination.lat, lng: response.destination.lng};
@@ -385,7 +386,7 @@ $(function() {
 });
 
 function setHeight(){
-    $('.screen').css('min-height', screenHeight+'px');
+    //$('.screen').css('min-height', screenHeight+'px');
 }
 
 $('input[type="text"]').on('input', function(){
@@ -1118,7 +1119,7 @@ function switchScreen(scrno, obj){
 			fw = true;
 			setTimeout(function(){
 
-                initMap(responseJson);
+                initMap(responseJson,"OTD");
                 timeCapture();
                 setCarousel();
                 if (info.reachwork!=undefined && info.reachwork.length>0){
@@ -1137,7 +1138,7 @@ function switchScreen(scrno, obj){
 		case 9:
 			var html = '<div class="col-md-12 fullheight">';
 			html += '<div class="fieldset">';
-            html += '<div class="routeInfo"><span class="routePtName">'+info.homeName+' to '+info.officeName +'</span></div>';
+            html += '<div class="routeInfo"><span class="routePtName">'+info.officeName+' to '+info.homeName +'</span></div>';
 			html += '<div id="gMap"></div>';
             html += '<div class="flex" style="width:90%">';
             html += '<div class="mapMsg"><span class="seats"><span class="cur">123</span>/<span class="total">200</span></span><br> travellers confirmed </div>';
@@ -1193,7 +1194,7 @@ function switchScreen(scrno, obj){
 			fw = false;
 			$('.bounce').addClass('hidden');
 			setTimeout(function(){
-				initMap(responseJson);
+				initMap(responseJson,"DTO");
 			},310);
 		break;
 		
@@ -1225,14 +1226,10 @@ function switchScreen(scrno, obj){
 			html += '</fieldset>';
             html += '<div class="headText headText4 text-center">Select a pass to book your spot on this route</div>';
 
-             html += '<div class="text-capitalize paynow btn btn-primary col-xs-6 setHeight centerVertical"  onclick="initiatePaymentProcess(1);" data-value="1" style="width:189px">20-Rides @ 499</div>';
-             html += '<div class="text-capitalize paynow btn btn-primary col-xs-6" onclick="initiatePaymentProcess(2);" data-value="2">Promo Monthly @ Rs 1800</div>';
+             html += '<div class="text-capitalize paynow btn btn-primary col-xs-6 setHeight centerVertical"  onclick="initiatePaymentProcess(1);" data-value="1" >20-Rides @ '+info.pricing[1]+'</div>';
+             html += '<div class="text-capitalize paynow btn btn-primary col-xs-6" onclick="initiatePaymentProcess(2);" data-value="2">Promo Monthly @ Rs '+info.pricing[0]+'<div> (Unlimited Rides) </div></div>';
+            html += '<br><br><br><br>';
              html += '<div class="fillingfast">(we\'ll refund your money if the services aren\'t launched)</div>';
-
-            html += '<div class="row social" id="whatsapp" onclick="sendWhatsApp()">';
-            html += '<div class="col-md-12">';
-            html += '<span class="full" style="padding:20px;display:table;">Share Via WhatsApp</span>';
-            html += '</div></div>';
 			html += '</div>';
             html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
             html += '<div class="modal-dialog modal-sm">';
@@ -1243,7 +1240,6 @@ function switchScreen(scrno, obj){
             html += '</div></div></div>';
 
             $(obj).html(html);
-            fillWhatsAppLink();
             $('.paynow').on('click', function(){
                 var rs = $(this).attr('data-value');
             });
@@ -1765,7 +1761,7 @@ function inpremoved(){
 function initiatePaymentProcess(orderType){
 
 
-    info.order_type=orderType;
+    info.pass_type=orderType;
     if (paymentFlow==1) {
         jQuery('#phoneModal').modal("show");
     }else{
@@ -1848,13 +1844,13 @@ function changeToStage(stageNo){
 
 function routeDetailsToWork(status){
     var routeSelected = (info.reachwork && info.reachwork[0] != null);
-    if (status == "departure") return (routeSelected ? ('Departs: ' +info.homeAddressShortened): "");
-    else if (status == "arrival") return (routeSelected ? ('Arrives: '+info.officeAddressShortened+' @ '+ info.reachwork) : "You have chosen not to Shuttl to work");
+    if (status == "departure") return (routeSelected ? ('Departs: ' +info.homeName): "");
+    else if (status == "arrival") return (routeSelected ? ('Arrives: '+info.officeName+' @ '+ info.reachwork) : "You have chosen not to Shuttl to work");
 }
 function routeDetailsFromWork(status){
     var routeSelected = (info.leavework && info.leavework[0] != null);
-    if (status == "departure") return (routeSelected ? ('Departs: '+info.officeAddressShortened+' @ '+ info.leavework) : "You have chosen not to Shuttl home");
-    else if (status == "arrival") return (routeSelected ? ('Arrives: '+info.homeAddressShortened): "" );
+    if (status == "departure") return (routeSelected ? ('Departs: '+info.officeName+' @ '+ info.leavework) : "You have chosen not to Shuttl home");
+    else if (status == "arrival") return (routeSelected ? ('Arrives: '+info.homeName): "" );
 }
 
 

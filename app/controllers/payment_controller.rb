@@ -148,7 +148,21 @@ class PaymentController < ApplicationController
       @transaction=Transaction.new
       @transaction.phone_number=phoneNumber
       @transaction.status=0
-      @transaction.amount=1
+      if session["info"]["route_type"]==ROUTE::SUGGESTED_ROUTE
+        priceSel=Price.where(:routeid=>session["info"]["routeid"]).where("pass_type"=>session["info"]["pass_type"]).last
+        if priceSel==nil
+          throw CustomError::ParamsException,"Invalid amount"
+        else
+          @transaction.amount=priceSel.price
+        end
+      else
+        if session["info"]["pass_type"]==1
+          @transaction.amount=500
+        else
+          @transaction.amount=4500
+        end
+      end
+
       @transaction.save
 
     end

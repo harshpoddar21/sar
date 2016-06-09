@@ -655,12 +655,9 @@ div#pickup-drop{
 body {
     font-family: "Lato Normal 400", Lato, "Helvetica Neue",Helvetica,Arial,sans-serif!important;
     color:#333333!important;
-    overflow-y:scroll!important;
-    width:100%;
+    height: 100%;
     margin: 0 auto;
-}
-.secondary-blue {
-    border-color: #3c5daa!important;
+
 }
 
 
@@ -765,6 +762,9 @@ body {
 }
 @media only screen and (min-device-width: 750px) {
     body {
+        width: 60% !important;
+    }
+    .bounce{
         width: 60% !important;
     }
 }

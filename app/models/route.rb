@@ -1,7 +1,7 @@
 class Route
 
 
-  attr_accessor :routeType,:routePoints,:name,:id
+  attr_accessor :routeType,:routePoints,:name,:id,:pricing
 
   THRESHOLD_DISTANCE_TO_CONSIDER=100
   GRID_RES=0.001
@@ -26,7 +26,16 @@ class Route
       route.routePoints=routeFound.route_points
       route.name=routeFound.name
       route.id=routeFound.id
+      if (routeType=="Live_route")
+        route.pricing=[500,4500]
+      else
+        price=Price.where(:routeid=>route.id)
 
+        route.pricing=Array.new
+        price.each do |pri|
+          route.pricing.push pri.price
+        end
+      end
 
     end
 
@@ -73,7 +82,7 @@ class Route
 
     @@routeExistMap=Hash.new
     @@routeSuggestMap=Hash.new
-    RouteExist.all.each do |route|
+    RouteExist.where(:deleted => 0).each do |route|
       if (route.route_points!=nil)
 
         routePoints=Polylines::Decoder.decode_polyline(route.route_points)
@@ -175,10 +184,10 @@ class Route
   end
   def self.getRouteBetweenPoints(origin,destination)
     route=getRouteLiveBetweenPoints origin,destination
-
     if (route==nil)
       route=getRouteSuggestedBetweenPoints origin,destination
       if (route!=nil)
+
         return route,SUGGESTED_ROUTE
       else
         return nil,nil
@@ -347,6 +356,9 @@ class Route
   def self.createRoute name,pick,timestamp,pricing,routeType
 
     if routeType==SUGGESTED_ROUTE
+      if (RouteSuggest.find_by(:name=>name)!=nil)
+        deleteSuggestedRouteByName(name)
+      end
        pickPointLatLng=Array.new
        pick.each do |pi|
          point=Hash.new
@@ -385,5 +397,25 @@ class Route
   end
 
 
+  def self.deleteSuggestedRouteByName(name)
+
+    routes=RouteSuggest.where(:name=>name)
+    if (routes!=nil)
+      routes.each do |route|
+        routeid=route.id
+        route.destroy!
+        Price.where(:routeid=>routeid).each do |ro|
+          ro.destroy!
+        end
+        PickUp.where(:routeid=>routeid).each do |ro|
+          ro.destroy!
+        end
+        TimestampSuggest.where(:routeid=>routeid).each do |ro|
+          ro.destroy!
+        end
+
+      end
+    end
+  end
 
 end
