@@ -497,6 +497,7 @@ function validatePhone(){
     if(inputtxt.match(phoneno)) {
         $('#phoneModal .error').html('').hide();
         $('.loader').fadeIn();
+        showLoader();
         $.ajax({
                 url : 'sendOtp?phoneNumber='+inputtxt,
                 type : 'GET',
@@ -506,6 +507,7 @@ function validatePhone(){
             })
             .done(function(result){
 
+                hideLoader();
                 $('.loader').fadeOut();
                 if(result.success){
 
@@ -2040,8 +2042,10 @@ function otpentered(obj) {
     if (/\d{4,4}/.test(jQuery(obj).val())) {
         var otp = jQuery(obj).val();
 
+        showLoader();
         jQuery.ajax({url: "/suggest/verifyOtp?otp=" + otp + "&phoneNumber=" + info.phone_number}).done(function (response) {
 
+            hideLoader();
             if (response["success"]) {
 
                 onMobileVerified(info.phone_number);
@@ -2081,5 +2085,9 @@ function onPhoneNumberEntered(){
 
 function changeToLastScreen(){
 
-    changeToStage(5);
+    if (info.route_type=="new") {
+        changeToStage(5);
+    }else{
+        changeToStage(10);
+    }
 }
