@@ -8,7 +8,7 @@ class Route
   ROUTE_DOES_NOT_EXISTS="route_does_not_exists"
   LIVE_ROUTE="Live_route"
   SUGGESTED_ROUTE="suggested_route"
-  ZONAL_WIDTH=30
+  ZONAL_WIDTH=50
   @@routeExistMap=Hash.new
   @@routeSuggestMap=Hash.new
 
@@ -306,6 +306,8 @@ class Route
     possibleOriginRoutes=Hash.new
     possibleDestinationRoutes=Hash.new
 
+    distance=Hash.new
+
     (-1*ZONAL_WIDTH..1*ZONAL_WIDTH).each do |offset|
       (-1*ZONAL_WIDTH..1*ZONAL_WIDTH).each do |offset2|
         originC=origin.dup
@@ -316,6 +318,7 @@ class Route
             if possibleOriginRoutes[key]==nil
               possibleOriginRoutes[key]=Array.new
             end
+            distance[key]=Location.distance(origin,originC)
             possibleOriginRoutes[key]=possibleOriginRoutes[key]+value
           end
         end
@@ -341,14 +344,21 @@ class Route
 
     possibleRouteIds=possibleOriginRoutes.keys & possibleDestinationRoutes.keys
 
+
     if (possibleRouteIds.size>0)
+      minDistance=1000000
+      selRouteId=nil
       possibleRouteIds.each do |routeId|
 
-        if (possibleOriginRoutes[routeId].first["id"]<possibleDestinationRoutes[routeId].last["id"])
-          return RouteSuggest.find_by(:id=>routeId)
+        if (possibleOriginRoutes[routeId].first["id"]<possibleDestinationRoutes[routeId].last["id"] && distance[routeId]<minDistance)
+
+          selRouteId=routeId
+          minDistance=distance[routeId]
         end
 
       end
+
+      return RouteSuggest.find_by(:id=>selRouteId)
     end
     return nil
   end
@@ -376,8 +386,8 @@ class Route
       route=RouteSuggest.create(:name=>name,:route_points=>routePoints)
 
     pick.each do |pic|
-      if pic.length==3
-        PickUp.create(:routeid=>route.id,:name=>pic[0],:lat=>pic[1],:lng=>pic[2])
+      if pic.length==4
+        PickUp.create(:routeid=>route.id,:name=>pic[0],:lat=>pic[1],:lng=>pic[2],:landmark=>pic[3])
       else
         render :text=>"Error"
       end

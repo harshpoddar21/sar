@@ -40,6 +40,9 @@ class SuggestController < ApplicationController
        result["destination"]=destinationLoc
        result["route_type"]=route.routeType
        result["points"]=route.routePoints
+      if (route.routeType==Route::SUGGESTED_ROUTE)
+        result["pick"]=PickUp.where(:routeid=>route.id)
+      end
 
     else
       
@@ -383,7 +386,7 @@ class SuggestController < ApplicationController
 
       pick.each do |pic|
 
-        if pic.split(";").length==3
+        if pic.split(";").length==4
           pickA.push pic.split(";")
         else
           raise CustomError::ParamsException,"Invalid pick up points"
@@ -434,6 +437,7 @@ class SuggestController < ApplicationController
       destination.push destination_lat.to_f
       destination.push destination_lng.to_f
       route=Route::getRouteBetween(origin,destination)
+
     end
 
     render :json=>route.to_json
