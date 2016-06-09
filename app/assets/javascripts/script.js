@@ -9,7 +9,9 @@ var morningSlot = 0;
 var eveningSlot = 88;
 var reg;
 var sub;
+var slots_final=[];
 var isSubscribed = false;
+var duration;
 
 
 function initAutocomplete() {
@@ -101,6 +103,16 @@ function initAutocomplete() {
 					var slot = response.slots;
                     info.route_type=response.route_type;
                     info.routeid=response.route_id;
+                    info.pricing=response.pricing;
+                    slots_final=response.slots;
+                    for (var i=0;i<slots_final.length;i++){
+                        
+                        if (slots_final[i]>19*60){
+                            
+                            eveningSlot=i;
+                            break;
+                        }
+                    }
                     info.pricing=response.pricing;
 					$.each(slot, function(key, value){
 						var time = formatSectoIST(value*60);
@@ -215,16 +227,23 @@ function initMap(response,type) {
 
 	
 	var directionsService = new google.maps.DirectionsService;
+
+    var directionsService1 = new google.maps.DirectionsService;
 	var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
 	directionsDisplay.setMap(map);
 	
 	var originPts;
 	if(type=="OTD"){
-		originPts = {lat: response.origin.lat, lng: response.origin.lng};
+		originPts = new google.maps.LatLng(response.origin.lat,response.origin.lng);
 	}else{
-		originPts = {lat: response.destination.lat, lng: response.destination.lng};
+		originPts =new google.maps.LatLng(response.destination.lat,response.destination.lng);
 	}
-	
+    var destinationPts;
+    if(type=="OTD"){
+        destinationPts = new google.maps.LatLng(response.destination.lat,response.destination.lng);
+    }else{
+        destinationPts = new google.maps.LatLng(response.origin.lat,response.origin.lng);
+    }
 	directionsService.route({
 		origin: originPts,
 		destination: latlng,
@@ -232,11 +251,26 @@ function initMap(response,type) {
 	}, function(response, status) {
 		if (status === google.maps.DirectionsStatus.OK) {
 			directionsDisplay.setDirections(response);
+
+            directionsService1.route({
+                origin: originPts,
+                destination: destinationPts,
+                travelMode: google.maps.TravelMode.DRIVING
+            }, function(response, status) {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    if (response.routes[0]!=null &&response.routes[0].legs[0]!=null && response.routes[0].legs[0].duration){
+
+                        duration=response.routes[0].legs[0].duration.value;
+                    }
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
 		} else {
 			window.alert('Directions request failed due to ' + status);
 		}
 	});
-			
+    
 	var setRegion = new google.maps.Polyline({
 		path: decodedPath,
 		strokeColor: "#FF0000",
@@ -1844,18 +1878,83 @@ function changeToStage(stageNo){
 
 function routeDetailsToWork(status){
     var routeSelected = (info.reachwork && info.reachwork[0] != null);
-    if (status == "departure") return (routeSelected ? ('Departs: ' +info.homeName): "");
+    var rwork=info.reachwork[0];
+    rwork=rwork.split(" ");
+    var delta=0;
+    if (rwork[1]=="PM"){
+        
+        delta=12*3600;
+    }
+    rwork=rwork[0].split(":");
+
+    rwork=parseInt(rwork[0])*3600+parseInt(rwork[1])*60-duration+delta;
+
+    var hour=parseInt(rwork/3600);
+    var min=parseInt((rwork%3600)/60);
+    var time="";
+    var min_str=min<10?"0"+min:min+"";
+    var ma="";
+        if (hour>12){
+            hour=hour-12;
+            ma="PM";
+        }else{
+
+            ma="AM";
+        }
+    var hour_str="";
+        if (hour<10){
+
+            hour_str="0"+hour;
+        }else{
+
+            hour_str=hour+"";
+        }
+        time=hour_str+":"+min_str+" "+ma;
+
+
+    if (status == "departure") return (routeSelected ? ('Departs: ' +info.homeName)+" @ " +time: "");
     else if (status == "arrival") return (routeSelected ? ('Arrives: '+info.officeName+' @ '+ info.reachwork) : "You have chosen not to Shuttl to work");
 }
 function routeDetailsFromWork(status){
     var routeSelected = (info.leavework && info.leavework[0] != null);
+    var rwork=info.leavework[0];
+    rwork=rwork.split(" ");
+
+    var delta=0;
+    if (rwork[1]=="PM"){
+
+        delta=12*3600;
+    }
+    rwork=rwork[0].split(":");
+    rwork=parseInt(rwork[0])*3600+parseInt(rwork[1])*60+duration+delta;
+    var hour=parseInt(rwork/3600);
+    var min=parseInt((rwork%3600)/60);
+    var time="";
+    var min_str=min<10?"0"+min:min+"";
+    var ma="";
+    if (hour>12){
+        hour=hour-12;
+        ma="PM";
+    }else{
+
+        ma="AM";
+    }
+    var hour_str="";
+    if (hour<10){
+
+        hour_str="0"+hour;
+    }else{
+
+        hour_str=hour+"";
+    }
+    time=hour_str+":"+min_str+" "+ma;
     if (status == "departure") return (routeSelected ? ('Departs: '+info.officeName+' @ '+ info.leavework) : "You have chosen not to Shuttl home");
-    else if (status == "arrival") return (routeSelected ? ('Arrives: '+info.homeName): "" );
+    else if (status == "arrival") return (routeSelected ? ('Arrives: '+info.homeName)+"@"+time:"" );
 }
 
 
 function carouselSlide(obj, status, slot) {
-    var NUMBER_OF_SLOTS = 342;
+    var NUMBER_OF_SLOTS = slots_final.length;
     if (slot == morningSlot) {
         if (status == "next" && morningSlot < NUMBER_OF_SLOTS / 3)
             morningSlot = morningSlot + 3;

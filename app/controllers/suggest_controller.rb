@@ -34,6 +34,7 @@ class SuggestController < ApplicationController
        destinationLoc["lat"]=destination[0]
        destinationLoc["lng"]=destination[1]
        result["slots"] = route.getSlots
+       result["pricing"]=route.pricing
        result["origin"]=originLoc
        result["route_id"]=route.id
        result["destination"]=destinationLoc
