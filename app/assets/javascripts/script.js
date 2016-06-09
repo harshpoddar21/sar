@@ -213,6 +213,11 @@ function initMap(response,type) {
 	
 	var latlng = new google.maps.LatLng( decodedPath[closest].lat(), decodedPath[closest].lng() );    
 
+    if (type!="OTD"){
+
+        latlng = new google.maps.LatLng( decodedPath[decode].lat(), decodedPath[closest].lng() );
+    }
+
 	var marker2 = new google.maps.Marker( { 
 		position: latlng,     
 		map: map,      
@@ -245,8 +250,8 @@ function initMap(response,type) {
         destinationPts = new google.maps.LatLng(response.origin.lat,response.origin.lng);
     }
 	directionsService.route({
-		origin: originPts,
-		destination: latlng,
+		origin: latlng,
+		destination: originPts,
 		travelMode: google.maps.TravelMode.WALKING
 	}, function(response, status) {
 		if (status === google.maps.DirectionsStatus.OK) {
@@ -2088,6 +2093,6 @@ function changeToLastScreen(){
     if (info.route_type=="new") {
         changeToStage(5);
     }else{
-        changeToStage(10);
+        changeToStage(5);
     }
 }
