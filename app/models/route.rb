@@ -8,7 +8,7 @@ class Route
   ROUTE_DOES_NOT_EXISTS="route_does_not_exists"
   LIVE_ROUTE="Live_route"
   SUGGESTED_ROUTE="suggested_route"
-  ZONAL_WIDTH=1
+  ZONAL_WIDTH=30
   @@routeExistMap=Hash.new
   @@routeSuggestMap=Hash.new
 
@@ -243,9 +243,9 @@ class Route
     possibleOriginRoutes=Hash.new
     possibleDestinationRoutes=Hash.new
 
-    (-1..1).each do |offset|
-      (-1..1).each do |offset2|
-        originC=origin
+    (-1*ZONAL_WIDTH..1*ZONAL_WIDTH).each do |offset|
+      (-1*ZONAL_WIDTH..1*ZONAL_WIDTH).each do |offset2|
+        originC=origin.dup
         originC[0]=originC[0]+GRID_RES*offset
         originC[1]=originC[1]+GRID_RES*offset2
       if (@@routeExistMap[getMapKeyFor originC]!=nil)
@@ -260,9 +260,9 @@ class Route
 
     end
 
-    (-1..1).each do |offset|
-      (-1..1).each do |offset2|
-        destinationC=destination
+    (-1*ZONAL_WIDTH..1*ZONAL_WIDTH).each do |offset|
+      (-1*ZONAL_WIDTH..1*ZONAL_WIDTH).each do |offset2|
+        destinationC=destination.dup
         destinationC[0]=destinationC[0]+GRID_RES*offset
         destinationC[1]=destinationC[1]+GRID_RES*offset2
         if (@@routeExistMap[getMapKeyFor destinationC]!=nil)
@@ -298,12 +298,12 @@ class Route
 
     (-1*ZONAL_WIDTH..1*ZONAL_WIDTH).each do |offset|
       (-1*ZONAL_WIDTH..1*ZONAL_WIDTH).each do |offset2|
-        originC=origin
+        originC=origin.dup
         originC[0]=originC[0]+GRID_RES*offset
         originC[1]=originC[1]+GRID_RES*offset2
         if (@@routeSuggestMap[getMapKeyFor originC]!=nil)
           @@routeSuggestMap[getMapKeyFor originC].each do |key,value|
-            if (possibleOriginRoutes[key]==nil)
+            if possibleOriginRoutes[key]==nil
               possibleOriginRoutes[key]=Array.new
             end
             possibleOriginRoutes[key]=possibleOriginRoutes[key]+value
@@ -315,7 +315,7 @@ class Route
 
     (-1*ZONAL_WIDTH..1*ZONAL_WIDTH).each do |offset|
       (-1*ZONAL_WIDTH..1*ZONAL_WIDTH).each do |offset2|
-        destinationC=destination
+        destinationC=destination.dup
         destinationC[0]=destinationC[0]+GRID_RES*offset
         destinationC[1]=destinationC[1]+GRID_RES*offset2
         if (@@routeSuggestMap[getMapKeyFor destinationC]!=nil)
@@ -327,7 +327,6 @@ class Route
           end
         end
       end
-
     end
 
     possibleRouteIds=possibleOriginRoutes.keys & possibleDestinationRoutes.keys

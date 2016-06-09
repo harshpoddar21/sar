@@ -1117,6 +1117,8 @@ function switchScreen(scrno, obj){
 			$('.bounce').addClass('hidden');
 			fw = true;
 			setTimeout(function(){
+
+                initMap(responseJson);
                 timeCapture();
                 setCarousel();
                 if (info.reachwork!=undefined && info.reachwork.length>0){
@@ -1129,7 +1131,6 @@ function switchScreen(scrno, obj){
                         }
                     });
                 }
-					initMap(responseJson);
 			},310);
 		break;
 		

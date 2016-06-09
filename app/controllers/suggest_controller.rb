@@ -425,6 +425,13 @@ class SuggestController < ApplicationController
     route=Hash.new
 
     if origin_lat!=nil && origin_lng!=nil && destination_lat!=nil && destination_lng!=nil
+
+      origin=Array.new
+      origin.push origin_lat.to_f
+      origin.push origin_lng.to_f
+      destination=Array.new
+      destination.push destination_lat.to_f
+      destination.push destination_lng.to_f
       route=Route::getRouteBetween(origin,destination)
     end
 

@@ -5,7 +5,7 @@ module PaytmPaymentHelper
   end
 
   def getMID
-    if (Rails.env.production?)
+    if Rails.env.production?
       return "SUPERM32131698365846"
     else
       return "Superh25717328284467"
@@ -13,7 +13,7 @@ module PaytmPaymentHelper
   end
 
   def getWebsite
-    if (Rails.env.production?)
+    if Rails.env.production?
       return "SUPERweb"
     else
       return "SUPERweb"

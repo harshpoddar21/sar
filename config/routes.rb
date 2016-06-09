@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   get 'suggest/showRouteFoundFromSlots'
 get 'nps/submitNps'
   root 'suggest#base'
-
+get 'payment/paymentDone'
   get 'payment/makePayment'
   post 'payment/makePayment'
 post 'suggest/createRoute'
@@ -11,6 +11,7 @@ post 'suggest/createRoute'
   get 'suggest/getSlots'
   get 'suggest/getFromTo'
 
+  get 'suggest/getSlotsWithCoords'
   get 'suggest/sendOtp'
   get 'suggest/verifyOtp'
   get 'payment/setSessionVar'
