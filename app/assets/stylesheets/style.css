@@ -368,6 +368,7 @@ span.highlight.lesshighlight {
 .bouncebtn,.backBtnMap {
     position: absolute;
     bottom: 0px;
+    left: 0px;
 }
 
 .submit-notification {

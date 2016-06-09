@@ -2078,3 +2078,8 @@ function onPhoneNumberEntered(){
         $('#phoneModal .error').html('invalid mobile number').fadeIn();
     }
 }
+
+function changeToLastScreen(){
+
+    changeToStage(5);
+}
