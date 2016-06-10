@@ -656,7 +656,7 @@ function onMobileVerified(num){
     refer.stage = stage;
     refer.click = 'down';
     if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1){
-        if (stage!=10) {
+        if (stage==10) {
             if (paymentFlow==1){
 
                 onForPaymentMobileVerified(info.phone_number);
