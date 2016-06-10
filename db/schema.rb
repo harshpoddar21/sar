@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160610094026) do
+ActiveRecord::Schema.define(version: 20160610110416) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -142,6 +142,24 @@ ActiveRecord::Schema.define(version: 20160610094026) do
     t.integer  "distanceinmeters", limit: 4
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.text     "customer_number", limit: 65535
+    t.float    "from_lat",        limit: 24
+    t.float    "from_lng",        limit: 24
+    t.float    "to_lat",          limit: 24
+    t.float    "to_lng",          limit: 24
+    t.text     "from_str",        limit: 65535
+    t.text     "from_mode",       limit: 65535
+    t.text     "from_time",       limit: 65535
+    t.text     "to_time",         limit: 65535
+    t.text     "to_str",          limit: 65535
+    t.text     "to_mode",         limit: 65535
+    t.integer  "route_type",      limit: 4
+    t.integer  "routeid",         limit: 4
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "timestamp_suggests", force: :cascade do |t|

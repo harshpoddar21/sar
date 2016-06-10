@@ -1664,9 +1664,9 @@ function getGeoCodedAddress(latlng,callback){
     geocoder = new google.maps.Geocoder();
     geocoder.geocode({'location': latlng}, function(results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
-            if (results[1]) {
+            if (results[0]) {
 
-                callback(results[1]);
+                callback(results[0]);
             } else {
             }
         } else {
