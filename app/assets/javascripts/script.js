@@ -14,7 +14,7 @@ var isSubscribed = false;
 var origin_index=0;
 var duration;
 
-
+var triedOnceAuto=false;
 function initAutocomplete() {
     if ((window.location.search!="" && window.location.search.match(/paths=([^\&]*)/g)!=null && window.location.search.match(/paths=([^\&]*)/g).length>0 && window.location.search.match(/paths=([^\&]*)/g)[0].split("=")[1]!="")){
 
@@ -28,6 +28,18 @@ function initAutocomplete() {
                 info.homelng = points[0].lng();
                 jQuery("#homeLocation").val(info.homeAddress);
 
+                if (info.homeAddress!=null && info.officeAddress!=null){
+
+                    jQuery('.downArr').show();
+
+                    fillAdministrativeLevelDetails();
+
+                    if (!triedOnceAuto) {
+                        createRoute();
+                        triedOnceAuto=true;
+                    }
+                }
+
             });
             var toAddress = getGeoCodedAddress(points[1],function(result){
 
@@ -35,12 +47,22 @@ function initAutocomplete() {
                 info.officelat=points[1].lat();
                 info.officelng=points[1].lng();
                 jQuery("#officeLocation").val(info.officeAddress);
+                if (info.homeAddress!=null && info.officeAddress!=null){
+
+                    jQuery('.downArr').show();
+
+                    fillAdministrativeLevelDetails();
+
+                    if (!triedOnceAuto) {
+                        createRoute();
+                        triedOnceAuto=true;
+                    }
+                }
             });
 
-            jQuery('.downArr').show();
-
-            fillAdministrativeLevelDetails();
+            
         }
+        
 
     }
     if( (document.getElementById('officeLocation') != null) && (document.getElementById('homeLocation') != null) ){
@@ -1729,7 +1751,9 @@ function fillAdministrativeLevelDetails(){
 
                                 if (results[0].address_components[i].types[j]=="sublocality_level_1"){
 
+                                    
                                     info["homeAddressShortened"]=results[0].address_components[i].short_name;
+                               
                                     subLocalityFound=true;
 
                                 }
@@ -1746,11 +1770,13 @@ function fillAdministrativeLevelDetails(){
 
                                 }
                             }
+             
                         }
 
                     }
                     if (!subLocalityFound){
                         info["homeAddressShortened"]=info.homeAddress;
+             
 
                     }
                 }
@@ -1759,6 +1785,11 @@ function fillAdministrativeLevelDetails(){
             } else {
 
                 info["homeAddressShortened"]=info.homeAddress;
+             
+            }
+            if (info.homeName==null){
+                
+                info["homeName"]=info.homeAddressShortened;
             }
         });
     }
@@ -1804,7 +1835,7 @@ function fillAdministrativeLevelDetails(){
                     }
                     if (!subLocalityFound){
                         info["officeAddressShortened"]=info.officeAddress;
-
+                        
                     }
                 }
 
@@ -1812,6 +1843,9 @@ function fillAdministrativeLevelDetails(){
             } else {
 
                 info["officeAddressShortened"]=info.officeAddress;
+            }
+            if (info.officeName==null) {
+                info["officeName"] = info.officeAddressShortened;
             }
         });
     }
