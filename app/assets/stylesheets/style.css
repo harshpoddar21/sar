@@ -377,14 +377,22 @@ span.live{
 }
 
 .shuttl-pass{
-
+    font-size: 16px;
 }
-.shuttl-pass.selected{
-
-    background-color: #3eb6b5 !important;
+.shuttl-pass.selected {
+    background-color: #3c5daa !important;
+    color: #fff;
 }
 fieldset.pay{
     padding: 10px;
+
+}
+.success{
+    color:green;
+}
+.successpay{
+
+    margin-top: 22px;
 }
 .headText.headText4{
     padding: 10px 0px;

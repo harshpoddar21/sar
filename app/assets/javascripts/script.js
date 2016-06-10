@@ -1247,8 +1247,6 @@ function switchScreen(scrno, obj){
                     jQuery(".routePtName.pick").html(info.pick[origin_index]["name"]);
                     jQuery(".routePtName.drop").html(info.pick[info.pick.length-1]["name"]);
                 }
-                timeCapture();
-                setCarousel();
                 if (info.reachwork!=undefined && info.reachwork.length>0){
 
                     jQuery(".item button").each(function(){
@@ -1259,6 +1257,9 @@ function switchScreen(scrno, obj){
                         }
                     });
                 }
+
+                timeCapture();
+                setCarousel();
 			},310);
 		break;
 		
@@ -1304,8 +1305,6 @@ function switchScreen(scrno, obj){
             setTimeout(function () {
 
 
-                setCarousel2();
-                timeCapture();
                 if (info.leavework!=undefined && info.leavework.length>0){
 
                     jQuery(".item button").each(function(){
@@ -1326,12 +1325,15 @@ function switchScreen(scrno, obj){
 			$('.bounce').addClass('hidden');
 			setTimeout(function(){
 				initMap(responseJson,"DTO");
+
+                setCarousel2();
+                timeCapture();
 			},310);
 		break;
 		
 		case 10:
 			var html = '<div class="col-md-12 text-center fullheight">';
-            html += '<span class="headText headText4 text-center bold">Order summary</span>';
+            html += '<span class="headText headText4 text-center bold">Route summary</span>';
 			html += '<fieldset class="pay">';
             html += '<div class="box-payment">';
 					html += '<div class="boxrow">';
@@ -1361,8 +1363,8 @@ function switchScreen(scrno, obj){
             html += '<div class="fillingfast">(We will refund your money if the route isn\'t launched)</div>';
             //html += '<span class="headText headText4 centerHorizontal payTM-click-to-pay"> Click to pay by </span>';
             html += '<div class="payTM-image row social">';
-            html += '<div class="col-md-12" style="background-color:yellow">';
-            html += '<span class="full" style="padding:20px;display:table" onclick="initiatePaymentProcess()"><span class=" payTM-click-to-pay headText headText4 centerHorizontal"> PAY USING </span><img style="padding-bottom:10px" src="../images/PayTM-Logo.png"> </span>';
+            html += '<div class="col-md-12" style="background-color: #3eb6b5;">';
+            html += '<span class="full" style="padding:20px;display:table" onclick="initiatePaymentProcess()"><span class=" payTM-click-to-pay headText headText4 centerHorizontal" style="color: #fff !important;"> PAY USING </span><img style="padding-bottom:10px" src="../images/PayTM-Logo.png"> </span>';
             html += '</div></div>';
             html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
             html += '<div class="modal-dialog modal-sm">';
@@ -1385,7 +1387,8 @@ function switchScreen(scrno, obj){
         case 12:
             var html = '<div class="col-md-12 text-center fullheight">';
             html += '<h3 style="margin:0;" class="text-center" id="route_live">'+((info["payment_status"]==1)?"Payment Successful":"Payment Failed")+'</h3><br />';
-            html += '<fieldset class="pay">';
+            html+='<span style="margin-bottom: 14px;" class="">We will contact you when route is live</span>';
+            html += '<fieldset class="pay successpay">';
             html += '<legend class="payments"><span class="home">'+info.homeName+'</span> <> <span class="office">'+info.officeName+'</span></legend>';
             html += '<div class="box">';
             html += '<div class="boxrow">';
@@ -1917,6 +1920,7 @@ function initiatePaymentProcess(){
 
 function onForPaymentMobileVerified(phoneNumber){
     
+    showLoader();
     jQuery("body").append("<form  method='post' action='/payment/makePayment' id='paymentForm'><input type='hidden' name='info' value='"+JSON.stringify(info)+"'></form>");
     jQuery("#paymentForm").submit();
 
