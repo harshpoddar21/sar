@@ -221,6 +221,7 @@ function initMap(response,type) {
 
     bounds.extend(new google.maps.LatLng(decodedPath[0].lat(),decodedPath[0].lng()));
     bounds.extend(new google.maps.LatLng(decodedPath[decodedPath.length-1].lat(),decodedPath[decodedPath.length-1].lng()));
+   
 	$.each(decodedPath, function(key, value){
 		var position = new google.maps.LatLng(decodedPath[key].lat(), decodedPath[key].lng());
 
@@ -248,8 +249,18 @@ function initMap(response,type) {
                 
                 origin_index=i;
                 min_dis=Haversine(info.pick[i]["lat"],info.pick[i]["lng"],info.homelat,info.homelng);
+                
             }
         }
+        /*
+        setTimeout(function () {
+            var bounds1=new google.maps.LatLngBounds();
+            bounds1.extend(new google.maps.LatLng(decodedPath[origin_index].lat(),decodedPath[origin_index].lng()));
+            bounds1.extend(new google.maps.LatLng(decodedPath[decodedPath.length-origin_index>3?origin_index+2:decodedPath.length-1].lat(),decodedPath[decodedPath.length-origin_index>3?origin_index+2:decodedPath.length-1].lng()));
+
+            map.fitBounds(bounds1);
+        },2000);
+        */
     }
     var latlng=null;
     if (info.pick==null || info.pick.length==0) {
