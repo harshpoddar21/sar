@@ -1184,7 +1184,7 @@ function switchScreen(scrno, obj){
         case 8:
 			var html = '<div class="col-md-12 fullheight">';
 			html += '<div class="fieldset">';
-            html += '<div class="routeInfo1"><div class="flex"><span class="routePtName">' + info.homeName + '</span><span style="position:relative; top:-10px; background-color:white; margin-top:3px"> to </span> <span class="routePtName">'+ info.officeName+'</span></div></div>';
+            html += '<div class="routeInfo1"><div class="flex"><span class="routePtName pick">' + info.homeName + '</span><span style="position:relative; top:-10px; background-color:white; margin-top:3px"> to </span> <span class="routePtName drop">'+ info.officeName+'</span></div></div>';
             html += '<span class="landmark"> (Landmark: Enter landmark here) </span>';
 			html += '<div id="gMap"></div>';
             html += '<div class="flex" style="width:90%">';
@@ -1228,6 +1228,10 @@ function switchScreen(scrno, obj){
 
                 initMap(responseJson,"OTD");
                 jQuery(".landmark").html((info.pick!=null && info.pick.length>0)?info.pick[origin_index]["landmark"]:"");
+                if ((info.pick!=null && info.pick.length>0)) {
+                    jQuery(".routePtName.pick").html(info.pick[origin_index]["name"]);
+                    jQuery(".routePtName.drop").html(info.pick[info.pick.length-1]["name"]);
+                }
                 timeCapture();
                 setCarousel();
                 if (info.reachwork!=undefined && info.reachwork.length>0){
@@ -1246,7 +1250,7 @@ function switchScreen(scrno, obj){
 		case 9:
 			var html = '<div class="col-md-12 fullheight">';
 			html += '<div class="fieldset">';
-            html += '<div class="routeInfo1"><div class="flex"><span class="routePtName">' + info.homeName + '</span><span style="position:relative; top:-10px; background-color:white; margin-top:3px"> to </span> <span class="routePtName">'+ info.officeName+'</span></div></div>';
+            html += '<div class="routeInfo1"><div class="flex"><span class="routePtName drop">' + info.officeName + '</span><span style="position:relative; top:-10px; background-color:white; margin-top:3px"> to </span> <span class="routePtName pick">'+ info.homeName+'</span></div></div>';
             html += '<span class="landmark"> '+(info.pick!=null && info.pick.length>0)?info.pick[info.pick.length-1]["landmark"]:""+' </span>';
 			html += '<div id="gMap"></div>';
             html += '<div class="flex" style="width:90%">';
@@ -1296,6 +1300,10 @@ function switchScreen(scrno, obj){
                             jQuery(this).removeClass("btn-default").addClass("btn-info");
                         }
                     });
+                }
+                if ((info.pick!=null && info.pick.length>0)) {
+                    jQuery(".routePtName.pick").html(info.pick[origin_index]["name"]);
+                    jQuery(".routePtName.drop").html(info.pick[info.pick.length-1]["name"]);
                 }
             },310);
             

@@ -408,6 +408,8 @@ span.highlight.lesshighlight {
     bottom: 41px;
     position: static;
     left: 0px;
+    padding-top: 12px;
+    height:42px;
     margin:2px;
     width: 48%;
 }
