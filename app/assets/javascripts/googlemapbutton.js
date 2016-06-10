@@ -114,6 +114,8 @@ function FullScreenControl(map, enterFull, exitFull) {
     // setup the click event listener
     google.maps.event.addDomListener(controlDiv, "click", function () {
         if (!fullScreen) {
+
+            map.fitBounds(bounds);
             controlDiv.goFullScreen();
         }
         else {

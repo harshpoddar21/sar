@@ -74,7 +74,6 @@ module PaytmPaymentHelper
   end
 
   def getCallbackUrl
-
     return "https://myor.shuttl.com/payment/paymentDone"
   end
 

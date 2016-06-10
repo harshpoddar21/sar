@@ -1,4 +1,8 @@
+
+
+
 /* google auto suggestor */
+
 var px = 0;
 var refer = {};
 var info = {};
@@ -9,14 +13,11 @@ var morningSlot = 0;
 var eveningSlot = 88;
 var reg;
 var sub;
-var slots_final=[];
 var isSubscribed = false;
-var origin_index=0;
-var duration;
 
-var triedOnceAuto=false;
+
 function initAutocomplete() {
-    if ((window.location.search!="" && window.location.search.match(/paths=([^\&]*)/g)!=null && window.location.search.match(/paths=([^\&]*)/g).length>0 && window.location.search.match(/paths=([^\&]*)/g)[0].split("=")[1]!="")){
+    if (window.location.search!="" && window.location.search.match(/paths=([^\&]*)/g)!=null && window.location.search.match(/paths=([^\&]*)/g).length>0 && window.location.search.match(/paths=([^\&]*)/g)[0].split("=")[1]!=""){
 
         var polyline=window.location.search.match(/paths=([^\&]*)/g)[0].split("=")[1];
         var points=google.maps.geometry.encoding.decodePath(polyline);
@@ -28,18 +29,6 @@ function initAutocomplete() {
                 info.homelng = points[0].lng();
                 jQuery("#homeLocation").val(info.homeAddress);
 
-                if (info.homeAddress!=null && info.officeAddress!=null){
-
-                    jQuery('.downArr').show();
-
-                    fillAdministrativeLevelDetails();
-
-                    if (!triedOnceAuto) {
-                        createRoute();
-                        triedOnceAuto=true;
-                    }
-                }
-
             });
             var toAddress = getGeoCodedAddress(points[1],function(result){
 
@@ -47,22 +36,12 @@ function initAutocomplete() {
                 info.officelat=points[1].lat();
                 info.officelng=points[1].lng();
                 jQuery("#officeLocation").val(info.officeAddress);
-                if (info.homeAddress!=null && info.officeAddress!=null){
-
-                    jQuery('.downArr').show();
-
-                    fillAdministrativeLevelDetails();
-
-                    if (!triedOnceAuto) {
-                        createRoute();
-                        triedOnceAuto=true;
-                    }
-                }
             });
 
-            
+            jQuery('.downArr').show();
+
+            fillAdministrativeLevelDetails();
         }
-        
 
     }
     if( (document.getElementById('officeLocation') != null) && (document.getElementById('homeLocation') != null) ){
@@ -105,60 +84,49 @@ function initAutocomplete() {
         });
 
         function createRoute() {
-			$('.bounce').show();
-			var poly = new google.maps.Polyline({
-				strokeColor: '#000000',
-				strokeOpacity: 1,
-				strokeWeight: 3
-			});
-			var path=poly.getPath();
-			path.push(new google.maps.LatLng(info.homelat,info.homelng));
-			path.push(new google.maps.LatLng(info.officelat,info.officelng));
-			var encodedPoints=google.maps.geometry.encoding.encodePath(path);
-			
+            $('.bounce').show();
+            var poly = new google.maps.Polyline({
+                strokeColor: '#000000',
+                strokeOpacity: 1,
+                strokeWeight: 3
+            });
+            var path = poly.getPath();
+            path.push(new google.maps.LatLng(info.homelat, info.homelng));
+            path.push(new google.maps.LatLng(info.officelat, info.officelng));
+            var encodedPoints = google.maps.geometry.encoding.encodePath(path);
+
+
             showLoader();
             $.ajax({
-				url:'getSlots?path='+encodedPoints
-			}).done(function(response){
-				responseJson = response;
+                url: 'http://bus2work.in/suggest/getSlots?path=' + encodedPoints
+            }).done(function (response) {
+                responseJson = response;
                 hideLoader();
-				if(response.route_type == 'Live_route' || response.route_type == 'suggested_route'){
-					var slot = response.slots;
+                if(response.route_type == 'Live_route' || response.route_type == 'suggested_route'){
+                    var slot = response.slots;
                     info.route_type=response.route_type;
                     info.routeid=response.route_id;
-                    info.pricing=response.pricing;
-                    info.pick=response.pick;
-                    slots_final=response.slots;
-                    for (var i=0;i<slots_final.length;i++){
-                        
-                        if (slots_final[i]>19*60){
-                            
-                            eveningSlot=i;
-                            break;
-                        }
-                    }
-                    info.pricing=response.pricing;
-					$.each(slot, function(key, value){
-						var time = formatSectoIST(value*60);
-						slotBtns += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="'+time+'">'+time+'<span class="live">(live)</span></button></div>';
-					});
-					stage = 8;
-					window.location.hash = 'stage'+stage;
-					var handle = $('.screenWrapper').find('.screen');
-					var px = $(handle).outerHeight();
-					var newHandle = createScreenBox(handle, 'after', px);
-					setHeight();
-					$(handle).css('top','-'+px+'px')
-					setTimeout(function(){
-						$(newHandle).css('top','0');
-					},0);
-					setTimeout(function(){
-						$(handle).remove();
-					},300);
-				}else{
-					$('.downArr .fa-angle-double-down').trigger('click');
-				}
-			})
+                    $.each(slot, function (key, value) {
+                        var time = formatSectoIST(value * 60);
+                        slotBtns += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="' + time + '">' + time + '<span class="live">(live)</span></button></div>';
+                    });
+                    stage = 8;
+                    window.location.hash = 'stage' + stage;
+                    var handle = $('.screenWrapper').find('.screen');
+                    var px = $(handle).outerHeight();
+                    var newHandle = createScreenBox(handle, 'after', px);
+                    setHeight();
+                    $(handle).css('top', '-' + px + 'px')
+                    setTimeout(function () {
+                        $(newHandle).css('top', '0');
+                    }, 0);
+                    setTimeout(function () {
+                        $(handle).remove();
+                    }, 300);
+                } else {
+                    $('.downArr .fa-angle-double-down').trigger('click');
+                }
+            })
         }
 
     }
@@ -166,173 +134,125 @@ function initAutocomplete() {
 /* google auto suggestor */
 
 function Deg2Rad( deg ) {
-   return deg * Math.PI / 180;
+    return deg * Math.PI / 180;
 }
 
 function Haversine( lat1, lon1, lat2, lon2 )
 {
-	var R = 6372.8;
-	var dLat = Deg2Rad(lat2-lat1);  
-	var dLon = Deg2Rad(lon2-lon1);  
-	var a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
-			Math.cos(Deg2Rad(lat1)) * Math.cos(Deg2Rad(lat2)) * 
-			Math.sin(dLon/2) * Math.sin(dLon/2);  
-	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-	var d = R * c; 
-	return d;
+    var R = 6372.8;
+    var dLat = Deg2Rad(lat2-lat1);
+    var dLon = Deg2Rad(lon2-lon1);
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(Deg2Rad(lat1)) * Math.cos(Deg2Rad(lat2)) *
+        Math.sin(dLon/2) * Math.sin(dLon/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = R * c;
+    return d;
 }
 var closest = 0;
 var mindist = 99999;
 $(window).resize(function(){
-	if($('#gMap').length){
-		initMap(responseJson,"OTD");
-	}
+    if($('#gMap').length){
+        initMap(responseJson);
+    }
 });
-function initMap(response,type) {
-	$('#gMap').html('');
-	var wpx = $('.screen .col-md-12').width();
-	var hpx = $('.screen').height()/2.5+0;
-	$('#gMap').css({'width':wpx+'px', 'height':hpx+'px'});
+function initMap(response) {
+    $('#gMap').html('');
+    var wpx = $('.screen .col-md-12').width();
+    var hpx = $('.screen').height()/2.5+0;
+    $('#gMap').css({'width':wpx+'px', 'height':hpx+'px'});
 
-    map = new google.maps.Map(document.getElementById('gMap'), {
+    var map = new google.maps.Map(document.getElementById('gMap'), {
         zoomControl: false,
-        zoom:1,
-		mapTypeControl: false,
-		streetViewControl: false
-	});
+        mapTypeControl: false,
+        streetViewControl: false
+    });
+
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(
         FullScreenControl(map, "Full screen",
             "Exit full screen"));
 
-	var origin = new google.maps.Marker({
-		position: {lat: response.origin.lat, lng: response.origin.lng},
-		map: map,
-		icon: '/images/home.png'
-	});
-	
-	var destination = new google.maps.Marker({
-		position: {lat: response.destination.lat, lng: response.destination.lng},
-		map: map,
-		icon: '/images/office.png'
-	});
-	
-	var decodedPath = google.maps.geometry.encoding.decodePath(response.points);
-	bounds = new google.maps.LatLngBounds();
+    var origin = new google.maps.Marker({
+        position: {lat: response.origin.lat, lng: response.origin.lng},
+        map: map,
+        icon: '/images/home.png'
+    });
 
-    bounds.extend(new google.maps.LatLng(decodedPath[0].lat(),decodedPath[0].lng()));
-    bounds.extend(new google.maps.LatLng(decodedPath[decodedPath.length-1].lat(),decodedPath[decodedPath.length-1].lng()));
-	$.each(decodedPath, function(key, value){
-		var position = new google.maps.LatLng(decodedPath[key].lat(), decodedPath[key].lng());
+    var destination = new google.maps.Marker({
+        position: {lat: response.destination.lat, lng: response.destination.lng},
+        map: map,
+        icon: '/images/office.png'
+    });
 
+    var decodedPath = google.maps.geometry.encoding.decodePath(response.points);
+    var bounds = new google.maps.LatLngBounds();
+    $.each(decodedPath, function(key, value){
+        var position = new google.maps.LatLng(decodedPath[key].lat(), decodedPath[key].lng());
+        bounds.extend(position);
 
-		var dist;
-		if(fw){
-			dist = Haversine( decodedPath[key].lat(), decodedPath[key].lng(), response.origin.lat, response.origin.lng );
-		}else{
-			dist = Haversine( decodedPath[key].lat(), decodedPath[key].lng(), response.destination.lat, response.destination.lng );
-		}
-
-		if ( dist < mindist )
-		{
-			closest = key;
-			mindist = dist;
-		}
-	});
-
-
-    if (info["pick"]!=null && info.pick.length>0){
-        var min_dis=100000;
-        for (var i=0;i<info.pick.length;i++){
-
-            if (Haversine(info.pick[i]["lat"],info.pick[i]["lng"],info.homelat,info.homelng)<min_dis){
-                
-                origin_index=i;
-                min_dis=Haversine(info.pick[i]["lat"],info.pick[i]["lng"],info.homelat,info.homelng);
-            }
+        var dist;
+        if(fw){
+            dist = Haversine( decodedPath[key].lat(), decodedPath[key].lng(), response.origin.lat, response.origin.lng );
+        }else{
+            dist = Haversine( decodedPath[key].lat(), decodedPath[key].lng(), response.destination.lat, response.destination.lng );
         }
-    }
-    var latlng=null;
-    if (info.pick==null || info.pick.length==0) {
-         latlng = new google.maps.LatLng(decodedPath[0].lat(), decodedPath[0].lng());
+
+        if ( dist < mindist )
+        {
+            closest = key;
+            mindist = dist;
+        }
+
+    });
+    map.fitBounds(bounds);
+
+    var latlng = new google.maps.LatLng( decodedPath[closest].lat(), decodedPath[closest].lng() );
+
+    var marker2 = new google.maps.Marker( {
+        position: latlng,
+        map: map,
+        title: Math.round(Number(mindist)*1000*0.00944) + " minutes", // 0.0105787 is the time in minutes to walk a meter
+        icon: '/images/bus-stop.png'
+    });
+
+    var contentString = Math.round(Number(mindist)*1000*0.009944) + " minutes";    // HTML text to display in the InfoWindow
+    var infowindow = new google.maps.InfoWindow( { content: contentString } );
+    infowindow.open( map, marker2 );
+    google.maps.event.addListener( marker2, 'click', function() { infowindow.open( map, marker2 ); });
+
+
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
+    directionsDisplay.setMap(map);
+
+    var originPts;
+    if(fw){
+        originPts = {lat: response.origin.lat, lng: response.origin.lng};
     }else{
-
-        latlng = new google.maps.LatLng(info.pick[origin_index]["lat"], info.pick[origin_index]["lng"]);
-    }
-    if (type!="OTD"){
-
-        latlng = new google.maps.LatLng( decodedPath[decodedPath.length-1].lat(), decodedPath[decodedPath.length-1].lng() );
+        originPts = {lat: response.destination.lat, lng: response.destination.lng};
     }
 
-    /*
-	var marker2 = new google.maps.Marker( { 
-		position: latlng,     
-		map: map,      
-        title: Math.round(Number(mindist)*1000*0.00944) + " min walk", // 0.0105787 is the time in minutes to walk a meter
-		icon: '/images/bus-stop.png'
-	});
-*/
-    var contentString = Math.round(Number(mindist)*1000*0.009944) + " min walk";    // HTML text to display in the InfoWindow
-	/*
-    var infowindow = new google.maps.InfoWindow( { content: contentString } );  
-	infowindow.open( map, marker2 );
-	
-	google.maps.event.addListener( marker2, 'click', function() { infowindow.open( map, marker2 ); });
-*/
-	
-	var directionsService = new google.maps.DirectionsService;
+    directionsService.route({
+        origin: originPts,
+        destination: latlng,
+        travelMode: google.maps.TravelMode.WALKING
+    }, function(response, status) {
+        if (status === google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+        } else {
+            window.alert('Directions request failed due to ' + status);
+        }
+    });
 
-    var directionsService1 = new google.maps.DirectionsService;
-	var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
-	directionsDisplay.setMap(map);
-	
-	var originPts;
-	if(type=="OTD"){
-		originPts = new google.maps.LatLng(info.homelat,info.homelng);
-	}else{
-		originPts =new google.maps.LatLng(info.officelat,info.officelng);
-        
-	}
-    var destinationPts;
-    if(type=="OTD"){
-        destinationPts = new google.maps.LatLng(info.officelat,info.officelng);
-    }else{
-        destinationPts = new google.maps.LatLng(info.homelat,info.homelng);
-    }
-	directionsService.route({
-		origin: originPts,
-		destination: latlng,
-		travelMode: google.maps.TravelMode.WALKING
-	}, function(response, status) {
-		if (status === google.maps.DirectionsStatus.OK) {
-			directionsDisplay.setDirections(response);
-
-            directionsService1.route({
-                origin: latlng,
-                destination: destinationPts,
-                travelMode: google.maps.TravelMode.DRIVING
-            }, function(response, status) {
-                if (status === google.maps.DirectionsStatus.OK) {
-                    if (response.routes[0]!=null &&response.routes[0].legs[0]!=null && response.routes[0].legs[0].duration){
-
-                        info["duration"]=response.routes[0].legs[0].duration.value;
-                        
-                    }
-                } else {
-                    window.alert('Directions request failed due to ' + status);
-                }
-            });
-		} else {
-			window.alert('Directions request failed due to ' + status);
-		}
-	});
-    
-	var setRegion = new google.maps.Polyline({
-		path: decodedPath,
-		strokeColor: "#FF0000",
-		strokeOpacity: 1.0,
-		strokeWeight: 2,
-		map: map
-	});
+    var setRegion = new google.maps.Polyline({
+        path: decodedPath,
+        strokeColor: "#FF0000",
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+        map: map
+    });
+    map.fitBounds(bounds);
+    map.setCenter()
 }
 
 var screenHeight = 100;
@@ -391,39 +311,39 @@ function setCarousel(){
 // for every slide in carousel, copy the next slide's item in the slide.
 // Do the same for the next, next item.
     /*
-	var wd = $('.carousel').width();
-	var wd2 = 2*($('.leftbtn')[0].offsetWidth);
-	wd = wd-wd2-10;
-	var bw = $('.btnTime').length*104;
-	if(wd > bw){
-		wd = bw;
-	}
-	$('.btnsWrapper').css('width', wd+'px');
-	$('.btnsWrapper .btns').css('width', bw+'px');
-	
-	$('.leftbtn').on('click', function(){
-		var btw = ($('.btnsWrapper .btns').width()/2)-104;
-		var lt = $('.btnsWrapper .btns').css('left');
-		lt = lt.replace('px','');
-		lt = Number(lt);
-		lt = lt-(104);
-		console.log(lt,btw);
-		if(Math.abs(lt) <= btw){
-			$('.btnsWrapper .btns').css('left', lt+'px');
-		}
-	});
+     var wd = $('.carousel').width();
+     var wd2 = 2*($('.leftbtn')[0].offsetWidth);
+     wd = wd-wd2-10;
+     var bw = $('.btnTime').length*104;
+     if(wd > bw){
+     wd = bw;
+     }
+     $('.btnsWrapper').css('width', wd+'px');
+     $('.btnsWrapper .btns').css('width', bw+'px');
 
-	$('.rightbtn').on('click', function(){
-		var lt = $('.btnsWrapper .btns').css('left');
-		lt = lt.replace('px','');
-		lt = Number(lt);
-		lt = lt+(104);
-		var wd = ($('.btnsWrapper .btns')[0].offsetWidth);
-		if(lt <= 0){
-			$('.btnsWrapper .btns').css('left', lt+'px');
-		}
-	});
-	*/
+     $('.leftbtn').on('click', function(){
+     var btw = ($('.btnsWrapper .btns').width()/2)-104;
+     var lt = $('.btnsWrapper .btns').css('left');
+     lt = lt.replace('px','');
+     lt = Number(lt);
+     lt = lt-(104);
+     console.log(lt,btw);
+     if(Math.abs(lt) <= btw){
+     $('.btnsWrapper .btns').css('left', lt+'px');
+     }
+     });
+
+     $('.rightbtn').on('click', function(){
+     var lt = $('.btnsWrapper .btns').css('left');
+     lt = lt.replace('px','');
+     lt = Number(lt);
+     lt = lt+(104);
+     var wd = ($('.btnsWrapper .btns')[0].offsetWidth);
+     if(lt <= 0){
+     $('.btnsWrapper .btns').css('left', lt+'px');
+     }
+     });
+     */
 }
 
 function setCarousel2() {
@@ -450,27 +370,27 @@ function setCarousel2() {
 
 
 function hideAddressBar(){
-    setTimeout(function(){
+    /*setTimeout(function(){
         // Hide the address bar!
         window.scrollTo(0, 1);
-    }, 0);
+    }, 0);*/
 }
 
 window.addEventListener("load",function() {
-	// Set a timeout...
-	setTimeout(function(){
-		// Hide the address bar!
-		window.scrollTo(0, 1);
-	}, 0);
+    // Set a timeout...
+   /* setTimeout(function(){
+        // Hide the address bar!
+        window.scrollTo(0, 1);
+    }, 0);*/
 });
 
 $(function() {
-	//screenHeight = screen.availHeight-50;
-	screenHeight = window.innerHeight;
-	var height = $('.header')[0].offsetHeight;
-	screenHeight = screenHeight-height;
-	setHeight();
-	$('.screenWrapper').css('height', screenHeight+'px');
+    //screenHeight = screen.availHeight-50;
+    screenHeight = window.innerHeight;
+    var height = $('.header')[0].offsetHeight;
+    screenHeight = screenHeight-height;
+    setHeight();
+    $('.screenWrapper').css('height', screenHeight+'px');
 });
 
 function setHeight(){
@@ -551,17 +471,15 @@ function validatePhone(){
     if(inputtxt.match(phoneno)) {
         $('#phoneModal .error').html('').hide();
         $('.loader').fadeIn();
-        showLoader();
         $.ajax({
-                url : 'sendOtp?phoneNumber='+inputtxt,
-                type : 'GET',
-                dataType : 'json',
-                contentType : "application/json; charset=utf-8",
-                header : 'x-requested-with'
-            })
+            url : 'sendOtp?phoneNumber='+inputtxt,
+            type : 'GET',
+            dataType : 'json',
+            contentType : "application/json; charset=utf-8",
+            header : 'x-requested-with'
+        })
             .done(function(result){
 
-                hideLoader();
                 $('.loader').fadeOut();
                 if(result.success){
 
@@ -587,12 +505,12 @@ function validateMobileInput(num){
 
     info.phone_number=num;
     $.ajax({
-            url : 'verifyPhoneCall?phone_number='+num+"&try="+tries,
-            type : 'GET',
-            dataType : 'json',
-            contentType : "application/json; charset=utf-8",
-            header : 'x-requested-with'
-        })
+        url : 'verifyPhoneCall?phone_number='+num+"&try="+tries,
+        type : 'GET',
+        dataType : 'json',
+        contentType : "application/json; charset=utf-8",
+        header : 'x-requested-with'
+    })
         .done(function(result){
             if(result.success){
                 if (result.is_done==0 && tries<50){
@@ -614,11 +532,11 @@ function validateMobileInput(num){
                     }
 
                 }else if (stage==10){
-                    
+
                     if (paymentFlow==1) {
                     onForPaymentMobileVerified();
                     }
-                    
+
                 }else if (stage==11){
 
 
@@ -655,8 +573,8 @@ function onMobileVerified(num){
             }
         }else{
 
-            stage=5;
-        }
+        stage = 5;
+    }
     }
     else {
 
@@ -665,7 +583,7 @@ function onMobileVerified(num){
             onForPaymentMobileVerified(info.phone_number);
             return;
         }else {
-            stage = 15;
+        stage=15;
         }
     }
     window.location.hash = 'stage'+stage;
@@ -684,64 +602,70 @@ function onMobileVerified(num){
 }
 
 function notInterested(){
-	$('.bounce, .bouncebtn').on('click', function(){
-		stage = 14;
-		window.location.hash = 'stage'+stage;
-		var handle = $('.screenWrapper').find('.screen');
-		var px = $(handle).outerHeight();
-		var newHandle = createScreenBox(handle, 'after', px);
-		setHeight();
-		$(handle).css('top','-'+px+'px')
-		setTimeout(function(){
-			$(newHandle).css('top','0');
-		},0);
-		setTimeout(function(){
-			$(handle).remove();
-		},300);
-	});
+    $('.bounce, .bouncebtn').on('click', function(){
+        stage = 14;
+        window.location.hash = 'stage'+stage;
+        var handle = $('.screenWrapper').find('.screen');
+        var px = $(handle).outerHeight();
+        var newHandle = createScreenBox(handle, 'after', px);
+        setHeight();
+        $(handle).css('top','-'+px+'px')
+        setTimeout(function(){
+            $(newHandle).css('top','0');
+        },0);
+        setTimeout(function(){
+            $(handle).remove();
+        },300);
+    });
 }
 notInterested();
 
-function choosePass(passType){
-    info.pass_type=passType;
-    jQuery(".shuttl-pass").removeClass("selected");
-
-    jQuery(".passtype_"+passType).addClass("selected");
-
-
+function choosePass(){
+    jQuery(document).off(".choosePass");
+    $(document).on('click.shuttl-pass', function() {
+        var obj = $(this);
+        var passValue = $(obj).attr('data-value');
+        if ($(obj).hasClass('btn-default')) {
+            $(obj).removeClass('btn-default').addClass('btn-info');
+        }
+        else {
+            $(obj).addClass('btn-default').removeClass('btn-info');
+            var value = $(obj).attr('data-value');
+        }
+    });
 }
 
 function timeCapture(){
     jQuery(document).off(".timecapture");
-	$(document).on('click.timecapture','.reachwork button, .leavework button, .commutework button, .btnTime', function(){
-		var obj = $(this);
-		var type = $(obj).closest('.btn-group-justified').attr('data-roletype');
-		if($(obj).hasClass('btn-default')){
-			$(obj).removeClass('btn-default').addClass('btn-info');
-			var value = $(obj).attr('data-value');
-			if(type == 'reachwork'){
-				var index;
-				if(info.reachwork === undefined){
-					info.reachwork = []
-				}
-				info.reachwork.push(value);
-				$.unique(info.reachwork);
-				if($(obj).hasClass('btnTime')){
-					if(info.reachwork.length > 1){
-						$(obj).closest('.btn-group-justified').find('button[data-value="'+info.reachwork[0]+'"]').addClass('btn-default').removeClass('btn-info');
-						info.reachwork.splice(0, 1);
-					}
-				}else{
-					if(info.reachwork.length > 2){
-						$(obj).closest('.btn-group-justified').find('button[data-value="'+info.reachwork[1]+'"]').addClass('btn-default').removeClass('btn-info');
-						info.reachwork.splice(1, 1);
-					}
-				}
-			}else if(type == 'leavework'){
-				if(info.leavework === undefined){
-					info.leavework = []
-				}
-				info.leavework.push(value);
+    $(document).on('click.timecapture','.reachwork button, .leavework button, .commutework button, .btnTime', function(){
+        var obj = $(this);
+        var type = $(obj).closest('.btn-group-justified').attr('data-roletype');
+        if($(obj).hasClass('btn-default')){
+            $(obj).removeClass('btn-default').addClass('btn-info');
+            var value = $(obj).attr('data-value');
+            if(type == 'reachwork'){
+                var index;
+                if(info.reachwork === undefined){
+                    info.reachwork = []
+                }
+                info.reachwork.push(value);
+                $.unique(info.reachwork);
+                if($(obj).hasClass('btnTime')){
+                    if(info.reachwork.length > 1){
+                        $(obj).closest('.btn-group-justified').find('button[data-value="'+info.reachwork[0]+'"]').addClass('btn-default').removeClass('btn-info');
+                        info.reachwork.splice(0, 1);
+                    }
+                }else{
+                    if(info.reachwork.length > 2){
+                        $(obj).closest('.btn-group-justified').find('button[data-value="'+info.reachwork[1]+'"]').addClass('btn-default').removeClass('btn-info');
+                        info.reachwork.splice(1, 1);
+                    }
+                }
+            }else if(type == 'leavework'){
+                if(info.leavework === undefined){
+                    info.leavework = []
+                }
+                info.leavework.push(value);
                 $.unique(info.leavework);
                 if($(obj).hasClass('btnTime')) {
                     if (info.leavework.length > 1) {
@@ -749,50 +673,50 @@ function timeCapture(){
                         info.leavework.splice(0, 1);
                     }
                 }else{
-				if(info.leavework.length > 2){
-					$(obj).closest('.btn-group-justified').find('button[data-value="'+info.leavework[1]+'"]').addClass('btn-default').removeClass('btn-info');
-					info.leavework.splice(1, 1);
+                    if(info.leavework.length > 2){
+                        $(obj).closest('.btn-group-justified').find('button[data-value="'+info.leavework[1]+'"]').addClass('btn-default').removeClass('btn-info');
+                        info.leavework.splice(1, 1);
                     }
-				}
-			}else if(type == 'commutework'){
-				if(info.commutework === undefined){
-					info.commutework = []
-				}
-				info.commutework.push(value);
-			}
-		}else{
-			$(obj).addClass('btn-default').removeClass('btn-info');
-			var value = $(obj).attr('data-value');
-			var index;
-			if(type == 'reachwork'){
-				index = info.reachwork.indexOf(value);
-				info.reachwork.splice(index,1);
-			}else if(type == 'leavework'){
-				index = info.leavework.indexOf(value);
-				info.leavework.splice(index,1);
-			}else if(type == 'commutework'){
-				index = info.commutework.indexOf(value);
-				info.commutework.splice(index,1);
-			}
-		}
-		
-		var arrLength;
-		if(type == 'reachwork'){
-			arrLength = info.reachwork;
-			if(arrLength.length == 2){
-				$('.downArr .fa-angle-double-down').trigger('click');
-			}
-		}else if(type == 'leavework'){
-			arrLength = info.leavework;
-			if(arrLength.length == 2){
-				$('.downArr .fa-angle-double-down').trigger('click');
-			}
-		}else if(type == 'commutework'){
-			arrLength = info.commutework;
-			$('.downArr').fadeIn();
-			$('.bounce').hide();
-		}
-	});
+                }
+            }else if(type == 'commutework'){
+                if(info.commutework === undefined){
+                    info.commutework = []
+                }
+                info.commutework.push(value);
+            }
+        }else{
+            $(obj).addClass('btn-default').removeClass('btn-info');
+            var value = $(obj).attr('data-value');
+            var index;
+            if(type == 'reachwork'){
+                index = info.reachwork.indexOf(value);
+                info.reachwork.splice(index,1);
+            }else if(type == 'leavework'){
+                index = info.leavework.indexOf(value);
+                info.leavework.splice(index,1);
+            }else if(type == 'commutework'){
+                index = info.commutework.indexOf(value);
+                info.commutework.splice(index,1);
+            }
+        }
+
+        var arrLength;
+        if(type == 'reachwork'){
+            arrLength = info.reachwork;
+            if(arrLength.length == 2){
+                $('.downArr .fa-angle-double-down').trigger('click');
+            }
+        }else if(type == 'leavework'){
+            arrLength = info.leavework;
+            if(arrLength.length == 2){
+                $('.downArr .fa-angle-double-down').trigger('click');
+            }
+        }else if(type == 'commutework'){
+            arrLength = info.commutework;
+            $('.downArr').fadeIn();
+            $('.bounce').hide();
+        }
+    });
 }
 
 function routeSummary(){
@@ -872,7 +796,8 @@ function switchScreen(scrno, obj){
     switch(scrno){
         case 1:
 
-            var html = '<div class="headText text-center"> For daily pickup and drop from <br> Home to Office <span class="highlight"><br/>#MakeYourOwnRoute</span></div>';
+            var html = aboutUs();
+            html += '<div class="headText text-center"> For daily pickup and drop from <br> Home to Office <span class="highlight"><br/>#MakeYourOwnRoute</span></div>';
             html += '<div class="col-md-12 homeL"><br /><br />';
             html += '<div class="form-group form-group-wrapper">';
             html += '<div class="input-group">';
@@ -893,9 +818,8 @@ function switchScreen(scrno, obj){
             html += '</div></div></div>';
             html += '<img style="height:92px" class="slide-right" src="../images/right_slide_icon.png" alt="button">';
             html += '<div class="downArr dowfirst"><span class="fa fa-angle-double-down"></span></div>';
-            html += aboutUs();
             $(obj).html(html)
-	    .find('.downArr').hide();
+                .find('.downArr').hide();
 
             //aboutUsSlider
 
@@ -915,8 +839,6 @@ function switchScreen(scrno, obj){
                 $('#aboutUsOverlay').toggle(null, options, duration);
 
             });
-
-            $('#aboutUsOverlay').toggle(null, null, 1000);
 
             if(refer.hasOwnProperty('click')){
                 if(refer.stage >= 1){
@@ -1110,7 +1032,7 @@ function switchScreen(scrno, obj){
 
         case 5:
             var html = '<div class="col-md-12 text-center" style="height: 100%;position: static;">';
-			html += '<h4 style="margin:0;" id="share_heading" class="text-center sharetext">Congratulations!! You have successfully made</h4><br />';
+            html += '<h4 style="margin:0;" id="share_heading" class="text-center sharetext">Congratulations!! You have successfully made</h4><br />';
             html += '<fieldset>';
             html += '<legend>#YourRoute</legend>';
             html += '<div class="col-md-12 routeHeading text-capitalize">';
@@ -1130,12 +1052,12 @@ function switchScreen(scrno, obj){
             html += '<div class="headText headText3 text-center">To launch the route sooner <span class="highlight">#KeepSpreadingTheWord</span></div>';
             html += '<div class="row social">';
             html += '<div class="col-md-12">';
-           /*html += '<span class="fa fa-google-plus col-md-3"></span>';*/
+            /*html += '<span class="fa fa-google-plus col-md-3"></span>';*/
             /*html += '<span class="fa fa-facebook col-md-3"></span>';
              html += '<span class="fa fa-linkedin col-md-3"></span>';
              */
             /*html += '<a class="fa-social" id="whatsapp" onclick="sendWhatsApp();"><span class="fa fa-whatsapp col-md-3"></span></a>';*/
-           html += '<a class="fa-social" id="whatsapp" onclick="sendWhatsApp();"><span class="full" style="padding:13px;display:table;">Share Via WhatsApp</span></a>';
+            html += '<a class="fa-social" id="whatsapp" onclick="sendWhatsApp();"><span class="full" style="padding:13px;display:table;">Share Via WhatsApp</span></a>';
             html += '</div></div></div>';
 
             var mSlots = '';
@@ -1197,18 +1119,18 @@ function switchScreen(scrno, obj){
             break;
 
         case 8:
-			var html = '<div class="col-md-12 fullheight">';
-			html += '<div class="fieldset">';
-            html += '<div class="routeInfo1"><div class="flex"><span class="routePtName pick">' + info.homeName + '</span><span style="position:relative; top:-10px; background-color:white; margin-top:3px"> to </span> <span class="routePtName drop">'+ info.officeName+'</span></div></div>';
+            var html = '<div class="col-md-12 fullheight">';
+            html += '<div class="fieldset">';
+            html += '<div class="routeInfo1"><div class="flex"><span class="routePtName">' + info.homeName + '</span><span style="position:relative; top:-10px; background-color:white; margin-top:3px"> to </span> <span class="routePtName">'+ info.officeName+'</span></div></div>';
             html += '<span class="landmark"> (Landmark: Enter landmark here) </span>';
-			html += '<div id="gMap"></div>';
+            html += '<div id="gMap"></div>';
             html += '<div class="flex" style="width:90%">';
             html += '<div class="mapMsg"><span class="seats"><span class="cur">123</span>/<span class="total">200</span></span><br> travellers confirmed </div>';
             html += '<div class="daysLeft"><span class="days">13</span><br>days to go live</div>';
             html += '</div></div>';
             html += '<div class="line2">To travel on this route, tell us</div>';
-			html += '<div class="line2">What time do you have to reach work?</div>';
-			html += '<div class="carousel slide" id="mycarousel">';
+            html += '<div class="line2">What time do you have to reach work?</div>';
+            html += '<div class="carousel slide" id="mycarousel">';
 
             //html += '<span class="btnsWrapper">';
             html += '<div >';
@@ -1229,24 +1151,17 @@ function switchScreen(scrno, obj){
             //html += '<span class="btn btn-default rightbtn">&gt;</span>';
             html += '</div>';
             html += '<div class="fillingfast">(leave blank if you don\'t wish to use shuttl in the morning)</div>';
-            html += '<div class="text-capitalize btn btn-default col-xs-6 bouncebtn" style="width:48%">not interested</div>';
+            html += '<div class="text-capitalize btn btn-default col-xs-6 bouncebtn" onClick=changeToStage(14) style="width:48%">not interested</div>';
             html += '<div class="text-capitalize btn btn-primary col-xs-6 nextBtnMap" style="width:48%">next&gt;</div>';
             html += '</div>';
             $(obj).html(html);
 
             hideAddressBar();
-			notInterested();
+            notInterested();
 
-			$('.bounce').addClass('hidden');
-			fw = true;
-			setTimeout(function(){
-
-                initMap(responseJson,"OTD");
-                jQuery(".landmark").html((info.pick!=null && info.pick.length>0)?info.pick[origin_index]["landmark"]:"");
-                if ((info.pick!=null && info.pick.length>0)) {
-                    jQuery(".routePtName.pick").html(info.pick[origin_index]["name"]);
-                    jQuery(".routePtName.drop").html(info.pick[info.pick.length-1]["name"]);
-                }
+            $('.bounce').addClass('hidden');
+            fw = true;
+            setTimeout(function(){
                 timeCapture();
                 setCarousel();
                 if (info.reachwork!=undefined && info.reachwork.length>0){
@@ -1259,20 +1174,21 @@ function switchScreen(scrno, obj){
                         }
                     });
                 }
-			},310);
-		break;
-		
-		case 9:
-			var html = '<div class="col-md-12 fullheight">';
-			html += '<div class="fieldset">';
-            html += '<div class="routeInfo1"><div class="flex"><span class="routePtName drop">' + info.officeName + '</span><span style="position:relative; top:-10px; background-color:white; margin-top:3px"> to </span> <span class="routePtName pick">'+ info.homeName+'</span></div></div>';
-            html += '<span class="landmark"> '+(info.pick!=null && info.pick.length>0)?info.pick[info.pick.length-1]["landmark"]:""+' </span>';
-			html += '<div id="gMap"></div>';
+                initMap(responseJson);
+            },310);
+            break;
+
+        case 9:
+            var html = '<div class="col-md-12 fullheight">';
+            html += '<div class="fieldset">';
+            html += '<div class="routeInfo1"><div class="flex"><span class="routePtName">' + info.homeName + '</span><span style="position:relative; top:-10px; background-color:white; margin-top:3px"> to </span> <span class="routePtName">'+ info.officeName+'</span></div></div>';
+            html += '<span class="landmark"> Landmark: (Enter landmark here) </span>';
+            html += '<div id="gMap"></div>';
             html += '<div class="flex" style="width:90%">';
             html += '<div class="mapMsg"><span class="seats"><span class="cur">123</span>/<span class="total">200</span></span><br> travellers confirmed </div>';
             html += '<div class="daysLeft"><span class="days">13</span><br>days to go live</div>';
             html += '</div></div>';
-			html += '<div class="line2">What time do you leave from work?</div>';
+            html += '<div class="line2">What time do you leave from work?</div>';
             html += '<div class="carousel slide" id="mycarousel2">';
 
             //html += '<span class="btnsWrapper">';
@@ -1297,8 +1213,8 @@ function switchScreen(scrno, obj){
             html += '<div class="fillingfast">(leave blank if you don\'t wish to use shuttl in the evening)</div>';
             html += '<div class="text-capitalize btn btn-primary col-xs-6 backBtnMap" style="width:48%">&lt;back</div>';
             html += '<div class="text-capitalize btn btn-primary col-xs-6 nextBtnMap" style="width:48%">next&gt;</div>';
-			html += '</div>';
-			$(obj).html(html);
+            html += '</div>';
+            $(obj).html(html);
 
             hideAddressBar();
             setTimeout(function () {
@@ -1316,53 +1232,49 @@ function switchScreen(scrno, obj){
                         }
                     });
                 }
-                if ((info.pick!=null && info.pick.length>0)) {
-                    jQuery(".routePtName.pick").html(info.pick[origin_index]["name"]);
-                    jQuery(".routePtName.drop").html(info.pick[info.pick.length-1]["name"]);
-                }
             },310);
-            
-			fw = false;
-			$('.bounce').addClass('hidden');
-			setTimeout(function(){
-				initMap(responseJson,"DTO");
-			},310);
-		break;
-		
-		case 10:
-			var html = '<div class="col-md-12 text-center fullheight">';
+
+            fw = false;
+            $('.bounce').addClass('hidden');
+            setTimeout(function(){
+                initMap(responseJson);
+            },310);
+            break;
+
+        case 10:
+            var html = '<div class="col-md-12 text-center fullheight">';
             html += '<span class="headText headText4 text-center bold">Order summary</span>';
-			html += '<fieldset class="pay">';
+            html += '<fieldset class="pay">';
             html += '<div class="box-payment">';
-					html += '<div class="boxrow">';
-						html += '<span class="heading">Going To Work</span>';
-						html += '<span class="change" onclick="goToReachWorkScreen(this);">change</span>';
-					html += '</div>';
+            html += '<div class="boxrow">';
+            html += '<span class="heading">Going To Work</span>';
+            html += '<span class="change" onclick="goToReachWorkScreen(this);">change</span>';
+            html += '</div>';
             html += '<div class="routeinfoPayment">' + routeDetailsToWork("departure")+'</div>';
             html += '<div class="routeinfoPayment">' + routeDetailsToWork("arrival")+ '</div>';
-					html += '<div class="fillingfast" style="display:none;">8 more ppl required to launch route</div>';
-				html += '</div>';
-			
+            html += '<div class="fillingfast" style="display:none;">8 more ppl required to launch route</div>';
+            html += '</div>';
+
             html += '<div class="box-payment">';
-					html += '<div class="boxrow">';
-						html += '<span class="heading">Return From Work</span>';
-						html += '<span class="change"  onclick="goToLeaveWorkScreen(this);">change</span>';
-					html += '</div>';
+            html += '<div class="boxrow">';
+            html += '<span class="heading">Return From Work</span>';
+            html += '<span class="change"  onclick="goToLeaveWorkScreen(this);">change</span>';
+            html += '</div>';
             html += '<div class="routeinfoPayment">'+ routeDetailsFromWork("departure") +'</div>';
             html += '<div class="routeinfoPayment">'+ routeDetailsFromWork("arrival")+'</div>';
-					html += '<div class="fillingfast" style="display:none;">4 more ppl required to launch route</div>';
-				html += '</div>';
-				
-			html += '</fieldset>';
+            html += '<div class="fillingfast" style="display:none;">4 more ppl required to launch route</div>';
+            html += '</div>';
+
+            html += '</fieldset>';
             html += '<div class="headText headText4 text-center">Select a pass to travel on this route</div>';
             html += '<div class="item active">';
-            html += '<button type="button" class="shuttl-pass text-capitalize paynow btn btn-default col-xs-6 setHeight centerVertical centerHorizontal passtype_1" onclick="choosePass(1);" data-value="1">10 rides @ '+info.pricing[0]+'</button>';
-            html += '<button type="button" class="shuttl-pass text-capitalize paynow btn btn-default col-xs-6 setHeight centerVertical centerHorizontal passtype_2" onclick="choosePass(2);" data-value="2"><div>20 rides @ '+info.pricing[1]+'</div></button></div>';
+            html += '<button type="button" class="shuttl-pass text-capitalize paynow btn btn-default col-xs-6 setHeight centerVertical centerHorizontal" data-value="899">10 rides @ 1000</button>';
+            html += '<button type="button" class="shuttl-pass text-capitalize paynow btn btn-default col-xs-6 setHeight centerVertical centerHorizontal" data-value="3199"><div>20 rides @ 2000</div></button></div>';
             html += '<div class="fillingfast">(We will refund your money if the route isn\'t launched)</div>';
             //html += '<span class="headText headText4 centerHorizontal payTM-click-to-pay"> Click to pay by </span>';
             html += '<div class="payTM-image row social">';
             html += '<div class="col-md-12" style="background-color:yellow">';
-            html += '<span class="full" style="padding:20px;display:table" onclick="initiatePaymentProcess()"><span class=" payTM-click-to-pay headText headText4 centerHorizontal"> PAY USING </span><img style="padding-bottom:10px" src="../images/PayTM-Logo.png"> </span>';
+            html += '<span class="full" style="padding:20px;display:table"><span class=" payTM-click-to-pay headText headText4 centerHorizontal"> PAY USING </span><img style="padding-bottom:10px" src="../images/PayTM-Logo.png"> </span>';
             html += '</div></div>';
             html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
             html += '<div class="modal-dialog modal-sm">';
@@ -1371,14 +1283,15 @@ function switchScreen(scrno, obj){
             html+='<div class="otp-entry" style="display: none;"><input type="number" class="col-md-12" placeholder="enter otp" maxlength="5" id="otp" onkeyup="otpentered(this)"/>';
             html+='<div><button class="btn-primary" onclick="validatePhone();">Resend Otp</button><button class="btn-primary" onclick="changePhoneNumber();">Change Number</button></div></div>';
             html += '</div></div></div>';
-
             $(obj).html(html);
+            notInterested();
             $('.paynow').on('click', function(){
                 var rs = $(this).attr('data-value');
             });
-
-            choosePass(1);
             break;
+
+            choosePass();
+
 
         case 11:
 
@@ -1421,50 +1334,50 @@ function switchScreen(scrno, obj){
              */
             html += '<span class="full" style="padding:20px;display:table;">Share Via WhatsApp</span>';
             html += '</div></div></div>';
-			$(obj).html(html);
+            $(obj).html(html);
             fillWhatsAppLink();
-		break;
-		//offline sharing screen
-		case 13:
-			var html = '<div class="col-md-12">';
-			html += '<div class="fieldset">';
-			html += '<div class="routeInfo"><span class="ambassador routePtName">Become the Route Ambassador</span></div>';
-			html += '<div class="promoMsg">Share your Promo Code: <em>4567</em> by sticking Customize poster\'s on your Home & Office notice boards';
-			html += '<p class="extra">Earn Rs 25 Credit for every new customer on this route</p>';
-			html += '</div>';
-			html += '</div>';
-			html += '<div class="confirmMsg">Confirm the below details to receive 3 <em>Posters</em> by mail within this week</div>';
-			html += '<form>';
-			html += '<div class="form-group">';
-			html += '<input type="text" placeholder="full name" class="form-control" id="fullname"/>';
-			html += '</div>';
-			html += '<div class="form-group">';
-			html += '<input type="text" placeholder="address.." class="form-control" id="address"/>';
-			html += '</div>';
-			html += '<div class="text-capitalize btn btn-default col-xs-6 bouncebtn">cancel</div>';
-			html += '<div class="text-capitalize btn btn-primary col-xs-6 submitaddress">submit</div>';
-			html += '</form>';
-			html += '</div>';
-			$(obj).html(html);
-			$('#address').val(info.homeAddressShortened);
-			$('.bounce').remove();
-		break;
-		
-		case 14:
-			var html = '<div class="col-md-12">';
-			html += '<h4>I am not interested in using Shuttl service because:</h4>';
-			html += '<form>';
-			html += '<div class="form-group">';
-			html += '<textarea class="form-control" id="reason" placeholder="Type your reason..."></textarea>';
-			html += '</div>';
-			html += '<div class="form-group">';
-			html += '<button type="submit" class="btn btn-primary center-block">Submit</button>';
-			html += '</div>';
-			html += '</form>';
-			html += '</div>';
-			$(obj).html(html);
-			$('.bounce').remove();
-		break;
+            break;
+        //offline sharing screen
+        case 13:
+            var html = '<div class="col-md-12">';
+            html += '<div class="fieldset">';
+            html += '<div class="routeInfo"><span class="ambassador routePtName">Become the Route Ambassador</span></div>';
+            html += '<div class="promoMsg">Share your Promo Code: <em>4567</em> by sticking Customize poster\'s on your Home & Office notice boards';
+            html += '<p class="extra">Earn Rs 25 Credit for every new customer on this route</p>';
+            html += '</div>';
+            html += '</div>';
+            html += '<div class="confirmMsg">Confirm the below details to receive 3 <em>Posters</em> by mail within this week</div>';
+            html += '<form>';
+            html += '<div class="form-group">';
+            html += '<input type="text" placeholder="full name" class="form-control" id="fullname"/>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<input type="text" placeholder="address.." class="form-control" id="address"/>';
+            html += '</div>';
+            html += '<div class="text-capitalize btn btn-default col-xs-6 bouncebtn">cancel</div>';
+            html += '<div class="text-capitalize btn btn-primary col-xs-6 submitaddress">submit</div>';
+            html += '</form>';
+            html += '</div>';
+            $(obj).html(html);
+            $('#address').val(info.homeAddressShortened);
+            $('.bounce').remove();
+            break;
+
+        case 14:
+            var html = '<div class="col-md-12">';
+            html += '<h4>I am not interested in using Shuttl service because:</h4>';
+            html += '<form>';
+            html += '<div class="form-group">';
+            html += '<textarea class="form-control" id="reason" placeholder="Type your reason..."></textarea>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<button type="submit" class="btn btn-primary center-block">Submit</button>';
+            html += '</div>';
+            html += '</form>';
+            html += '</div>';
+            $(obj).html(html);
+            $('.bounce').remove();
+            break;
 
         case 15:
             var html ='<div class="col-md-12 text-center fullheight">';
@@ -1496,7 +1409,7 @@ function switchScreen(scrno, obj){
                             console.log('Subscribed! Endpoint:', sub.endpoint);
                             info.subscriberID = sub.endpoint;
                             if (info.route_type=="new"){
-                                changeToStage(5);
+                            changeToStage(5);
                             }else{
 
                                 changeToStage(11);
@@ -1506,7 +1419,7 @@ function switchScreen(scrno, obj){
                     }).catch(function (error) {
                         console.log('Service Worker Error :^(', error);
                         if (info.route_type=="new"){
-                            changeToStage(5);
+                        changeToStage(5);
                         }else{
 
                             changeToStage(11);
@@ -1515,15 +1428,15 @@ function switchScreen(scrno, obj){
                 }catch (error){
 
                     if (info.route_type=="new"){
-                        changeToStage(5);
-                    }else{
+                    changeToStage(5);
+            }else{
 
                         changeToStage(11);
                     }
                 }
             }else{
                 if (info.route_type=="new"){
-                    changeToStage(5);
+                changeToStage(5);
                 }else{
 
                     changeToStage(11);
@@ -1552,7 +1465,7 @@ function switchScreen(scrno, obj){
             //     }
             // }, 500);
             break;
-        
+
         case 16:
             var html = '<div class="col-md-12 text-center" style="height: 100%;position: static;">';
             html += '<h4 style="margin:0;" id="share_heading" class="text-center sharetext">"Congratulations!! You have successfully made"</h4><br />';
@@ -1636,20 +1549,20 @@ function switchScreen(scrno, obj){
             html += '<div class="routeInfo"><span class="ambassador routePtName">Become the Route Ambassador</span></div>';
             html += '<p> Share your promo code:' + getOfflineSharePromoCode() + ' by sticking customized posters on your home and office notice boards</p>';
             html += '<div class="incentive"> Earn Rs. 25 credit for every new customer on this route</div>';
-            html += '<div class="mapMsg"><span class="seats"><span class="cur">14</span>/<span class="total">20</span></span> travellers are confirmed</div>';
+            html += '<div class="mapMsg"><span class="seats"><span class="cur">123</span>/<span class="total">200</span></span> travellers confi</div>';
             html += '</div>';
             html += '<div class="promoDetails"> Confirm the below details to receive 3 posters by mail within the week</div>';
             html += '<form role="form">';
             html += '<div class="form-group">';
-           // html += '<label for="full-name"> Full Name: </label>';
+            // html += '<label for="full-name"> Full Name: </label>';
             html += '<input type="text" class="form-control" id="full-name" placeholder="Full name">';
             html += '</div>';
             html += '<div class="form-group">';
-           // html += '<label for="email"> Email address: </label>';
+            // html += '<label for="email"> Email address: </label>';
             html += '<input type="email" class="form-control" id="email" placeholder="Email address">';
             html += '</div>';
             html += '<div class="form-group">';
-           // html += '<label for="home-address"> Home Address: </label>';
+            // html += '<label for="home-address"> Home Address: </label>';
             html += '<input readonly type="text" class="form-control" id="home-address" placeholder="Home address">';
             html += '</div>';
             html += '</form>';
@@ -1669,10 +1582,10 @@ function switchScreen(scrno, obj){
 
 function   submitDataToServer(){
     $.ajax({
-            url : 'saveNewSuggestion',
-            method : 'POST',
-            data:{data1:JSON.stringify(info)}
-        })
+        url : 'saveNewSuggestion',
+        method : 'POST',
+        data:{data1:JSON.stringify(info)}
+    })
         .done(function(result){
 
         })
@@ -1691,9 +1604,9 @@ function getGeoCodedAddress(latlng,callback){
     geocoder = new google.maps.Geocoder();
     geocoder.geocode({'location': latlng}, function(results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
-            if (results[0]) {
+            if (results[1]) {
 
-                callback(results[0]);
+                callback(results[1]);
             } else {
             }
         } else {
@@ -1716,9 +1629,9 @@ function fillWhatsAppLink(){
     var encodedPoints=google.maps.geometry.encoding.encodePath(path);
 
 
-    jQuery('#whatsapp').attr("href_send","whatsapp://send?text="+"Start your shuttl at Rs 3/Km.Just log on to http://myor.shuttl.com/suggest/index?paths="+encodedPoints+"&utm_source=whatsapp");
+    jQuery('#whatsapp').attr("href_send","whatsapp://send?text="+"Start your shuttl at Rs 3/Km.Just log on to http://bus2work.in/suggest/index?paths="+encodedPoints+"&utm_source=whatsapp");
 
-    jQuery.ajax({url:"/suggest/getWhatsAppShareLink?url="+"http://myor.shuttl.com/suggest/index?paths="+encodedPoints}).done(function(result){
+    jQuery.ajax({url:"/suggest/getWhatsAppShareLink?url="+"http://bus2work.in/suggest/index?paths="+encodedPoints}).done(function(result){
 
         var url=result["whatsapp_url"];
         jQuery('#whatsapp').attr("href_send","whatsapp://send?text=Start your shuttl at Rs 3/Km.Just log on to "+url);
@@ -1740,17 +1653,17 @@ function sendWhatsApp(){
 }
 
 function formatSectoIST(seconds){
-	var hours   = Math.floor(seconds / 3600);
-	var minutes = Math.floor((seconds - (hours * 3600)) / 60);
-	var zone = '';
-	if(hours > 12){
-		hours -= 12;
-		zone = 'PM';
-	}else{
-		zone = 'AM';
-	}
-	
-	return pad(hours)+':'+pad(minutes)+' '+zone;
+    var hours   = Math.floor(seconds / 3600);
+    var minutes = Math.floor((seconds - (hours * 3600)) / 60);
+    var zone = '';
+    if(hours > 12){
+        hours -= 12;
+        zone = 'PM';
+    }else{
+        zone = 'AM';
+    }
+
+    return pad(hours)+':'+pad(minutes)+' '+zone;
 }
 function pad(n) {
     return (n < 10) ? ("0" + n) : n;
@@ -1778,9 +1691,7 @@ function fillAdministrativeLevelDetails(){
 
                                 if (results[0].address_components[i].types[j]=="sublocality_level_1"){
 
-                                    
                                     info["homeAddressShortened"]=results[0].address_components[i].short_name;
-                               
                                     subLocalityFound=true;
 
                                 }
@@ -1790,20 +1701,18 @@ function fillAdministrativeLevelDetails(){
 
                                         info["homeAddressShortened"]=results[0].address_components[i].short_name;
                                     }else {
-                                        info["homeAddressShortened"] = info["homeAddressShortened"]+","+results[0].address_components[i].short_name;
+                                        info["homeAddressShortened"] = info["homeAddressShortened"]+", "+results[0].address_components[i].short_name;
                                     }
                                     subLocalityFound=true;
 
 
                                 }
                             }
-             
                         }
 
                     }
                     if (!subLocalityFound){
                         info["homeAddressShortened"]=info.homeAddress;
-             
 
                     }
                 }
@@ -1812,11 +1721,6 @@ function fillAdministrativeLevelDetails(){
             } else {
 
                 info["homeAddressShortened"]=info.homeAddress;
-             
-            }
-            if (info.homeName==null){
-                
-                info["homeName"]=info.homeAddressShortened;
             }
         });
     }
@@ -1850,7 +1754,7 @@ function fillAdministrativeLevelDetails(){
 
                                     }else{
 
-                                        info["officeAddressShortened"]=info["officeAddressShortened"]+","+results[0].address_components[i].short_name;
+                                        info["officeAddressShortened"]=info["officeAddressShortened"]+", "+results[0].address_components[i].short_name;
 
                                     }
 
@@ -1862,7 +1766,7 @@ function fillAdministrativeLevelDetails(){
                     }
                     if (!subLocalityFound){
                         info["officeAddressShortened"]=info.officeAddress;
-                        
+
                     }
                 }
 
@@ -1870,9 +1774,6 @@ function fillAdministrativeLevelDetails(){
             } else {
 
                 info["officeAddressShortened"]=info.officeAddress;
-            }
-            if (info.officeName==null) {
-                info["officeName"] = info.officeAddressShortened;
             }
         });
     }
@@ -1885,13 +1786,13 @@ function inpclicked(obj){
     if (jQuery(obj).attr("id")=="homeLocation"){
 
         jQuery(".screenWrapper").addClass("inputClicked_homeLocation");
-        
+
     }else{
 
         jQuery(".screenWrapper").addClass("inputClicked_officeLocation");
     }
-   
-    
+
+
     jQuery('.bounce').hide();
 }
 
@@ -1901,12 +1802,14 @@ function inpremoved(){
     jQuery('.bounce').show();
     jQuery(".screenWrapper").removeClass("inputClicked_homeLocation");
     jQuery(".screenWrapper").removeClass("inputClicked_officeLocation");
-    
+
 }
 
 
-function initiatePaymentProcess(){
+function initiatePaymentProcess(orderType){
 
+
+    info.order_type=orderType;
     if (paymentFlow==1) {
         jQuery('#phoneModal').modal("show");
     }else{
@@ -1916,7 +1819,7 @@ function initiatePaymentProcess(){
 }
 
 function onForPaymentMobileVerified(phoneNumber){
-    
+
     jQuery("body").append("<form  method='post' action='/payment/makePayment' id='paymentForm'><input type='hidden' name='info' value='"+JSON.stringify(info)+"'></form>");
     jQuery("#paymentForm").submit();
 
@@ -1989,86 +1892,18 @@ function changeToStage(stageNo){
 
 function routeDetailsToWork(status){
     var routeSelected = (info.reachwork && info.reachwork[0] != null);
-    if (routeSelected) {
-        var rwork = info.reachwork[0];
-        rwork = rwork.split(" ");
-        var delta = 0;
-        if (rwork[1] == "PM") {
-
-            delta = 12 * 3600;
-        }
-        rwork = rwork[0].split(":");
-
-        rwork = parseInt(rwork[0]) * 3600 + parseInt(rwork[1]) * 60 - info["duration"] + delta;
-
-        var hour = parseInt(rwork / 3600);
-        var min = parseInt((rwork % 3600) / 60);
-        var time = "";
-        var min_str = min < 10 ? "0" + min : min + "";
-        var ma = "";
-        if (hour > 12) {
-            hour = hour - 12;
-            ma = "PM";
-        } else {
-
-            ma = "AM";
-        }
-        var hour_str = "";
-        if (hour < 10) {
-
-            hour_str = "0" + hour;
-        } else {
-
-            hour_str = hour + "";
-        }
-        time = hour_str + ":" + min_str + " " + ma;
-
-    }
-    if (status == "departure") return (routeSelected ? ('Departs: ' +info.homeName)+" @ " +time: "");
+    if (status == "departure") return (routeSelected ? ('Departs: ' +info.homeName): "");
     else if (status == "arrival") return (routeSelected ? ('Arrives: '+info.officeName+' @ '+ info.reachwork) : "You have chosen not to Shuttl to work");
 }
 function routeDetailsFromWork(status){
     var routeSelected = (info.leavework && info.leavework[0] != null);
-    if (routeSelected) {
-        var rwork = info.leavework[0];
-        rwork = rwork.split(" ");
-
-        var delta = 0;
-        if (rwork[1] == "PM") {
-
-            delta = 12 * 3600;
-        }
-        rwork = rwork[0].split(":");
-        rwork = parseInt(rwork[0]) * 3600 + parseInt(rwork[1]) * 60 + info["duration"] + delta;
-        var hour = parseInt(rwork / 3600);
-        var min = parseInt((rwork % 3600) / 60);
-        var time = "";
-        var min_str = min < 10 ? "0" + min : min + "";
-        var ma = "";
-        if (hour > 12) {
-            hour = hour - 12;
-            ma = "PM";
-        } else {
-
-            ma = "AM";
-        }
-        var hour_str = "";
-        if (hour < 10) {
-
-            hour_str = "0" + hour;
-        } else {
-
-            hour_str = hour + "";
-        }
-        time = hour_str + ":" + min_str + " " + ma;
-    }
     if (status == "departure") return (routeSelected ? ('Departs: '+info.officeName+' @ '+ info.leavework) : "You have chosen not to Shuttl home");
-    else if (status == "arrival") return (routeSelected ? ('Arrives: '+info.homeName)+" @ "+time:"" );
+    else if (status == "arrival") return (routeSelected ? ('Arrives: '+info.homeName): "" );
 }
 
 
 function carouselSlide(obj, status, slot) {
-    var NUMBER_OF_SLOTS = slots_final.length;
+    var NUMBER_OF_SLOTS = 342;
     if (slot == morningSlot) {
         if (status == "next" && morningSlot < NUMBER_OF_SLOTS / 3)
             morningSlot = morningSlot + 3;
@@ -2087,52 +1922,71 @@ function carouselSlide(obj, status, slot) {
 
 function aboutUs() {
  var html = '<div id="aboutUsOverlay" style="overflow:visible!important">';
-    html += '<section id = "overlay-one">';
-    html += '<div id="overlay-logo" ><img style ="max-width:100px" vertical-align=middle width =175% src="../images/shuttl_logo.png"></div>';
-    html += '<div id="overlay-introduction">';
+ html += '<section id = "overlay-one">';
+ html += '<div id="overlay-logo" ><img style ="max-width:100px" vertical-align=middle width =175% src="../images/shuttl_logo.png"></div>';
+ html += '<div id="overlay-introduction">';
  html += '<div style="color:#333333"><h5 style="margin-bottom: 2px">Introducing</h5></div>';
  html += '<div style="color:grey"><h5 style="margin-top:2px">#MakeYourOwnRoute</h5></div>';
-    html += '</div>';
-    html += '</section>';
-    html += '<section id="overlay-two">';
-    html += '<div id="home-to-office">';
+ html += '</div>';
+ html += '</section>';
+ html += '<section id="overlay-two">';
+ html += '<div id="home-to-office">';
  html += '<div style="color:white"><h4>Home</h4> </div>';
-    html += '<img id="overlay-arrow" src ="../images/arrow.png" alt="arrow">';
+ html += '<img id="overlay-arrow" src ="../images/arrow.png" alt="arrow">';
  html += '<div style="color:white"><h4>Office</h4> </div>';
-    html += '</div>';
+ html += '</div>';
  html += '<div id="pickup-drop"> <h4> Pickup - Drop </h4></div>';
-    html += '<div id="route-information">';
-    html += '<div class="flex">';
+ html += '<div id="route-information">';
+ html += '<div class="flex">';
  html += '<div class="route-information-image"><img style="max-height:32px" src="../images/route_icon.png" alt="icon" /></div>';
-    html += '<span class="route-information">';
+ html += '<span class="route-information">';
  html += '<p style="font-size:16px"> Direct routes from home to office</p>';
-    html += '</span>';
-    html += '</div>';
-    html += '<div class="flex">';
+ html += '</span>';
+ html += '</div>';
+ html += '<div class="flex">';
  html += '<div class="route-information-image"><img style ="max-height:32px" src="../images/friends_icon.png" alt="icon" /></div>';
-    html += '<span class="route-information">';
+ html += '<span class="route-information">';
  html += '<p style="font-size:16px"> Travel with friends and colleagues</p>';
-    html += '</span>';
-    html += '</div>';
-    html += '</div>';
-    html += '</section>';
-    html += '<section id="overlay-three">';
+ html += '</span>';
+ html += '</div>';
+ html += '</div>';
+ html += '</section>';
+ html += '<section id="overlay-three">';
  html += '<div id="overlay-starting-at"> <h3> Starting @ Rs 3/km </h3> </div>';
-    html += '<hr>';
+ html += '<hr>';
  html += '<div id="assured-seats"> <h5> AC buses | Assured seats </h5></div>';
-    html += '<div><img class="vanImage" src="../images/van2.png"></div>';
-    html += '</section>';
+ html += '<div><img class="vanImage" src="../images/van2.png"></div>';
+ html += '</section>';
  html += '<div class="slide-left"><h4> &lt;&lt; Got it </h4></div>';
-    html += '</div>';
+ html += '</div>';
+ return html;
+ }
+
+
+function aboutUsOrrca(){
+    var html ='<div id="aboutUsOrrcaOverlay">';
+    html+= '<h4 style="text-align: center; font-weight: bold">OUTER RING ROAD COMPANIES ASSOCIATION</h4>';
+    html+= ' To facilitate home office travel, ORRCA invites you to share your office and home address and preferred time of commute. Using your suggestions we will revert to you shortly with a bus based travel solution that is comfortable and reliable.';
+    html+= ' <br><p>';
+    html+= '</p><br><ul>';
+    html+= '<li> Shared commute is safe for you and the environment. </li>';
+    html+= '<li> An app will allow you to track your AC bus. No more waiting. No more uncertainty. </li>';
+    html+= '<li> You have a guaranteed seat, so no more standing. </li>';
+    html+= '<li> Our solution will be flexible, and will give you several timing options. It will bring you closer to your home for pick up and drop off. </li>';
+    html+= '<li> Travel with colleagues and like minded people; use the extra time to relax. </li> </ul><br>';
+    html+= ' <p>Your daily commute is no longer about fighting traffic, but about reaching your destination full of energy and with a smile. <br><br>';
+    html+= ' Team ORRCA <br>';
+    html+= '</p>';
+    html+= '</div>';
+    html+= '<div id="aboutUsCross"> <i class="fa fa-times fa-lg" aria-hidden="true">';
+    html+= '</i> </div>';
     return html;
 }
 
 
-  
-
-    function getOfflineSharePromoCode(){
-        return "" ;
-    }
+function getOfflineSharePromoCode(){
+    return "" ;
+}
 
 
 
@@ -2142,10 +1996,8 @@ function otpentered(obj) {
     if (/\d{4,4}/.test(jQuery(obj).val())) {
         var otp = jQuery(obj).val();
 
-        showLoader();
         jQuery.ajax({url: "/suggest/verifyOtp?otp=" + otp + "&phoneNumber=" + info.phone_number}).done(function (response) {
 
-            hideLoader();
             if (response["success"]) {
 
                 onMobileVerified(info.phone_number);
@@ -2171,23 +2023,16 @@ function changePhoneNumber(){
     jQuery(".otp-entry").hide();
 }
 
-function onPhoneNumberEntered(){
+function onPhoneNumberEntered() {
 
-    if (/\d{10,10}/.test(jQuery("#userPhoneNumber").val())){
+    if (/\d{10,10}/.test(jQuery("#userPhoneNumber").val())) {
 
-        info.phone_number=jQuery("#userPhoneNumber").val();
+        info.phone_number = jQuery("#userPhoneNumber").val();
         validatePhone();
-    }else{
+    } else {
 
         $('#phoneModal .error').html('invalid mobile number').fadeIn();
     }
-}
 
-function changeToLastScreen(){
 
-    if (info.route_type=="new") {
-        changeToStage(5);
-    }else{
-        changeToStage(5);
-    }
 }

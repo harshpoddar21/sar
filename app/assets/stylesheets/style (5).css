@@ -244,6 +244,7 @@ span.slots {
     float: left;
     margin: 0 2px;
 }
+
 .btn-group-justified .btn{
     float: left;
     position: relative;
@@ -379,12 +380,8 @@ span.live{
 .shuttl-pass{
 
 }
-.shuttl-pass.selected{
-
-    background-color: #3eb6b5 !important;
-}
 fieldset.pay{
-    padding: 10px;
+    margin:10px;
 }
 .headText.headText4{
     padding: 10px 0px;
@@ -414,7 +411,6 @@ span.highlight.lesshighlight {
 .bouncebtn,.backBtnMap {
     position: absolute;
     bottom: 0px;
-    left: 0px;
 }
 
 .submit-notification {
@@ -437,11 +433,11 @@ span.highlight.lesshighlight {
     bottom: 41px;
     position: static;
     left: 0px;
-    padding-top: 12px;
-    height:42px;
     margin:2px;
     width: 48%;
 }
+
+
 .not-int{
 
     bottom:0px;
@@ -544,7 +540,7 @@ span.highlight.lesshighlight {
     left: 0px;
     background: #000;
     opacity: 0.8;
-    z-index: 10000;
+    z-index: 100;
 }
 .
 .carousel-inner .active.left { left: -33%; }
@@ -717,9 +713,7 @@ body {
     color:#333333!important;
     height: 100%;
     margin: 0 auto;
-
 }
-
 
 .btn:focus{
     outline: #ef4050!important;
@@ -734,13 +728,6 @@ body {
     display:none;
     z-index: 1000;
 }
-#orcacross{
-
-    position: absolute;
-    top: 20px;
-    right: 4px;
-    font-size: 23px;
-}
 #aboutUsCross{
 
     position: fixed;
@@ -748,7 +735,6 @@ body {
     right: 7%;
     z-index: 1000;
 }
-
 #aboutUsOverlay{
 
     position: fixed;
@@ -756,7 +742,7 @@ body {
     top: 0px;
     bottom: 0px;
     z-index: 1000;
-    display:none;
+    display: none;
     border: solid 1px #333333;
     overflow: visible!important;
 }
@@ -782,15 +768,11 @@ body {
     position: absolute;
 }
 
-.carousel-center{
-    padding: 0px!important;
-}
-
-
 .incentive {
     text-decoration:underline;
     font-size: 14px;
 }
+
 .setHeight {
     height:42px;
 }
@@ -801,19 +783,8 @@ body {
     justify-content: center;
     flex-direction: column;
 }
-.notInterested{
 
-    display:none;
-
-}
-.otp-entry button{
-    margin-right: 10px;
-    border: 0px;
-    margin-top: 12px;
-}
 .slide-right {
-    bottom:28px;
-    position: absolute;
     height:92px;
 }
 
@@ -821,24 +792,20 @@ body {
     background-color: #3eb6b5;
     height: 30px;
     width: 30%;
-    left: 80%;
+    left: 85%;
     position: absolute;
-    bottom: 2%;
+    bottom: 100px;
     font-weight: bold;
     color: white;
     border: 1px solid black;
-}
-.otp-entry{
-
-    text-align: center;
-    padding-bottom: 20px;
 }
 
 @media only screen and (min-device-width: 350px) {
     .carousel-item-center {
         margin-left: calc(50% - 150px);
-    }
+          }
 }
+
 @media only screen and (min-device-width: 750px) {
     body {
         width: 60% !important;
@@ -852,12 +819,6 @@ body {
     .btnTime {
         font-size: 85%;
         width:30%;
-    }
-    .daysLeft{
-        font-size: 12px;
-    }
-    .mapMsg{
-        font-size: 12px;
     }
 
     .carousel-item-center {
@@ -874,6 +835,18 @@ body {
 
     .headText {
         font-size: 15px;
+    }
+
+    .slide-left {
+        background-color: #3eb6b5;
+        height: 30px;
+        width: 35%;
+        left: 80%;
+        position: absolute;
+        bottom: 2%;
+        font-weight: bold;
+        color: white;
+        border: 1px solid black;
     }
 }
 
@@ -907,13 +880,12 @@ body {
         height:54px;
     }
     .slide-left{
-        display: none !important;
-}
+        display: none;
+    }
     .slide-right {
-        display: none !important;
+        display: none;
     }
     #aboutUsOverlay{
-        display:none !important;
+        display:none;
     }
-
 }
