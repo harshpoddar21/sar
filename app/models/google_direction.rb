@@ -42,7 +42,7 @@ class GoogleDirection
 
   def parseResponse response
 
-    self.overviewPolyline=response["routes"][0]["overview_polyline"]
+    self.overviewPolyline=response["routes"][0]["overview_polyline"]["points"]
 
   end
 end
