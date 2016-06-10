@@ -445,4 +445,17 @@ class SuggestController < ApplicationController
   end
 
 
+  def getPath
+    origin_lat=params[:origin_lat]
+    origin_lng=params[:origin_lng]
+    destination_lat=params[:destination_lat]
+    destination_lng=params[:destination_lng]
+    path=""
+    if (origin_lat!=nil && origin_lng!=nil && destination_lat!=nil && destination_lng!=nil)
+     path=Polylines::Encoder.encode_points([[origin_lat.to_f,origin_lng.to_f],[destination_lat.to_f,destination_lng.to_f]])
+    end
+    render :text=>path
+  end
+
+
 end

@@ -10,6 +10,7 @@ post 'suggest/createRoute'
   post 'payment/paymentDone'
   get 'suggest/getSlots'
   get 'suggest/getFromTo'
+  get 'suggest/getPath'
 
   get 'suggest/getSlotsWithCoords'
   get 'suggest/sendOtp'

@@ -318,7 +318,9 @@ class Route
             if possibleOriginRoutes[key]==nil
               possibleOriginRoutes[key]=Array.new
             end
+            if distance[key]==nil || distance[key]>Location.distance(origin,originC)
             distance[key]=Location.distance(origin,originC)
+            end
             possibleOriginRoutes[key]=possibleOriginRoutes[key]+value
           end
         end

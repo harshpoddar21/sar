@@ -11,11 +11,12 @@ var reg;
 var sub;
 var slots_final=[];
 var isSubscribed = false;
+var origin_index=0;
 var duration;
 
 
 function initAutocomplete() {
-    if (window.location.search!="" && window.location.search.match(/paths=([^\&]*)/g)!=null && window.location.search.match(/paths=([^\&]*)/g).length>0 && window.location.search.match(/paths=([^\&]*)/g)[0].split("=")[1]!=""){
+    if ((window.location.search!="" && window.location.search.match(/paths=([^\&]*)/g)!=null && window.location.search.match(/paths=([^\&]*)/g).length>0 && window.location.search.match(/paths=([^\&]*)/g)[0].split("=")[1]!="")){
 
         var polyline=window.location.search.match(/paths=([^\&]*)/g)[0].split("=")[1];
         var points=google.maps.geometry.encoding.decodePath(polyline);
@@ -104,6 +105,7 @@ function initAutocomplete() {
                     info.route_type=response.route_type;
                     info.routeid=response.route_id;
                     info.pricing=response.pricing;
+                    info.pick=response.pick;
                     slots_final=response.slots;
                     for (var i=0;i<slots_final.length;i++){
                         
@@ -210,9 +212,26 @@ function initMap(response,type) {
 			mindist = dist;
 		}
 	});
-	
-	var latlng = new google.maps.LatLng( decodedPath[0].lat(), decodedPath[0].lng() );    
 
+
+    if (info["pick"]!=null && info.pick.length>0){
+        var min_dis=100000;
+        for (var i=0;i<info.pick.length;i++){
+
+            if (Haversine(info.pick[i]["lat"],info.pick[i]["lng"],info.homelat,info.homelng)<min_dis){
+                
+                origin_index=i;
+                min_dis=Haversine(info.pick[i]["lat"],info.pick[i]["lng"],info.homelat,info.homelng);
+            }
+        }
+    }
+    var latlng=null;
+    if (info.pick==null || info.pick.length==0) {
+         latlng = new google.maps.LatLng(decodedPath[0].lat(), decodedPath[0].lng());
+    }else{
+
+        latlng = new google.maps.LatLng(info.pick[origin_index]["lat"], info.pick[origin_index]["lng"]);
+    }
     if (type!="OTD"){
 
         latlng = new google.maps.LatLng( decodedPath[decodedPath.length-1].lat(), decodedPath[decodedPath.length-1].lng() );
@@ -1186,6 +1205,7 @@ function switchScreen(scrno, obj){
 			setTimeout(function(){
 
                 initMap(responseJson,"OTD");
+                jQuery(".landmark").html((info.pick!=null && info.pick.length>0)?info.pick[origin_index]["landmark"]:"");
                 timeCapture();
                 setCarousel();
                 if (info.reachwork!=undefined && info.reachwork.length>0){
@@ -1205,7 +1225,7 @@ function switchScreen(scrno, obj){
 			var html = '<div class="col-md-12 fullheight">';
 			html += '<div class="fieldset">';
             html += '<div class="routeInfo1"><div class="flex"><span class="routePtName">' + info.homeName + '</span><span style="position:relative; top:-10px; background-color:white; margin-top:3px"> to </span> <span class="routePtName">'+ info.officeName+'</span></div></div>';
-            html += '<span class="landmark"> Landmark: (Enter landmark here) </span>';
+            html += '<span class="landmark"> '+(info.pick!=null && info.pick.length>0)?info.pick[info.pick.length-1]["landmark"]:""+' </span>';
 			html += '<div id="gMap"></div>';
             html += '<div class="flex" style="width:90%">';
             html += '<div class="mapMsg"><span class="seats"><span class="cur">123</span>/<span class="total">200</span></span><br> travellers confirmed </div>';
@@ -1292,8 +1312,8 @@ function switchScreen(scrno, obj){
 			html += '</fieldset>';
             html += '<div class="headText headText4 text-center">Select a pass to book your spot on this route</div>';
 
-             html += '<div class="text-capitalize paynow btn btn-primary col-xs-6 setHeight centerVertical"  onclick="initiatePaymentProcess(1);" data-value="1" >20-Rides @ '+info.pricing[1]+'</div>';
-             html += '<div class="text-capitalize paynow btn btn-primary col-xs-6" onclick="initiatePaymentProcess(2);" data-value="2">Promo Monthly @ Rs '+info.pricing[0]+'<div> (Unlimited Rides) </div></div>';
+             html += '<div class="text-capitalize paynow btn btn-primary col-xs-6 setHeight centerVertical"  onclick="initiatePaymentProcess(1);" data-value="1" >10-Rides @ '+info.pricing[0]+'</div>';
+             html += '<div class="text-capitalize paynow btn btn-primary col-xs-6" onclick="initiatePaymentProcess(2);" data-value="2">20-Rides @ '+info.pricing[1]+'<div>  </div></div>';
             html += '<br><br><br><br>';
              html += '<div class="fillingfast">(we\'ll refund your money if the services aren\'t launched)</div>';
 			html += '</div>';
@@ -1910,76 +1930,79 @@ function changeToStage(stageNo){
 
 function routeDetailsToWork(status){
     var routeSelected = (info.reachwork && info.reachwork[0] != null);
-    var rwork=info.reachwork[0];
-    rwork=rwork.split(" ");
-    var delta=0;
-    if (rwork[1]=="PM"){
-        
-        delta=12*3600;
+    if (routeSelected) {
+        var rwork = info.reachwork[0];
+        rwork = rwork.split(" ");
+        var delta = 0;
+        if (rwork[1] == "PM") {
+
+            delta = 12 * 3600;
+        }
+        rwork = rwork[0].split(":");
+
+        rwork = parseInt(rwork[0]) * 3600 + parseInt(rwork[1]) * 60 - info["duration"] + delta;
+
+        var hour = parseInt(rwork / 3600);
+        var min = parseInt((rwork % 3600) / 60);
+        var time = "";
+        var min_str = min < 10 ? "0" + min : min + "";
+        var ma = "";
+        if (hour > 12) {
+            hour = hour - 12;
+            ma = "PM";
+        } else {
+
+            ma = "AM";
+        }
+        var hour_str = "";
+        if (hour < 10) {
+
+            hour_str = "0" + hour;
+        } else {
+
+            hour_str = hour + "";
+        }
+        time = hour_str + ":" + min_str + " " + ma;
+
     }
-    rwork=rwork[0].split(":");
-
-    rwork=parseInt(rwork[0])*3600+parseInt(rwork[1])*60-info["duration"]+delta;
-
-    var hour=parseInt(rwork/3600);
-    var min=parseInt((rwork%3600)/60);
-    var time="";
-    var min_str=min<10?"0"+min:min+"";
-    var ma="";
-        if (hour>12){
-            hour=hour-12;
-            ma="PM";
-        }else{
-
-            ma="AM";
-        }
-    var hour_str="";
-        if (hour<10){
-
-            hour_str="0"+hour;
-        }else{
-
-            hour_str=hour+"";
-        }
-        time=hour_str+":"+min_str+" "+ma;
-
-
     if (status == "departure") return (routeSelected ? ('Departs: ' +info.homeName)+" @ " +time: "");
     else if (status == "arrival") return (routeSelected ? ('Arrives: '+info.officeName+' @ '+ info.reachwork) : "You have chosen not to Shuttl to work");
 }
 function routeDetailsFromWork(status){
     var routeSelected = (info.leavework && info.leavework[0] != null);
-    var rwork=info.leavework[0];
-    rwork=rwork.split(" ");
+    if (routeSelected) {
+        var rwork = info.leavework[0];
+        rwork = rwork.split(" ");
 
-    var delta=0;
-    if (rwork[1]=="PM"){
+        var delta = 0;
+        if (rwork[1] == "PM") {
 
-        delta=12*3600;
+            delta = 12 * 3600;
+        }
+        rwork = rwork[0].split(":");
+        rwork = parseInt(rwork[0]) * 3600 + parseInt(rwork[1]) * 60 + info["duration"] + delta;
+        var hour = parseInt(rwork / 3600);
+        var min = parseInt((rwork % 3600) / 60);
+        var time = "";
+        var min_str = min < 10 ? "0" + min : min + "";
+        var ma = "";
+        if (hour > 12) {
+            hour = hour - 12;
+            ma = "PM";
+        } else {
+
+            ma = "AM";
+        }
+        var hour_str = "";
+        if (hour < 10) {
+
+            hour_str = "0" + hour;
+        } else {
+
+            hour_str = hour + "";
+        }
+        time = hour_str + ":" + min_str + " " + ma;
     }
-    rwork=rwork[0].split(":");
-    rwork=parseInt(rwork[0])*3600+parseInt(rwork[1])*60+info["duration"]+delta;
-    var hour=parseInt(rwork/3600);
-    var min=parseInt((rwork%3600)/60);
-    var time="";
-    var min_str=min<10?"0"+min:min+"";
-    var ma="";
-    if (hour>12){
-        hour=hour-12;
-        ma="PM";
-    }else{
-
-        ma="AM";
-    }
-    var hour_str="";
-    if (hour<10){
-
-        hour_str="0"+hour;
-    }else{
-
-        hour_str=hour+"";
-    }
-    time=hour_str+":"+min_str+" "+ma;
     if (status == "departure") return (routeSelected ? ('Departs: '+info.officeName+' @ '+ info.leavework) : "You have chosen not to Shuttl home");
     else if (status == "arrival") return (routeSelected ? ('Arrives: '+info.homeName)+"@"+time:"" );
 }
