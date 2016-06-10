@@ -42,18 +42,7 @@ class GoogleDirection
 
   def parseResponse response
 
-    over=""
-
-    i=0
-    while i<response["routes"][0]["legs"][0]["steps"].length
-      if i<response["routes"][0]["legs"][0]["steps"].length-1
-        over=over+response["routes"][0]["legs"][0]["steps"][i]["polyline"]["points"]+"|"
-      else
-        over=over+response["routes"][0]["legs"][0]["steps"][i]["polyline"]["points"]
-      end
-      i=i+1
-    end
-    self.overviewPolyline=over
+    self.overviewPolyline=response["routes"][0]["overview_polyline"]
 
   end
 end
