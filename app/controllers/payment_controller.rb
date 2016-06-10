@@ -261,7 +261,7 @@ class PaymentController < ApplicationController
         if session["info"]!=nil
         session["info"][PAYMENT_KEY]=PAYMENT_FAILED
         end
-       TelephonyManager.sendSms transaction.phone_number ,"Hey Shuttlr! We have received your payment of Rs #{transaction.amount}. We will contact you when the route is live. Your money will be refunded in case the route is not live in 30 days."
+       TelephonyManager.sendSms transaction.phone_number,"Hey Shuttlr! We have received your payment of Rs #{transaction.amount}. We will contact you when the route is live. Your money will be refunded in case the route is not live in 30 days."
       end
     else
       render :text=>"Something bad has happended.Please try again"
