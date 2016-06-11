@@ -339,6 +339,7 @@ function initMap(response,type) {
                     bounds.extend(new google.maps.LatLng(decodedPath[0].lat(),decodedPath[0].lng()));
                     bounds.extend(new google.maps.LatLng(info.pick[origin_index]["lat"],info.pick[origin_index]["lng"]));
 
+                    map.fitBounds(bounds);
                 } else {
                     window.alert('Directions request failed due to ' + status);
                 }
