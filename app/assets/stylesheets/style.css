@@ -328,7 +328,13 @@ span.slots {
     font-size: 12px;
     text-align: center;
 }
+.passinf{
 
+    margin: 5px 0;
+    font-size: 15px;
+    text-align: center;
+
+}
 .promoDetails {
     margin: 20px;
     font-size:18px;
@@ -973,11 +979,11 @@ body {
 }
 
 @media only screen and (max-device-width: 470px){
-    .paynow{font-size: small;}
+    .paynow{font-size: 20px;}
 }
 
 @media only screen and (max-device-width:415px){
-    .paynow{font-size: x-small;}
+    .paynow{font-size: 20px;}
 }
 
 
@@ -1001,4 +1007,57 @@ body {
         display:none !important;
     }
 
+}
+.shuttl_pass_info{
+    position: absolute;
+    top: 4px;
+    background: #3c5daa;
+    z-index: 10000;
+    display: none;
+    height: 475px;
+    width: 90%;
+    text-align: justify;
+    left: 20px;
+    display: none;
+    opacity: 0.95;
+    padding-top: 60px;
+    color: #fff;
+    padding: 17px 16px 0 16px;
+    font-size: 13px;
+    border: 1px solid black;
+
+}
+.shuttl_pass_info h1{
+
+    margin-bottom: 26px;
+    text-align: center;
+}
+.shuttl_pass_info>ul{
+
+    list-style: none;
+    padding: 0px;
+}
+.shuttl_pass_info li {
+    margin-bottom: 18px;
+    margin-top: 10px;
+
+}
+.shuttl_pass_info .descrp{
+
+    font-weight: bold;
+    text-decoration: underline;
+    margin-right: 10px;
+}
+.shuttl_pass_info .gotit{
+    border: 1px solid white;
+    background: #3c5daa;
+    padding: 5px 10px;
+    font-size: 16px;
+    position: absolute;
+    left: 50%;
+    margin-left: -27px;
+}
+.bolder{
+
+    font-weight:bolder;
 }

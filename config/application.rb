@@ -26,6 +26,7 @@ module Sar
     config.active_record.raise_in_transactional_callbacks = true
     config.after_initialize do
 
+      Route::initializeRouteCache
     end
   end
 end

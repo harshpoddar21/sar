@@ -144,10 +144,10 @@ function initAutocomplete() {
 					$.each(slot, function(key, value){
 						var time = formatSectoIST(value*60);
                         if (time.indexOf("AM")!="-1") {
-                            slotBtnsM += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="' + time + '">' + time + '<span class="live">(live)</span></button></div>';
+                            slotBtnsM += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="' + time + '">' + time + '<span style="display:none;" class="live">(live)</span></button></div>';
                         }else{
 
-                            slotBtnsE += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="' + time + '">' + time + '<span class="live">(live)</span></button></div>';
+                            slotBtnsE += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="' + time + '">' + time + '<span style="display:none;" class="live">(live)</span></button></div>';
                         }
                         });
 					stage = 8;
@@ -250,6 +250,8 @@ function initMap(response,type) {
 
 
     if (info["pick"]!=null && info.pick.length>0){
+
+
         var min_dis=100000;
         for (var i=0;i<info.pick.length;i++){
 
@@ -347,11 +349,56 @@ function initMap(response,type) {
     
 	var setRegion = new google.maps.Polyline({
 		path: decodedPath,
-		strokeColor: "#FF0000",
-		strokeOpacity: 1.0,
-		strokeWeight: 2,
+		strokeColor: "#0090ff",
+        strokeOpacity: 1.0,
+        fillColor: '#4cb1ff',
+        fillOpacity: 1,
+		strokeWeight: 5,
 		map: map
 	});
+    var cityCircle=[];
+    for (var i=0;i<info.pick.length;i++) {
+
+        cityCircle.push(new google.maps.Circle({
+            strokeColor: '#000',
+            strokeOpacity: 1,
+            strokeWeight: 2,
+            fillColor: '#fff',
+            fillOpacity: 1,
+            map: map,
+            center: {lat: info.pick[i]["lat"], lng: info.pick[i]["lng"]},
+            radius: (25)
+        }));
+    }
+
+    map.addListener('zoom_changed', function(e) {
+
+        return;
+        for (var i = 0; i < cityCircle.length; i++) {
+
+            cityCircle[i].setMap(null);
+        }
+
+        cityCircle = [];
+        setTimeout(function () {
+
+            for (var i = 0; i < info.pick.length; i++) {
+
+                cityCircle.push(new google.maps.Circle({
+                    strokeColor: '#000',
+                    strokeOpacity: 1,
+                    strokeWeight: 2,
+                    fillColor: '#fff',
+                    fillOpacity: 1,
+                    map: map,
+                    center: {lat: info.pick[i]["lat"], lng: info.pick[i]["lng"]},
+                    radius: ((25 * 15) / map.getZoom())
+                }));
+            }
+
+        }, 3000);
+
+    });
 }
 
 var screenHeight = 100;
@@ -1220,11 +1267,11 @@ function switchScreen(scrno, obj){
             html += '<span class="landmark"> (Landmark: Enter landmark here) </span>';
 			html += '<div id="gMap"></div>';
             html += '<div class="flex" style="width:90%">';
-            html += '<div class="mapMsg"><span class="seats"><span class="cur">123</span>/<span class="total">200</span></span><br> travellers confirmed </div>';
-            html += '<div class="daysLeft"><span class="days">13</span><br>days to go live</div>';
+            html += '<div class="mapMsg"><span class="seats"><span class="cur">138</span>/<span class="total">200</span></span><br> travellers confirmed </div>';
+            html += '<div class="daysLeft"><span class="days">12</span><br>days to go live</div>';
             html += '</div></div>';
             html += '<div class="line2">To travel on this route, tell us</div>';
-			html += '<div class="line2">What time do you have to reach work?</div>';
+			html += '<div class="line2">What time do you have to <span class="bolder">reach</span> work?</div>';
 			html += '<div class="carousel slide" id="mycarousel">';
 
             //html += '<span class="btnsWrapper">';
@@ -1259,7 +1306,7 @@ function switchScreen(scrno, obj){
 			setTimeout(function(){
 
                 initMap(responseJson,"OTD");
-                jQuery(".landmark").html((info.pick!=null && info.pick.length>0)?info.pick[origin_index]["landmark"]:"");
+                jQuery(".landmark").html((info.pick!=null && info.pick.length>0)?"(Landmark: "+info.pick[origin_index]["landmark"]+")":"");
                 if ((info.pick!=null && info.pick.length>0)) {
                     jQuery(".routePtName.pick").html(info.pick[origin_index]["name"]);
                     jQuery(".routePtName.drop").html(info.pick[info.pick.length-1]["name"]);
@@ -1287,10 +1334,10 @@ function switchScreen(scrno, obj){
             html += '<span class="landmark"> '+(info.pick!=null && info.pick.length>0)?info.pick[info.pick.length-1]["landmark"]:""+' </span>';
 			html += '<div id="gMap"></div>';
             html += '<div class="flex" style="width:90%">';
-            html += '<div class="mapMsg"><span class="seats"><span class="cur">123</span>/<span class="total">200</span></span><br> travellers confirmed </div>';
-            html += '<div class="daysLeft"><span class="days">13</span><br>days to go live</div>';
+            html += '<div class="mapMsg"><span class="seats"><span class="cur">138</span>/<span class="total">200</span></span><br> travellers confirmed </div>';
+            html += '<div class="daysLeft"><span class="days">12</span><br>days to go live</div>';
             html += '</div></div>';
-			html += '<div class="line2">What time do you leave from work?</div>';
+			html += '<div class="line2">What time do you <span class="bolder">leave</span> from work?</div>';
             html += '<div class="carousel slide" id="mycarousel2">';
 
             //html += '<span class="btnsWrapper">';
@@ -1377,7 +1424,7 @@ function switchScreen(scrno, obj){
             html += '<div class="item active">';
             html += '<button type="button" class="shuttl-pass text-capitalize paynow btn btn-default col-xs-6 setHeight centerVertical centerHorizontal passtype_1" onclick="choosePass(1);" data-value="1">10 rides @ '+info.pricing[0]+'</button>';
             html += '<button type="button" class="shuttl-pass text-capitalize paynow btn btn-default col-xs-6 setHeight centerVertical centerHorizontal passtype_2" onclick="choosePass(2);" data-value="2"><div>20 rides @ '+info.pricing[1]+'</div></button></div>';
-            html += '<div class="fillingfast">(We will refund your money if the route isn\'t launched)</div>';
+            html += '<div class="passinf">For more info <a onclick="showRoutePass();">click here</a></div>';
             //html += '<span class="headText headText4 centerHorizontal payTM-click-to-pay"> Click to pay by </span>';
             html += '<div class="payTM-image row social">';
             html += '<div class="col-md-12" style="background-color: #3eb6b5;">';
@@ -1391,10 +1438,12 @@ function switchScreen(scrno, obj){
             html+='<div><button class="btn-primary" onclick="validatePhone();">Resend Otp</button><button class="btn-primary" onclick="changePhoneNumber();">Change Number</button></div></div>';
             html += '</div></div></div>';
 
+            html+=getRoutePass();
             $(obj).html(html);
             $('.paynow').on('click', function(){
                 var rs = $(this).attr('data-value');
             });
+
 
             choosePass(1);
             break;
@@ -2212,3 +2261,35 @@ function changeToLastScreen(){
         changeToStage(5);
     }
 }
+
+
+function getRoutePass(){
+var html="";
+html+='<div class="shuttl_pass_info">';
+
+    html+='<h1>Pass Information</h1>';
+
+html+='<ul>';
+    html+='<li><span class="descrp">Definition:</span>A Ride is a one-side journey travelled from home-to-office or office-to-home.<br>  eg. A return journey taken will be counted as 2 rides</li>';
+    html+='<li><span class="descrp">Validity:</span>Pass is valid for bookings for any available time slot only on the specific route it is purchased for. </li>';
+    html+='<li><span class="descrp">Refund Policy:</span>Money will be refunded back to your PayTM wallet, in case:';
+    html+='<ul>'
+    html+='<li> the route is not launched within one week of the launch date</li>';
+    html+='<li>  customer is not satisfied with the service after taking no more than 3 rides.</li>';
+    html+="</ul>";
+    html+='<li><span class="descrp">Contact Us:</span> For any queries or complaints you can reach us at myor@shuttl.com</li>';
+
+    html+='<button class="gotit" onclick="hideRoutePass();">Got It</button>';
+    html+='</div>';
+    return html;
+}
+
+function showRoutePass(){
+
+    jQuery(".shuttl_pass_info").show();
+}
+function hideRoutePass(){
+
+    jQuery(".shuttl_pass_info").hide();
+}
+
