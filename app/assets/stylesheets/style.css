@@ -979,11 +979,11 @@ body {
 }
 
 @media only screen and (max-device-width: 470px){
-    .paynow{font-size: 20px;}
+    .paynow{font-size: small;}
 }
 
 @media only screen and (max-device-width:415px){
-    .paynow{font-size: 20px;}
+    .paynow{font-size: small;}
 }
 
 

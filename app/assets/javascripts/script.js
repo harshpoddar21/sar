@@ -227,9 +227,7 @@ function initMap(response,type) {
 	var decodedPath = google.maps.geometry.encoding.decodePath(response.points);
 	bounds = new google.maps.LatLngBounds();
 
-    bounds.extend(new google.maps.LatLng(decodedPath[0].lat(),decodedPath[0].lng()));
-    bounds.extend(new google.maps.LatLng(decodedPath[decodedPath.length-1].lat(),decodedPath[decodedPath.length-1].lng()));
-   
+
 	$.each(decodedPath, function(key, value){
 		var position = new google.maps.LatLng(decodedPath[key].lat(), decodedPath[key].lng());
 
@@ -338,6 +336,9 @@ function initMap(response,type) {
                         info["duration"]=response.routes[0].legs[0].duration.value;
                         
                     }
+                    bounds.extend(new google.maps.LatLng(decodedPath[0].lat(),decodedPath[0].lng()));
+                    bounds.extend(new google.maps.LatLng(info.pick[origin_index]["lat"],info.pick[origin_index]["lng"]));
+
                 } else {
                     window.alert('Directions request failed due to ' + status);
                 }
