@@ -104,6 +104,7 @@ function FullScreenControl(map, enterFull, exitFull) {
         mapDiv.style.top = originalTop;
         mapDiv.style.left = originalLeft;
         mapDiv.style.zIndex = originalZIndex;
+
         document.body.style.overflow = originalOverflow;
         $(controlDiv).find("div div").html(enterFull);
         fullScreen = false;
@@ -115,10 +116,12 @@ function FullScreenControl(map, enterFull, exitFull) {
     google.maps.event.addDomListener(controlDiv, "click", function () {
         if (!fullScreen) {
 
-            map.fitBounds(bounds);
+            map.setZoom(10);
             controlDiv.goFullScreen();
         }
         else {
+
+            map.setZoom(13);
             controlDiv.exitFullScreen();
         }
     });
