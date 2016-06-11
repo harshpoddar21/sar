@@ -5,6 +5,8 @@ var info = {};
 var fw = true;
 var responseJson;
 var slotBtns = '';
+var slotBtnsM = '';
+var slotBtnsE = '';
 var morningSlot = 0;
 var eveningSlot = 88;
 var reg;
@@ -141,8 +143,13 @@ function initAutocomplete() {
                     info.pricing=response.pricing;
 					$.each(slot, function(key, value){
 						var time = formatSectoIST(value*60);
-						slotBtns += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="'+time+'">'+time+'<span class="live">(live)</span></button></div>';
-					});
+                        if (time.indexOf("AM")!="-1") {
+                            slotBtnsM += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="' + time + '">' + time + '<span class="live">(live)</span></button></div>';
+                        }else{
+
+                            slotBtnsE += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="' + time + '">' + time + '<span class="live">(live)</span></button></div>';
+                        }
+                        });
 					stage = 8;
 					window.location.hash = 'stage'+stage;
 					var handle = $('.screenWrapper').find('.screen');
@@ -452,7 +459,7 @@ function setCarousel2() {
         infinite: true,
         slidesToShow: 3,
         slidesToScroll: 3,
-        initialSlide:eveningSlot,
+        initialSlide:0,
         swipeToSlide:true
     });
     $('.carousel-inner')
@@ -1223,7 +1230,7 @@ function switchScreen(scrno, obj){
             //html += '<span class="btnsWrapper">';
             html += '<div >';
             html += '<div class="carousel-inner btns btn-group-justified carousel-item-center" data-roletype="reachwork">';
-            html += slotBtns;
+            html += slotBtnsM;
 
             /* html += '<button type="button" class="btn btn-default btnTime" data-value="99:99">99:99<span class="live">(live)</span></button>';
              html += '<button type="button" class="btn btn-default btnTime" data-value="8:30">8:30</button>';
@@ -1289,7 +1296,7 @@ function switchScreen(scrno, obj){
             //html += '<span class="btnsWrapper">';
             html += '<div>';
             html += '<div class="carousel-inner btns btn-group-justified carousel-item-center" data-roletype="leavework">';
-            html += slotBtns;
+            html += slotBtnsE;
             /*
              html += '<button type="button" class="btn btn-default btnTime" data-value="99:99">99:99<span class="live">(live)</span></button>';
              html += '<button type="button" class="btn btn-default btnTime" data-value="8:30">8:30</button>';
