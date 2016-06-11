@@ -1014,13 +1014,13 @@ body {
     background: #3c5daa;
     z-index: 10000;
     display: none;
-    height: 475px;
+    height: 485px;
     width: 90%;
     text-align: justify;
     left: 20px;
     display: none;
     opacity: 0.95;
-    padding-top: 60px;
+    padding-top: 45px;
     color: #fff;
     padding: 17px 16px 0 16px;
     font-size: 13px;
