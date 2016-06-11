@@ -20,6 +20,7 @@ function initAutocomplete() {
 
         var polyline=window.location.search.match(/paths=([^\&]*)/g)[0].split("=")[1];
         var points=google.maps.geometry.encoding.decodePath(polyline);
+        
         if (points.length==2) {
             var fromAdd = getGeoCodedAddress(points[0],function(result){
 
@@ -379,6 +380,7 @@ var stage = 1;
 
 function setCarousel(){
 
+    /*
     jQuery(".item").eq(morningSlot).addClass("active");
     $('#mycarousel').carousel({
         interval: false,
@@ -397,6 +399,13 @@ function setCarousel(){
         else {
             $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
         }
+    });
+*/
+
+    $('.carousel-inner').slick({
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 3
     });
 
 // for every slide in carousel, copy the next slide's item in the slide.
@@ -439,24 +448,14 @@ function setCarousel(){
 
 function setCarousel2() {
 
-    jQuery(".item").eq(eveningSlot).addClass("active");
-    $('#mycarousel2').carousel({
-        interval: false
+    $('.carousel-inner').slick({
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        initialSlide:eveningSlot,
+        swipeToSlide:true
     });
-    $('#mycarousel2 .item').each(function () {
-        var next = $(this).next();
-        if (!next.length) {
-            next = $(this).siblings(':first');
-        }
-        next.children(':first-child').clone().appendTo($(this));
-
-        if (next.next().length > 0) {
-            next.next().children(':first-child').clone().appendTo($(this));
-        }
-        else {
-            $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
-        }
-    });
+    $('.carousel-inner')
 }
 
 
@@ -1234,8 +1233,8 @@ function switchScreen(scrno, obj){
              html += '<button type="button" class="btn btn-default btnTime" data-value="10:30">10:30</button>'; */
 
             html += '</div></div>';
-            html += '<a class="left carousel-control" href="#mycarousel" role="button" data-slide-to=0 onClick=carouselSlide(this,"previous",morningSlot) > <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
-            html += '<a class="right carousel-control" href="#mycarousel" role="button"  data-slide-to=0 onClick=carouselSlide(this,"next",morningSlot)> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span></a>';
+            //html += '<a class="left carousel-control" href="#mycarousel" role="button" data-slide-to=0 onClick=carouselSlide(this,"previous",morningSlot) > <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
+           // html += '<a class="right carousel-control" href="#mycarousel" role="button"  data-slide-to=0 onClick=carouselSlide(this,"next",morningSlot)> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span></a>';
             //	html += '</span>';
             //html += '<span class="btn btn-default rightbtn">&gt;</span>';
             html += '</div>';
@@ -1301,8 +1300,8 @@ function switchScreen(scrno, obj){
              */
 
             html += '</div></div>';
-            html += '<a class="left carousel-control" href="#mycarousel2" role="button" onClick=carouselSlide(this,"previous",eveningSlot) data-slide-to="0"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
-            html += '<a class="right carousel-control" href="#mycarousel2" role="button" onClick=carouselSlide(this,"next",eveningSlot) data-slide-to="0"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span></a>';
+        //    html += '<a class="left carousel-control" href="#mycarousel2" role="button" onClick=carouselSlide(this,"previous",eveningSlot) data-slide-to="0"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
+          //  html += '<a class="right carousel-control" href="#mycarousel2" role="button" onClick=carouselSlide(this,"next",eveningSlot) data-slide-to="0"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span></a>';
             //	html += '</span>';
             //html += '<span class="btn btn-default rightbtn">&gt;</span>';
             html += '</div>';

@@ -215,7 +215,63 @@ span.slots {
 .carousel{
     width: 100%;
     text-align: center;
-    margin: 10px 0;
+    margin: 10px 0px;
+    height: 70px;
+
+}
+.slick-prev, .slick-next {
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    top: 50%;
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    padding: 0;
+    cursor: pointer;
+    color: transparent;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+.slick-slide{
+
+    margin-right: 10px;
+}
+.slick-slider {
+    position: relative;
+    display: block;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+}
+.slick-next,.slick-prev {
+    background: #3eb6b5;
+    color: #fff;
+}
+.slick-prev:before, .slick-next:before {
+    font-family: 'slick';
+    font-size: 20px;
+    line-height: 1;
+    opacity: .75;
+    color: white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.slick-prev::before {
+    content: "←";
+}
+.slick-prev::before {
+    content: "←";
 }
 .carousel .leftbtn,
 .carousel .rightbtn{
@@ -239,7 +295,8 @@ span.slots {
 }
 .btnTime{
     min-width:20px;
-    width:38%;
+
+    width:82px;
     max-width:100px;
     float: left;
     margin: 0 2px;
@@ -715,7 +772,6 @@ div#pickup-drop{
 .secondary-blue {
     border-color: #3c5daa!important;
 }
-
 .bold {
     font-weight:600;
 }
@@ -843,9 +899,30 @@ body {
 }
 
 @media only screen and (min-device-width: 350px) {
-    .carousel-item-center {
-        margin-left: calc(50% - 150px);
-    }
+.carousel-inner{
+
+    width:100%;
+}
+}
+.slick-next::before {
+    content: "→";
+}
+.slick-next {
+    right: 0px;
+    top: 16px;
+}
+.slick-prev {
+    left: -1px;
+    top: 16px;
+}
+.slick-list{
+
+    width: 84%;
+    margin-left: 7% !important;
+}
+.slick-prev, .slick-next{
+
+    display:inline-block !important;
 }
 @media only screen and (min-device-width: 750px) {
     body {
@@ -859,7 +936,7 @@ body {
 @media only screen and (max-device-width: 350px) {
     .btnTime {
         font-size: 85%;
-        width:30%;
+
     }
     .daysLeft{
         font-size: 12px;
