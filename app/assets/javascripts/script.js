@@ -336,9 +336,14 @@ function initMap(response,type) {
                         info["duration"]=response.routes[0].legs[0].duration.value;
                         
                     }
-                    bounds.extend(new google.maps.LatLng(decodedPath[0].lat(),decodedPath[0].lng()));
-                    bounds.extend(new google.maps.LatLng(info.pick[origin_index]["lat"],info.pick[origin_index]["lng"]));
+                    if (type=="OTD") {
+                        bounds.extend(new google.maps.LatLng(decodedPath[0].lat(), decodedPath[0].lng()));
+                        bounds.extend(new google.maps.LatLng(info.pick[origin_index]["lat"], info.pick[origin_index]["lng"]));
+                    }else{
 
+                        bounds.extend(new google.maps.LatLng(decodedPath[decodedPath.length-1].lat(), decodedPath[decodedPath.length-1].lng()));
+                        bounds.extend(new google.maps.LatLng(decodedPath[decodedPath.length-2].lat(), decodedPath[decodedPath.length-2].lng()));
+                    }
                     map.fitBounds(bounds);
                 } else {
                     window.alert('Directions request failed due to ' + status);
