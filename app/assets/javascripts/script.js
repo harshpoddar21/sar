@@ -344,7 +344,8 @@ function initMap(response,type) {
                         bounds.extend(new google.maps.LatLng(decodedPath[decodedPath.length-1].lat(), decodedPath[decodedPath.length-1].lng()));
                         bounds.extend(new google.maps.LatLng(decodedPath[decodedPath.length-2].lat(), decodedPath[decodedPath.length-2].lng()));
                     }
-                    map.fitBounds(bounds);
+                    map.setZoom(15);
+                    
                 } else {
                     window.alert('Directions request failed due to ' + status);
                 }
