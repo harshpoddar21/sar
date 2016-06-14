@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'suggest/showRouteFoundFromSlots'
-get 'nps/submitNps'
+
+  get 'suggest/zoneCovered' =>"suggest#zoneCovered"
+  get 'nps/submitNps'
   root 'suggest#base'
 get 'payment/paymentDone'
   get 'payment/makePayment'

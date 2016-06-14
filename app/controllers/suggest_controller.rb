@@ -457,5 +457,12 @@ class SuggestController < ApplicationController
     render :text=>path
   end
 
+  def zoneCovered
+
+    i=0
+    i=i+1
+
+  end
+
 
 end

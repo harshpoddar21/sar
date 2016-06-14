@@ -1,0 +1,175 @@
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  #map {
+    height: 100%;
+  }
+</style>
+<div id="map"></div>
+<script>
+  var routes=[];
+  var route=[];
+  var suggestions=[];
+  <%
+RouteSuggest.all.each do |rs|
+ %>
+  route=[];
+  <%
+  lines=Polylines::Decoder.decode_polyline(rs.route_points)
+   lines.each do |line|
+   %>
+  route.push({lat:<%= line[0]%>,lng:<%= line[1]%>});
+  <%
+   end
+   %>
+  routes.push(route);
+   <%
+  end
+    %>
+  <%
+  CustomerSuggestion.all.each do |cust|
+    %>
+  suggestions.push({lat:<%= cust["from_lat"]%>,lng:<%= cust["from_lng"]%>});
+  <%
+  end
+  %>
+
+  // This example creates a simple polygon representing the Bermuda Triangle.
+
+  function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 10,
+      center: {lat: 28.886, lng: 78.76},
+      mapTypeId: google.maps.MapTypeId.TERRAIN
+    });
+
+    // Define the LatLng coordinates for the polygon's path.
+
+
+    // Construct the polygon.
+
+    routes_p=[];
+    routes_p1=[];
+    routes_p2=[];
+    for (var i = 0; i < routes.length; i++) {
+
+      var rout=[];
+      var rout2=[];
+      for (var j=0;j<routes[i].length-1;j++){
+        var perpendicular=findPerpendicularPoint(routes[i][j],(j<routes[i].length-1)?routes[i][j+1]:routes[i][j-1]);
+        rout[j]={lat:perpendicular[0],lng:perpendicular[1]};
+        rout[2*(routes[i].length-1)-1-j]={lat:perpendicular[2],lng:perpendicular[3]};
+        rout2.push({lat:perpendicular[2],lng:perpendicular[3]});
+       // rout[j]={lat:perpendicular[2],lng:perpendicular[3]};
+        //rout[2*routes[i].length-1-j]={lat:perpendicular[2],lng:perpendicular[3]};
+
+        /*
+         rectangle = new google.maps.Rectangle({
+          strokeColor: '#FF0000',
+          strokeOpacity: 0,
+          strokeWeight: 0,
+          fillColor: '#FF0000',
+          fillOpacity: 0.35,
+          map: map,
+          bounds: {
+            north: Math.min(perpendicular[0],perpendicular[2]),
+            south: Math.max(perpendicular[0],perpendicular[2]),
+            east: Math.max(perpendicular[1],perpendicular[2]),
+            west: Math.min(perpendicular[1],perpendicular[3])
+          }
+        });
+*/
+
+      }
+      routes_p1.push(rout);
+      routes_p2.push(rout2);
+    }
+for (var i=0;i<routes.length;i++) {
+
+  var bermudaTriangle = new google.maps.Polygon({
+    paths: routes_p1[i],
+    strokeColor: '#FF0000',
+    strokeOpacity: 0,
+    strokeWeight: 0,
+    fillColor: '#FF0000',
+    fillOpacity: 0.35,
+    map: map
+  });
+  var bermudaTriangle = new google.maps.Polyline({
+    path: routes[i],
+    strokeColor: '#00FF00',
+    strokeOpacity: 1,
+    zoom:10,
+    strokeWeight: 2000,
+    width:10000,
+    fillColor: '#00FF00',
+    fillOpacity: 1,
+    map: map
+  });
+
+}
+    for (var i=0;i<suggestions.length;i++) {
+      // Add the circle for this city to the map.
+      var cityCircle = new google.maps.Circle({
+        strokeColor: '#000000',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#000000',
+        fillOpacity: 0.35,
+        map: map,
+        center: suggestions[i],
+        radius: 30
+      });
+    }
+
+  }
+    function findPerpendicularPoint(a,b){
+      var x=a["lat"];
+      var y=a["lng"];
+      var x1=b["lat"];
+      var y1=b["lng"];
+
+      var distP=0.03;
+      var x3;
+      var y3;var x4;var y4;
+      var dx=x1-x;
+      var dy=y1-y;
+      var dist=Math.sqrt(dx*dx+dy*dy);
+      dx =dx/dist;
+      dy=dy/dist;
+      x3=x+distP*dy;
+      y3=y-distP*dx;
+      x4=x-distP*dy;
+      y4=y+distP*dx;
+      var sign=1;
+      if (dy/dx>0){
+
+        sign=0;
+      }
+      distance_real=Haversine(x,y,x3,y3);
+
+
+      return [x3,y3,x4,y4];
+
+    }
+  function Deg2Rad( deg ) {
+    return deg * Math.PI / 180;
+  }
+
+  function Haversine( lat1, lon1, lat2, lon2 )
+  {
+    var R = 6372.8;
+    var dLat = Deg2Rad(lat2-lat1);
+    var dLon = Deg2Rad(lon2-lon1);
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(Deg2Rad(lat1)) * Math.cos(Deg2Rad(lat2)) *
+        Math.sin(dLon/2) * Math.sin(dLon/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = R * c;
+    return d;
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2l0w6s0WszboqNqwFOIGPLKPgovaKnZk&amp;libraries=places,geometry&amp;callback=initMap" async="" defer=""></script>
