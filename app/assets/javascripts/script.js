@@ -334,6 +334,7 @@ function initMap(response,type) {
                     if (response.routes[0]!=null &&response.routes[0].legs[0]!=null && response.routes[0].legs[0].duration){
 
                         info["duration"]=response.routes[0].legs[0].duration.value;
+                        info["distance"]=response.routes[0].legs[0].distance.value;
                         
                     }
                     if (type=="OTD") {
@@ -1406,7 +1407,8 @@ function switchScreen(scrno, obj){
 		case 10:
 			var html = '<div class="col-md-12 text-center fullheight">';
             html += '<span class="headText headText4 text-center bold">Route summary</span>';
-			html += '<fieldset class="pay">';
+			html+='<div class="route_price_ticket" >Distance:<b>&nbsp;'+parseInt(info.distance/1000)+' KM</b>&nbsp;&nbsp;|&nbsp;&nbsp;One-Way Price:&nbsp;<b>Rs '+info.pricing[0][2]+'</b></div>';
+            html += '<fieldset class="pay">';
             html += '<div class="box-payment">';
 					html += '<div class="boxrow">';
 						html += '<span class="heading">Going To Work</span>';
@@ -1430,8 +1432,8 @@ function switchScreen(scrno, obj){
 			html += '</fieldset>';
             html += '<div class="headText headText4 text-center">Select a pass to travel on this route</div>';
             html += '<div class="item active">';
-            html += '<button type="button" class="shuttl-pass text-capitalize paynow btn btn-default col-xs-6 setHeight centerVertical centerHorizontal passtype_1" onclick="choosePass(1);" data-value="1">10 rides @ '+info.pricing[0]+'</button>';
-            html += '<button type="button" class="shuttl-pass text-capitalize paynow btn btn-default col-xs-6 setHeight centerVertical centerHorizontal passtype_2" onclick="choosePass(2);" data-value="2"><div>20 rides @ '+info.pricing[1]+'</div></button></div>';
+            html += '<button type="button" class="shuttl-pass text-capitalize paynow btn btn-default col-xs-6 setHeight centerVertical centerHorizontal passtype_1" onclick="choosePass(1);" data-value="1"><div>10 rides @ <span class="strike">'+info.pricing[0][0]+'</span><span class="offer_price">&nbsp;'+info.pricing[0][1]+'</span></div></button>';
+            html += '<button type="button" class="shuttl-pass text-capitalize paynow btn btn-default col-xs-6 setHeight centerVertical centerHorizontal passtype_2" onclick="choosePass(2);" data-value="2"><div>20 rides @ <span class="strike">'+info.pricing[1][0]+'</span><span class="offer_price">&nbsp;'+info.pricing[1][1]+'</span></div></button></div>';
             html += '<div class="passinf">For more info <a onclick="showRoutePass();">click here</a></div>';
             //html += '<span class="headText headText4 centerHorizontal payTM-click-to-pay"> Click to pay by </span>';
             html += '<div class="payTM-image row social">';

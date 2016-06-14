@@ -27,13 +27,13 @@ class Route
       route.name=routeFound.name
       route.id=routeFound.id
       if (routeType=="Live_route")
-        route.pricing=[500,4500]
+        route.pricing=[[500,490],[4500,4400]]
       else
         price=Price.where(:routeid=>route.id)
 
         route.pricing=Array.new
         price.each do |pri|
-          route.pricing.push pri.price
+          route.pricing.push [pri.price,pri.offer_price,pri.price_single]
         end
       end
 
@@ -399,7 +399,7 @@ class Route
     end
 
     pricing.each do |pri|
-      Price.create :routeid=>route.id,:price=>pri[0],:pass_type=>pri[1]
+      Price.create :routeid=>route.id,:price=>pri[0],:pass_type=>pri[3],:offer_price=>pri[1],:price_single=>pri[2]
     end
 
     return true,route

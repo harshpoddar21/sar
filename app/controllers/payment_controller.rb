@@ -161,7 +161,7 @@ class PaymentController < ApplicationController
         if priceSel==nil
           throw CustomError::ParamsException,"Invalid amount"
         else
-          @transaction.amount=priceSel.price
+          @transaction.amount=priceSel.offer_price
         end
       else
         if session["info"]["pass_type"]==1
@@ -171,7 +171,7 @@ class PaymentController < ApplicationController
         end
       end
 
-      if (phoneNumber=="8800846150" || phoneNumber=="8130737777")
+      if (phoneNumber=="8130737777")
         @transaction.amount=1
       end
 

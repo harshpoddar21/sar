@@ -1061,3 +1061,10 @@ body {
 
     font-weight:bolder;
 }
+.strike{
+
+    text-decoration: line-through;
+}
+.route_price_ticket{
+    font-size: 15px;color: #337ab7;
+}
