@@ -271,6 +271,7 @@ class SuggestController < ApplicationController
 
   def getWhatsAppShareLink
     url=params[:url]
+
     result=Hash.new
     result["whatsapp_url"]=BitlyUtils.shortenUrl url+"&utm_source=whatsapp"
     render :json=>result.to_json

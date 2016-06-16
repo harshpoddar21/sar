@@ -8,7 +8,7 @@ class Route
   ROUTE_DOES_NOT_EXISTS="route_does_not_exists"
   LIVE_ROUTE="Live_route"
   SUGGESTED_ROUTE="suggested_route"
-  ZONAL_WIDTH=50
+  ZONAL_WIDTH=30
   @@routeExistMap=Hash.new
   @@routeSuggestMap=Hash.new
 
