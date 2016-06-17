@@ -480,5 +480,22 @@ class SuggestController < ApplicationController
 
   end
 
+  def generateWhatsAppShareLinkForUser
+    url=params[:url]
+    phoneNumber=params[:phone_number]
+    source=Crypto::KeyGenerator.simpleEncryption phoneNumber
+    result=Hash.new
+    sign="?"
+    if  url.include? "?"
+      sign="&"
+    end
+    result["whatsapp_url"]=BitlyUtils.shortenUrl url+sign+"utm_source=link_share&sou="+source
+    render :text=>result["whatsapp_url"]
+  end
+
+  def sendSms
+    message=""
+  end
+
 
 end

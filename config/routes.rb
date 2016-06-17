@@ -14,6 +14,7 @@ post 'suggest/createRoute'
   get 'suggest/getFromTo'
   get 'suggest/getPath'
 
+  get 'suggest/generateWhatsAppShareLinkForUser'
   get 'suggest/getSlotsWithCoords'
   get 'suggest/sendOtp'
   get 'suggest/verifyOtp'
