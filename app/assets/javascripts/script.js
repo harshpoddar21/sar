@@ -744,8 +744,10 @@ function validateMobileInput(num){
 function onMobileVerified(num){
     
     info["is_mobile_verified"]=true;
-    
-    submitDataToServer();
+
+    if (stage==9) {
+        submitDataToServer();
+    }
     $('.loader').fadeOut();
     $('#phoneModal').modal('hide');
     refer.stage = stage;
@@ -1334,6 +1336,8 @@ function switchScreen(scrno, obj){
 
                 fillWhatsAppLink();
             }
+
+            submitDataToServer();
             break;
 
 
