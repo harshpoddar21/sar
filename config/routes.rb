@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'nps/submitNps'
   root 'suggest#base'
 get 'payment/paymentDone'
+  get 'suggest/sendSms'
   get 'payment/makePayment'
   post 'payment/makePayment'
 post 'suggest/createRoute'
