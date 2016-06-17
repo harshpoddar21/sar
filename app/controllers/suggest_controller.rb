@@ -496,7 +496,7 @@ class SuggestController < ApplicationController
   def sendSms
     message=params[:message]
     number=params[:number]
-    TelephonyManager.sendSms number,message
+    #TelephonyManager.sendSms number,message
     render :text=>"OK"
 
   end
