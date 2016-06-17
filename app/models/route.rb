@@ -26,8 +26,10 @@ class Route
       route.routePoints=routeFound.route_points
       route.name=routeFound.name
       route.id=routeFound.id
-      if (routeType=="Live_route")
-        route.pricing=[[500,490],[4500,4400]]
+      if routeType=="Live_route"
+        fare=getPriceForLiveRouteBetween origin,destination
+        route.pricing=[[fare*10,fare*10,fare]]
+
       else
         price=Price.where(:routeid=>route.id)
 
@@ -173,7 +175,7 @@ class Route
     totalCoords=Array.new
     delta_in_x=coord2[0]-coord1[0]
     delta_in_y=coord2[1]-coord1[1]
-    totalDistance=Location.distance(coord1,coord2)
+    totalDistance=LocationUtil.distance(coord1,coord2)
     (0..totalDistance.to_i).step(20) do |distance|
       coord=Hash.new
       coord["lat"]=coord1[0]+((distance.to_f/totalDistance)*delta_in_x)
@@ -241,15 +243,74 @@ class Route
     pointYO=((constant/slope**2)+constantO)/(1+1/slope**2)
     pointXD=(constantD-constant)/(slope-1/slope)
     pointYD=((constant/slope**2)+constantD)/(1+1/slope**2)
-    distanceOrigin=Location::distance(origin,[pointXO,pointYO])
-    distanceDestination=Location::distance destination,[pointXD,pointYD]
+    distanceOrigin=LocationUtil::distance(origin,[pointXO,pointYO])
+    distanceDestination=LocationUtil::distance destination,[pointXD,pointYD]
     return distanceOrigin,distanceDestination
   end
 
 
 
+def self.getPriceForLiveRouteBetween origin,destination
+  reqParams=Hash.new
+  reqParams["fromLat"]=origin[0]
+  reqParams["fromLng"]=origin[1]
+  reqParams["toLat"]=destination[0]
+  reqParams["toLng"]=destination[1]
+  reqParams["fromLocationName"]="something something"
+  reqParams["toLocationName"]="something something"
+  response=ConnectionManager.makePostHttpRequest "http://routesuggester.goplus.in/user/getRouteDetails",reqParams,nil,true
+  if (response==nil)
+    return nil,nil
+  end
+
+  response=JSON.parse response.body
+
+
+  if response["responseCode"]=="SUCCESS"
+    if response["routeDetailsMinResponseDTOList"]!=nil && response["routeDetailsMinResponseDTOList"].size>0 && response["routeDetailsMinResponseDTOList"][0]["fare"]>0
+      return response["routeDetailsMinResponseDTOList"][0]["fare"]
+    else
+      return nil,nil
+    end
+  else
+    return nil,nil
+  end
+
+end
+
 
   def self.getRouteLiveBetweenPoints(origin,destination)
+
+    reqParams=Hash.new
+    reqParams["fromLat"]=origin[0]
+    reqParams["fromLng"]=origin[1]
+    reqParams["toLat"]=destination[0]
+    reqParams["toLng"]=destination[1]
+    reqParams["fromLocationName"]="something something"
+    reqParams["toLocationName"]="something something"
+    response=ConnectionManager.makePostHttpRequest "http://routesuggester.goplus.in/user/getRouteDetails",reqParams,nil,true
+    if (response==nil)
+      return nil
+    end
+
+    response=JSON.parse response.body
+
+
+    if response["responseCode"]=="SUCCESS"
+      if response["routeDetailsMinResponseDTOList"]!=nil && response["routeDetailsMinResponseDTOList"].size>0 && response["routeDetailsMinResponseDTOList"][0]["fare"]>0
+        routeid=response["routeDetailsMinResponseDTOList"][0]["sessions"][0]["routeId"]
+        if routeid==578 || routeid==586
+          return nil
+        end
+        return RouteExist.find_by(:id=>routeid)
+      else
+        return nil
+      end
+    else
+      return nil
+    end
+
+
     possibleOriginRoutes=Hash.new
     possibleDestinationRoutes=Hash.new
 
@@ -318,8 +379,8 @@ class Route
             if possibleOriginRoutes[key]==nil
               possibleOriginRoutes[key]=Array.new
             end
-            if distance[key]==nil || distance[key]>Location.distance(origin,originC)
-            distance[key]=Location.distance(origin,originC)
+            if distance[key]==nil || distance[key]>LocationUtil.distance(origin,originC)
+            distance[key]=LocationUtil.distance(origin,originC)
             end
             possibleOriginRoutes[key]=possibleOriginRoutes[key]+value
           end

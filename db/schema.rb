@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160614074641) do
+ActiveRecord::Schema.define(version: 20160616115542) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -194,6 +194,7 @@ ActiveRecord::Schema.define(version: 20160614074641) do
     t.text     "comment",      limit: 65535
     t.text     "route_type",   limit: 65535
     t.integer  "routeid",      limit: 4
+    t.text     "referred_by",  limit: 65535
   end
 
 end

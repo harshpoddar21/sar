@@ -272,10 +272,10 @@ span.slots {
     -moz-osx-font-smoothing: grayscale;
 }
 .slick-prev::before {
-    content: "←";
+    content: "â†";
 }
 .slick-prev::before {
-    content: "←";
+    content: "â†";
 }
 .carousel .leftbtn,
 .carousel .rightbtn{
@@ -650,6 +650,7 @@ span.highlight.lesshighlight {
 .container_fluid {
     height:100%;
     margin-top:-5px;
+    overflow: scroll;
 }
 
 .inline {
@@ -791,7 +792,7 @@ body {
     color:#333333!important;
     height: 100%;
     margin: 0 auto;
-
+    overflow-y: hidden;
 }
 
 
@@ -909,13 +910,13 @@ body {
 }
 
 @media only screen and (min-device-width: 350px) {
-.carousel-inner{
+    .carousel-inner{
 
-    width:100%;
-}
+        width:100%;
+    }
 }
 .slick-next::before {
-    content: "→";
+    content: "â†’";
 }
 .slick-next {
     right: 0px;
@@ -1019,7 +1020,7 @@ body {
     }
     .slide-left{
         display: none !important;
-}
+    }
     .slide-right {
         display: none !important;
     }
@@ -1044,13 +1045,11 @@ body {
     padding-top: 45px;
     color: #fff;
     padding: 17px 16px 0 16px;
-    font-size: 13px;
     border: 1px solid black;
 
 }
 .shuttl_pass_info h2{
 
-    margin-bottom: 26px;
     text-align: center;
 }
 .shuttl_pass_info>ul{

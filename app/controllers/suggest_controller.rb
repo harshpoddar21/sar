@@ -42,6 +42,9 @@ class SuggestController < ApplicationController
        result["points"]=route.routePoints
       if (route.routeType==Route::SUGGESTED_ROUTE)
         result["pick"]=PickUp.where(:routeid=>route.id)
+      elsif route.routeType==Route::LIVE_ROUTE
+        result["pick"]=Slot.where(:routeid=>route.id).joins("join locations on slots.locationid=locations.id").select("slots.*,locations.lat,locations.lng,locations.name")
+
       end
 
     else
@@ -124,12 +127,23 @@ class SuggestController < ApplicationController
     pushSubStatus=data["pushSubscriptionStatus"]
 
     subId=data["subscriberID"]
-    from_mode=data["commutework"].join(",")
-    to_mode=data["commutework"].join(",")
-    from_time=data["reachwork"].join(",")
-    to_time=data["leavework"].join(",")
-    route_type=1
+    from_mode=""
+    to_mode=""
+    from_time=""
+    to_time=""
+    from_mode=data["commutework"].join(",") if data["commutework"]!=nil
+    to_mode=data["commutework"].join(",") if data["commutework"]!=nil
+    from_time=data["reachwork"].join(",") if data["reachwork"]!=nil
+    to_time=data["leavework"].join(",")  if data["leavework"]!=nil
     routeid=0
+    if data["route_type"]==Route::ROUTE_DOES_NOT_EXISTS
+     route_type=1
+     routeid=0
+    else
+      route_type=data["route_type"]==Route::LIVE_ROUTE ? 2:3
+      routeid=data["routeid"].to_i
+    end
+
     if customer_number!=nil && from_lat!=nil && to_lat!=nil && from_lng!=nil  && to_lng!=nil && from_mode!=nil && to_mode!=nil && from_time!=nil && to_time!=nil && from_str!=nil && to_str!=nil
 
       suggestion=CustomerSuggestion.new
@@ -151,7 +165,7 @@ class SuggestController < ApplicationController
       suggestion.route_type=route_type
       suggestion.routeid=routeid
       suggestion.save
-      if (routeid>0)
+      if routeid>0 && false
       from_time.split(",").each do |timeslot|
 
         summ=RouteSuggestionAndLiveSummary.where(:routid=>routeid).where(:timeslot=>timeslot.to_i).where(:route_type=>route_type)
@@ -271,9 +285,10 @@ class SuggestController < ApplicationController
 
   def getWhatsAppShareLink
     url=params[:url]
-
+    phoneNumber=params[:phone_number]
+    source=Crypto::KeyGenerator.simpleEncryption phoneNumber
     result=Hash.new
-    result["whatsapp_url"]=BitlyUtils.shortenUrl url+"&utm_source=whatsapp"
+    result["whatsapp_url"]=BitlyUtils.shortenUrl url+"&utm_source=whatsapp&sou="+source
     render :json=>result.to_json
 
   end

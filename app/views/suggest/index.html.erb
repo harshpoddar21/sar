@@ -27,7 +27,11 @@
     <script>
       jQuery.ajax({url:"/suggest/getInfo"}).done(function(response){
 
-        info=response;
+        var info_n=response;
+        for (var k in info_n){
+
+          info[k]=info_n[k];
+        }
         if (info["payment_status"]==1){
 
           changeToStage(12);

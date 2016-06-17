@@ -154,7 +154,9 @@ class PaymentController < ApplicationController
       @transaction.phone_number=phoneNumber
       @transaction.routeid=session["info"]["routeid"]
       @transaction.route_type=session["info"]["route_type"]
-
+      if session["info"]["referred_by"]!=nil
+        @transaction.referred_by=Crypto::KeyGenerator.simpleDecryption session["info"]["referred_by"]
+      end
       @transaction.status=0
       if session["info"]["route_type"]==Route::SUGGESTED_ROUTE
         priceSel=Price.where(:routeid=>session["info"]["routeid"]).where("pass_type"=>session["info"]["pass_type"]).last
@@ -171,7 +173,7 @@ class PaymentController < ApplicationController
         end
       end
 
-      if (phoneNumber=="8130737777")
+      if phoneNumber=="8800846150"
         @transaction.amount=1
       end
 
@@ -254,14 +256,14 @@ class PaymentController < ApplicationController
        if session["info"]!=nil
        session["info"][PAYMENT_KEY]=PAYMENT_SUCCESS
        end
-
+       TelephonyManager.sendSms transaction.phone_number,"Hey Shuttlr! We have received your payment of Rs #{transaction.amount}. We will contact you when the route is live. Your money will be refunded in case the route is not live in 30 days."
       else
         transaction.comments=params1.to_json
         transaction.save
         if session["info"]!=nil
         session["info"][PAYMENT_KEY]=PAYMENT_FAILED
         end
-       TelephonyManager.sendSms transaction.phone_number,"Hey Shuttlr! We have received your payment of Rs #{transaction.amount}. We will contact you when the route is live. Your money will be refunded in case the route is not live in 30 days."
+
       end
     else
       render :text=>"Something bad has happended.Please try again"

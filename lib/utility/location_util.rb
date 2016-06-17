@@ -1,4 +1,4 @@
-module Location
+module LocationUtil
   def self.distance loc1, loc2
     rad_per_deg = Math::PI/180  # PI / 180
     rkm = 6371                  # Earth radius in kilometers
