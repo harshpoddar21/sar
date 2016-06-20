@@ -1296,9 +1296,14 @@ function switchScreen(scrno, obj){
             var eSlots = '';
 
             if (!(navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1)) {
-            info.pushSubscriptionStatus = window.Notification.permission;
-            ga('send', 'event', 'chromeNotificationStatus',window.Notification.permission);
-            }else{
+                if (window.Notification) {
+                    info.pushSubscriptionStatus = window.Notification.permission;
+                    ga('send', 'event', 'chromeNotificationStatus', window.Notification.permission);
+                }else{
+
+                    info.pushSubscriptionStatus="weird_browser";
+                }
+                }else{
 
                 info.pushSubscriptionStatus="safari_notpresent";
             }
