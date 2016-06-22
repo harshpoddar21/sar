@@ -272,10 +272,10 @@ span.slots {
     -moz-osx-font-smoothing: grayscale;
 }
 .slick-prev::before {
-    content: "←";
+    content: "â†";
 }
 .slick-prev::before {
-    content: "←";
+    content: "â†";
 }
 .carousel .leftbtn,
 .carousel .rightbtn{
@@ -580,6 +580,7 @@ span.highlight.lesshighlight {
     display:none;
 
 }
+
 
 .centered {
     text-align: center;
@@ -912,13 +913,13 @@ body {
 }
 
 @media only screen and (min-device-width: 350px) {
-.carousel-inner{
+    .carousel-inner{
 
-    width:100%;
-}
+        width:100%;
+    }
 }
 .slick-next::before {
-    content: "→";
+    content: "â†’";
 }
 .slick-next {
     right: 0px;
@@ -1022,7 +1023,7 @@ body {
     }
     .slide-left{
         display: none !important;
-}
+    }
     .slide-right {
         display: none !important;
     }
@@ -1115,9 +1116,11 @@ body {
 }
 
 @media only screen and (orientation: landscape) {
-
+    .not-int {
+        display: none;
+    }
     .notInterested {
-        display: none !important;
+        display: none;
     }
 }
 

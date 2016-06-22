@@ -1,4 +1,5 @@
-/* google auto suggestor */
+/* google auto suggester */
+
 var px = 0;
 var refer = {};
 var info = {};
@@ -18,22 +19,11 @@ var duration;
 
 var triedOnceAuto=false;
 function initAutocomplete() {
-
-
-    if (window.location.search!="" && window.location.search.match(/sou=[^\&^\#]*/g)!=null && window.location.search.match(/sou=[^\&^\#]*/g)[0].split("=")[1]!=""){
-
-        jQuery(document).ready(function(){
-
-            info["referred_by"]=window.location.search.match(/sou=[^\&^\#]*/g)[0].split("=")[1];         
-        });
-   
-    }
-
     if ((window.location.search!="" && window.location.search.match(/paths=([^\&]*)/g)!=null && window.location.search.match(/paths=([^\&]*)/g).length>0 && window.location.search.match(/paths=([^\&]*)/g)[0].split("=")[1]!="")){
 
         var polyline=window.location.search.match(/paths=([^\&]*)/g)[0].split("=")[1];
         var points=google.maps.geometry.encoding.decodePath(polyline);
-        
+
         if (points.length==2) {
             var fromAdd = getGeoCodedAddress(points[0],function(result){
 
@@ -74,9 +64,9 @@ function initAutocomplete() {
                 }
             });
 
-            
+
         }
-        
+
 
     }
     if( (document.getElementById('officeLocation') != null) && (document.getElementById('homeLocation') != null) ){
@@ -118,146 +108,146 @@ function initAutocomplete() {
 
         });
 
-        
+
+
+        function createRoute() {
+            $('.bounce').show();
+            var poly = new google.maps.Polyline({
+                strokeColor: '#000000',
+                strokeOpacity: 1,
+                strokeWeight: 3
+            });
+            var path=poly.getPath();
+            path.push(new google.maps.LatLng(info.homelat,info.homelng));
+            path.push(new google.maps.LatLng(info.officelat,info.officelng));
+            var encodedPoints=google.maps.geometry.encoding.encodePath(path);
+
+            showLoader();
+            $.ajax({
+                url:'http://bus2work.in/suggest/getSlots?path='+encodedPoints
+            }).done(function(response){
+                responseJson = response;
+                hideLoader();
+                if(response.route_type == 'Live_route' || response.route_type == 'suggested_route'){
+                    var slot = response.slots;
+                    info.route_type=response.route_type;
+                    info.routeid=response.route_id;
+                    info.pricing=response.pricing;
+                    info.pick=response.pick;
+                    slots_final=response.slots;
+                    for (var i=0;i<slots_final.length;i++){
+
+                        if (slots_final[i]>19*60){
+
+                            eveningSlot=i;
+                            break;
+                        }
+                    }
+                    info.pricing=response.pricing;
+                    $.each(slot, function(key, value){
+                        var time = formatSectoIST(value*60);
+                        if (time.indexOf("AM")!="-1") {
+                            slotBtnsM += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="' + time + '">' + time + '<span style="display:none;" class="live">(live)</span></button></div>';
+                        }else{
+
+                            slotBtnsE += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="' + time + '">' + time + '<span style="display:none;" class="live">(live)</span></button></div>';
+                        }
+                    });
+                    stage = 8;
+                    window.location.hash = 'stage'+stage;
+                    var handle = $('.screenWrapper').find('.screen');
+                    var px = $(handle).outerHeight();
+                    var newHandle = createScreenBox(handle, 'after', px);
+                    setHeight();
+                    $(handle).css('top','-'+px+'px')
+                    setTimeout(function(){
+                        $(newHandle).css('top','0');
+                    },0);
+                    setTimeout(function(){
+                        $(handle).remove();
+                    },300);
+                }else{
+                    $('.downArr .fa-angle-double-down').trigger('click');
+                }
+            })
+        }
 
     }
-}
-
-function createRoute() {
-    $('.bounce').show();
-    var poly = new google.maps.Polyline({
-        strokeColor: '#000000',
-        strokeOpacity: 1,
-        strokeWeight: 3
-    });
-    var path=poly.getPath();
-    path.push(new google.maps.LatLng(info.homelat,info.homelng));
-    path.push(new google.maps.LatLng(info.officelat,info.officelng));
-    var encodedPoints=google.maps.geometry.encoding.encodePath(path);
-
-    showLoader();
-    $.ajax({
-        url:'getSlots?path='+encodedPoints
-    }).done(function(response){
-        responseJson = response;
-        hideLoader();
-        if(response.route_type == 'Live_route' || response.route_type == 'suggested_route'){
-            var slot = response.slots;
-            info.route_type=response.route_type;
-            info.routeid=response.route_id;
-            info.pricing=response.pricing;
-            info.pick=response.pick;
-            slots_final=response.slots;
-            for (var i=0;i<slots_final.length;i++){
-
-                if (slots_final[i]>19*60){
-
-                    eveningSlot=i;
-                    break;
-                }
-            }
-            info.pricing=response.pricing;
-            $.each(slot, function(key, value){
-                var time = formatSectoIST(value*60);
-                if (time.indexOf("AM")!="-1") {
-                    slotBtnsM += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="' + time + '">' + time + '<span style="display:none;" class="live">(live)</span></button></div>';
-                }else{
-
-                    slotBtnsE += '<div class="item"><button type="button" class=" btn btn-default btnTime" data-value="' + time + '">' + time + '<span style="display:none;" class="live">(live)</span></button></div>';
-                }
-            });
-            stage = 8;
-            window.location.hash = 'stage'+stage;
-            var handle = $('.screenWrapper').find('.screen');
-            var px = $(handle).outerHeight();
-            var newHandle = createScreenBox(handle, 'after', px);
-            setHeight();
-            $(handle).css('top','-'+px+'px')
-            setTimeout(function(){
-                $(newHandle).css('top','0');
-            },0);
-            setTimeout(function(){
-                $(handle).remove();
-            },300);
-        }else{
-            $('.downArr .fa-angle-double-down').trigger('click');
-        }
-    })
 }
 /* google auto suggestor */
 
 function Deg2Rad( deg ) {
-   return deg * Math.PI / 180;
+    return deg * Math.PI / 180;
 }
 
 function Haversine( lat1, lon1, lat2, lon2 )
 {
-	var R = 6372.8;
-	var dLat = Deg2Rad(lat2-lat1);  
-	var dLon = Deg2Rad(lon2-lon1);  
-	var a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
-			Math.cos(Deg2Rad(lat1)) * Math.cos(Deg2Rad(lat2)) * 
-			Math.sin(dLon/2) * Math.sin(dLon/2);  
-	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-	var d = R * c; 
-	return d;
+    var R = 6372.8;
+    var dLat = Deg2Rad(lat2-lat1);
+    var dLon = Deg2Rad(lon2-lon1);
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(Deg2Rad(lat1)) * Math.cos(Deg2Rad(lat2)) *
+        Math.sin(dLon/2) * Math.sin(dLon/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = R * c;
+    return d;
 }
 var closest = 0;
 var mindist = 99999;
 $(window).resize(function(){
-	if($('#gMap').length){
-		initMap(responseJson,"OTD");
-	}
+    if($('#gMap').length){
+        initMap(responseJson,"OTD");
+    }
 });
 function initMap(response,type) {
-	$('#gMap').html('');
-	var wpx = $('.screen .col-md-12').width();
-	var hpx = $('.screen').height()/2.5+0;
-	$('#gMap').css({'width':wpx+'px', 'height':hpx+'px'});
+    $('#gMap').html('');
+    var wpx = $('.screen .col-md-12').width();
+    var hpx = $('.screen').height()/2.5+0;
+    $('#gMap').css({'width':wpx+'px', 'height':hpx+'px'});
 
     map = new google.maps.Map(document.getElementById('gMap'), {
         zoomControl: false,
         zoom:1,
-		mapTypeControl: false,
-		streetViewControl: false
-	});
+        mapTypeControl: false,
+        streetViewControl: false
+    });
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(
         FullScreenControl(map, "Full screen",
             "Exit full screen"));
 
-	var origin = new google.maps.Marker({
-		position: {lat: response.origin.lat, lng: response.origin.lng},
-		map: map,
-		icon: '/images/home.png'
-	});
-	
-	var destination = new google.maps.Marker({
-		position: {lat: response.destination.lat, lng: response.destination.lng},
-		map: map,
-		icon: '/images/office.png'
-	});
-	
-	var decodedPath = google.maps.geometry.encoding.decodePath(response.points);
-	bounds = new google.maps.LatLngBounds();
+    var origin = new google.maps.Marker({
+        position: {lat: response.origin.lat, lng: response.origin.lng},
+        map: map,
+        icon: '/images/home.png'
+    });
+
+    var destination = new google.maps.Marker({
+        position: {lat: response.destination.lat, lng: response.destination.lng},
+        map: map,
+        icon: '/images/office.png'
+    });
+
+    var decodedPath = google.maps.geometry.encoding.decodePath(response.points);
+    bounds = new google.maps.LatLngBounds();
 
 
-	$.each(decodedPath, function(key, value){
-		var position = new google.maps.LatLng(decodedPath[key].lat(), decodedPath[key].lng());
+    $.each(decodedPath, function(key, value){
+        var position = new google.maps.LatLng(decodedPath[key].lat(), decodedPath[key].lng());
 
 
-		var dist;
-		if(fw){
-			dist = Haversine( decodedPath[key].lat(), decodedPath[key].lng(), response.origin.lat, response.origin.lng );
-		}else{
-			dist = Haversine( decodedPath[key].lat(), decodedPath[key].lng(), response.destination.lat, response.destination.lng );
-		}
+        var dist;
+        if(fw){
+            dist = Haversine( decodedPath[key].lat(), decodedPath[key].lng(), response.origin.lat, response.origin.lng );
+        }else{
+            dist = Haversine( decodedPath[key].lat(), decodedPath[key].lng(), response.destination.lat, response.destination.lng );
+        }
 
-		if ( dist < mindist )
-		{
-			closest = key;
-			mindist = dist;
-		}
-	});
+        if ( dist < mindist )
+        {
+            closest = key;
+            mindist = dist;
+        }
+    });
 
 
     if (info["pick"]!=null && info.pick.length>0){
@@ -267,25 +257,25 @@ function initMap(response,type) {
         for (var i=0;i<info.pick.length;i++){
 
             if (Haversine(info.pick[i]["lat"],info.pick[i]["lng"],info.homelat,info.homelng)<min_dis){
-                
+
                 origin_index=i;
                 min_dis=Haversine(info.pick[i]["lat"],info.pick[i]["lng"],info.homelat,info.homelng);
-                
+
             }
         }
         /*
-        setTimeout(function () {
-            var bounds1=new google.maps.LatLngBounds();
-            bounds1.extend(new google.maps.LatLng(decodedPath[origin_index].lat(),decodedPath[origin_index].lng()));
-            bounds1.extend(new google.maps.LatLng(decodedPath[decodedPath.length-origin_index>3?origin_index+2:decodedPath.length-1].lat(),decodedPath[decodedPath.length-origin_index>3?origin_index+2:decodedPath.length-1].lng()));
+         setTimeout(function () {
+         var bounds1=new google.maps.LatLngBounds();
+         bounds1.extend(new google.maps.LatLng(decodedPath[origin_index].lat(),decodedPath[origin_index].lng()));
+         bounds1.extend(new google.maps.LatLng(decodedPath[decodedPath.length-origin_index>3?origin_index+2:decodedPath.length-1].lat(),decodedPath[decodedPath.length-origin_index>3?origin_index+2:decodedPath.length-1].lng()));
 
-            map.fitBounds(bounds1);
-        },2000);
-        */
+         map.fitBounds(bounds1);
+         },2000);
+         */
     }
     var latlng=null;
     if (info.pick==null || info.pick.length==0) {
-         latlng = new google.maps.LatLng(decodedPath[0].lat(), decodedPath[0].lng());
+        latlng = new google.maps.LatLng(decodedPath[0].lat(), decodedPath[0].lng());
     }else{
 
         latlng = new google.maps.LatLng(info.pick[origin_index]["lat"], info.pick[origin_index]["lng"]);
@@ -296,47 +286,47 @@ function initMap(response,type) {
     }
 
     /*
-	var marker2 = new google.maps.Marker( { 
-		position: latlng,     
-		map: map,      
-        title: Math.round(Number(mindist)*1000*0.00944) + " min walk", // 0.0105787 is the time in minutes to walk a meter
-		icon: '/images/bus-stop.png'
-	});
-*/
+     var marker2 = new google.maps.Marker( { 
+     position: latlng,     
+     map: map,      
+     title: Math.round(Number(mindist)*1000*0.00944) + " min walk", // 0.0105787 is the time in minutes to walk a meter
+     icon: '/images/bus-stop.png'
+     });
+     */
     var contentString = Math.round(Number(mindist)*1000*0.009944) + " min walk";    // HTML text to display in the InfoWindow
-	/*
-    var infowindow = new google.maps.InfoWindow( { content: contentString } );  
-	infowindow.open( map, marker2 );
-	
-	google.maps.event.addListener( marker2, 'click', function() { infowindow.open( map, marker2 ); });
-*/
-	
-	var directionsService = new google.maps.DirectionsService;
+    /*
+     var infowindow = new google.maps.InfoWindow( { content: contentString } );  
+     infowindow.open( map, marker2 );
+
+     google.maps.event.addListener( marker2, 'click', function() { infowindow.open( map, marker2 ); });
+     */
+
+    var directionsService = new google.maps.DirectionsService;
 
     var directionsService1 = new google.maps.DirectionsService;
-	var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
-	directionsDisplay.setMap(map);
-	
-	var originPts;
-	if(type=="OTD"){
-		originPts = new google.maps.LatLng(info.homelat,info.homelng);
-	}else{
-		originPts =new google.maps.LatLng(info.officelat,info.officelng);
-        
-	}
+    var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
+    directionsDisplay.setMap(map);
+
+    var originPts;
+    if(type=="OTD"){
+        originPts = new google.maps.LatLng(info.homelat,info.homelng);
+    }else{
+        originPts =new google.maps.LatLng(info.officelat,info.officelng);
+
+    }
     var destinationPts;
     if(type=="OTD"){
         destinationPts = new google.maps.LatLng(info.officelat,info.officelng);
     }else{
         destinationPts = new google.maps.LatLng(info.homelat,info.homelng);
     }
-	directionsService.route({
-		origin: originPts,
-		destination: latlng,
-		travelMode: google.maps.TravelMode.WALKING
-	}, function(response, status) {
-		if (status === google.maps.DirectionsStatus.OK) {
-			directionsDisplay.setDirections(response);
+    directionsService.route({
+        origin: originPts,
+        destination: latlng,
+        travelMode: google.maps.TravelMode.WALKING
+    }, function(response, status) {
+        if (status === google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
 
             directionsService1.route({
                 origin: latlng,
@@ -348,7 +338,7 @@ function initMap(response,type) {
 
                         info["duration"]=response.routes[0].legs[0].duration.value;
                         info["distance"]=response.routes[0].legs[0].distance.value;
-                        
+
                     }
                     if (type=="OTD") {
                         bounds.extend(new google.maps.LatLng(decodedPath[0].lat(), decodedPath[0].lng()));
@@ -359,25 +349,25 @@ function initMap(response,type) {
                         bounds.extend(new google.maps.LatLng(decodedPath[decodedPath.length-2].lat(), decodedPath[decodedPath.length-2].lng()));
                     }
                     map.setZoom(15);
-                    
+
                 } else {
                     window.alert('Directions request failed due to ' + status);
                 }
             });
-		} else {
-			window.alert('Directions request failed due to ' + status);
-		}
-	});
-    
-	var setRegion = new google.maps.Polyline({
-		path: decodedPath,
-		strokeColor: "#0090ff",
+        } else {
+            window.alert('Directions request failed due to ' + status);
+        }
+    });
+
+    var setRegion = new google.maps.Polyline({
+        path: decodedPath,
+        strokeColor: "#0090ff",
         strokeOpacity: 1.0,
         fillColor: '#4cb1ff',
         fillOpacity: 1,
-		strokeWeight: 5,
-		map: map
-	});
+        strokeWeight: 5,
+        map: map
+    });
     var cityCircle=[];
     for (var i=0;i<info.pick.length;i++) {
 
@@ -457,26 +447,26 @@ var stage = 1;
 function setCarousel(){
 
     /*
-    jQuery(".item").eq(morningSlot).addClass("active");
-    $('#mycarousel').carousel({
-        interval: false,
-        wrap: false
-    });
-    $('#mycarousel .item').each(function(){
-        var next = $(this).next();
-        if (!next.length) {
-            next = $(this).siblings(':first');
-        }
-        next.children(':first-child').clone().appendTo($(this));
+     jQuery(".item").eq(morningSlot).addClass("active");
+     $('#mycarousel').carousel({
+     interval: false,
+     wrap: false
+     });
+     $('#mycarousel .item').each(function(){
+     var next = $(this).next();
+     if (!next.length) {
+     next = $(this).siblings(':first');
+     }
+     next.children(':first-child').clone().appendTo($(this));
 
-        if (next.next().length>0) {
-            next.next().children(':first-child').clone().appendTo($(this));
-        }
-        else {
-            $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
-        }
-    });
-*/
+     if (next.next().length>0) {
+     next.next().children(':first-child').clone().appendTo($(this));
+     }
+     else {
+     $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
+     }
+     });
+     */
 
     $('.carousel-inner').slick({
         infinite: true,
@@ -487,39 +477,39 @@ function setCarousel(){
 // for every slide in carousel, copy the next slide's item in the slide.
 // Do the same for the next, next item.
     /*
-	var wd = $('.carousel').width();
-	var wd2 = 2*($('.leftbtn')[0].offsetWidth);
-	wd = wd-wd2-10;
-	var bw = $('.btnTime').length*104;
-	if(wd > bw){
-		wd = bw;
-	}
-	$('.btnsWrapper').css('width', wd+'px');
-	$('.btnsWrapper .btns').css('width', bw+'px');
-	
-	$('.leftbtn').on('click', function(){
-		var btw = ($('.btnsWrapper .btns').width()/2)-104;
-		var lt = $('.btnsWrapper .btns').css('left');
-		lt = lt.replace('px','');
-		lt = Number(lt);
-		lt = lt-(104);
-		console.log(lt,btw);
-		if(Math.abs(lt) <= btw){
-			$('.btnsWrapper .btns').css('left', lt+'px');
-		}
-	});
+     var wd = $('.carousel').width();
+     var wd2 = 2*($('.leftbtn')[0].offsetWidth);
+     wd = wd-wd2-10;
+     var bw = $('.btnTime').length*104;
+     if(wd > bw){
+     wd = bw;
+     }
+     $('.btnsWrapper').css('width', wd+'px');
+     $('.btnsWrapper .btns').css('width', bw+'px');
 
-	$('.rightbtn').on('click', function(){
-		var lt = $('.btnsWrapper .btns').css('left');
-		lt = lt.replace('px','');
-		lt = Number(lt);
-		lt = lt+(104);
-		var wd = ($('.btnsWrapper .btns')[0].offsetWidth);
-		if(lt <= 0){
-			$('.btnsWrapper .btns').css('left', lt+'px');
-		}
-	});
-	*/
+     $('.leftbtn').on('click', function(){
+     var btw = ($('.btnsWrapper .btns').width()/2)-104;
+     var lt = $('.btnsWrapper .btns').css('left');
+     lt = lt.replace('px','');
+     lt = Number(lt);
+     lt = lt-(104);
+     console.log(lt,btw);
+     if(Math.abs(lt) <= btw){
+     $('.btnsWrapper .btns').css('left', lt+'px');
+     }
+     });
+
+     $('.rightbtn').on('click', function(){
+     var lt = $('.btnsWrapper .btns').css('left');
+     lt = lt.replace('px','');
+     lt = Number(lt);
+     lt = lt+(104);
+     var wd = ($('.btnsWrapper .btns')[0].offsetWidth);
+     if(lt <= 0){
+     $('.btnsWrapper .btns').css('left', lt+'px');
+     }
+     });
+     */
 }
 
 function setCarousel2() {
@@ -543,20 +533,20 @@ function hideAddressBar(){
 }
 
 window.addEventListener("load",function() {
-	// Set a timeout...
-	setTimeout(function(){
-		// Hide the address bar!
-		window.scrollTo(0, 1);
-	}, 0);
+    // Set a timeout...
+    setTimeout(function(){
+        // Hide the address bar!
+        window.scrollTo(0, 1);
+    }, 0);
 });
 
 $(function() {
-	//screenHeight = screen.availHeight-50;
-	screenHeight = window.innerHeight;
-	var height = $('.header')[0].offsetHeight;
-	screenHeight = screenHeight-height;
-	setHeight();
-	$('.screenWrapper').css('height', screenHeight+'px');
+    //screenHeight = screen.availHeight-50;
+    screenHeight = window.innerHeight;
+    var height = $('.header')[0].offsetHeight;
+    screenHeight = screenHeight-height;
+    setHeight();
+    $('.screenWrapper').css('height', screenHeight+'px');
 });
 
 function setHeight(){
@@ -591,13 +581,13 @@ function nextPrevVlickEvents(){
             }
             if (info.route_type=="Live_route"){
                 
-                changeToStage(6);
-                return;
+            changeToStage(6);
+            return;
             }else{
                 
                 changeToStage(10);
                 return;
-            }
+        }
         }
 
         refer.stage = stage;
@@ -656,12 +646,12 @@ function validatePhone(){
         $('.loader').fadeIn();
         showLoader();
         $.ajax({
-                url : 'sendOtp?phoneNumber='+inputtxt,
-                type : 'GET',
-                dataType : 'json',
-                contentType : "application/json; charset=utf-8",
-                header : 'x-requested-with'
-            })
+            url : 'sendOtp?phoneNumber='+inputtxt,
+            type : 'GET',
+            dataType : 'json',
+            contentType : "application/json; charset=utf-8",
+            header : 'x-requested-with'
+        })
             .done(function(result){
 
                 hideLoader();
@@ -690,12 +680,12 @@ function validateMobileInput(num){
 
     info.phone_number=num;
     $.ajax({
-            url : 'verifyPhoneCall?phone_number='+num+"&try="+tries,
-            type : 'GET',
-            dataType : 'json',
-            contentType : "application/json; charset=utf-8",
-            header : 'x-requested-with'
-        })
+        url : 'verifyPhoneCall?phone_number='+num+"&try="+tries,
+        type : 'GET',
+        dataType : 'json',
+        contentType : "application/json; charset=utf-8",
+        header : 'x-requested-with'
+    })
         .done(function(result){
             if(result.success){
                 if (result.is_done==0 && tries<50){
@@ -717,11 +707,11 @@ function validateMobileInput(num){
                     }
 
                 }else if (stage==10){
-                    
+
                     if (paymentFlow==1) {
-                    onForPaymentMobileVerified();
+                        onForPaymentMobileVerified();
                     }
-                    
+
                 }else if (stage==11){
 
 
@@ -742,7 +732,7 @@ function validateMobileInput(num){
 }
 
 function onMobileVerified(num){
-    
+
     info["is_mobile_verified"]=true;
 
     if (stage==9) {
@@ -752,7 +742,6 @@ function onMobileVerified(num){
     $('#phoneModal').modal('hide');
     refer.stage = stage;
     refer.click = 'down';
-    
     if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1){
     //removing notification process if its iphone
         if (stage==9){
@@ -827,21 +816,21 @@ function onMobileVerified(num){
 }
 
 function notInterested(){
-	$('.bounce, .bouncebtn').on('click', function(){
-		stage = 14;
-		window.location.hash = 'stage'+stage;
-		var handle = $('.screenWrapper').find('.screen');
-		var px = $(handle).outerHeight();
-		var newHandle = createScreenBox(handle, 'after', px);
-		setHeight();
-		$(handle).css('top','-'+px+'px')
-		setTimeout(function(){
-			$(newHandle).css('top','0');
-		},0);
-		setTimeout(function(){
-			$(handle).remove();
-		},300);
-	});
+    $('.bounce, .bouncebtn').on('click', function(){
+        stage = 14;
+        window.location.hash = 'stage'+stage;
+        var handle = $('.screenWrapper').find('.screen');
+        var px = $(handle).outerHeight();
+        var newHandle = createScreenBox(handle, 'after', px);
+        setHeight();
+        $(handle).css('top','-'+px+'px')
+        setTimeout(function(){
+            $(newHandle).css('top','0');
+        },0);
+        setTimeout(function(){
+            $(handle).remove();
+        },300);
+    });
 }
 notInterested();
 
@@ -856,35 +845,35 @@ function choosePass(passType){
 
 function timeCapture(){
     jQuery(document).off(".timecapture");
-	$(document).on('click.timecapture','.reachwork button, .leavework button, .commutework button, .btnTime', function(){
-		var obj = $(this);
-		var type = $(obj).closest('.btn-group-justified').attr('data-roletype');
-		if($(obj).hasClass('btn-default')){
-			$(obj).removeClass('btn-default').addClass('btn-info');
-			var value = $(obj).attr('data-value');
-			if(type == 'reachwork'){
-				var index;
-				if(info.reachwork === undefined){
-					info.reachwork = []
-				}
-				info.reachwork.push(value);
-				$.unique(info.reachwork);
-				if($(obj).hasClass('btnTime')){
-					if(info.reachwork.length > 1){
-						$(obj).closest('.btn-group-justified').find('button[data-value="'+info.reachwork[0]+'"]').addClass('btn-default').removeClass('btn-info');
-						info.reachwork.splice(0, 1);
-					}
-				}else{
-					if(info.reachwork.length > 2){
-						$(obj).closest('.btn-group-justified').find('button[data-value="'+info.reachwork[1]+'"]').addClass('btn-default').removeClass('btn-info');
-						info.reachwork.splice(1, 1);
-					}
-				}
-			}else if(type == 'leavework'){
-				if(info.leavework === undefined){
-					info.leavework = []
-				}
-				info.leavework.push(value);
+    $(document).on('click.timecapture','.reachwork button, .leavework button, .commutework button, .btnTime', function(){
+        var obj = $(this);
+        var type = $(obj).closest('.btn-group-justified').attr('data-roletype');
+        if($(obj).hasClass('btn-default')){
+            $(obj).removeClass('btn-default').addClass('btn-info');
+            var value = $(obj).attr('data-value');
+            if(type == 'reachwork'){
+                var index;
+                if(info.reachwork === undefined){
+                    info.reachwork = []
+                }
+                info.reachwork.push(value);
+                $.unique(info.reachwork);
+                if($(obj).hasClass('btnTime')){
+                    if(info.reachwork.length > 1){
+                        $(obj).closest('.btn-group-justified').find('button[data-value="'+info.reachwork[0]+'"]').addClass('btn-default').removeClass('btn-info');
+                        info.reachwork.splice(0, 1);
+                    }
+                }else{
+                    if(info.reachwork.length > 2){
+                        $(obj).closest('.btn-group-justified').find('button[data-value="'+info.reachwork[1]+'"]').addClass('btn-default').removeClass('btn-info');
+                        info.reachwork.splice(1, 1);
+                    }
+                }
+            }else if(type == 'leavework'){
+                if(info.leavework === undefined){
+                    info.leavework = []
+                }
+                info.leavework.push(value);
                 $.unique(info.leavework);
                 if($(obj).hasClass('btnTime')) {
                     if (info.leavework.length > 1) {
@@ -892,50 +881,50 @@ function timeCapture(){
                         info.leavework.splice(0, 1);
                     }
                 }else{
-				if(info.leavework.length > 2){
-					$(obj).closest('.btn-group-justified').find('button[data-value="'+info.leavework[1]+'"]').addClass('btn-default').removeClass('btn-info');
-					info.leavework.splice(1, 1);
+                    if(info.leavework.length > 2){
+                        $(obj).closest('.btn-group-justified').find('button[data-value="'+info.leavework[1]+'"]').addClass('btn-default').removeClass('btn-info');
+                        info.leavework.splice(1, 1);
                     }
-				}
-			}else if(type == 'commutework'){
-				if(info.commutework === undefined){
-					info.commutework = []
-				}
-				info.commutework.push(value);
-			}
-		}else{
-			$(obj).addClass('btn-default').removeClass('btn-info');
-			var value = $(obj).attr('data-value');
-			var index;
-			if(type == 'reachwork'){
-				index = info.reachwork.indexOf(value);
-				info.reachwork.splice(index,1);
-			}else if(type == 'leavework'){
-				index = info.leavework.indexOf(value);
-				info.leavework.splice(index,1);
-			}else if(type == 'commutework'){
-				index = info.commutework.indexOf(value);
-				info.commutework.splice(index,1);
-			}
-		}
-		
-		var arrLength;
-		if(type == 'reachwork'){
-			arrLength = info.reachwork;
-			if(arrLength.length == 2){
-				$('.downArr .fa-angle-double-down').trigger('click');
-			}
-		}else if(type == 'leavework'){
-			arrLength = info.leavework;
-			if(arrLength.length == 2){
-				$('.downArr .fa-angle-double-down').trigger('click');
-			}
-		}else if(type == 'commutework'){
-			arrLength = info.commutework;
-			$('.downArr').fadeIn();
-			$('.bounce').hide();
-		}
-	});
+                }
+            }else if(type == 'commutework'){
+                if(info.commutework === undefined){
+                    info.commutework = []
+                }
+                info.commutework.push(value);
+            }
+        }else{
+            $(obj).addClass('btn-default').removeClass('btn-info');
+            var value = $(obj).attr('data-value');
+            var index;
+            if(type == 'reachwork'){
+                index = info.reachwork.indexOf(value);
+                info.reachwork.splice(index,1);
+            }else if(type == 'leavework'){
+                index = info.leavework.indexOf(value);
+                info.leavework.splice(index,1);
+            }else if(type == 'commutework'){
+                index = info.commutework.indexOf(value);
+                info.commutework.splice(index,1);
+            }
+        }
+
+        var arrLength;
+        if(type == 'reachwork'){
+            arrLength = info.reachwork;
+            if(arrLength.length == 2){
+                $('.downArr .fa-angle-double-down').trigger('click');
+            }
+        }else if(type == 'leavework'){
+            arrLength = info.leavework;
+            if(arrLength.length == 2){
+                $('.downArr .fa-angle-double-down').trigger('click');
+            }
+        }else if(type == 'commutework'){
+            arrLength = info.commutework;
+            $('.downArr').fadeIn();
+            $('.bounce').hide();
+        }
+    });
 }
 
 function routeSummary(){
@@ -1039,7 +1028,7 @@ function switchScreen(scrno, obj){
             html += aboutUs();
             html += '<div id = "grey-screen"> </div>';
             $(obj).html(html)
-	    .find('.downArr').hide();
+                .find('.downArr').hide();
 
             //aboutUsSlider
 
@@ -1048,8 +1037,8 @@ function switchScreen(scrno, obj){
                 if ($('#aboutUsOverlay').is(':visible'))
                 {
                         $('#aboutUsOverlay, #grey-screen').hide();
-
-
+                    
+                    
                 }
 
 
@@ -1062,7 +1051,7 @@ function switchScreen(scrno, obj){
 
 
 
-
+           
             if(refer.hasOwnProperty('click')){
                 if(refer.stage >= 1){
                     $(obj).find('.downArr').fadeIn().end()
@@ -1255,7 +1244,7 @@ function switchScreen(scrno, obj){
 
         case 5:
             var html = '<div class="col-md-12 text-center" style="height: 100%;position: static;">';
-			html += '<h4 style="margin:0;" id="share_heading" class="text-center sharetext">Congratulations!! You have successfully made</h4><br />';
+            html += '<h4 style="margin:0;" id="share_heading" class="text-center sharetext">Congratulations!! You have successfully made</h4><br />';
             html += '<fieldset>';
             html += '<legend>#YourRoute</legend>';
             html += '<div class="col-md-12 routeHeading text-capitalize">';
@@ -1275,12 +1264,12 @@ function switchScreen(scrno, obj){
             html += '<div class="headText headText3 text-center">To launch the route sooner <span class="highlight">#KeepSpreadingTheWord</span></div>';
             html += '<div class="row social">';
             html += '<div class="col-md-12">';
-           /*html += '<span class="fa fa-google-plus col-md-3"></span>';*/
+            /*html += '<span class="fa fa-google-plus col-md-3"></span>';*/
             /*html += '<span class="fa fa-facebook col-md-3"></span>';
              html += '<span class="fa fa-linkedin col-md-3"></span>';
              */
             /*html += '<a class="fa-social" id="whatsapp" onclick="sendWhatsApp();"><span class="fa fa-whatsapp col-md-3"></span></a>';*/
-           html += '<a class="fa-social" id="whatsapp" onclick="sendWhatsApp();"><span class="full" style="padding:13px;display:table;">Share Via WhatsApp</span></a>';
+            html += '<a class="fa-social" id="whatsapp" onclick="sendWhatsApp();"><span class="full" style="padding:13px;display:table;">Share Via WhatsApp</span></a>';
             html += '</div></div></div>';
 
             var mSlots = '';
@@ -1299,9 +1288,9 @@ function switchScreen(scrno, obj){
 
             if (!(navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1)) {
                 if (window.Notification) {
-                    info.pushSubscriptionStatus = window.Notification.permission;
-                    ga('send', 'event', 'chromeNotificationStatus', window.Notification.permission);
-                }else{
+                info.pushSubscriptionStatus = window.Notification.permission;
+                ga('send', 'event', 'chromeNotificationStatus',window.Notification.permission);
+            }else{
 
                     info.pushSubscriptionStatus="weird_browser";
                 }
@@ -1343,7 +1332,6 @@ function switchScreen(scrno, obj){
 
                 fillWhatsAppLink();
             }
-
             submitDataToServer();
             break;
 
@@ -1420,18 +1408,18 @@ function switchScreen(scrno, obj){
             break;
 
         case 8:
-			var html = '<div class="col-md-12 fullheight">';
-			html += '<div class="fieldset">';
+            var html = '<div class="col-md-12 fullheight">';
+            html += '<div class="fieldset">';
             html += '<div class="routeInfo1"><div class="flex"><span class="routePtName pick">' + info.homeName + '</span><span style="position:relative; top:-10px; background-color:white; margin-top:3px"> to </span> <span class="routePtName drop">'+ info.officeName+'</span></div></div>';
             html += '<span class="landmark"> (Landmark: Enter landmark here) </span>';
-			html += '<div id="gMap"></div>';
+            html += '<div id="gMap"></div>';
             html += '<div class="flex" style="width:90%">';
-            html += '<div class="mapMsg"><span class="seats"><span class="cur">201</span>/<span class="total">210</span></span><br> travellers confirmed </div>';
+            html += '<div class="mapMsg"><span class="seats"><span class="cur">180</span>/<span class="total">200</span></span><br> travellers confirmed </div>';
             html += '<div class="daysLeft"><span class="days">12</span><br>days to go live</div>';
             html += '</div></div>';
             html += '<div class="line2">To travel on this route, tell us</div>';
-			html += '<div class="line2">What time do you have to <span class="bolder">reach</span> work?</div>';
-			html += '<div class="carousel slide" id="mycarousel">';
+            html += '<div class="line2">What time do you have to <span class="bolder">reach</span> work?</div>';
+            html += '<div class="carousel slide" id="mycarousel">';
 
             //html += '<span class="btnsWrapper">';
             html += '<div >';
@@ -1447,7 +1435,7 @@ function switchScreen(scrno, obj){
 
             html += '</div></div>';
             //html += '<a class="left carousel-control" href="#mycarousel" role="button" data-slide-to=0 onClick=carouselSlide(this,"previous",morningSlot) > <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
-           // html += '<a class="right carousel-control" href="#mycarousel" role="button"  data-slide-to=0 onClick=carouselSlide(this,"next",morningSlot)> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span></a>';
+            // html += '<a class="right carousel-control" href="#mycarousel" role="button"  data-slide-to=0 onClick=carouselSlide(this,"next",morningSlot)> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span></a>';
             //	html += '</span>';
             //html += '<span class="btn btn-default rightbtn">&gt;</span>';
             html += '</div>';
@@ -1458,14 +1446,11 @@ function switchScreen(scrno, obj){
             $(obj).html(html);
 
             hideAddressBar();
-			notInterested();
+            notInterested();
 
-			$('.bounce').addClass('hidden');
-			fw = true;
-            if (info.routeid==64) {
-                jQuery(".daysLeft").html("Route live on <b>29 June</b>");
-            }
-			setTimeout(function(){
+            $('.bounce').addClass('hidden');
+            fw = true;
+            setTimeout(function(){
 
                 initMap(responseJson,"OTD");
                 jQuery(".landmark").html((info.pick!=null && info.pick.length>0)?"(Landmark: "+info.pick[origin_index]["landmark"]+")":"");
@@ -1486,20 +1471,20 @@ function switchScreen(scrno, obj){
 
                 timeCapture();
                 setCarousel();
-			},310);
-		break;
-		
-		case 9:
-			var html = '<div class="col-md-12 fullheight">';
-			html += '<div class="fieldset">';
+            },310);
+            break;
+
+        case 9:
+            var html = '<div class="col-md-12 fullheight">';
+            html += '<div class="fieldset">';
             html += '<div class="routeInfo1"><div class="flex"><span class="routePtName drop">' + info.officeName + '</span><span style="position:relative; top:-10px; background-color:white; margin-top:3px"> to </span> <span class="routePtName pick">'+ info.homeName+'</span></div></div>';
             html += '<div class="landmark"> '+(info.pick!=null && info.pick.length>0)?info.pick[info.pick.length-1]["landmark"]:""+' </div>';
-			html += '<div id="gMap"></div>';
+            html += '<div id="gMap"></div>';
             html += '<div class="flex" style="width:90%">';
-            html += '<div class="mapMsg"><span class="seats"><span class="cur">201</span>/<span class="total">210</span></span><br> travellers confirmed </div>';
+            html += '<div class="mapMsg"><span class="seats"><span class="cur">180</span>/<span class="total">200</span></span><br> travellers confirmed </div>';
             html += '<div class="daysLeft"><span class="days">12</span><br>days to go live</div>';
             html += '</div></div>';
-			html += '<div class="line2">What time do you <span class="bolder">leave</span> from work?</div>';
+            html += '<div class="line2">What time do you <span class="bolder">leave</span> from work?</div>';
             html += '<div class="carousel slide" id="mycarousel2">';
 
             //html += '<span class="btnsWrapper">';
@@ -1516,15 +1501,15 @@ function switchScreen(scrno, obj){
              */
 
             html += '</div></div>';
-        //    html += '<a class="left carousel-control" href="#mycarousel2" role="button" onClick=carouselSlide(this,"previous",eveningSlot) data-slide-to="0"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
-          //  html += '<a class="right carousel-control" href="#mycarousel2" role="button" onClick=carouselSlide(this,"next",eveningSlot) data-slide-to="0"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span></a>';
+            //    html += '<a class="left carousel-control" href="#mycarousel2" role="button" onClick=carouselSlide(this,"previous",eveningSlot) data-slide-to="0"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>';
+            //  html += '<a class="right carousel-control" href="#mycarousel2" role="button" onClick=carouselSlide(this,"next",eveningSlot) data-slide-to="0"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span></a>';
             //	html += '</span>';
             //html += '<span class="btn btn-default rightbtn">&gt;</span>';
             html += '</div>';
             html += '<div class="fillingfast">(leave blank if you don\'t wish to use shuttl in the evening)</div>';
             html += '<div class="text-capitalize btn btn-primary col-xs-6 backBtnMap change-case-btn-left">&lt;back</div>';
             html += '<div class="text-capitalize btn btn-primary col-xs-6 nextBtnMap change-case-btn-right">next&gt;</div>';
-			html += '</div>';
+            html += '</div>';
 
             html += '<div class="modal fade bs-example-modal-sm" role="dialog" id="phoneModal">';
             html += '<div class="modal-dialog modal-sm">';
@@ -1533,12 +1518,9 @@ function switchScreen(scrno, obj){
             html+='<div class="otp-entry" style="display: none;"><input type="number" class="col-md-12" placeholder="enter otp" maxlength="5" id="otp" onkeyup="otpentered(this)"/>';
             html+='<div><button class="btn-primary" onclick="validatePhone();">Resend Otp</button><button class="btn-primary" onclick="changePhoneNumber();">Change Number</button></div></div>';
             html += '</div></div></div>';
-			$(obj).html(html);
+            $(obj).html(html);
 
             hideAddressBar();
-            if (info.routeid==64) {
-                jQuery(".daysLeft").html("Route live on <b>29 June</b>");
-            }
             setTimeout(function () {
 
 
@@ -1557,49 +1539,47 @@ function switchScreen(scrno, obj){
                     jQuery(".routePtName.drop").html(info.pick[info.pick.length-1]["name"]);
                 }
             },310);
-            
-			fw = false;
-			$('.bounce').addClass('hidden');
-			setTimeout(function(){
-				initMap(responseJson,"DTO");
+
+            fw = false;
+            $('.bounce').addClass('hidden');
+            setTimeout(function(){
+                initMap(responseJson,"DTO");
 
                 setCarousel2();
                 timeCapture();
-			},310);
-		break;
-		
-		case 10:
-			var html = '<div class="col-md-12 text-center fullheight">';
+            },310);
+            break;
+
+        case 10:
+            var html = '<div class="col-md-12 text-center fullheight">';
             html += '<span class="headText headText4 text-center bold">Route summary</span>';
-			html+='<div class="route_price_ticket" >Distance:<b>&nbsp;'+parseInt(info.distance/1000)+' KM</b>&nbsp;&nbsp;|&nbsp;&nbsp;One-Way Price:&nbsp;<b>Rs '+info.pricing[0][2]+'</b></div>';
+            html+='<div class="route_price_ticket" >Distance:<b>&nbsp;'+parseInt(info.distance/1000)+' KM</b>&nbsp;&nbsp;|&nbsp;&nbsp;One-Way Price:&nbsp;<b>Rs '+info.pricing[0][2]+'</b></div>';
             html += '<fieldset class="pay">';
             html += '<div class="box-payment">';
-					html += '<div class="boxrow">';
-						html += '<span class="heading">Going To Work</span>';
-						html += '<span class="change" onclick="goToReachWorkScreen(this);">change</span>';
-					html += '</div>';
+            html += '<div class="boxrow">';
+            html += '<span class="heading">Going To Work</span>';
+            html += '<span class="change" onclick="goToReachWorkScreen(this);">change</span>';
+            html += '</div>';
             html += '<div class="routeinfoPayment">' + routeDetailsToWork("departure")+'</div>';
             html += '<div class="routeinfoPayment">' + routeDetailsToWork("arrival")+ '</div>';
-					html += '<div class="fillingfast" style="display:none;">8 more ppl required to launch route</div>';
-				html += '</div>';
-			
+            html += '<div class="fillingfast" style="display:none;">8 more ppl required to launch route</div>';
+            html += '</div>';
+
             html += '<div class="box-payment">';
-					html += '<div class="boxrow">';
-						html += '<span class="heading">Return From Work</span>';
-						html += '<span class="change"  onclick="goToLeaveWorkScreen(this);">change</span>';
-					html += '</div>';
+            html += '<div class="boxrow">';
+            html += '<span class="heading">Return From Work</span>';
+            html += '<span class="change"  onclick="goToLeaveWorkScreen(this);">change</span>';
+            html += '</div>';
             html += '<div class="routeinfoPayment">'+ routeDetailsFromWork("departure") +'</div>';
             html += '<div class="routeinfoPayment">'+ routeDetailsFromWork("arrival")+'</div>';
-					html += '<div class="fillingfast" style="display:none;">4 more ppl required to launch route</div>';
-				html += '</div>';
-				
-			html += '</fieldset>';
+            html += '<div class="fillingfast" style="display:none;">4 more ppl required to launch route</div>';
+            html += '</div>';
+            html += '</fieldset>';
             html += '<div class="headText headText4 text-center selecpasstext">Select a pass to travel on this route</div>';
             html += '<div class="item active selecpass">';
             html += '<button type="button" class="shuttl-pass text-capitalize paynow btn btn-default col-xs-6 setHeight centerVertical centerHorizontal passtype_1" onclick="choosePass(1);" data-value="1"><div>10 rides @ <span class="strike">'+info.pricing[0][0]+'</span><span class="offer_price">&nbsp;'+info.pricing[0][1]+'</span></div></button>';
             html += '<button type="button" class="shuttl-pass text-capitalize paynow btn btn-default col-xs-6 setHeight centerVertical centerHorizontal passtype_2" onclick="choosePass(2);" data-value="2"><div>20 rides @ <span class="strike">'+info.pricing[1][0]+'</span><span class="offer_price">&nbsp;'+info.pricing[1][1]+'</span></div></button></div>';
             html += '<div class="passinf selecpass">For more info <a onclick="showRoutePass();">click here</a></div>';
-            //html += '<span class="headText headText4 centerHorizontal payTM-click-to-pay"> Click to pay by </span>';
             html += '<div class="payTM-image row social">';
             html += '<div class="col-md-12" style="background-color: #3eb6b5;">';
             html += '<span class="full" style="padding:20px;display:table" onclick="initiatePaymentProcess()"><span class=" payTM-click-to-pay headText headText4 centerHorizontal" style="color: #fff !important;"> PAY USING </span><img style="padding-bottom:10px" src="../images/PayTM-Logo.png"> </span>';
@@ -1734,50 +1714,50 @@ function switchScreen(scrno, obj){
              */
             html += '<span class="full" style="padding:20px;display:table;">Share Via WhatsApp</span>';
             html += '</div></div></div>';
-			$(obj).html(html);
+            $(obj).html(html);
             fillWhatsAppLink();
-		break;
-		//offline sharing screen
-		case 13:
-			var html = '<div class="col-md-12">';
-			html += '<div class="fieldset">';
-			html += '<div class="routeInfo"><span class="ambassador routePtName">Become the Route Ambassador</span></div>';
-			html += '<div class="promoMsg">Share your Promo Code: <em>4567</em> by sticking Customize poster\'s on your Home & Office notice boards';
-			html += '<p class="extra">Earn Rs 25 Credit for every new customer on this route</p>';
-			html += '</div>';
-			html += '</div>';
-			html += '<div class="confirmMsg">Confirm the below details to receive 3 <em>Posters</em> by mail within this week</div>';
-			html += '<form>';
-			html += '<div class="form-group">';
-			html += '<input type="text" placeholder="full name" class="form-control" id="fullname"/>';
-			html += '</div>';
-			html += '<div class="form-group">';
-			html += '<input type="text" placeholder="address.." class="form-control" id="address"/>';
-			html += '</div>';
-			html += '<div class="text-capitalize btn btn-default col-xs-6 bouncebtn">cancel</div>';
-			html += '<div class="text-capitalize btn btn-primary col-xs-6 submitaddress">submit</div>';
-			html += '</form>';
-			html += '</div>';
-			$(obj).html(html);
-			$('#address').val(info.homeAddressShortened);
-			$('.bounce').remove();
-		break;
-		
-		case 14:
-			var html = '<div class="col-md-12">';
-			html += '<h4>I am not interested in using Shuttl service because:</h4>';
-			html += '<form>';
-			html += '<div class="form-group">';
-			html += '<textarea class="form-control" id="reason" placeholder="Type your reason..."></textarea>';
-			html += '</div>';
-			html += '<div class="form-group">';
-			html += '<button type="submit" class="btn btn-primary center-block">Submit</button>';
-			html += '</div>';
-			html += '</form>';
-			html += '</div>';
-			$(obj).html(html);
-			$('.bounce').remove();
-		break;
+            break;
+        //offline sharing screen
+        case 13:
+            var html = '<div class="col-md-12">';
+            html += '<div class="fieldset">';
+            html += '<div class="routeInfo"><span class="ambassador routePtName">Become the Route Ambassador</span></div>';
+            html += '<div class="promoMsg">Share your Promo Code: <em>4567</em> by sticking Customize poster\'s on your Home & Office notice boards';
+            html += '<p class="extra">Earn Rs 25 Credit for every new customer on this route</p>';
+            html += '</div>';
+            html += '</div>';
+            html += '<div class="confirmMsg">Confirm the below details to receive 3 <em>Posters</em> by mail within this week</div>';
+            html += '<form>';
+            html += '<div class="form-group">';
+            html += '<input type="text" placeholder="full name" class="form-control" id="fullname"/>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<input type="text" placeholder="address.." class="form-control" id="address"/>';
+            html += '</div>';
+            html += '<div class="text-capitalize btn btn-default col-xs-6 bouncebtn">cancel</div>';
+            html += '<div class="text-capitalize btn btn-primary col-xs-6 submitaddress">submit</div>';
+            html += '</form>';
+            html += '</div>';
+            $(obj).html(html);
+            $('#address').val(info.homeAddressShortened);
+            $('.bounce').remove();
+            break;
+
+        case 14:
+            var html = '<div class="col-md-12">';
+            html += '<h4>I am not interested in using Shuttl service because:</h4>';
+            html += '<form>';
+            html += '<div class="form-group">';
+            html += '<textarea class="form-control" id="reason" placeholder="Type your reason..."></textarea>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<button type="submit" class="btn btn-primary center-block">Submit</button>';
+            html += '</div>';
+            html += '</form>';
+            html += '</div>';
+            $(obj).html(html);
+            $('.bounce').remove();
+            break;
 
         case 15:
             var html ='<div class="col-md-12 text-center fullheight">';
@@ -1865,7 +1845,7 @@ function switchScreen(scrno, obj){
             //     }
             // }, 500);
             break;
-        
+
         case 16:
             var html = '<div class="col-md-12 text-center" style="height: 100%;position: static;">';
             html += '<h4 style="margin:0;" id="share_heading" class="text-center sharetext">"Congratulations!! You have successfully made"</h4><br />';
@@ -1954,15 +1934,15 @@ function switchScreen(scrno, obj){
             html += '<div class="promoDetails"> Confirm the below details to receive 3 posters by mail within the week</div>';
             html += '<form role="form">';
             html += '<div class="form-group">';
-           // html += '<label for="full-name"> Full Name: </label>';
+            // html += '<label for="full-name"> Full Name: </label>';
             html += '<input type="text" class="form-control" id="full-name" placeholder="Full name">';
             html += '</div>';
             html += '<div class="form-group">';
-           // html += '<label for="email"> Email address: </label>';
+            // html += '<label for="email"> Email address: </label>';
             html += '<input type="email" class="form-control" id="email" placeholder="Email address">';
             html += '</div>';
             html += '<div class="form-group">';
-           // html += '<label for="home-address"> Home Address: </label>';
+            // html += '<label for="home-address"> Home Address: </label>';
             html += '<input readonly type="text" class="form-control" id="home-address" placeholder="Home address">';
             html += '</div>';
             html += '</form>';
@@ -1982,10 +1962,10 @@ function switchScreen(scrno, obj){
 
 function   submitDataToServer(){
     $.ajax({
-            url : 'saveNewSuggestion',
-            method : 'POST',
-            data:{data1:JSON.stringify(info)}
-        })
+        url : 'saveNewSuggestion',
+        method : 'POST',
+        data:{data1:JSON.stringify(info)}
+    })
         .done(function(result){
 
         })
@@ -2029,9 +2009,9 @@ function fillWhatsAppLink(){
     var encodedPoints=google.maps.geometry.encoding.encodePath(path);
 
 
-    jQuery('#whatsapp').attr("href_send","whatsapp://send?text="+"Start your shuttl at Rs 3/Km.Just log on to http://myor.shuttl.com/suggest/index?paths="+encodedPoints+"&utm_source=whatsapp");
+    jQuery('#whatsapp').attr("href_send","whatsapp://send?text="+"Start your shuttl at Rs 3/Km.Just log on to http://bus2work.in/suggest/index?paths="+encodedPoints+"&utm_source=whatsapp");
 
-    jQuery.ajax({url:"/suggest/getWhatsAppShareLink?phone_number="+info.phone_number+"&url="+"http://myor.shuttl.com/suggest/index?paths="+encodedPoints}).done(function(result){
+    jQuery.ajax({url:"/suggest/getWhatsAppShareLink?url="+"http://bus2work.in/suggest/index?paths="+encodedPoints}).done(function(result){
 
         var url=result["whatsapp_url"];
         jQuery('#whatsapp').attr("href_send","whatsapp://send?text=Start your shuttl at Rs 3/Km.Just log on to "+url);
@@ -2053,17 +2033,17 @@ function sendWhatsApp(){
 }
 
 function formatSectoIST(seconds){
-	var hours   = Math.floor(seconds / 3600);
-	var minutes = Math.floor((seconds - (hours * 3600)) / 60);
-	var zone = '';
-	if(hours > 12){
-		hours -= 12;
-		zone = 'PM';
-	}else{
-		zone = 'AM';
-	}
-	
-	return pad(hours)+':'+pad(minutes)+' '+zone;
+    var hours   = Math.floor(seconds / 3600);
+    var minutes = Math.floor((seconds - (hours * 3600)) / 60);
+    var zone = '';
+    if(hours > 12){
+        hours -= 12;
+        zone = 'PM';
+    }else{
+        zone = 'AM';
+    }
+
+    return pad(hours)+':'+pad(minutes)+' '+zone;
 }
 function pad(n) {
     return (n < 10) ? ("0" + n) : n;
@@ -2091,9 +2071,9 @@ function fillAdministrativeLevelDetails(){
 
                                 if (results[0].address_components[i].types[j]=="sublocality_level_1"){
 
-                                    
+
                                     info["homeAddressShortened"]=results[0].address_components[i].short_name;
-                               
+
                                     subLocalityFound=true;
 
                                 }
@@ -2110,13 +2090,13 @@ function fillAdministrativeLevelDetails(){
 
                                 }
                             }
-             
+
                         }
 
                     }
                     if (!subLocalityFound){
                         info["homeAddressShortened"]=info.homeAddress;
-             
+
 
                     }
                 }
@@ -2125,10 +2105,10 @@ function fillAdministrativeLevelDetails(){
             } else {
 
                 info["homeAddressShortened"]=info.homeAddress;
-             
+
             }
             if (info.homeName==null){
-                
+
                 info["homeName"]=info.homeAddressShortened;
             }
         });
@@ -2175,7 +2155,7 @@ function fillAdministrativeLevelDetails(){
                     }
                     if (!subLocalityFound){
                         info["officeAddressShortened"]=info.officeAddress;
-                        
+
                     }
                 }
 
@@ -2198,15 +2178,15 @@ function inpclicked(obj){
     if (jQuery(obj).attr("id")=="homeLocation"){
 
         jQuery(".screenWrapper").addClass("inputClicked_homeLocation");
-        
+
     }else{
 
         jQuery(".screenWrapper").addClass("inputClicked_officeLocation");
     }
-   
-    
+
+
     jQuery('.bounce').hide();
-}
+    }
 
 function inpremoved(){
 
@@ -2214,7 +2194,7 @@ function inpremoved(){
     jQuery('.bounce').show();
     jQuery(".screenWrapper").removeClass("inputClicked_homeLocation");
     jQuery(".screenWrapper").removeClass("inputClicked_officeLocation");
-    
+
 }
 
 
@@ -2222,8 +2202,8 @@ function initiatePaymentProcess(){
 
     if (paymentFlow==1) {
         if (!info.is_mobile_verified) {
-            jQuery('#phoneModal').modal("show");
-        }else{
+        jQuery('#phoneModal').modal("show");
+    }else{
 
             onForPaymentMobileVerified(info.phone_number);
         }
@@ -2236,7 +2216,7 @@ function initiatePaymentProcess(){
 }
 
 function onForPaymentMobileVerified(phoneNumber){
-    
+
     showLoader();
     jQuery("body").append("<form  method='post' action='/payment/makePayment' id='paymentForm'><input type='hidden' name='info' value='"+JSON.stringify(info)+"'></form>");
     jQuery("#paymentForm").submit();
@@ -2381,40 +2361,40 @@ function carouselSlide(obj, status, slot) {
 }
 
 function aboutUs() {
- var html = '<div id="aboutUsOverlay" style="overflow:visible!important">';
+    var html = '<div id="aboutUsOverlay" style="overflow:visible!important">';
     html += '<section id = "overlay-one">';
     html += '<div id="overlay-logo" ><img style ="max-width:100px" vertical-align=middle width =175% src="../images/shuttl_logo.png"></div>';
     html += '<div id="overlay-introduction">';
- html += '<div style="color:#333333"><h5 style="margin-bottom: 2px">Introducing</h5></div>';
- html += '<div style="color:grey"><h5 style="margin-top:2px">#MakeYourOwnRoute</h5></div>';
+    html += '<div style="color:#333333"><h5 style="margin-bottom: 2px">Introducing</h5></div>';
+    html += '<div style="color:grey"><h5 style="margin-top:2px">#MakeYourOwnRoute</h5></div>';
     html += '</div>';
     html += '</section>';
     html += '<section id="overlay-two">';
     html += '<div id="home-to-office">';
- html += '<div style="color:white"><h4>Home</h4> </div>';
+    html += '<div style="color:white"><h4>Home</h4> </div>';
     html += '<img id="overlay-arrow" src ="../images/arrow.png" alt="arrow">';
- html += '<div style="color:white"><h4>Office</h4> </div>';
+    html += '<div style="color:white"><h4>Office</h4> </div>';
     html += '</div>';
- html += '<div id="pickup-drop"> <h4> Pickup - Drop </h4></div>';
+    html += '<div id="pickup-drop"> <h4> Pickup - Drop </h4></div>';
     html += '<div id="route-information">';
     html += '<div class="flex">';
- html += '<div class="route-information-image"><img style="max-height:32px" src="../images/route_icon.png" alt="icon" /></div>';
+    html += '<div class="route-information-image"><img style="max-height:32px" src="../images/route_icon.png" alt="icon" /></div>';
     html += '<span class="route-information">';
- html += '<p style="font-size:16px"> Direct routes from home to office</p>';
+    html += '<p style="font-size:16px"> Direct routes from home to office</p>';
     html += '</span>';
     html += '</div>';
     html += '<div class="flex">';
- html += '<div class="route-information-image"><img style ="max-height:32px" src="../images/friends_icon.png" alt="icon" /></div>';
+    html += '<div class="route-information-image"><img style ="max-height:32px" src="../images/friends_icon.png" alt="icon" /></div>';
     html += '<span class="route-information">';
- html += '<p style="font-size:16px"> Travel with friends and colleagues</p>';
+    html += '<p style="font-size:16px"> Travel with friends and colleagues</p>';
     html += '</span>';
     html += '</div>';
     html += '</div>';
     html += '</section>';
     html += '<section id="overlay-three">';
- html += '<div id="overlay-starting-at"> <h3> Starting @ Rs 3/km </h3> </div>';
+    html += '<div id="overlay-starting-at"> <h3> Starting @ Rs 3/km </h3> </div>';
     html += '<hr>';
- html += '<div id="assured-seats"> <h5> AC buses | Assured seats </h5></div>';
+    html += '<div id="assured-seats"> <h5> AC buses | Assured seats </h5></div>';
     html += '<div><img class="vanImage" src="../images/van2.png"></div>';
     html += '</section>';
     html += '<div class="slide-left text-center"><h4> Got it! </h4></div>';
@@ -2423,11 +2403,11 @@ function aboutUs() {
 }
 
 
-  
 
-    function getOfflineSharePromoCode(){
-        return "" ;
-    }
+
+function getOfflineSharePromoCode(){
+    return "" ;
+}
 
 
 
@@ -2489,12 +2469,12 @@ function changeToLastScreen(){
 
 
 function getRoutePass(){
-var html="";
-html+='<div class="shuttl_pass_info">';
+    var html="";
+    html+='<div class="shuttl_pass_info">';
 
     html+='<h2>Pass Information</h2>';
 
-html+='<ul>';
+    html+='<ul>';
     html+='<li><span class="descrp">Definition:</span>A Ride is a one-way journey travelled from home-to-office or office-to-home.<br>  e.g. A return journey taken will be counted as 2 rides</li>';
     html+='<li><span class="descrp">Validity:</span>A Pass is valid for bookings for any available time slot only on the specific route it is purchased for. </li>';
     html+='<li><span class="descrp">Refund Policy:</span>Money will be refunded to your PayTM wallet, in case:';
