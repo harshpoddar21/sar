@@ -1424,7 +1424,7 @@ function switchScreen(scrno, obj){
             html += '<span class="landmark"> (Landmark: Enter landmark here) </span>';
 			html += '<div id="gMap"></div>';
             html += '<div class="flex" style="width:90%">';
-            html += '<div class="mapMsg"><span class="seats"><span class="cur">191</span>/<span class="total">200</span></span><br> travellers confirmed </div>';
+            html += '<div class="mapMsg"><span class="seats"><span class="cur">201</span>/<span class="total">210</span></span><br> travellers confirmed </div>';
             html += '<div class="daysLeft"><span class="days">12</span><br>days to go live</div>';
             html += '</div></div>';
             html += '<div class="line2">To travel on this route, tell us</div>';
@@ -1460,6 +1460,9 @@ function switchScreen(scrno, obj){
 
 			$('.bounce').addClass('hidden');
 			fw = true;
+            if (info.routeid==64) {
+                jQuery(".daysLeft").html("Route live on <b>29 June</b>");
+            }
 			setTimeout(function(){
 
                 initMap(responseJson,"OTD");
@@ -1491,7 +1494,7 @@ function switchScreen(scrno, obj){
             html += '<span class="landmark"> '+(info.pick!=null && info.pick.length>0)?info.pick[info.pick.length-1]["landmark"]:""+' </span>';
 			html += '<div id="gMap"></div>';
             html += '<div class="flex" style="width:90%">';
-            html += '<div class="mapMsg"><span class="seats"><span class="cur">191</span>/<span class="total">200</span></span><br> travellers confirmed </div>';
+            html += '<div class="mapMsg"><span class="seats"><span class="cur">201</span>/<span class="total">210</span></span><br> travellers confirmed </div>';
             html += '<div class="daysLeft"><span class="days">12</span><br>days to go live</div>';
             html += '</div></div>';
 			html += '<div class="line2">What time do you <span class="bolder">leave</span> from work?</div>';
@@ -1531,6 +1534,9 @@ function switchScreen(scrno, obj){
 			$(obj).html(html);
 
             hideAddressBar();
+            if (info.routeid==64) {
+                jQuery(".daysLeft").html("Route live on <b>29 June</b>");
+            }
             setTimeout(function () {
 
 

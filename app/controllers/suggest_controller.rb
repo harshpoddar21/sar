@@ -502,4 +502,9 @@ class SuggestController < ApplicationController
   end
 
 
+  def new_lead
+
+  end
+
+
 end
