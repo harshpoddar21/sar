@@ -52,7 +52,10 @@ class Route
       slotsFinal.push time
 
     end
+    (960..1260).step(15).each do |time|
+      slotsFinal.push time
 
+    end
     return slotsFinal
   end
   def getSlots
@@ -60,23 +63,23 @@ class Route
     slotsFinal=Array.new
 
     if (routeType==LIVE_ROUTE)
-      slots=getSlotsForNonExistentRoute
+      slotsFinal=Route.getSlotsForNonExistentRoute()
     else
       slots=TimestampSuggest.where(:routeid=>id)
+      slots.each do |slot|
+        delta= 5*3600+1800
 
-    end
-
-
-    slots.each do |slot|
-      delta= 5*3600+1800
-
-      timeFrom=((slot.fromtime.to_i+delta)/60)%1440
-      timeTo=((slot.totime.to_i+delta)/60)%1440
-      interval=slot.interval
-      (timeFrom..timeTo).step(interval).each do |time|
-        slotsFinal.push time
+        timeFrom=((slot.fromtime.to_i+delta)/60)%1440
+        timeTo=((slot.totime.to_i+delta)/60)%1440
+        interval=slot.interval
+        (timeFrom..timeTo).step(interval).each do |time|
+          slotsFinal.push time
+        end
       end
     end
+
+
+
 
     slotsFinal
   end
