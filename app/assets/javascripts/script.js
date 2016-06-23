@@ -1465,6 +1465,11 @@ function switchScreen(scrno, obj){
             if (info.routeid==64) {
                 jQuery(".daysLeft").html("Route live on <b>29 June</b>");
             }
+            if (info.route_type=="Live_route"){
+
+                jQuery(".mapMsg").hide();
+                jQuery(".daysLeft").hide();
+            }
 			setTimeout(function(){
 
                 initMap(responseJson,"OTD");
@@ -1538,6 +1543,11 @@ function switchScreen(scrno, obj){
             hideAddressBar();
             if (info.routeid==64) {
                 jQuery(".daysLeft").html("Route live on <br><b>29 June</b>");
+            }
+            if (info.route_type=="Live_route"){
+
+                jQuery(".mapMsg").hide();
+                jQuery(".daysLeft").hide();
             }
             setTimeout(function () {
 
