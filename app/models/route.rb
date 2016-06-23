@@ -60,7 +60,7 @@ class Route
     slotsFinal=Array.new
 
     if (routeType==LIVE_ROUTE)
-      slots=Timestamp.where(:routeid=>id)
+      slots=getSlotsForNonExistentRoute
     else
       slots=TimestampSuggest.where(:routeid=>id)
 

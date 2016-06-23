@@ -306,7 +306,7 @@ span.slots {
     margin: 0 2px;
 }
 .btn-group-justified .btn{
-    float: left;
+    float: none;
     position: relative;
 }
 .fieldset {

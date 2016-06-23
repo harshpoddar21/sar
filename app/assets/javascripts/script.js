@@ -1537,7 +1537,7 @@ function switchScreen(scrno, obj){
 
             hideAddressBar();
             if (info.routeid==64) {
-                jQuery(".daysLeft").html("Route live on <b>29 June</b>");
+                jQuery(".daysLeft").html("Route live on <br><b>29 June</b>");
             }
             setTimeout(function () {
 
