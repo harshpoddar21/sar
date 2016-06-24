@@ -302,7 +302,7 @@ end
     if response["responseCode"]=="SUCCESS"
       if response["routeDetailsMinResponseDTOList"]!=nil && response["routeDetailsMinResponseDTOList"].size>0 && response["routeDetailsMinResponseDTOList"][0]["fare"]>0
         routeid=response["routeDetailsMinResponseDTOList"][0]["sessions"][0]["routeId"]
-        if routeid==578 || routeid==586
+        if routeid==578 || routeid==586 || routeid==614
           return nil
         end
         return RouteExist.find_by(:id=>routeid)
