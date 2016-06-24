@@ -1043,6 +1043,7 @@ function switchScreen(scrno, obj){
 
             //aboutUsSlider
 
+
             $(document).click(function toggleAboutUs() {
 
                 if ($('#aboutUsOverlay').css("display")!="none")
@@ -1060,6 +1061,12 @@ function switchScreen(scrno, obj){
                 $('#aboutUsOverlay, #grey-screen').show();
             });
 
+            jQuery(".slide-left").click(function (e){
+
+                e.stopPropagation();
+                $('#aboutUsOverlay, #grey-screen').hide();
+
+            });
 
 
 
