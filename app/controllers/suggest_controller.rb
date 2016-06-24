@@ -506,5 +506,12 @@ class SuggestController < ApplicationController
 
   end
 
+  def loadImage
+    i=0
+
+    redirect_to "https://myor.shuttl.com/images/"+params[:image]+"."+params[:format]
+
+  end
+
 
 end

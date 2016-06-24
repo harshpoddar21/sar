@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4ae579d7-318a-429b-8341-3b3ef608ec5a" name="Default" comment="UI Fixes" />
+    <list default="true" id="4ae579d7-318a-429b-8341-3b3ef608ec5a" name="Default" comment="UI Fixes">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/suggest_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/suggest_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
+    </list>
     <ignored path="sar.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/.bundle/" />
@@ -41,8 +47,28 @@
       <file leaf-file-name="route.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/route.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5130">
-              <caret line="342" column="0" selection-start-line="342" selection-start-column="0" selection-end-line="342" selection-end-column="0" />
+            <state relative-caret-position="330">
+              <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="routes.rb" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/routes.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="suggest_controller.rb" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/controllers/suggest_controller.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="541">
+              <caret line="510" column="0" selection-start-line="510" selection-start-column="0" selection-end-line="510" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -51,18 +77,74 @@
       <file leaf-file-name="script.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/script.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2205">
-              <caret line="147" column="30" selection-start-line="147" selection-start-column="30" selection-end-line="147" selection-end-column="30" />
-              <folding />
+            <state relative-caret-position="-21300">
+              <caret line="102" column="30" selection-start-line="102" selection-start-column="30" selection-end-line="102" selection-end-column="30" />
+              <folding>
+                <marker date="1466667824525" expanded="true" signature="5417:5430" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="5658:5671" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="32280:32291" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="33681:33694" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="43364:43377" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="43516:43530" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="44845:44875" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="44903:44912" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="46909:46936" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="50371:50384" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="50997:51010" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="51155:51169" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="52270:52279" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="52381:52401" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="52514:52531" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="53529:53546" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="53900:53927" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="54290:54358" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="54614:54623" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="58852:58920" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="59229:59238" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="62310:62323" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="62462:62476" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="64966:64979" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="65554:65567" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="66903:66929" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="66981:67007" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="67121:67144" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="67176:67195" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="67755:67768" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="67907:67921" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="69417:69427" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="74314:74323" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="74478:74498" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="75243:75256" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="75811:75824" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="76667:76694" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="78807:78816" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="82154:82184" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="82221:82230" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="84230:84257" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="87903:87917" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="88027:88041" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="99872:99898" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="99997:100012" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="100158:100171" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="100184:100202" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="100251:100261" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="100274:100288" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="100474:100485" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="100611:100622" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="100874:100889" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="101012:101026" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="101208:101223" placeholder="..." />
+                <marker date="1466667824525" expanded="true" signature="101348:101362" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="paytm_payment_helper.rb" pinned="false" current-in-tab="true">
+      <file leaf-file-name="paytm_payment_helper.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/helpers/paytm_payment_helper.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+            <state relative-caret-position="60">
+              <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -81,11 +163,30 @@
       <file leaf-file-name="payment_controller.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/payment_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3075">
-              <caret line="278" column="0" selection-start-line="278" selection-start-column="0" selection-end-line="278" selection-end-column="0" />
+            <state relative-caret-position="4170">
+              <caret line="279" column="0" selection-start-line="279" selection-start-column="0" selection-end-line="279" selection-end-column="0" />
               <folding>
-                <marker date="1465569446379" expanded="true" signature="6789:6799" placeholder="if ... end" />
-                <marker date="1465569446379" expanded="true" signature="6789:6883" placeholder="if ... end" />
+                <marker date="1466140265077" expanded="true" signature="215:361" placeholder="if ... end" />
+                <marker date="1466140265077" expanded="true" signature="394:552" placeholder=" ... end" />
+                <marker date="1466140265077" expanded="true" signature="400:544" placeholder="if ... end" />
+                <marker date="1466140265077" expanded="true" signature="574:612" placeholder=" ... end" />
+                <marker date="1466140265077" expanded="true" signature="639:680" placeholder=" ... end" />
+                <marker date="1466140265077" expanded="true" signature="701:748" placeholder=" ... end" />
+                <marker date="1466140265077" expanded="true" signature="787:1992" placeholder=" ... end" />
+                <marker date="1466140265077" expanded="true" signature="1038:1945" placeholder="if ... end" />
+                <marker date="1466140265077" expanded="true" signature="1074:1773" placeholder="if ... end" />
+                <marker date="1466140265077" expanded="true" signature="1258:1761" placeholder="if ... end" />
+                <marker date="1466140265077" expanded="true" signature="2015:2951" placeholder=" ... end" />
+                <marker date="1466140265077" expanded="true" signature="2022:2172" placeholder="if ... end" />
+                <marker date="1466140265077" expanded="true" signature="2598:2944" placeholder="if ... end" />
+                <marker date="1466140265077" expanded="true" signature="2635:2886" placeholder="if ... end" />
+                <marker date="1466140265077" expanded="true" signature="2972:2979" placeholder=" ... end" />
+                <marker date="1466140265077" expanded="true" signature="3002:3009" placeholder=" ... end" />
+                <marker date="1466140265077" expanded="true" signature="3029:3548" placeholder=" ... end" />
+                <marker date="1466140265077" expanded="true" signature="3257:3548" placeholder="if ... end" />
+                <marker date="1466140265077" expanded="true" signature="6920:6930" placeholder="if ... end" />
+                <marker date="1466140265077" expanded="true" signature="6920:7014" placeholder="if ... end" />
+                <marker date="1466140265077" expanded="true" signature="6920:7079" placeholder=" ... end" />
               </folding>
             </state>
           </provider>
@@ -94,7 +195,7 @@
       <file leaf-file-name="application.html.erb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
+            <state relative-caret-position="360">
               <caret line="24" column="2" selection-start-line="24" selection-start-column="2" selection-end-line="24" selection-end-column="2" />
               <folding />
             </state>
@@ -149,7 +250,6 @@
         <option value="$PROJECT_DIR$/app/views/suggest/index.html.erb" />
         <option value="$PROJECT_DIR$/app/models/route_suggest.rb" />
         <option value="$PROJECT_DIR$/config/database.yml" />
-        <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/views/suggest/index (3).html" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/script_orca.js" />
         <option value="$PROJECT_DIR$/lib/exception/exception.rb" />
@@ -159,7 +259,6 @@
         <option value="$PROJECT_DIR$/lib/google/google_map.rb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/script.js" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/style.css" />
-        <option value="$PROJECT_DIR$/app/controllers/suggest_controller.rb" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/style1.css" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/script1.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/googlemapbutton.js" />
@@ -167,6 +266,8 @@
         <option value="$PROJECT_DIR$/app/models/route.rb" />
         <option value="$PROJECT_DIR$/app/controllers/payment_controller.rb" />
         <option value="$PROJECT_DIR$/app/helpers/paytm_payment_helper.rb" />
+        <option value="$PROJECT_DIR$/config/routes.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/suggest_controller.rb" />
       </list>
     </option>
   </component>
@@ -184,10 +285,9 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1" />
-    <option name="y" value="239" />
-    <option name="width" value="1356" />
-    <option name="height" value="714" />
+    <option name="y" value="-4" />
+    <option name="width" value="1366" />
+    <option name="height" value="772" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -214,8 +314,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="RailsProjectView" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -231,6 +329,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="sar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -454,7 +566,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="RailsProjectView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -722,6 +836,7 @@
       <workItem from="1465399952096" duration="613000" />
       <workItem from="1465451636852" duration="41000" />
       <workItem from="1465888595050" duration="22000" />
+      <workItem from="1466749168797" duration="222000" />
     </task>
     <task id="LOCAL-00001" summary="UI Fixes">
       <created>1463684556641</created>
@@ -748,7 +863,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="182197000" />
+    <option name="totallyTimeSpent" value="182419000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -760,10 +875,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1" y="239" width="1356" height="714" extended-state="0" />
+    <frame x="0" y="-4" width="1366" height="772" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40560472" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40263543" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3255814" sideWeight="0.49086577" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29767442" sideWeight="0.51969695" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930514" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -800,10 +915,17 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="ruby-line">
+          <url>file://$PROJECT_DIR$/app/controllers/suggest_controller.rb</url>
+          <line>509</line>
+          <option name="timeStamp" value="126" />
+        </line-breakpoint>
+      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="126" />
+      <option name="time" value="127" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -936,15 +1058,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/routes.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1035,13 +1148,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/suggest_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6405">
-          <caret line="427" column="54" selection-start-line="427" selection-start-column="54" selection-end-line="427" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/style1.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="11790">
@@ -1064,22 +1170,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/route.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5130">
-          <caret line="342" column="0" selection-start-line="342" selection-start-column="0" selection-end-line="342" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/script.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2205">
-          <caret line="147" column="30" selection-start-line="147" selection-start-column="30" selection-end-line="147" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/payment/makePayment.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -1089,8 +1179,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/helpers/paytm_payment_helper.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+        <state relative-caret-position="60">
+          <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -1105,19 +1195,126 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/payment_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3075">
-          <caret line="278" column="0" selection-start-line="278" selection-start-column="0" selection-end-line="278" selection-end-column="0" />
+        <state relative-caret-position="4170">
+          <caret line="279" column="0" selection-start-line="279" selection-start-column="0" selection-end-line="279" selection-end-column="0" />
           <folding>
-            <marker date="1465569446379" expanded="true" signature="6789:6799" placeholder="if ... end" />
-            <marker date="1465569446379" expanded="true" signature="6789:6883" placeholder="if ... end" />
+            <marker date="1466140265077" expanded="true" signature="215:361" placeholder="if ... end" />
+            <marker date="1466140265077" expanded="true" signature="394:552" placeholder=" ... end" />
+            <marker date="1466140265077" expanded="true" signature="400:544" placeholder="if ... end" />
+            <marker date="1466140265077" expanded="true" signature="574:612" placeholder=" ... end" />
+            <marker date="1466140265077" expanded="true" signature="639:680" placeholder=" ... end" />
+            <marker date="1466140265077" expanded="true" signature="701:748" placeholder=" ... end" />
+            <marker date="1466140265077" expanded="true" signature="787:1992" placeholder=" ... end" />
+            <marker date="1466140265077" expanded="true" signature="1038:1945" placeholder="if ... end" />
+            <marker date="1466140265077" expanded="true" signature="1074:1773" placeholder="if ... end" />
+            <marker date="1466140265077" expanded="true" signature="1258:1761" placeholder="if ... end" />
+            <marker date="1466140265077" expanded="true" signature="2015:2951" placeholder=" ... end" />
+            <marker date="1466140265077" expanded="true" signature="2022:2172" placeholder="if ... end" />
+            <marker date="1466140265077" expanded="true" signature="2598:2944" placeholder="if ... end" />
+            <marker date="1466140265077" expanded="true" signature="2635:2886" placeholder="if ... end" />
+            <marker date="1466140265077" expanded="true" signature="2972:2979" placeholder=" ... end" />
+            <marker date="1466140265077" expanded="true" signature="3002:3009" placeholder=" ... end" />
+            <marker date="1466140265077" expanded="true" signature="3029:3548" placeholder=" ... end" />
+            <marker date="1466140265077" expanded="true" signature="3257:3548" placeholder="if ... end" />
+            <marker date="1466140265077" expanded="true" signature="6920:6930" placeholder="if ... end" />
+            <marker date="1466140265077" expanded="true" signature="6920:7014" placeholder="if ... end" />
+            <marker date="1466140265077" expanded="true" signature="6920:7079" placeholder=" ... end" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
+        <state relative-caret-position="360">
           <caret line="24" column="2" selection-start-line="24" selection-start-column="2" selection-end-line="24" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/script.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-21300">
+          <caret line="102" column="30" selection-start-line="102" selection-start-column="30" selection-end-line="102" selection-end-column="30" />
+          <folding>
+            <marker date="1466667824525" expanded="true" signature="5417:5430" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="5658:5671" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="32280:32291" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="33681:33694" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="43364:43377" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="43516:43530" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="44845:44875" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="44903:44912" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="46909:46936" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="50371:50384" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="50997:51010" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="51155:51169" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="52270:52279" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="52381:52401" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="52514:52531" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="53529:53546" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="53900:53927" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="54290:54358" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="54614:54623" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="58852:58920" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="59229:59238" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="62310:62323" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="62462:62476" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="64966:64979" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="65554:65567" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="66903:66929" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="66981:67007" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="67121:67144" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="67176:67195" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="67755:67768" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="67907:67921" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="69417:69427" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="74314:74323" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="74478:74498" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="75243:75256" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="75811:75824" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="76667:76694" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="78807:78816" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="82154:82184" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="82221:82230" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="84230:84257" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="87903:87917" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="88027:88041" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="99872:99898" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="99997:100012" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="100158:100171" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="100184:100202" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="100251:100261" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="100274:100288" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="100474:100485" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="100611:100622" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="100874:100889" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="101012:101026" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="101208:101223" placeholder="..." />
+            <marker date="1466667824525" expanded="true" signature="101348:101362" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/route.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/routes.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/suggest_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="541">
+          <caret line="510" column="0" selection-start-line="510" selection-start-column="0" selection-end-line="510" selection-end-column="0" />
           <folding />
         </state>
       </provider>

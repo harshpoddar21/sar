@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   root 'suggest#base'
 get 'payment/paymentDone'
   get 'suggest/sendSms'
+  match 'suggest/images/:image' , to: "suggest#loadImage",via:[:get]
+  
   get 'payment/makePayment'
   post 'payment/makePayment'
 post 'suggest/createRoute'
