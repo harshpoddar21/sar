@@ -1045,7 +1045,7 @@ function switchScreen(scrno, obj){
 
             $(document).click(function toggleAboutUs() {
 
-                if ($('#aboutUsOverlay').is(':visible'))
+                if ($('#aboutUsOverlay').css("display")!="none")
                 {
                         $('#aboutUsOverlay, #grey-screen').hide();
 
