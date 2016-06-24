@@ -2039,12 +2039,12 @@ function fillWhatsAppLink(){
     var encodedPoints=google.maps.geometry.encoding.encodePath(path);
 
 
-    jQuery('#whatsapp').attr("href_send","whatsapp://send?text="+"Start your shuttl at Rs 3/Km.Just log on to http://myor.shuttl.com/suggest/index?paths="+encodedPoints+"&utm_source=whatsapp");
+    jQuery('#whatsapp').attr("href_send","whatsapp://send?text="+"We can save minimum 50% of our office travel cost. AC buses are available @ just Rs 3/Km. Suggest your home and office location and Shuttl will start the route: http://myor.shuttl.com/suggest/index?paths="+encodedPoints+"&utm_source=whatsapp");
 
     jQuery.ajax({url:"/suggest/getWhatsAppShareLink?phone_number="+info.phone_number+"&url="+"http://myor.shuttl.com/suggest/index?paths="+encodedPoints}).done(function(result){
 
         var url=result["whatsapp_url"];
-        jQuery('#whatsapp').attr("href_send","whatsapp://send?text=Start your shuttl at Rs 3/Km.Just log on to "+url);
+        jQuery('#whatsapp').attr("href_send","whatsapp://send?text=We can save minimum 50% of our office travel cost. AC buses are available @ just Rs 3/Km. Suggest your home and office location and Shuttl will start the route: "+url);
 
 
 
