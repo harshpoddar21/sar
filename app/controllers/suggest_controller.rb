@@ -503,6 +503,10 @@ class SuggestController < ApplicationController
 
 
   def new_lead
+    number=params[:clid]
+    Lead.create(:number=>number)
+    TelephonyManager.sendSms number,"Hi,We are excited to help you in making your office commute better.To get started please download Shuttl app http://bit.ly/downloadShuttl"
+    render :text=>"OK"
 
   end
 
@@ -510,6 +514,34 @@ class SuggestController < ApplicationController
     i=0
 
     redirect_to "https://myor.shuttl.com/images/"+params[:image]+"."+params[:format]
+
+  end
+
+
+  def messageReceived
+
+    phone_number=params[:from]
+
+    referralCode=params[:message]
+
+
+
+    if referralCode!=nil
+      referralCode.sub! "Shuttl",""
+      referralCode.sub! "shuttl",""
+      referralCode.gsub!(/\s+/,"")
+      exist=PosterReferral.find_by(:phone_number=>phone_number)
+      if exist==nil
+       PosterReferral.create(:code=>referralCode,:phone_number=>phone_number)
+       TelephonyManager.sendSms phone_number,"Hi, We are excited to help you in making your office commute better. To get started please download Shuttl app http://bit.ly/downloadShuttl"
+      else
+        TelephonyManager.sendSms phone_number,"Hi, We are excited to help you in making your office commute better. To get started please download Shuttl app http://bit.ly/downloadShuttl"
+      end
+
+    end
+
+
+    render :text=>"OK"
 
   end
 

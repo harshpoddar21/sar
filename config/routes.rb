@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   get 'suggest/showRouteFoundFromSlots'
 
+  get 'suggest/messageReceived'
+
+  get 'suggest/new_lead'
   get 'suggest/zoneCovered' =>"suggest#zoneCovered"
   get 'nps/submitNps'
   root 'suggest#base'

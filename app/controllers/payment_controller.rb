@@ -173,7 +173,7 @@ class PaymentController < ApplicationController
         end
       end
 
-      if phoneNumber=="8800846150"
+      if phoneNumber=="8130737777"
         @transaction.amount=1
       end
 
