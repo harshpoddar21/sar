@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer_number: MyText
+  from_str: MyText
+  from_mode: MyText
+  to_mode: MyText
+  from_time: MyText
+  to_time: MyText
+  routeid: 1
+  route_type: 1
+
+two:
+  customer_number: MyText
+  from_str: MyText
+  from_mode: MyText
+  to_mode: MyText
+  from_time: MyText
+  to_time: MyText
+  routeid: 1
+  route_type: 1

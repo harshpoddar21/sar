@@ -546,4 +546,63 @@ class SuggestController < ApplicationController
   end
 
 
+  def getSuggestionViaTab
+
+
+  end
+
+  def saveNewSuggestionTab
+    customer_number=params[:phone_number]
+    data=JSON.parse params[:data1]
+    customer_number=data["phone_number"]
+
+    from_str=data["homeAddress"]
+    to_str=data["officeAddress"]
+    pushSubStatus=data["pushSubscriptionStatus"]
+
+    subId=data["subscriberID"]
+    from_mode=""
+    to_mode=""
+    from_time=""
+    to_time=""
+    from_mode=data["commutework"].join(",") if data["commutework"]!=nil
+    to_mode=data["commutework"].join(",") if data["commutework"]!=nil
+    from_time=data["reachwork"].join(",") if data["reachwork"]!=nil
+    to_time=data["leavework"].join(",")  if data["leavework"]!=nil
+    routeid=0
+    if data["route_type"]==Route::ROUTE_DOES_NOT_EXISTS
+      route_type=1
+      routeid=0
+    else
+      route_type=data["route_type"]==Route::LIVE_ROUTE ? 2:3
+      routeid=data["routeid"].to_i
+    end
+
+    if customer_number!=nil && from_mode!=nil && to_mode!=nil && from_time!=nil && to_time!=nil && from_str!=nil && to_str!=nil
+
+      suggestion=GetSuggestionViaTab.new
+      suggestion.customer_number=customer_number
+      suggestion.from_str=from_str
+      suggestion.from_mode=from_mode
+      suggestion.from_time=from_time
+      suggestion.to_time=to_time
+      suggestion.to_str=to_str
+      suggestion.to_mode=to_mode
+      suggestion.route_type=route_type
+      suggestion.routeid=routeid
+      suggestion.save
+
+      render :text=>"OK"
+    else
+      render :text=>"Error"
+    end
+  end
+
+
+
+
+
+
+
+
 end

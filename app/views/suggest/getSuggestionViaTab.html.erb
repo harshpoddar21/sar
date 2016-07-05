@@ -1,0 +1,17 @@
+<%= stylesheet_link_tag    'style_tab', media: 'all', 'data-turbolinks-track' => true %>
+<div class="container_fluid">
+  <div class="header">
+    <div style="display: inline-block;">
+      <img onclick="clickLogo()" src="images/shuttl_logo.png" class="logo" />
+    </div>
+  </div>
+  <div class="screenWrapper fullheight">
+  </div>
+</div>
+<script>
+  var paymentFlow=2;
+</script>
+<%= javascript_include_tag 'script_tab', 'data-turbolinks-track' => true %>
+<div class="loader_wrapper">
+  <div class="loader_inner"></div>
+</div>

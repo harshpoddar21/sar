@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'suggest/showRouteFoundFromSlots'
 
+  get 'suggest/getSuggestionViaTab'
+  post 'suggest/saveNewSuggestionTab'
   get 'suggest/messageReceived'
 
   get 'suggest/new_lead'
