@@ -522,20 +522,34 @@ class SuggestController < ApplicationController
 
     phone_number=params[:from]
 
-    referralCode=params[:message]
+    message=params[:message]
+    if message!=nil
+      message.sub! "Shuttl",""
+      message.sub! "shuttl",""
+      message.gsub!(/\s+/,"")
+      message.downcase!
 
+      if message=="earn"
+        success,referralCode=Referral.getReferralCodeForUser(phone_number)
+        if !success
 
+          success,referralCode=Referral.createReferralCodeForUser(phone_number)
 
-    if referralCode!=nil
-      referralCode.sub! "Shuttl",""
-      referralCode.sub! "shuttl",""
-      referralCode.gsub!(/\s+/,"")
-      exist=PosterReferral.find_by(:phone_number=>phone_number)
-      if exist==nil
-       PosterReferral.create(:code=>referralCode,:phone_number=>phone_number)
-       TelephonyManager.sendSms phone_number,"Hi, We are excited to help you in making your office commute better. To get started please download Shuttl app http://bit.ly/downloadShuttl"
+          if !success
+            raise Exception,"Referral Code could not be generated"
+          end
+        end
+
+        TelephonyManager.sendSms phone_number,"Hello Shuttlr!, Please write "+referralCode.to_s+" on the blank spaces in the poster. Now you can earn 1 free ride for every new customer. Please note that ride will be credited to you after the customer buys a pass."
+
       else
-        TelephonyManager.sendSms phone_number,"Hi, We are excited to help you in making your office commute better. To get started please download Shuttl app http://bit.ly/downloadShuttl"
+
+        success,errorCode=Referral.referUser message,phone_number
+        if success
+          TelephonyManager.sendSms phone_number,"We are excited that you have decided to try Shuttl for your office commute. We hope that your travel with us is hassle free. Please download Shuttl app to have an awesome experience http://bit.ly/downloadShuttl and avail one more free ride."
+        else
+
+        end
       end
 
     end
