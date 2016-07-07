@@ -597,6 +597,7 @@ function switchScreen (scrno, obj){
             }
             var html = '<div class="col-md-12" style="height: 100%;">';
             html += '<div class = "select-boarding-point-home text-center"><h3> Select boarding point near home </h3> </div>';
+            html += '<button type="button" class = "boarding-point-home" data-value="Vaishali Metro"> Vaishali Metro </button>';
             html += '<button type="button" class = "boarding-point-home" data-value="Kaushambi Metro"> Kaushambi Metro </button>';
             html += '<button type="button" class = "boarding-point-home" data-value="Hassanpur Depot"> Hassanpur Depot </button>';
             html += '<button type="button" class = "boarding-point-home" data-value="Preetvihar Metro"> Preetvihar Metro </button>';

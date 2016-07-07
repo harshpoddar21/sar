@@ -505,7 +505,7 @@ class SuggestController < ApplicationController
   def new_lead
     number=params[:clid]
     Lead.create(:number=>number)
-    TelephonyManager.sendSms number,"Hi,We are excited to help you in making your office commute better.To get started please download Shuttl app http://bit.ly/downloadShuttl"
+    TelephonyManager.sendSms number,"i,WeH are excited to help you in making your office commute better.To get started please download Shuttl app http://bit.ly/downloadShuttl"
     render :text=>"OK"
 
   end
@@ -588,7 +588,8 @@ class SuggestController < ApplicationController
       suggestion.to_time=to_time
       suggestion.to_str=to_str
       suggestion.to_mode=to_mode
-      suggestion.route_type=route_type
+      suggestion.make_booking=data["makeBooking"]?1:0
+      suggesstion.route_type=route_type
       suggestion.routeid=routeid
       suggestion.save
 
@@ -596,7 +597,13 @@ class SuggestController < ApplicationController
     else
       render :text=>"Error"
     end
+    if data["makeBooking"]
+      TelephonyManager.sendSms customer_number,"We are excited that you have decided to try Shuttl for your office commute. We hope that your travel with us is hassle free. Please download Shuttl app to have an awesome experience http://bit.ly/downloadShuttl and avail one more free ride."
+    end
   end
+
+
+
 
 
 
