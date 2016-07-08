@@ -52,8 +52,8 @@ class CustomercareController < ApplicationController
     nLink=params[:nLink]
     phoneNumber=params[:phone_number]
     if content!=nil
-      content.gsub! "{pLink}",pLink
-      content.gsub! "{nLink}",nLink
+      content.gsub! "{pLink}",pLink if pLink!=nil
+      content.gsub! "{nLink}",nLink if nLink!=nil
       NewLead.sendSms phoneNumber,content
     end
 
