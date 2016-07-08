@@ -51,7 +51,7 @@ class NewLead < ActiveRecord::Base
       else
         self.user_id=UmsUser::USER_NOT_FOUND_ID
       end
-
+      self.user_id
     end
   end
 

@@ -7,12 +7,12 @@ class CustomercareController < ApplicationController
       render :json=>Response.new(false).to_json
       return
     end
-    fromDate=params[:fromDate].to_date
-    toDate=params[:toDate].to_date
+    fromDate=params[:fromDate]
+    toDate=params[:toDate]
 
     leads=Array.new
     if fromDate!=nil && toDate!=nil
-      customers=GetSuggestionViaTab.where(:created_at=>fromDate..toDate)
+      customers=GetSuggestionViaTab.where("unix_timestamp(created_at)>=#{fromDate} and unix_timestamp(created_at)<=#{toDate}")
       customers.each do |cust|
         leads.push NewLead.loadOrCreateByCustomer cust
       end
