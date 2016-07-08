@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  phone_number: MyText
+  whatsapp_status: 1
+  acquired_date: 2016-07-07 11:48:48
+  subscription_status: 1
+  count_link_sent: 1
+  count_clicked_on_positive: 1
+  count_clicked_on_negative: 1
+
+two:
+  phone_number: MyText
+  whatsapp_status: 1
+  acquired_date: 2016-07-07 11:48:48
+  subscription_status: 1
+  count_link_sent: 1
+  count_clicked_on_positive: 1
+  count_clicked_on_negative: 1

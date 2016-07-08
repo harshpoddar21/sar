@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   post 'suggest/saveNewSuggestionTab'
   get 'suggest/messageReceived'
 
+  get 'customercare/getData'
+  post 'customercare/getData'
+
   get 'suggest/new_lead'
   get 'suggest/zoneCovered' =>"suggest#zoneCovered"
   get 'nps/submitNps'

@@ -27,9 +27,17 @@ production:
   <<: *default
   database: sar
 
+
 old_db:
     adapter: mysql2
     host: 52.74.42.151
     username: shuttl
     password: hakunamatata
     database: shuttl
+
+ums_read_only_replica:
+    adapter: mysql2
+    host: 52.76.110.199
+    username: ums_read_only
+    password: uro24680
+    database: USER_MANAGEMENT_SYSTEMS

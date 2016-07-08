@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160707034722) do
+ActiveRecord::Schema.define(version: 20160707104036) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -96,6 +96,24 @@ ActiveRecord::Schema.define(version: 20160707034722) do
     t.float    "lng",        limit: 24
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+  end
+
+  create_table "new_leads", force: :cascade do |t|
+    t.text     "phone_number",              limit: 65535
+    t.integer  "whatsapp_status",           limit: 4
+    t.datetime "acquired_date"
+    t.integer  "subscription_status",       limit: 4
+    t.integer  "count_link_sent",           limit: 4
+    t.integer  "count_clicked_on_positive", limit: 4
+    t.integer  "count_clicked_on_negative", limit: 4
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.text     "from_location",             limit: 65535
+    t.text     "to_location",               limit: 65535
+    t.integer  "user_id",                   limit: 4
+    t.integer  "called",                    limit: 4
+    t.integer  "interested",                limit: 4
+    t.text     "response",                  limit: 65535
   end
 
   create_table "otp_messages", force: :cascade do |t|
