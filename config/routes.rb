@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   post 'suggest/saveNewSuggestionTab'
   get 'suggest/messageReceived'
 
+  get 'customercare/update_lead_data'
+  post 'customercare/update_lead_data'
+  get 'customercare/sendSMS'
+  post 'customercare/sendSMS'
   get 'customercare/getData'
   post 'customercare/getData'
 

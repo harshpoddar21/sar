@@ -1,6 +1,8 @@
 var Url={
 
-    "new_lead":"https://myor.shuttl.com/customercare/fetchData"
+    "new_lead":"https://myor.shuttl.com/customercare/getData",
+    "update_lead_data":"https://myor.shuttl.com/customercare/update_lead_data",
+    "send_sms":"https://myor.shuttl.com/customercare/sendsms"
 };
 
 var SheetColumn={
@@ -24,13 +26,23 @@ var SheetColumn={
     "RESPONSE":17
 
 };
+var JobStatus={
+
+    "IN_PROGRESS":0,
+    "DONE":1
+};
+var Constants={
+    "INTERESTED":0,
+    "NOT_INTERESTED":-1,
+    "STARTING_DATA_ROW":4
+};
 
 function Lead(phone_number,date_aquired,interested,from_point,to_point,no_messages,p_click_message,n_click_message,whatsapp_status,called,response,subscription_status){
 
 
     this.phoneNumber=phone_number;
     this.dateAquired=date_aquired;
-    this.interested=interested;
+    this.interested=(interested==Constants.INTERESTED)?"Yes":"No";
     this.fromPoint=from_point;
     this.toPoint=to_point;
     this.noOfMessages=no_messages;
@@ -38,9 +50,9 @@ function Lead(phone_number,date_aquired,interested,from_point,to_point,no_messag
     this.nClickMessage=n_click_message;
     this.whatsappAdded=whatsapp_status;
     this.whatsappLeft=whatsapp_status;
-    this.called=called;
-    this.response=response;
-    this.subscriptionStatus=subscription_status;
+    this.called=called==0?"No":"Yes";
+    this.response=response==null?"":response;
+    this.subscriptionStatus=subscription_status==2?"PLEDGE":subscription_status==1?"SUBSCRIPTION":"NONE";
 
 
 
@@ -52,19 +64,111 @@ function onChange(e) {
     if (refreshTheSheetV=="Yes"){
 
         refreshTheSheet();
+        ss.getRange("B2").setValue("No");
         return;
     }
-
-
-
 }
 
+
+function onEdit(e){
+
+    var sheet = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = sheet.getActiveSheet();
+    var range = e.range;
+    var row=range.getRow();
+    var value=range.getValue();
+    var column=range.getColumn();
+    var phoneNumber=ss.getRange(row,SheetColumn.PHONE_NUMBER).getValue();
+    if (row==2 && column==2){
+        refreshTheSheet();
+        return;
+
+    }else if (!(/\d{10,10}/.test(phoneNumber))){
+
+        return;
+    }else if (column==SheetColumn.INTERESTED && row>=Constants.STARTING_DATA_ROW){
+
+        changeInterestedStatusForNumber(phoneNumber,range.getValue());
+
+    }else if (column==SheetColumn.CALLED && row>=Constants.STARTING_DATA_ROW){
+
+        changeCalledStatus(phoneNumber,range.getValue());
+    }else if (column==SheetColumn.SEND_SMS_LINK && row>=Constants.STARTING_DATA_ROW && ss.getRange(row,SheetColumn.SEND_SMS_LINK,1,1).getValue()=="Yes"){
+
+        sendSMS(phoneNumber,ss.getRange(row,SheetColumn.CONTENT_SMS),ss.getRange(row,SheetColumn.POSITIVE_URL),ss.getRange(row,SheetColumn.NEGATIVE_URL));
+        ss.getRange(row,SheetColumn.NO_OF_MESSAGES,1,1).setValue(parseInt(ss.getRange(row,SheetColumn.NO_OF_MESSAGES,1,1).getValue())+1);
+        ss.getRange(row,SheetColumn.SEND_SMS_LINK,1,1).setValue("No");
+    }
+
+}
+function changeInterestedStatusForNumber(phoneNumber,isInterested){
+
+    changeJobStatus(JobStatus.IN_PROGRESS);
+    if (isInterested=="Yes"){
+
+        updateKeyValue(phoneNumber,"interested",0);
+    }else{
+
+        updateKeyValue(phoneNumber,"interested",-1);
+    }
+
+    changeJobStatus(JobStatus.DONE);
+}
+
+function changeCalledStatus(phoneNumber,value){
+
+    changeJobStatus(JobStatus.IN_PROGRESS);
+    if (value=="yes"){
+
+        updateKeyValue(phoneNumber,"called",1);
+    }else{
+
+        updateKeyValue(phoneNumber,"called",0);
+    }
+
+    changeJobStatus(JobStatus.DONE);
+}
+
+function sendSMS(phoneNumber,message,positiveLink,negativeLink){
+
+    changeJobStatus(JobStatus.IN_PROGRESS);
+    sendHttpPost(Url.send_sms,{"phone_number":phoneNumber,"content":message,"pLink":positiveLink,"nLink":negativeLink});
+
+    changeJobStatus(JobStatus.DONE);
+}
+
+
+function updateKeyValue(phoneNumber,key,value){
+
+
+    a={};
+    a[key]=value;
+    a["phone_number"]=phoneNumber;
+    sendHttpPost(Url.update_lead_data,a);
+}
+function changeJobStatus(status){
+
+
+    var sheet = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = sheet.getActiveSheet();
+    ss.getRange(F1).setValue(status==JobStatus.DONE?"DONE":"IN PROGRESS");
+
+}
 function refreshTheSheet(){
+
+
+    changeJobStatus(JobStatus.IN_PROGRESS);
     clearDataOnSheet();
+
+    var ss = SpreadsheetApp.getActive();
     var fromDate=ss.getRange("B1").getValue();
+
+    Logger.log(fromDate);
+
     var toDate=ss.getRange("C1").getValue();
 
-    response=sendHttpPost(Url.new_lead,{"fromDate":fromDate,"toDate":toDate});
+
+    response=sendHttpPost(Url.new_lead,{"fromDate":fromDate.getTime()/1000,"toDate":toDate.getTime()/1000});
     var leads=[];
     if (response!=null && response!=""){
 
@@ -72,9 +176,9 @@ function refreshTheSheet(){
 
         for (var i=0;i<response["data"].length;i++){
 
-            var responseO=response[i];
-            var lead=new Lead(responseO["phone_number"],responseO["acquired_date"],responseO["interested"],responseO["from_point"],
-                responseO["to_point"],responseO["count_link_sent"],responseO["count_clicked_on_positive"],responseO["count_clicked_on_negative"],
+            var responseO=response["data"][i];
+            var lead=new Lead(responseO["phone_number"],responseO["acquired_date"],responseO["interested"],responseO["from_location"],
+                responseO["to_location"],responseO["count_link_sent"],responseO["count_clicked_on_positive"],responseO["count_clicked_on_negative"],
                 responseO["whatsapp_status"],responseO["called"],responseO["response"],responseO["subscription_status"]);
             leads.push(lead);
         }
@@ -82,6 +186,8 @@ function refreshTheSheet(){
         renderLeadsOnSheet(leads);
     }
 
+    ss.getRange("B2").setValue("No");
+    changeJobStatus(JobStatus.DONE);
 
 }
 
@@ -89,7 +195,7 @@ function refreshTheSheet(){
 function clearDataOnSheet(){
 
     var ss = SpreadsheetApp.getActive();
-    var range = sheet.getRange("A4:P10000");
+    var range = ss.getRange("A4:P10000");
     range.clearContent();
 
 }
@@ -97,8 +203,8 @@ function clearDataOnSheet(){
 
 function renderLeadsOnSheet(leads){
 
-
-    var ss=SpreadsheetApp.getActive();
+    var sheet = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = sheet.getActiveSheet();
     if (leads!=null && leads.length>0){
 
 
@@ -139,12 +245,17 @@ function sendHttpPost(url,payload) {
     // automatically default to either 'application/x-www-form-urlencoded'
     // or 'multipart/form-data')
 
-    var options =
-    {
-        "method" : "post",
-        "payload" : payload
-    };
+    var i=0;
+    for (var key in payload){
 
-    resp=UrlFetchApp.fetch(url, options);
+        if (i==0){
+
+            url=url+"?"+key+"="+payload[key];
+        }else{
+            url=url+"&"+key+"="+payload[key];
+        }
+        i++;
+    }
+    resp=UrlFetchApp.fetch(url);
     return resp;
 }

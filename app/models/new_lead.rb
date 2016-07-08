@@ -10,6 +10,8 @@ class NewLead < ActiveRecord::Base
   WHATSAPP_NOT_LEFT=1
   LEAD_NOT_INTERESTED=1
   LEAD_INTERESTED=0
+  CALLED=1
+  NOT_CALLED=0
 
     def self.loadOrCreateByCustomer customer
 
@@ -20,6 +22,75 @@ class NewLead < ActiveRecord::Base
       new_lead
     end
 
+  def self.sendSms phoneNumber,message
+
+    lead=NewLead.find_by(:phone_number=>phoneNumber)
+
+    if lead!=nil
+      lead.count_link_sent=lead.count_link_sent==nil ? 1 : lead.count_link_sent+1
+      lead.save
+      TelephonyManager.sendSms lead.phone_number,message
+    end
+  end
+
+  def self.changeCalledStatus phoneNumber,value
+    new_lead=self.find_by(:phone_number=>phoneNumber)
+    if new_lead==nil
+      raise Exception,"Invalid phone number"
+    else
+
+      if value!=nil && (value.to_i==CALLED || value.to_i == NOT_CALLED)
+
+        new_lead.called=value.to_i
+        new_lead.save
+
+      else
+
+        raise Exception,"Invalid Value"
+
+      end
+
+    end
+  end
+  def self.changeInterestedStatus phoneNumber,value
+    new_lead=self.find_by(:phone_number=>phoneNumber)
+    if new_lead==nil
+      raise Exception,"Invalid phone number"
+    else
+
+      if value!=nil && (value.to_i==LEAD_INTERESTED || value.to_i == LEAD_NOT_INTERESTED)
+
+        new_lead.interested=value.to_i
+        new_lead.save
+
+      else
+
+        raise Exception,"Invalid Value"
+
+      end
+
+    end
+  end
+
+  def self.changeResponse phoneNumber,value
+    new_lead=self.find_by(:phone_number=>phoneNumber)
+    if new_lead==nil
+      raise Exception,"Invalid phone number"
+    else
+
+      if value!=nil
+
+        new_lead.response=value
+        new_lead.save
+
+      else
+
+        raise Exception,"Invalid Value"
+
+      end
+
+    end
+  end
 
   def subscription_status
     if self[:subscription_status]==SUBSCRIPTION_BOUGHT || self[:subscription_status]==PLEDGE_BOUGHT

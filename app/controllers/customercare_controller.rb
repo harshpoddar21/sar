@@ -24,6 +24,42 @@ class CustomercareController < ApplicationController
   end
 
 
+  def update_lead_data
+    key=params[:key]
+    value=params[:value]
+    phoneNumber=params[:phone_number]
+
+    if key==nil || value==nil || phoneNumber==nil
+      raise CustomError::ParamsException,"Invalid Input"
+    end
+
+    if key=="called"
+      NewLead.changeCalledStatus phoneNumber,value
+    elsif key=="interested"
+      NewLead.changeInterestedStatus phoneNumber,value
+    elsif key=="response"
+      NewLead.changeResponse phoneNumber,value
+    else
+      raise Exception,"Invalid Key"
+    end
+
+    render :json=>Response.new(true,{}).to_json
+  end
+
+  def sendSMS
+    content=params[:content]
+    pLink=params[:pLink]
+    nLink=params[:nLink]
+    phoneNumber=params[:phone_number]
+    if content!=nil
+      content.gsub! "{pLink}",pLink
+      content.gsub! "{nLink}",nLink
+      NewLead.sendSms phoneNumber,content
+    end
+
+
+    render :json=>Response.new(true,{}).to_json
+  end
 
 
 
