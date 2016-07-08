@@ -3,6 +3,7 @@ class PaymentController < ApplicationController
   PAYMENT_FAILED=2
   PAYMENT_TRIED=3
   PAYMENT_KEY="payment_status"
+
   def paymentError
     render "lazypay-error"
   end

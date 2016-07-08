@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   get 'suggest/showRouteFoundFromSlots'
 
+  get 's/:id' => "shortener#index" , as:"shorten"
+
+  get 's/:id/:sign' => "shortener#linkClicked"
   get 'suggest/getSuggestionViaTab'
   post 'suggest/saveNewSuggestionTab'
   get 'suggest/messageReceived'

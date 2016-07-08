@@ -505,7 +505,7 @@ class SuggestController < ApplicationController
   def new_lead
     number=params[:clid]
     Lead.create(:number=>number)
-    TelephonyManager.sendSms number,"i,WeH are excited to help you in making your office commute better.To get started please download Shuttl app http://bit.ly/downloadShuttl"
+    TelephonyManager.sendSms number,"Hi,We are excited to help you in making your office commute better.To get started please download Shuttl app http://bit.ly/downloadShuttl"
     render :text=>"OK"
 
   end

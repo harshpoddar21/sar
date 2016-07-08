@@ -16,6 +16,13 @@ class CustomercareController < ApplicationController
       customers.each do |cust|
         leads.push NewLead.loadOrCreateByCustomer cust
       end
+      customers=RouteSuggestionCombined.where("unix_timestamp(created_at)>=#{fromDate} and unix_timestamp(created_at)<=#{toDate}")
+      customers.each do |cust|
+        leads.push NewLead.loadOrCreateByCustomer cust
+      end
+
+
+
 
     end
 
@@ -51,9 +58,13 @@ class CustomercareController < ApplicationController
     pLink=params[:pLink]
     nLink=params[:nLink]
     phoneNumber=params[:phone_number]
-    if content!=nil
-      content.gsub! "{pLink}",pLink if pLink!=nil
-      content.gsub! "{nLink}",nLink if nLink!=nil
+    lead=NewLead.find_by(:phone_number=>phoneNumber)
+
+    if content!=nil && lead!=nil
+      urlSh=UrlShortener.create(:new_lead_id=>lead.id,:p_link=>pLink,:n_link=>nLink)
+
+      content.gsub! "{pLink}",urlSh.getPositiveLinkShortened if pLink!=nil
+      content.gsub! "{nLink}",urlSh.getNegativeLinkShortened if nLink!=nil
       NewLead.sendSms phoneNumber,content
     end
 
