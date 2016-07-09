@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get 'customercare/getData'
   post 'customercare/getData'
 
+  get 'show/laxminagar' => "shortener#laxminagar"
+
   get 'suggest/new_lead'
   get 'suggest/zoneCovered' =>"suggest#zoneCovered"
   get 'nps/submitNps'

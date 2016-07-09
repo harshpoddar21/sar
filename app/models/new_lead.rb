@@ -13,11 +13,11 @@ class NewLead < ActiveRecord::Base
   CALLED=1
   NOT_CALLED=0
 
-    def self.loadOrCreateByCustomer customer
+    def self.loadOrCreateByCustomer customer,channel
 
       new_lead=self.find_by(:phone_number=>customer.customer_number)
       if new_lead==nil
-        new_lead=NewLead.create(:phone_number=>customer.customer_number,:acquired_date=>customer.created_at,:from_location=>customer.from_str,:to_location=>customer.to_str)
+        new_lead=NewLead.create(:phone_number=>customer.customer_number,:acquired_date=>customer.created_at,:from_location=>customer.from_str,:to_location=>customer.to_str,:channel=>channel)
       end
       new_lead
     end
@@ -157,6 +157,11 @@ class NewLead < ActiveRecord::Base
 
   def interested
     whatsapp_status>>1==WHATSAPP_LEFT || count_clicked_on_negative>0 || self[:interested]==LEAD_NOT_INTERESTED ? LEAD_NOT_INTERESTED : LEAD_INTERESTED
+  end
+
+  def channel
+    self[:channel]==nil ? "TAB":self[:channel]
+
   end
 
 

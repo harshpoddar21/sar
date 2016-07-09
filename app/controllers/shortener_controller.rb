@@ -23,4 +23,8 @@ class ShortenerController < ApplicationController
   end
 
 
+  def laxminagar
+
+  end
+
 end
