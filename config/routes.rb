@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   post 'customercare/getData'
 
   get 'show/laxminagar' => "shortener#laxminagar"
+  get 'show/gazipur' => "shortener#gazipur"
+  get 'show/preetvihar' => "shortener#preetvihar"
+  get 'show/vaishali' => "shortener#vaishali"
 
   get 'suggest/new_lead'
   get 'suggest/zoneCovered' =>"suggest#zoneCovered"

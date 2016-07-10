@@ -26,5 +26,14 @@ class ShortenerController < ApplicationController
   def laxminagar
 
   end
+  def preetvihar
+
+  end
+  def vaishali
+
+  end
+  def gazipur
+
+  end
 
 end
