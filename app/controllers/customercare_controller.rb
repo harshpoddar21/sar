@@ -22,6 +22,13 @@ class CustomercareController < ApplicationController
         leads.push NewLead.loadOrCreateByCustomer cust,cust.channel
       end
 
+      customers=CustomerSuggestion.where("unix_timestamp('created_at')>=#{fromDate} and unix_timestamp(created_at)<=#{toDate}").where("routeid in (831,832.64)")
+      customers.each do |cust|
+        leads.push NewLead.loadOrCreateByCustomer cust,"myor"
+      end
+
+
+
 
 
 
