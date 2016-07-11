@@ -608,7 +608,7 @@ class SuggestController < ApplicationController
       suggestion.save
 
       if data["makeBooking"]
-        TelephonyManager.sendSms customer_number,"We are excited that you have decided to try Shuttl for your office commute. We hope that your travel with us is hassle free. Please download Shuttl app to have an awesome experience http://bit.ly/downloadShuttl and avail one more free ride."
+        TelephonyManager.sendSms customer_number,"We are excited that you have decided to try Shuttl for your office commute. Your booking id is #{}.We hope that your travel with us is hassle free."
       end
       render :text=>"OK"
     else

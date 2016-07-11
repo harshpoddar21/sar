@@ -165,5 +165,44 @@ class NewLead < ActiveRecord::Base
   end
 
 
+  def from_time
+
+    if self[:from_time]==nil
+      if channel=="TAB"
+        sug=GetSuggestionViaTab.where(:customer_number=>self[:phone_number]).last
+        if sug!=nil
+          self.from_time=sug.from_time
+          self.save
+          self[:from_time]
+        else
+          self.from_time="NA"
+          self.save
+          self[:from_time]
+        end
+      end
+    else
+      self[:from_time]
+    end
+  end
+
+  def to_time
+
+    if self[:to_time]==nil
+      if channel=="TAB"
+        sug=GetSuggestionViaTab.where(:customer_number=>self[:phone_number]).last
+        if sug!=nil
+          self.to_time=sug.to_time
+          self.save
+        else
+          self.to_time="NA"
+          self.save
+        end
+      end
+    else
+      self[:to_time]
+    end
+
+  end
+
 
 end
