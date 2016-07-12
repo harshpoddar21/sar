@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   post 'customercare/sendSMS'
   get 'customercare/getData'
   post 'customercare/getData'
+  get 'customercare/getBookingDetails'
+  post 'customercare/getBookingDetails'
 
   get 'restricted/getDetailsForLead'
 
