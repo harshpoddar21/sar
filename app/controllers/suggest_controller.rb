@@ -624,9 +624,4 @@ class SuggestController < ApplicationController
 
 
 
-
-
-
-
-
 end

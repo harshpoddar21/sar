@@ -88,8 +88,13 @@ class CustomercareController < ApplicationController
 
     bookings=UmsBooking.where("ROUTE_ID in (831,832,586,587)").where(:is_delete=>false).joins(" join USERS on BOOKINGS.USER_ID=USERS.USER_ID").select("BOOKINGS.*,USERS.*")
 
+
     userBookings=Hash.new
 
+    bookingFollowA=Hash.new
+    BookingFollow.all.each do |bo|
+      bookingFollowA[bo.booking_id]=bo
+    end
     bookings.each do |booking|
 
 
@@ -99,7 +104,19 @@ class CustomercareController < ApplicationController
 
       end
 
-      userBookings[booking["USER_ID"]].push booking
+      boo=Hash.new
+
+      booking.attributes.each do |key,value|
+
+        boo[key]=value
+
+      end
+      bFlow=bookingFollowA[boo["BOOKING_ID"]]
+
+      boo["called"]=bFlow==nil ? "No": bFlow.called==nil ? "No" : bFlow.called
+      boo["response"]=bFlow==nil ? "" : bFlow.response
+
+      userBookings[booking["USER_ID"]].push boo
 
     end
 
