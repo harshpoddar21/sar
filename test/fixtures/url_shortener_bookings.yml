@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  booking_id: 1
+  p_link: MyText
+  n_link: MyText
+
+two:
+  booking_id: 1
+  p_link: MyText
+  n_link: MyText

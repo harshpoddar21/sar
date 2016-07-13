@@ -1,6 +1,8 @@
 var URL={
 
-    "BOOKINGS":"http://myor.shuttl.com/customercare/getBookingDetails"
+    "BOOKINGS":"http://myor.shuttl.com/customercare/getBookingDetails",
+    "SEND_SMS":"http://myor.shuttl.com/customercare/sendSmsBooking",
+    "UPDATE_BOOKING_DATA":"http://myor.shuttl.com/customercare/updateBookingData"
 };
 
 var FORWARD_ROUTE=[586,831];
@@ -26,11 +28,19 @@ var CONFIGURATIONS={
         "POSITIVE_URL":13,
         "NEGATIVE_URL":14,
         "CONTENT_SMS":15,
-        "CALLED":16,
-        "RESPONSE":17
+        "SEND_SMS":16,
+        "CALLED":17,
+        "RESPONSE":18
 
     }
 };
+
+var JobStatus={
+
+    "IN_PROGRESS":0,
+    "DONE":1
+};
+
 
 function BookingUser(bookingId,phoneNumber,userId,totalForwardBooking,totalReverseBooking,lastForwardBookingTime,lastReverseBookingTime,discountedFare,subscriptionType,tripRating,whatsAppStatus,called,response){
 
@@ -103,8 +113,24 @@ function getRelevantBookingDetails(totalBookingDetails,fromDate,toDate){
     return relevantBookings;
 }
 
-function onChangeBookings(e) {
+function onChange(e) {
     var ss=SpreadsheetApp.getActive();
+    if (ss.getActiveSheet().getName()=="Bookings"){
+        var refreshTheSheetV=ss.getRange("B2").getValue();
+        onChangeBookings({range:ss.getRange("B2")});
+    }
+}
+
+
+function onChangeBookings(e) {
+
+    var range = e.range;
+    var row=range.getRow();
+    var value=range.getValue();
+    var column=range.getColumn();
+    var ss=SpreadsheetApp.getActive();
+    var bookingId=ss.getActiveSheet().getRange(row,CONFIGURATIONS.SHEET_COLUMN.BOOKING_ID,1,1).getValue();
+
 
     if (ss.getActiveSheet().getName()=="Bookings"){
 
@@ -113,14 +139,28 @@ function onChangeBookings(e) {
         if (refreshTheSheetV=="Yes"){
 
             refreshTheBookingSheet();
+        }else if (row>CONFIGURATIONS.DATA_START_INDEX && column==CONFIGURATIONS.SHEET_COLUMN.CALLED){
+
+            changeCalledStatus(bookingId,value);
+        }
+        else if (row> CONFIGURATIONS.DATA_START_INDEX && column==CONFIGURATIONS.SHEET_COLUMN.RESPONSE){
+
+            changeResponse(bookingId,value);
+        }else if (row>CONFIGURATIONS.DATA_START_INDEX && column==CONFIGURATIONS.SHEET_COLUMN.SEND_SMS){
+
+            sendSMS(bookingId,ss.getRange(row,CONFIGURATIONS.SHEET_COLUMN.CONTENT_SMS,1,1).getValue(),
+                ss.getRange(row,CONFIGURATIONS.SHEET_COLUMN.POSITIVE_URL,1,1).getValue(),
+                ss.getRange(row,CONFIGURATIONS.SHEET_COLUMN.NEGATIVE_URL,1,1).getValue());
         }
     }
 }
 
 
 function refreshTheBookingSheet(){
+    changeJobStatus(JobStatus.IN_PROGRESS);
 
-
+    clearDataOnSheet();
+    var ss=SpreadsheetApp.getActive();
     var fromDate=ss.getRange("B1").getValue();
     var toDate=ss.getRange("C1").getValue();
 
@@ -132,7 +172,7 @@ function refreshTheBookingSheet(){
         var userLastBoardingTime=response[userid][response[userid].length-1]["BOARDING_TIME"];
         if (userLastBoardingTime>=fromDate.getTime() && userLastBoardingTime<=toDate.getTime()){
 
-           var relevantBookings=getRelevantBookingDetails(response[userid],fromDate.getTime(),toDate.getTime());
+            var relevantBookings=getRelevantBookingDetails(response[userid],fromDate.getTime(),toDate.getTime());
 
             if (relevantBookings!=null){
 
@@ -146,13 +186,16 @@ function refreshTheBookingSheet(){
     }
 
     renderBookings(overallRelevantBookings);
-    
+
+    var sheet = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = sheet.getActiveSheet();
+    ss.getRange("B2").setValue("No");
+    changeJobStatus(JobStatus.DONE);
 }
 
 
 function renderBookings(bookings){
 
-    clearDataOnSheet();
     var sheet = SpreadsheetApp.getActiveSpreadsheet();
     var ss = sheet.getActiveSheet();
     for (var i=0;i<bookings.length;i++){
@@ -169,25 +212,77 @@ function renderBookings(bookings){
         ss.getRange(CONFIGURATIONS.DATA_START_INDEX+i,CONFIGURATIONS.SHEET_COLUMN.TOTAL_FORWARD_BOOKINGS,1,1).setValue(l.totalForwardBooking);
         ss.getRange(CONFIGURATIONS.DATA_START_INDEX+i,CONFIGURATIONS.SHEET_COLUMN.TOTAL_REVERSE_COOKINGS,1,1).setValue(l.totalReverseBooking);
         ss.getRange(CONFIGURATIONS.DATA_START_INDEX+i,CONFIGURATIONS.SHEET_COLUMN.DISCOUNTED_FARE,1,1).setValue(l.discountedFare);
-        
-
+        ss.getRange(CONFIGURATIONS.DATA_START_INDEX+i,CONFIGURATIONS.SHEET_COLUMN.TRIP_RATING,1,1).setValue(l.tripRating);
+        ss.getRange(CONFIGURATIONS.DATA_START_INDEX+i,CONFIGURATIONS.SHEET_COLUMN.SUBSCRIPTION_TYPE,1,1).setValue(l.subscriptionType);
+        ss.getRange(CONFIGURATIONS.DATA_START_INDEX+i,CONFIGURATIONS.SHEET_COLUMN.SEND_SMS,1,1).setValue("No");
     }
-    
-    
+
+
 }
+
+
+function changeJobStatus(status){
+
+
+    var sheet = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = sheet.getActiveSheet();
+    ss.getRange("E1").setValue(status==JobStatus.DONE?"DONE":"IN PROGRESS");
+
+}
+
 
 
 
 
 function clearDataOnSheet(){
 
-        var ss = SpreadsheetApp.getActive();
-        var range = ss.getRange("A"+CONFIGURATIONS.DATA_START_INDEX+":P10000");
-        range.clearContent();
+    var ss = SpreadsheetApp.getActive();
+    var range = ss.getRange("A"+CONFIGURATIONS.DATA_START_INDEX+":Q10000");
+    range.clearContent();
 
+}
+
+function changeCalledStatus(bookingId,value){
+
+    changeJobStatus(JobStatus.IN_PROGRESS);
+    if (value=="yes"){
+
+        updateKeyValue(bookingId,"called",1);
+    }else{
+
+        updateKeyValue(bookingId,"called",0);
     }
 
+    changeJobStatus(JobStatus.DONE);
+}
 
+
+
+function changeResponse(bookingId,response){
+
+    changeJobStatus(JobStatus.IN_PROGRESS);
+    updateKeyValue(bookingId,"response",response);
+    changeJobStatus(JobStatus.DONE);
+}
+
+
+function updateKeyValue(bookingId,key,value){
+
+
+    a={};
+    a["key"]=key;
+    a["value"]=value;
+    a["booking_id"]=bookingId;
+    sendHttpPost(URL.UPDATE_BOOKING_DATA,a);
+}
+
+function sendSMS(bookingId,message,positiveLink,negativeLink){
+
+    changeJobStatus(JobStatus.IN_PROGRESS);
+    sendHttpPost(URL.SEND_SMS,{"booking_id":bookingId,"content":message,"pLink":positiveLink,"nLink":negativeLink});
+
+    changeJobStatus(JobStatus.DONE);
+}
 
 function sendHttpPost(url,payload) {
 
@@ -222,5 +317,3 @@ function sendHttpPost(url,payload) {
      return resp;
      */
 }
-
-

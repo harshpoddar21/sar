@@ -108,6 +108,51 @@ class CustomercareController < ApplicationController
   end
 
 
+  def updateKeyValueForBooking
+
+    key=params[:key]
+    value=params[:value]
+    bookingId=params[:booking_id]
+    if key==nil || value == nil || bookingId==nil
+      throw CustomError::ParamsException,"Invalid parameters"
+    else
+
+      if key== "called"
+
+        BookingFollow.changeCalledStatusForBookingId bookingId,value
+      elsif key=="response"
+        BookingFollow.changeResponseForBookingId bookingId,value
+      else
+
+      end
+
+    end
+
+
+    render :json=>Response.new(true,{}).to_json
+
+  end
+
+  def sendSmsForBooking
+    content=params[:content]
+    pLink=params[:pLink]
+    nLink=params[:nLink]
+    bookingId=params[:booking_id]
+    if content!=nil && bookingId!=nil
+      urlSh=UrlShortenerBooking.create(:booking_id=>bookingId,:p_link=>pLink,:n_link=>nLink)
+
+      content.gsub! "{pLink}",urlSh.getPositiveLinkShortened if pLink!=nil
+      content.gsub! "{nLink}",urlSh.getNegativeLinkShortened if nLink!=nil
+      BookingFollow.sendSms bookingId,content
+    end
+
+
+    render :json=>Response.new(true,{}).to_json
+
+
+  end
+
+
 end
 
 

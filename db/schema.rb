@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160711084359) do
+ActiveRecord::Schema.define(version: 20160713061512) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -30,6 +30,19 @@ ActiveRecord::Schema.define(version: 20160711084359) do
     t.string  "ROUTE_ID",          limit: 20
     t.string  "HOME_PICKUP",       limit: 255
     t.string  "OFFICE_DROP",       limit: 255
+  end
+
+  create_table "booking_follows", force: :cascade do |t|
+    t.integer  "booking_id",                limit: 4
+    t.text     "phone_number",              limit: 65535
+    t.text     "called",                    limit: 65535
+    t.text     "response",                  limit: 65535
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.integer  "trip_rating",               limit: 4
+    t.integer  "count_link_sent",           limit: 4
+    t.integer  "count_clicked_on_positive", limit: 4
+    t.integer  "count_clicked_on_negative", limit: 4
   end
 
   create_table "customer_suggestions", force: :cascade do |t|
@@ -255,6 +268,14 @@ ActiveRecord::Schema.define(version: 20160711084359) do
     t.text     "route_type",   limit: 65535
     t.integer  "routeid",      limit: 4
     t.text     "referred_by",  limit: 65535
+  end
+
+  create_table "url_shortener_bookings", force: :cascade do |t|
+    t.integer  "booking_id", limit: 4
+    t.text     "p_link",     limit: 65535
+    t.text     "n_link",     limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "url_shorteners", force: :cascade do |t|

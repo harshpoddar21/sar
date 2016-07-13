@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  booking_id: 1
+  phone_number: 1
+  called: MyText
+  response: MyText
+
+two:
+  booking_id: 1
+  phone_number: 1
+  called: MyText
+  response: MyText

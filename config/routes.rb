@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   get 's/:id' => "shortener#index" , as:"shorten"
 
   get 's/:id/:sign' => "shortener#linkClicked"
+  get 'b/:id/:sign' => "shortener#linkClickedBooking"
+
+
+
   get 'suggest/getSuggestionViaTab'
   post 'suggest/saveNewSuggestionTab'
   get 'suggest/messageReceived'
@@ -16,6 +20,11 @@ Rails.application.routes.draw do
   post 'customercare/getData'
   get 'customercare/getBookingDetails'
   post 'customercare/getBookingDetails'
+  get 'customercare/updateKeyValueForBooking'
+  post 'customercare/updateKeyValueForBooking'
+  get 'customercare/sendSmsForBooking'
+  post 'customercare/sendSmsForBooking'
+
 
   get 'restricted/getDetailsForLead'
 

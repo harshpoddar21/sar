@@ -22,6 +22,22 @@ class ShortenerController < ApplicationController
     end
   end
 
+  def linkClickedBooking
+    @redirectUrl="https://myor.shuttl.com"
+    urlSh=UrlShortenerBooking.find_by(:id=>params[:id])
+    if urlSh==nil
+    else
+      if params[:sign]==1.to_s
+        @redirectUrl=urlSh.p_link
+        urlSh.positiveLinkClicked
+      elsif params[:sign]==2.to_s
+        @redirectUrl=urlSh.n_link
+        urlSh.negativeLinkClicked
+      else
+
+      end
+    end
+  end
 
   def laxminagar
 
