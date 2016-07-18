@@ -409,8 +409,9 @@ end
             if possibleOriginRoutes[key]==nil
               possibleOriginRoutes[key]=Array.new
             end
-            if distance[key]==nil || distance[key]>LocationUtil.distance(origin,[value["lat"],value["lng"]])
-            distance[key]=LocationUtil.distance(origin,[value["lat"],value["lng"]])
+            leastDistancePoint=findLeastDistancePoint value,origin
+            if distance[key]==nil || distance[key]>LocationUtil.distance(origin,[leastDistancePoint["lat"],leastDistancePoint["lng"]])
+            distance[key]=LocationUtil.distance(origin,[leastDistancePoint["lat"],leastDistancePoint["lng"]])
             end
             possibleOriginRoutes[key]=possibleOriginRoutes[key]+value
           end
