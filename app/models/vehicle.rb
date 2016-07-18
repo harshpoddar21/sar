@@ -165,7 +165,7 @@ class Vehicle
 
   def refreshEtaForDiffPoints
 
-    if routeId!=45 || routeId!=64 || routeId!=73
+    if routeId!=45 && routeId!=64 && routeId!=73
       return "Invalid route id"
     end
     etaResponse=EtaResponse.new
