@@ -404,7 +404,7 @@ end
         originC=origin.dup
         originC[0]=originC[0]+GRID_RES*offset
         originC[1]=originC[1]+GRID_RES*offset2
-        if (@@routeSuggestMap[getMapKeyFor originC]!=nil)
+        if @@routeSuggestMap[getMapKeyFor originC]!=nil
           @@routeSuggestMap[getMapKeyFor originC].each do |key,value|
             if possibleOriginRoutes[key]==nil
               possibleOriginRoutes[key]=Array.new
