@@ -17,7 +17,7 @@ class Vehicle
       self.routeId=trip.routeid
       if routeId==831
 
-        if Rails.env.production?
+        if Rails.env.production? || true
 
           self.routeId=64
         else
@@ -26,7 +26,7 @@ class Vehicle
         end
       else
 
-        if Rails.env.production?
+        if Rails.env.production? || true
 
           self.routeId=73
         else
@@ -165,7 +165,7 @@ class Vehicle
 
   def refreshEtaForDiffPoints
 
-    if routeId!=45
+    if routeId!=45 || routeId!=64 || routeId!=73
       return "Invalid route id"
     end
     etaResponse=EtaResponse.new
