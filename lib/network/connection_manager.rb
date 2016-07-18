@@ -16,6 +16,7 @@ module ConnectionManager
     res = Net::HTTP.start(uri.hostname, uri.port) do |http|
       http.request(req)
     end
+    puts res
     res
   end
 end

@@ -41,3 +41,10 @@ ums_read_only_replica:
     username: ums_read_only
     password: uro24680
     database: USER_MANAGEMENT_SYSTEMS
+
+operations:
+    adapter: mysql2
+    host: 52.74.42.151
+    username: analytics
+    password: analytics@123
+    database: shuttl

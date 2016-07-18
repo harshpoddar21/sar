@@ -7,11 +7,16 @@ Rails.application.routes.draw do
   get 'b/:id/:sign' => "shortener#linkClickedBooking"
 
 
+  get 'service/tracking' => 'service#tracking'
+  post 'service/tracking' => 'service#tracking'
+  get 'service/getDriverInfo'
+  get 'service/getPickUpPointsForRoute'
+  get 'service/refreshEtaForDiffPoints'
+  
 
   get 'suggest/getSuggestionViaTab'
   post 'suggest/saveNewSuggestionTab'
   get 'suggest/messageReceived'
-
   get 'customercare/update_lead_data'
   post 'customercare/update_lead_data'
   get 'customercare/sendSMS'

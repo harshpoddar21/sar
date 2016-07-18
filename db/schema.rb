@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713061512) do
+ActiveRecord::Schema.define(version: 20160715063359) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -185,6 +185,15 @@ ActiveRecord::Schema.define(version: 20160713061512) do
     t.decimal "end_lon",             precision: 8, scale: 6
   end
 
+  create_table "route_eta_statuses", force: :cascade do |t|
+    t.integer  "routeid",    limit: 4
+    t.integer  "eta_status", limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "driverid",   limit: 4
+    t.integer  "trip_id",    limit: 4
+  end
+
   create_table "route_exists", force: :cascade do |t|
     t.text     "name",         limit: 65535
     t.text     "route_points", limit: 65535
@@ -268,6 +277,17 @@ ActiveRecord::Schema.define(version: 20160713061512) do
     t.text     "route_type",   limit: 65535
     t.integer  "routeid",      limit: 4
     t.text     "referred_by",  limit: 65535
+  end
+
+  create_table "trip_eta", force: :cascade do |t|
+    t.integer  "eta",        limit: 4
+    t.integer  "locationid", limit: 4
+    t.integer  "routeid",    limit: 4
+    t.integer  "start_time", limit: 4
+    t.text     "remarks",    limit: 65535
+    t.integer  "driverid",   limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "url_shortener_bookings", force: :cascade do |t|

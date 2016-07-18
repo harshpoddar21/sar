@@ -1,7 +1,7 @@
 class Route
 
-
-  attr_accessor :routeType,:routePoints,:name,:id,:pricing
+  THRESHOLD_TIME_FOR_ROUTE_END = 4*3600
+  attr_accessor :routeType,:routePoints,:name,:id,:pricing,:pickUpPoint
 
   THRESHOLD_DISTANCE_TO_CONSIDER=100
   GRID_RES=0.001
@@ -11,6 +11,32 @@ class Route
   ZONAL_WIDTH=30
   @@routeExistMap=Hash.new
   @@routeSuggestMap=Hash.new
+
+
+  def self.getRouteByRouteId route_type,routeId
+    route=Route.new
+    route.routeType=route_type
+    route.id=routeId
+
+    return route
+
+
+  end
+
+
+  def getPickUpPoints
+
+    if pickUpPoint!=nil
+      return pickUpPoint
+    end
+    if routeType==SUGGESTED_ROUTE
+
+      pickUpPoint=PickUp.where(:routeid => id)
+
+    end
+
+    return pickUpPoint
+  end
 
   def self.getRouteBetween(origin,destination)
 
@@ -366,6 +392,7 @@ end
   end
 
 
+
   def self.getRouteSuggestedBetweenPoints(origin,destination)
     possibleOriginRoutes=Hash.new
     possibleDestinationRoutes=Hash.new
@@ -382,8 +409,8 @@ end
             if possibleOriginRoutes[key]==nil
               possibleOriginRoutes[key]=Array.new
             end
-            if distance[key]==nil || distance[key]>LocationUtil.distance(origin,originC)
-            distance[key]=LocationUtil.distance(origin,originC)
+            if distance[key]==nil || distance[key]>LocationUtil.distance(origin,[value["lat"],value["lng"]])
+            distance[key]=LocationUtil.distance(origin,[value["lat"],value["lng"]])
             end
             possibleOriginRoutes[key]=possibleOriginRoutes[key]+value
           end
@@ -429,6 +456,52 @@ end
     return nil
   end
 
+
+  def self.getPositionOfCoordWithinSuggestedRoute lat,lng,routeId
+
+    origin=[lat.to_f,lng.to_f]
+    pointF=nil
+    distanceToPoint=1000000000
+    (-1..1).each do |offset|
+      (-1..1).each do |offset2|
+        originC=origin.dup
+        originC[0]=lat+GRID_RES*offset
+        originC[1]=lng+GRID_RES*offset2
+        if (@@routeSuggestMap[getMapKeyFor originC]!=nil)
+          @@routeSuggestMap[getMapKeyFor originC].each do |key,value|
+            point=findLeastDistancePoint value,origin
+            if key.to_i==routeId.to_i && LocationUtil.distance(origin,[point["lat"].to_f,point["lng"].to_f]) < distanceToPoint
+
+              pointF=point
+
+              distanceToPoint=LocationUtil.distance(origin,[pointF["lat"],pointF["lng"]])
+            end
+
+          end
+        end
+      end
+
+    end
+
+    [pointF,distanceToPoint]
+  end
+
+  def self.findLeastDistancePoint allPoints,fromPoint
+    selPoint=nil
+
+    distance=10000000000
+    allPoints.each do |p|
+
+      if LocationUtil.distance([p["lat"],p["lng"]],fromPoint) < distance
+
+        distance=LocationUtil.distance([p["lat"],p["lng"]],fromPoint)
+        selPoint=p
+
+      end
+
+    end
+    selPoint
+  end
 
   def self.createRoute name,pick,timestamp,pricing,routeType
 

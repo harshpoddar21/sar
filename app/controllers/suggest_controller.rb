@@ -570,6 +570,7 @@ class SuggestController < ApplicationController
     data=JSON.parse params[:data1]
     customer_number=data["phone_number"]
 
+
     from_str=data["homeAddress"]
     to_str=data["officeAddress"]
     pushSubStatus=data["pushSubscriptionStatus"]
@@ -616,6 +617,7 @@ class SuggestController < ApplicationController
       render :text=>"ERROR"
     end
   end
+
 
 
 
