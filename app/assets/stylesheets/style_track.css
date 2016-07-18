@@ -1,0 +1,287 @@
+body{
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
+    text-align: center;
+    background: white;
+    color: #333333;
+}
+
+div#main-wrapper{
+    max-width: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 100%;
+}
+
+div.header-container{
+    height: 65px;
+    padding: 8px;
+    font-size: 20px;
+    box-sizing: content-box;
+}
+
+
+div.header-container .shuttl-logo {
+    width: 90px;
+}
+
+div.header-container .shuttl-logo .logo {
+    max-width: 100%;
+}
+
+
+div.footer-container {
+
+    padding: 16px 8px 16px 8px;
+    font-size: 22px;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+
+div.route-map {
+    text-align: center;
+    padding: 0;
+}
+
+div.route-map .start-end {
+    font-size: 10px;
+    padding: 5px 0 5px 0;
+    position: relative;
+    right: 50%;
+}
+
+div.route-map .shuttl-image {
+    /*background: white;
+    background-image: url(images/Shuttl.png);
+    background-size: cover;*/
+    position: absolute;
+    height: 18px;
+    width: 35px;
+    z-index: 200;
+    left: -16px;
+    top:0px;
+    background: white;
+}
+
+div.route-map .pickup-point-container {
+    position: relative;
+    border-left: 2px solid #e5e5e5;
+    border-top-left-radius: 2px;
+    margin-left: 0px;
+    padding-left: 15px;
+    opacity: 50;
+}
+
+div.route-map .pickupPointRow {
+   /* padding: 5px 0 5px 0;*/
+    position: relative;
+    height: 7vh;
+}
+
+
+div.route-map .pickupPointRow.odd-row .pickupPointInformation{
+text-align: left;
+    position: relative;
+    left: 10%;
+}
+
+div.route-map .pickupPointRow.even-row .pickupPointInformation{
+    text-align: right;
+    position: relative;
+    right: 130%;
+}
+
+div.route-map .pickupPointRow + .nextPickupPointRow {
+    color: #00adb7;
+}
+
+div.route-map .pickupPoint {
+    font-size: 14px;
+}
+
+div.route-map .landmark {
+    font-style: italic;
+    font-size: 12px;
+}
+
+div.route-map .pickupPointRow .circle{
+    position: absolute;
+    left: -22px;
+    top: 9px;
+    width: 12px;
+    height: 12px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: #333333;
+}
+div.route-map .pickupPointRow .circle.point-crossed {
+    background: #ee4050;
+}
+div.route-map .pickupPointRow .circle.points-left {
+    background: green;
+}
+
+div.route-map .pickupPointRow + .nextPickupPointRow .circle{
+    background: #00adb7;
+}
+
+div.route-map .pickupPointRow .circle.shuttlImage {
+    background: white;
+    background-image: url(images/Shuttl.png);
+    height: 18px;
+    width: 35px;
+    z-index: 200;
+    background-size: cover;
+    left: -35px;
+}
+
+div.tracking-info-column {
+
+}
+
+div.tracking-info-column .vertical-center {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@media only screen and (min-device-width: 380px)
+{
+    div.route-map .pickupPoint {
+        font-size: 16px;
+    }
+
+    div.route-map .landmark {
+        font-style: italic;
+        font-size: 12px;
+    }
+
+    div.header-container{
+        font-size: 22px;
+    }
+}
+
+@media only screen and (min-device-width: 550px)
+{
+
+    div.route-map .pickupPoint {
+        font-size: 26px;
+    }
+
+    div.route-map .landmark {
+        font-size: 24px;
+    }
+
+    div.route-map .pickup-point-container {
+        border-left: 5px solid #333333;
+    }
+
+    div.header-container{
+        font-size: 40px;
+        height: 150px;
+    }
+
+    div.route-map .pickupPointRow .circle{
+        left: -28px;
+        width: 20px;
+        height: 20px;
+    }
+
+    div.route-map .start-end {
+        font-size: 16px;
+    }
+
+    div.footer-container {
+        font-size: 40px;
+    }
+
+    div.header-container .shuttl-logo{
+        width: 160px;
+    }
+}
+
+@-webkit-keyframes shuttlBlink {
+    from, to {
+        background: green;
+    }
+    50% {
+        background: orange;
+    }
+}
+
+@keyframes shuttlBlink {
+    from, to {
+        background: green;
+    }
+    50% {
+        background: orange;
+    }
+}
+
+.point-next {
+    -webkit-animation: shuttlBlink 1s step-end infinite;
+    animation: shuttlBlink 1s step-end infinite;
+}
+
+#irc_la {
+    left: -6px;
+}
+.irc_but:hover {
+    background-color: #3d3d3d;
+    background-image: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,#4e4e4e),color-stop(1,#474747));
+    background-image: -webkit-linear-gradient(top,#4e4e4e,#474747);
+    background-image: linear-gradient(top,#4e4e4e,#474747);
+    border: 1px solid #191919;
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.09),1px 1px 0 rgba(255,255,255,.05),-1px -1px 0 rgba(0,0,0,.02),inset 1px 1px 0 rgba(255,255,255,.05);
+    box-shadow: 0 1px 0 rgba(255,255,255,.09),1px 1px 0 rgba(255,255,255,.05),-1px -1px 0 rgba(0,0,0,.02),inset 1px 1px 0 rgba(255,255,255,.05);
+    color: #bbb !important;
+}
+.irc_but {
+    background-color: #454545;
+    background-image: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,#3e3e3e),color-stop(1,#333));
+    background-image: -webkit-linear-gradient(top,#3e3e3e,#333);
+    background-image: linear-gradient(top,#3e3e3e,#333);
+    border: 1px solid #141414;
+    border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.06),1px 1px 0 rgba(255,255,255,.03),-1px -1px 0 rgba(0,0,0,.02),inset 1px 1px 0 rgba(255,255,255,.05);
+    box-shadow: 0 1px 0 rgba(255,255,255,.06),1px 1px 0 rgba(255,255,255,.03),-1px -1px 0 rgba(0,0,0,.02),inset 1px 1px 0 rgba(255,255,255,.05);
+    color: #aaa !important;
+    cursor: pointer !important;
+    display: inline-block;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#303030',EndColorStr='#262626');
+    font-size: 11px;
+    font-weight: bold;
+    margin: 0 5px;
+    outline: 0;
+    text-align: center;
+    text-decoration: none !important;
+    text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+    -webkit-user-select: none;
+    white-space: normal;
+    word-wrap: normal;
+}
+._GKb {
+    height: 77px;
+    padding: 0;
+    position: absolute;
+    width: 32px;
+    z-index: 1;
+}
+#irc_ra {
+    transform: scaleX(-1);
+    transform: scaleX(-1);
+    right: -6px;
+}
+.errorBlock{
+
+    background: #f00;
+    z-index: 1000000;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 50px;
+}

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get 'service/getDriverInfo'
   get 'service/getPickUpPointsForRoute'
   get 'service/refreshEtaForDiffPoints'
-  
+
 
   get 'suggest/getSuggestionViaTab'
   post 'suggest/saveNewSuggestionTab'

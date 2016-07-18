@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  eta: 1
+  locationid: 1
+  routeid: 1
+  start_time: 1
+  remarks: MyText
+  driverid: 1
+
+two:
+  eta: 1
+  locationid: 1
+  routeid: 1
+  start_time: 1
+  remarks: MyText
+  driverid: 1
