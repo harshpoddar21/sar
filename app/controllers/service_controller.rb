@@ -40,7 +40,7 @@ class ServiceController < ApplicationController
   def getPickUpPointsForRoute
     routeId=params[:routeId]
     routeType=Route::LIVE_ROUTE
-    if routeId==831
+    if routeId==831.to_s
 
       routeType=Route::SUGGESTED_ROUTE
       if Rails.env.production?
