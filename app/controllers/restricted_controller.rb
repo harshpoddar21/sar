@@ -18,4 +18,12 @@ class RestrictedController < ApplicationController
   end
 
 
+  def feedbackReceived
+
+    phoneNumber=params[:caller]
+    keypress=params[:keypress]
+    logger.info params.to_json
+    render :text=>"OK"
+  end
+
 end

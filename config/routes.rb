@@ -17,6 +17,19 @@ Rails.application.routes.draw do
   get 'suggest/getSuggestionViaTab'
   post 'suggest/saveNewSuggestionTab'
   get 'suggest/messageReceived'
+  get 'suggest/new_lead'
+  get 'suggest/zoneCovered' =>"suggest#zoneCovered"
+  get 'suggest/sendSms'
+  match 'suggest/images/:image' , to: "suggest#loadImage",via:[:get]
+  get 'suggest/getSlots'
+  get 'suggest/getFromTo'
+  get 'suggest/getPath'
+  get 'suggest/generateWhatsAppShareLinkForUser'
+  get 'suggest/getSlotsWithCoords'
+  get 'suggest/sendOtp'
+  get 'suggest/verifyOtp'
+
+
   get 'customercare/update_lead_data'
   post 'customercare/update_lead_data'
   get 'customercare/sendSMS'
@@ -32,33 +45,23 @@ Rails.application.routes.draw do
 
 
   get 'restricted/getDetailsForLead'
+  get 'restricted/feedbackReceived'
 
   get 'show/laxminagar' => "shortener#laxminagar"
   get 'show/gazipur' => "shortener#gazipur"
   get 'show/preetvihar' => "shortener#preetvihar"
   get 'show/vaishali' => "shortener#vaishali"
 
-  get 'suggest/new_lead'
-  get 'suggest/zoneCovered' =>"suggest#zoneCovered"
+
   get 'nps/submitNps'
   root 'suggest#base'
 get 'payment/paymentDone'
-  get 'suggest/sendSms'
-  match 'suggest/images/:image' , to: "suggest#loadImage",via:[:get]
-  
+
   get 'payment/makePayment'
   post 'payment/makePayment'
 post 'suggest/createRoute'
   get 'suggest/getInfo'
   post 'payment/paymentDone'
-  get 'suggest/getSlots'
-  get 'suggest/getFromTo'
-  get 'suggest/getPath'
-
-  get 'suggest/generateWhatsAppShareLinkForUser'
-  get 'suggest/getSlotsWithCoords'
-  get 'suggest/sendOtp'
-  get 'suggest/verifyOtp'
   get 'payment/setSessionVar'
 
   get 'suggest/getLink'
@@ -95,6 +98,10 @@ get 'suggest/index_orca'
   get 'payment/paymentUnsuccessful'
 
   get 'poster/generate' => "poster#generateNewPoster"
+
+
+  get 'random/call' =>"randomshit#call"
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -568,6 +568,7 @@ class SuggestController < ApplicationController
   end
 
   def saveNewSuggestionTab
+
     customer_number=params[:phone_number]
     data=JSON.parse params[:data1]
     customer_number=data["phone_number"]
