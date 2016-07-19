@@ -17,8 +17,7 @@ class Vehicle
       self.routeId=trip.routeid
       if routeId==831
 
-        if Rails.env.production? || true
-
+        if Rails.env.production?
           self.routeId=64
         else
 
@@ -26,7 +25,7 @@ class Vehicle
         end
       else
 
-        if Rails.env.production? || true
+        if Rails.env.production?
 
           self.routeId=73
         else

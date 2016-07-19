@@ -1,9 +1,11 @@
 body{
-    font-family: Tahoma, Verdana, Segoe, sans-serif;
+    font-family: "Lato Normal 400", Lato, "Helvetica Neue",Helvetica,Arial,sans-serif;
     text-align: center;
     background: white;
     color: #333333;
 }
+
+
 
 div#main-wrapper{
     max-width: 100%;
@@ -75,14 +77,14 @@ div.route-map .pickup-point-container {
 }
 
 div.route-map .pickupPointRow {
-   /* padding: 5px 0 5px 0;*/
+    /* padding: 5px 0 5px 0;*/
     position: relative;
     height: 7vh;
 }
 
 
 div.route-map .pickupPointRow.odd-row .pickupPointInformation{
-text-align: left;
+    text-align: left;
     position: relative;
     left: 10%;
 }
@@ -148,6 +150,40 @@ div.tracking-info-column .vertical-center {
     transform: translateY(-50%);
 }
 
+div.error-grey {
+    position: absolute;
+    top:0;
+    left:0;
+    opacity: 0.87;
+    background: black;
+    height: 88vh;
+    width:100%;
+    z-index: 1000;
+    display: none;
+}
+
+div.error-white {
+    height: 50vh;
+    width: 75vw;
+    position: absolute;
+    top: 20vh;
+    left: 12.5vw;
+    background: white;
+    z-index: 10000001;
+    text-align: center;
+    display: none;
+}
+
+div.error-white .error-message {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    font-weight: bold;
+    padding: 16px;
+    display: none;
+}
+
 @media only screen and (min-device-width: 380px)
 {
     div.route-map .pickupPoint {
@@ -198,8 +234,12 @@ div.tracking-info-column .vertical-center {
         font-size: 40px;
     }
 
-    div.header-container .shuttl-logo{
+    div.header-container .shuttl-logo {
         width: 160px;
+    }
+
+    div.error-white .error-message {
+        font-size:28px;
     }
 }
 
@@ -221,67 +261,62 @@ div.tracking-info-column .vertical-center {
     }
 }
 
+@media only screen and (min-device-width: 750px) {
+    body {
+        width: 60% !important;
+        margin: 0 auto;
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    div.route-map .pickupPoint {
+        font-size: 16px;
+    }
+
+    div.route-map .landmark {
+        font-size: 14px;
+    }
+
+    div.route-map .pickup-point-container {
+        border-left: 5px solid #333333;
+    }
+
+    div.header-container{
+        font-size: 22px;
+        height: 27px;
+        margin-top: 16px;
+    }
+
+    div.route-map .pickupPointRow .circle{
+        left: -28px;
+        width: 20px;
+        height: 20px;
+    }
+
+    div.route-map .start-end {
+        font-size: 12px;
+    }
+
+    div.footer-container {
+        font-size: 22px;
+        width: 60%;
+    }
+
+    div.header-container .shuttl-logo{
+        position: absolute;
+        left: 16px;
+        top: 16px;
+        width: 100px;
+    }
+}
+
 .point-next {
     -webkit-animation: shuttlBlink 1s step-end infinite;
     animation: shuttlBlink 1s step-end infinite;
 }
 
-#irc_la {
-    left: -6px;
-}
-.irc_but:hover {
-    background-color: #3d3d3d;
-    background-image: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,#4e4e4e),color-stop(1,#474747));
-    background-image: -webkit-linear-gradient(top,#4e4e4e,#474747);
-    background-image: linear-gradient(top,#4e4e4e,#474747);
-    border: 1px solid #191919;
-    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.09),1px 1px 0 rgba(255,255,255,.05),-1px -1px 0 rgba(0,0,0,.02),inset 1px 1px 0 rgba(255,255,255,.05);
-    box-shadow: 0 1px 0 rgba(255,255,255,.09),1px 1px 0 rgba(255,255,255,.05),-1px -1px 0 rgba(0,0,0,.02),inset 1px 1px 0 rgba(255,255,255,.05);
-    color: #bbb !important;
-}
-.irc_but {
-    background-color: #454545;
-    background-image: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,#3e3e3e),color-stop(1,#333));
-    background-image: -webkit-linear-gradient(top,#3e3e3e,#333);
-    background-image: linear-gradient(top,#3e3e3e,#333);
-    border: 1px solid #141414;
-    border-radius: 2px;
-    border-radius: 2px;
-    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.06),1px 1px 0 rgba(255,255,255,.03),-1px -1px 0 rgba(0,0,0,.02),inset 1px 1px 0 rgba(255,255,255,.05);
-    box-shadow: 0 1px 0 rgba(255,255,255,.06),1px 1px 0 rgba(255,255,255,.03),-1px -1px 0 rgba(0,0,0,.02),inset 1px 1px 0 rgba(255,255,255,.05);
-    color: #aaa !important;
-    cursor: pointer !important;
-    display: inline-block;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#303030',EndColorStr='#262626');
-    font-size: 11px;
-    font-weight: bold;
-    margin: 0 5px;
-    outline: 0;
-    text-align: center;
-    text-decoration: none !important;
-    text-shadow: 0 -1px 0 rgba(0,0,0,.5);
-    -webkit-user-select: none;
-    white-space: normal;
-    word-wrap: normal;
-}
-._GKb {
-    height: 77px;
-    padding: 0;
-    position: absolute;
-    width: 32px;
-    z-index: 1;
-}
-#irc_ra {
-    transform: scaleX(-1);
-    transform: scaleX(-1);
-    right: -6px;
-}
-.errorBlock{
-
-    background: #f00;
-    z-index: 1000000;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    padding: 50px;
+a {
+    color: #333;
 }

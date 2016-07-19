@@ -2,52 +2,41 @@
  * Created by Rahul Amlekar on 7/11/2016.
  */
 
-/*jslint browser:true */
-/*jslint todo: true */
-/*jslint node: true */
-/*jslint plusplus: true */
-
 'use strict';
-var pickupPoints;var drivers=[];
-var DriverErrorCode={
-    "GPS_NOT_AVAILABLE":8,
-    "NO_TRIP_ALLOCATED":1,
-"DRIVER_CANNOT_BE_TRACKED":4,
-    "TRIP_COMPLETED":5,
-"UNKNOWN_ERROR":6,
-"TRIP_NOT_ALLOTED":7,
-"SUCCESS":3,
-"TOO_SOON_TO_COMPUTE_ETA":2
+var pickupPoints;
+var drivers = [];
+var DriverErrorCode = {
+    "GPS_NOT_AVAILABLE": 8,
+    "NO_TRIP_ALLOCATED": 1,
+    "DRIVER_CANNOT_BE_TRACKED": 4,
+    "TRIP_COMPLETED": 5,
+    "UNKNOWN_ERROR": 6,
+    "TRIP_NOT_ALLOTED": 7,
+    "SUCCESS": 3,
+    "TOO_SOON_TO_COMPUTE_ETA": 2
 };
 function initialize(driver) {
-    
-    if (!driver){
+
+    if (!driver) {
         return;
     }
-    /*TODO
-    *
-    * Fill the following two values from the back end
-    *
-    * */
     var currentStopIndex = 0; // must be in integer between 0 and 8.
     var percentageTimeToNextStop = 0; // value between 0 and 100
 
-    
+
     var isEveningRoute = false;
 
-    
-    if (driver.status!=DriverErrorCode.SUCCESS){
+    if (driver.status != DriverErrorCode.SUCCESS){
 
-        jQuery(".errorBlock").html(getHumanReadableErrorFor(driver.status));
-        jQuery(".errorBlock").show();
-        document.getElementById("pickup-point-container").innerHTML="";
+        jQuery(".error-message").html(getHumanReadableErrorFor(driver.status));
+        jQuery(".error-grey, .error-white, .error-message").show();
         return;
-    }else{
+    } else {
 
-        jQuery(".errorBlock").hide();
+        jQuery(".error-grey, .error-white, .error-message").hide();
     }
-    currentStopIndex=driver.startIndex!=null?driver.startIndex:0;
-    percentageTimeToNextStop=driver.complete;
+    currentStopIndex = driver.startIndex != null ? driver.startIndex : 0;
+    percentageTimeToNextStop = driver.complete;
 
     if (isEveningRoute) {
         pickupPoints.reverse();  // We reverse the pickup points to get the evening route
@@ -56,17 +45,17 @@ function initialize(driver) {
 
     (function createHTML() {
         var html = "", i;
-        for (i = 0; i <= pickupPoints.length-1; i++) {
-            var eta=new Date(drivers[driverSelectedIndex].etas[[pickupPoints[i]["id"]]]*1000);
-            var hour=eta.getHours();
-            var minutes=eta.getMinutes();
-            if (hour.length==1){
+        for (i = 0; i <= pickupPoints.length - 1; i++) {
+            var eta = new Date(drivers[driverSelectedIndex].etas[[pickupPoints[i]["id"]]] * 1000);
+            var hour = eta.getHours();
+            var minutes = eta.getMinutes();
+            if (hour.length == 1) {
 
-                hour="0"+hour;
+                hour = "0" + hour;
             }
-            if (minutes.length==1){
+            if (minutes.length == 1) {
 
-                minutes="0"+minutes;
+                minutes = "0" + minutes;
             }
 
             html += '<div id="pickupPoint' + i + '" class="pickupPointRow odd-row">';
@@ -78,7 +67,7 @@ function initialize(driver) {
             if (i < pickupPoints.length) {
                 html += '<div id="pickupPoint' + i + '" class="pickupPointRow even-row">';
                 html += '<div class="pickupPointInformation"><div class="pickupPoint">' + pickupPoints[i]["name"] + '</div>';
-                html += '<div class="landmark landmark' + i + '">' + (eta.getYear()==70)?"":(hour+":"+minutes) + '</div></div>';
+                html += '<div class="landmark landmark' + i + '">' + (eta.getYear() == 70) ? "" : (hour + ":" + minutes) + '</div></div>';
                 html += '<div id="circle' + i + '" class="circle"></div>';
 
                 html += '</div>';
@@ -91,7 +80,7 @@ function initialize(driver) {
         var pickupPointCrossed = '', i;
 
         // color the circles green and red
-        for (i = 0; i<pickupPoints.length; i++) {
+        for (i = 0; i < pickupPoints.length; i++) {
             var eta=drivers[driverSelectedIndex].etas[pickupPoints[i]["id"]];
             if (eta==-1) {
                 pickupPointCrossed = "circle" + i;
@@ -106,22 +95,21 @@ function initialize(driver) {
             }
             else {
                 document.getElementById(pickupPointCrossed).className += " points-left";
-                 }
+            }
         }
         /*for (i = 0; i <= currentStopIndex; i++) {
-            pickupPointCrossed = "landmark" + i;
-            document.getElementById(pickupPointCrossed).className += " point-crossed";
-        }*/
+         pickupPointCrossed = "landmark" + i;
+         document.getElementById(pickupPointCrossed).className += " point-crossed";
+         }*/
         var viewportHeight = window.innerHeight;
         var displacementBetweenStopsInMap = Math.floor(viewportHeight / 14);
         var pixelsFromTop = 29 + (currentStopIndex * displacementBetweenStopsInMap) + (displacementBetweenStopsInMap * percentageTimeToNextStop / 100); // 29 is the pixels required to move Shuttl to the first stop
         document.getElementById('shuttl-image-id').style.top = pixelsFromTop + 'px';
-
     }());
 }
 
 var driverSelectedIndex=0;
-jQuery.ajax({url:"/service/getPickUpPointsForRoute?routeId=831"}).done(function(response){
+jQuery.ajax({url:"http://myor.shuttl.com/service/getPickUpPointsForRoute?routeId=831"}).done(function(response){
 
 
     pickupPoints=response["data"];
@@ -130,7 +118,7 @@ jQuery.ajax({url:"/service/getPickUpPointsForRoute?routeId=831"}).done(function(
 });
 setInterval(
     function() {
-    fetchRefreshDataForDriverPosition();
+        fetchRefreshDataForDriverPosition();
 
 
     }, 5000);
@@ -145,19 +133,17 @@ function Driver(startIndex,complete,etas,driverId,status){
 }
 function fetchRefreshDataForDriverPosition(){
 
-    jQuery.ajax({url:"/service/getDriverInfo?routeId="+831}).done(function(response) {
+    jQuery.ajax({url:"http://myor.shuttl.com/service/getDriverInfo?routeId="+831}).done(function(response) {
 
 
         drivers=[];
-            for (var i = 0; i < response.length; i++) {
-                var driverJson = response[i];
-                var driver = new Driver(driverJson.fromPointId, driverJson.complete, driverJson["data"]["locationEta"],driverJson["driverId"], driverJson["data"]["status"]);
-                drivers.push(driver);
-            }
+        for (var i = 0; i < response.length; i++) {
+            var driverJson = response[i];
+            var driver = new Driver(driverJson.fromPointId, driverJson.complete, driverJson["data"]["locationEta"],driverJson["driverId"], driverJson["data"]["status"]);
+            drivers.push(driver);
+        }
         initialize(drivers[driverSelectedIndex]);
-
     });
-    
 }
 
 jQuery("#irc_la").click(function(){
@@ -181,6 +167,7 @@ jQuery("#irc_ra").click(function(){
     initialize(drivers[driverSelectedIndex]);
 
 });
+
 
 
 function getHumanReadableErrorFor(error){
@@ -210,5 +197,6 @@ function getHumanReadableErrorFor(error){
 }
 
 
+fetchRefreshDataForDriverPosition();
 
 
