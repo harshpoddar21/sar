@@ -8,8 +8,12 @@ class Feedback < ActiveRecord::Base
 
     bookings.each do |book|
 
-      Feedback.create(:booking_id=>book["BOOKING_ID"],:channel=>channel,:time_sent=>Time.now.to_i)
-      sendFeedbackIvrToUser(book["USER_ID"])
+      user=UmsUser.find_by(:USER_ID=>book["USER_ID"])
+      if user!=nil
+        Feedback.create(:booking_id=>book["BOOKING_ID"],:channel=>channel,:time_sent=>Time.now.to_i,:phone_number=>user["PHONE_NUMBER"])
+        sendFeedbackIvrToUser(book["USER_ID"])
+      end
+
     end
 
   end
@@ -21,14 +25,29 @@ class Feedback < ActiveRecord::Base
 
   end
 
-  def self.sendFeedbackIvrToUser userId
+  def self.sendFeedbackIvrToUser user
 
-    user=UmsUser.find_by(:USER_ID=>userId)
     if user!=nil
-      response=TelephonyManager.sendFeedbackIvrCall user["PHONE_NUMBER"]
+      if Rails.env.production?
+       response=TelephonyManager.sendFeedbackIvrCall user["PHONE_NUMBER"]
+      end
       if response==nil || response!="OK"
         logger.error "Sending ivr call to "+user["PHONE_NUMBER"]+" has failed. Please check"
       end
     end
+  end
+
+  def self.recordResponseFromUser phoneNumber,channel,response
+
+    feedback=Feedback.where(:phone_number=>phoneNumber).where(:channel=>channel).last
+
+    if feedback!=nil
+      feedback.response=response
+      feedback.save
+      return true
+    end
+    return false
+
+
   end
 end

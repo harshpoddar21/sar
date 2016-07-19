@@ -6,15 +6,20 @@ class BookingObserver
   def checkIfNewBookingHappened(routeIds)
 
 
-    if !(Session.getCurrentSessionType==Session::MORNING_SESSION)
+    Rails.logger.info "Running cron in "+Rails.env.to_s
+    if Session.getCurrentSessionType==Session::MORNING_SESSION
        @bookings=UmsBooking.where("ROUTE_ID in ("+routeIds.join(",")+")")
                      .where("CREATED_TIME<"+((Session.getMorningSessionEndUnixTime)*Constants::MILLISECONDS_IN_SECOND).to_s)
                      .where("CREATED_TIME>"+(Utils.getTodayMorningUnixTime * Constants::MILLISECONDS_IN_SECOND).to_s)
     else
       @bookings=UmsBooking.where("ROUTE_ID in ("+routeIds.join(",")+")")
-                    .where("CREATED_TIME>"+((Session.getMorningSessionEndUnixTime)*Constants::MILLISECONDS_IN_SECOND).to_s)
+                    .where("CREATED_TIME>"+((Session.getMorningSessionEndUnixTime())*Constants::MILLISECONDS_IN_SECOND).to_s)
     end
 
+    if @bookings.length==0
+
+      return "Returned with no booking"
+    end
     @bookingsUserMap=Hash.new
 
     userIds=Array.new
@@ -22,6 +27,9 @@ class BookingObserver
       if !(userIds.include? book["USER_ID"])
         userIds.push book["USER_ID"]
       end
+    end
+    if userIds.length==0
+      return
     end
     allBookings=UmsBooking.where("USER_ID in ("+userIds.join(",")+")").where("ROUTE_ID in ("+routeIds.join(",")+")")
     allBookings.each do |book|
@@ -33,6 +41,7 @@ class BookingObserver
     end
 
     sendFeedbackCallToNewUser
+    return :text=>"Ran cron at "+Time.now.to_s
 
   end
 
@@ -48,7 +57,7 @@ class BookingObserver
         next
       end
 
-      if !bookingIds.include? booking["USER_ID"] && booking["CREATED_TIME"]/Constants::MILLISECONDS_IN_SECOND>currentTime+2*Constants::SECONDS_IN_HOUR
+      if booking["CREATED_TIME"]/Constants::MILLISECONDS_IN_SECOND<currentTime+2*Constants::SECONDS_IN_HOUR
       #initiate call after 2 hrs of booking
 
         if Feedback.where(:booking_id => booking["BOOKING_ID"]).size==0

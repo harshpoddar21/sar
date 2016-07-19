@@ -21,8 +21,15 @@ class RestrictedController < ApplicationController
   def feedbackReceived
 
     phoneNumber=params[:caller]
-    keypress=params[:keypress]
-    logger.info params.to_json
+    response=params[:input]
+
+    isSuccess=Feedback.recordResponseFromUser phoneNumber,Feedback::Channel::VIA_CALL,response
+
+    if !isSuccess
+      logger.error "Cannot save feedback from caller "+phoneNumber.to_s+" and response "+response
+
+    end
+
     render :text=>"OK"
   end
 
