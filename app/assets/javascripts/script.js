@@ -1036,11 +1036,34 @@ function switchScreen(scrno, obj){
             html += '</div></div></div>';
             html += '<img style="height:92px" class="slide-right" src="../images/right_slide_icon.png" alt="button">';
             html += '<div class="downArr dowfirst"><span class="fa fa-angle-double-down"></span></div>';
+            html+='<div id="freecharge-banner" class="freecharge-banner"><img src="/images/freecharge-logo.png" alt="freecharge-logo.png" width="317px"></div>';
+            html+='<div id="mobikwik-banner" class="mobikwik-banner"><img src="/images/mobikwik-logo.png" alt="mobikwik-logo.png" width="317px"></div>';
             html += aboutUs();
             html += '<div id = "grey-screen"> </div>';
             $(obj).html(html)
 	    .find('.downArr').hide();
 
+            var getString = window.location.search.replace("?", "");
+            if(getString.length > 0){
+                var getComponents = getString.split('&');
+                var getComponentsProper = {};
+                for(var i=0;i<getComponents.length;i++){
+                    var component = getComponents[i].split('=');
+                    getComponentsProper[component[0]] = component[1];
+                }
+
+                var sourceFirm = getComponentsProper["utm_source"];
+                if (sourceFirm!=null){
+                    
+                    info["utm_source"]=sourceFirm;
+                }
+                if(sourceFirm == 'freecharge'){
+                    $('#freecharge-banner').show();
+                }
+                else if(sourceFirm == 'mobikwik'){
+                    $('#mobikwik-banner').show();
+                }
+            }
             //aboutUsSlider
 
 

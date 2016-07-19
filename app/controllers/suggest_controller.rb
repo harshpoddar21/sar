@@ -121,6 +121,7 @@ class SuggestController < ApplicationController
     from_lat=data["homelat"]
     to_lat=data["officelat"]
     from_lng=data["homelng"]
+    utm_source=data["utm_source"]
     to_lng=data["officelng"]
     from_str=data["homeAddress"]
     to_str=data["officeAddress"]
@@ -156,6 +157,7 @@ class SuggestController < ApplicationController
       suggestion.from_mode=from_mode
       suggestion.from_time=from_time
       suggestion.to_lat=to_lat
+      suggestion.source=utm_source
       suggestion.sub_status=pushSubStatus
       suggestion.sub_id=subId
       suggestion.to_lng=to_lng

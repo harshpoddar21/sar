@@ -1206,3 +1206,12 @@ body {
     opacity: 0.7;
     z-index: 10;
 }
+.freecharge-banner{
+    text-align: center;
+    display: none;
+}
+
+.mobikwik-banner{
+    text-align: center;
+    display: none;
+}
