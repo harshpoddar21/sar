@@ -83,6 +83,7 @@ class ServiceController < ApplicationController
       vehicle.refreshEtaForDiffPoints
     end
 
+    render :text=>"OK"
 
   end
   before_filter :cors_preflight_check

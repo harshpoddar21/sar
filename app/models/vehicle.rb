@@ -316,6 +316,7 @@ class Vehicle
         end
       else
         etaResponse.status=EtaResponse::DRIVER_CANNOT_BE_TRACKED
+
         Rails.cache.write EtaResponse.getCacheKeyForDriverId(driverId), etaResponse.to_json
       end
 
@@ -351,7 +352,7 @@ class Vehicle
     attr_accessor :status,:locationEta
     def self.getCacheKeyForDriverId driverId
 
-      return CACHE_KEY+"driverId".to_s
+      return CACHE_KEY+"driverId".to_s+"/"+driverId.to_s
 
 
     end
