@@ -18,7 +18,7 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-every 30.minutes do
+every 3.minutes do
   runner "BookingObserver.new.checkIfNewBookingHappened([831,832])"
 end
 every 2.minutes do

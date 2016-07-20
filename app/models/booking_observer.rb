@@ -41,6 +41,7 @@ class BookingObserver
 
     end
 
+    sendWelcomeMessageToFirstBookingPeople
     sendFeedbackCallToNewUser
     return :text=>"Ran cron at "+Time.now.to_s
 
@@ -58,7 +59,7 @@ class BookingObserver
         next
       end
 
-      if booking["CREATED_TIME"]/Constants::MILLISECONDS_IN_SECOND<currentTime+2*Constants::SECONDS_IN_HOUR
+      if booking["CREATED_TIME"]/Constants::MILLISECONDS_IN_SECOND<currentTime-2*Constants::SECONDS_IN_HOUR
       #initiate call after 2 hrs of booking
 
         if Feedback.where(:booking_id => booking["BOOKING_ID"]).size==0
@@ -75,6 +76,20 @@ class BookingObserver
     end
 
 
+  end
+
+  def sendWelcomeMessageToFirstBookingPeople
+
+
+    @bookings.each do |booking|
+      if @bookingsUserMap[booking["USER_ID"]]==nil || @bookingsUserMap[booking["USER_ID"]].length>1
+        next
+      end
+      user=UmsUser.find_by(:USER_ID=>booking["USER_ID"])
+      if user!=nil
+        MessageTracker.sendMessage user["PHONE_NUMBER"],"Thanks for choosing Shuttl. We hope that your first ride with us is hassle free. However if you face any issue please call us at 9015122792 and let us know.",true,"booking/"+booking["BOOKING_ID"].to_s
+      end
+    end
   end
 
 
