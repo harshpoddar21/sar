@@ -10,8 +10,10 @@ class ServiceController < ApplicationController
       raise CustomError::ParamsException,"Invalid Parameters"
     else
       if [831,832].include? routeId.to_i
-        driverIds=[995,986,493,992,644,1017]
+        driverIds=[986,1017,995,493,644,453]
+        vehicleNo=["DL1VB9189","DL1VB9219","DL1VB8928","DL1VB9006","DL1VC2852","DL1VC2900"]
         driverPositions=Array.new
+        indexDriver=0
         driverIds.each do |driverId|
           vehicle=Vehicle.getVehicleDriverId driverId
 
@@ -19,12 +21,20 @@ class ServiceController < ApplicationController
           etaPoints=vehicle.getEtaForDifferentPoints
           a=Hash.new
           a["driverId"]=driverId
+          a["vehicleNo"]=vehicleNo[indexDriver]
           a["fromPointId"]=fromPointId
           a["toPointId"]=toPointId
           a["complete"]=complete
-          a["data"]=JSON.parse etaPoints if etaPoints!=nil
+          if etaPoints!=nil
+           a["data"]=JSON.parse etaPoints
+          else
+           a["data"]=Hash.new
+           a["data"]["status"]=Vehicle::EtaResponse::NO_TRIP_ALLOCATED
+          end
+
           driverPositions.push a
 
+          indexDriver=indexDriver+1
 
         end
 
@@ -43,26 +53,17 @@ class ServiceController < ApplicationController
     if routeId==831.to_s
 
       routeType=Route::SUGGESTED_ROUTE
-      if Rails.env.production?
+
 
         routeId=64
 
-      else
-
-        routeId=45
-      end
     else
 
       routeType=Route::SUGGESTED_ROUTE
-      if Rails.env.production?
+
 
         routeId=73
 
-      else
-
-        routeId=45
-
-      end
     end
 
     route=Route.getRouteByRouteId routeType,routeId

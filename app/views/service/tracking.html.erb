@@ -3,7 +3,7 @@
   <div class="header-container row">
     <div class="shuttl-logo">
       <a href="http://myor.shuttl.com/suggest/index">
-        <img src="images/shuttl_logo.png" class="logo">
+        <img src="/images/shuttl_logo.png" class="logo">
       </a>
     </div>
     <div class="route-title " id="route-title">EAST DELHI to GURGAON</div>
@@ -14,24 +14,27 @@
 
     <div class="col-xs-6 route-map">
       <div class="start-end"> (start) </div>
-      <img id ="shuttl-image-id" class="shuttl-image" src="images/Shuttl.png">
+      <img id ="shuttl-image-id" class="shuttl-image" src="/images/shuttl-space.png">
       <div id ="pickup-point-container" class="pickup-point-container"></div>
       <div class="start-end"> (end) </div>
     </div>
   </div>
   <div class="footer-container row">
-    <a class="_wec _GKb irc_but" id="irc_ra" data-noload="">
+    <a class="_wec _GKb irc_but" id="irc_la" data-noload="">
       <div class="col-xs-3"><i class="fa fa-chevron-left"></i></div>
     </a>
     <div class="route-number col-xs-6" id="route-number">#34280</div>
-    <a class="_wec _GKb irc_but" id="irc_la" data-noload="">
+
+    <a class="_wec _GKb irc_but" id="irc_ra" data-noload="">
       <div class="col-xs-3"><i class="fa fa-chevron-right"></i></div>
     </a>
+
   </div>
 
   <div class="error-grey"></div>
   <div class="error-white"> <div class="error-message">Live tracking is not available at this moment</div> </div>
 </div>
+
 <%= javascript_include_tag 'script_track', 'data-turbolinks-track' => true %>
 
 

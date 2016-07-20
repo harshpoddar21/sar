@@ -320,3 +320,8 @@ div.error-white .error-message {
 a {
     color: #333;
 }
+img#shuttl-image-id {
+    -ms-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}

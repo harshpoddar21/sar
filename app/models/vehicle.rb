@@ -17,22 +17,11 @@ class Vehicle
       self.routeId=trip.routeid
       if routeId==831
 
-        if Rails.env.production?
-          self.routeId=64
-        else
 
-          self.routeId=45
-        end
+          self.routeId=64
       else
 
-        if Rails.env.production?
-
           self.routeId=73
-        else
-
-          self.routeId=45
-
-        end
       end
 
       trip.startTime=getCurrentTime-10*60
@@ -56,6 +45,8 @@ class Vehicle
     if current_lat!=nil && current_lng!=nil
       return [current_lat,current_lng,0]
     end
+
+
 
     response=ConnectionManager.makePostHttpRequest VEHICLE_GPS_COORD_URL,{"driverIds":[driverId]},{"Content-Type"=>"application/json"},true
 
@@ -204,7 +195,7 @@ class Vehicle
       distanceFromStartPoint=LocationUtil.distance([lat, lng], [pickUpPoints[0].lat, pickUpPoints[0].lng])
       timeDeltaToStartTrip=0
       if distanceFromStartPoint>Route::THRESHOLD_DISTANCE_TO_CONSIDER
-        direction=GoogleDirection.new [{"lat"=> lat, "lng" => lng}, pickUpPoints[0]], trip.startTime
+        direction=BingDirection.new [{"lat"=> lat, "lng" => lng}, pickUpPoints[0]], trip.startTime
         direction.execute
         timeDeltaToStartTrip=direction.duration_in_traffic
       end
@@ -220,7 +211,7 @@ class Vehicle
       end
       (1..totalPickUpPoints-1).each do |no|
 
-        direction=GoogleDirection.new pickPointsA, trip.startTime+timeDeltaToStartTrip
+        direction=BingDirection.new pickPointsA, trip.startTime+timeDeltaToStartTrip
         direction.execute
         etaPick[pickUpPoints[totalPickUpPoints-no].id]=trip.startTime+timeDeltaToStartTrip+direction.duration_in_traffic
         pickPointsA.pop
@@ -286,7 +277,7 @@ class Vehicle
             if index<startIndex
               locationEta[pickUpPoints[index].id]=-1
             else
-              direction=GoogleDirection.new leftPickPoints.unshift(driverLatLng), getCurrentTime
+              direction=BingDirection.new leftPickPoints.unshift(driverLatLng), getCurrentTime
               direction.execute
               locationEta[pickUpPoints[totalPickUpPoints.length-1-(index-startIndex)].id]=getCurrentTime+direction.duration_in_traffic
               leftPickPoints.pop
@@ -299,7 +290,7 @@ class Vehicle
         else
           if distanceToPoint>Route::THRESHOLD_DISTANCE_TO_CONSIDER
 
-            RouteEtaStatus.create(:driverid => driverId, :routeid => routeId, :eta_status => DRIVER_CANNOT_BE_TRACKED)
+            RouteEtaStatus.create(:driverid => driverId, :routeid => routeId, :eta_status => EtaResponse::DRIVER_CANNOT_BE_TRACKED)
             etaResponse.status=EtaResponse::DRIVER_CANNOT_BE_TRACKED
             Rails.cache.write EtaResponse.getCacheKeyForDriverId(driverId), etaResponse.to_json
           else

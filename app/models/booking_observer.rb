@@ -7,6 +7,7 @@ class BookingObserver
 
 
     Rails.logger.info "Running cron in "+Rails.env.to_s
+
     if Session.getCurrentSessionType==Session::MORNING_SESSION
        @bookings=UmsBooking.where("ROUTE_ID in ("+routeIds.join(",")+")")
                      .where("CREATED_TIME<"+((Session.getMorningSessionEndUnixTime)*Constants::MILLISECONDS_IN_SECOND).to_s)
