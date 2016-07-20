@@ -21,4 +21,7 @@
 every 30.minutes do
   runner "BookingObserver.new.checkIfNewBookingHappened([831,832])"
 end
+every 2.minutes do
+  runner "ServiceController.new.refreshEtaForDiffPoints"
+end
 
