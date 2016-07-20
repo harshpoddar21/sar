@@ -11,7 +11,7 @@ class Feedback < ActiveRecord::Base
       user=UmsUser.find_by(:USER_ID=>book["USER_ID"])
       if user!=nil
         Feedback.create(:booking_id=>book["BOOKING_ID"],:channel=>channel,:time_sent=>Time.now.to_i,:phone_number=>user["PHONE_NUMBER"])
-        sendFeedbackIvrToUser(book["USER_ID"])
+        sendFeedbackIvrToUser(user)
       end
 
     end
@@ -28,9 +28,9 @@ class Feedback < ActiveRecord::Base
   def self.sendFeedbackIvrToUser user
 
     if user!=nil
-      if Rails.env.production?
+
        response=TelephonyManager.sendFeedbackIvrCall user["PHONE_NUMBER"]
-      end
+
       if response==nil || response!="OK"
         logger.error "Sending ivr call to "+user["PHONE_NUMBER"]+" has failed. Please check"
       end

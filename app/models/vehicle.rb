@@ -251,7 +251,7 @@ class Vehicle
       Rails.cache.write EtaResponse.getCacheKeyForDriverId(driverId), etaResponse.to_json
 
 
-    elsif currentTime-trip.startTime<Route::THRESHOLD_TIME_FOR_ROUTE_END && trip.driverEndTime==0
+    elsif currentTime-trip.startTime<Route::THRESHOLD_TIME_FOR_ROUTE_END && trip.endTime==0
 
 
       currentPoint, distanceToPoint= self.getCurrentPositionWithinRoute #driver is in middle of a trip
@@ -334,7 +334,7 @@ class Vehicle
     else
       # last sessions trip
 
-      etaResponse.status=EtaResponse::TRIP_NOT_ALLOTED
+      etaResponse.status=EtaResponse::NO_TRIP_ALLOCATED
       Rails.cache.write EtaResponse.getCacheKeyForDriverId(driverId), etaResponse.to_json
       return etaResponse
 
@@ -358,7 +358,6 @@ class Vehicle
     DRIVER_CANNOT_BE_TRACKED=4
     TRIP_COMPLETED=5
     UNKNOWN_ERROR=6
-    TRIP_NOT_ALLOTED=7
     SUCCESS=3
     TOO_SOON_TO_COMPUTE_ETA=2
     attr_accessor :status,:locationEta

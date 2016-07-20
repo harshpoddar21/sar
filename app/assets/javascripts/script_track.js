@@ -11,7 +11,6 @@ var DriverErrorCode = {
     "DRIVER_CANNOT_BE_TRACKED": 4,
     "TRIP_COMPLETED": 5,
     "UNKNOWN_ERROR": 6,
-    "TRIP_NOT_ALLOTED": 7,
     "SUCCESS": 3,
     "TOO_SOON_TO_COMPUTE_ETA": 2
 };
