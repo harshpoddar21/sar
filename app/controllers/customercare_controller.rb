@@ -95,6 +95,17 @@ class CustomercareController < ApplicationController
     BookingFollow.all.each do |bo|
       bookingFollowA[bo.booking_id]=bo
     end
+
+
+    feedbacks=Feedback.where("booking_id in ("+bookingFollowA.keys.join(",")+")")
+
+    bookingIdFeedback=Hash.new
+
+    feedbacks.each do |feedback|
+
+      bookingIdFeedback[feedback.booking_id]=feedback.response
+
+    end
     bookings.each do |booking|
 
 
@@ -115,6 +126,7 @@ class CustomercareController < ApplicationController
 
       boo["called"]=bFlow==nil ? "No": bFlow.called==nil ? "No" : bFlow.called
       boo["response"]=bFlow==nil ? "" : bFlow.response
+      boo["TRIP_RATING"]=bookingIdFeedback[boo["BOOKING_ID"]]==nil ? 0 : bookingIdFeedback[boo["BOOKING_ID"]]
 
       userBookings[booking["USER_ID"]].push boo
 
