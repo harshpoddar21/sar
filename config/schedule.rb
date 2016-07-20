@@ -24,3 +24,7 @@ end
 every 2.minutes do
   runner "ServiceController.new.refreshEtaForDiffPoints"
 end
+
+every 2.minutes do
+  runner "ServiceController.new.refreshPositionForDiffPoints"
+end

@@ -128,15 +128,35 @@ class Vehicle
   def getPositionBetweenPick
 
     pointCurrent,fromPick,fromPickPoint,toPick,toPickPoint=getPositionVehicleWithPickUpPoint
+    response=[nil,nil,0]
+
     if fromPick==nil
-      return nil,nil,0
+      response=[nil,nil,0]
     end
     if fromPick!=nil && toPick==nil
-      return fromPickPoint.id,fromPickPoint.id,0
+      response=[fromPickPoint.id,fromPickPoint.id,0]
     end
 
     if fromPick!=nil && toPick!=nil
-      return fromPickPoint.id,toPickPoint.id,(pointCurrent["id"]-fromPick["id"])/(1.0*(toPick["id"]-fromPick["id"]))
+      response=[fromPickPoint.id,toPickPoint.id,(pointCurrent["id"]-fromPick["id"])/(1.0*(toPick["id"]-fromPick["id"]))]
+    end
+
+
+    Rails.cache.write EtaResponse.getCacheKeyForDriverIdForStoringPosition(driverId),response.to_json
+
+  end
+
+  def getPositionBetweenPickCache
+
+    position=Rails.cache.fetch(EtaResponse.getCacheKeyForDriverIdForStoringPosition(driverId))
+    result= JSON.parse position
+    if result!=nil
+
+      return result[0],result[1],result[2]
+
+    else
+
+      return nil,nil,0
     end
 
   end
@@ -332,6 +352,7 @@ class Vehicle
   class EtaResponse
 
     CACHE_KEY="eta/"
+    POSITION_CACHE_KEY="position"
     GPS_NOT_AVAILABLE=8
     NO_TRIP_ALLOCATED=1
     DRIVER_CANNOT_BE_TRACKED=4
@@ -345,6 +366,11 @@ class Vehicle
 
       return CACHE_KEY+"driverId".to_s+"/"+driverId.to_s
 
+    end
+
+    def self.getCacheKeyForDriverIdForStoringPosition driverId
+
+      return POSITION_CACHE_KEY+"driverId".to_s+"/"+driverId.to_s
 
     end
   end
@@ -353,7 +379,7 @@ class Vehicle
     
     Time.now.to_i
 
-    
   end
+
 
 end

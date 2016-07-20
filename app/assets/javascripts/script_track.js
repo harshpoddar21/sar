@@ -151,9 +151,11 @@ function Driver(startIndex,complete,etas,driverId,status,vehicleNo){
     this.vehicleNo=vehicleNo;
 
 }
+var trial=0;
 function fetchRefreshDataForDriverPosition(){
 
-    jQuery.ajax({url:"/service/getDriverInfo?routeId="+831}).done(function(response) {
+    trial++;
+    jQuery.ajax({url:"/service/getDriverInfo?routeId="+831+"&trial="+trial}).done(function(response) {
 
 
         drivers=[];

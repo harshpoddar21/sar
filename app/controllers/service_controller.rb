@@ -17,7 +17,7 @@ class ServiceController < ApplicationController
         driverIds.each do |driverId|
           vehicle=Vehicle.getVehicleDriverId driverId
 
-          fromPointId,toPointId,complete=vehicle.getPositionBetweenPick
+          fromPointId,toPointId,complete=vehicle.getPositionBetweenPickCache
           etaPoints=vehicle.getEtaForDifferentPoints
           a=Hash.new
           a["driverId"]=driverId
@@ -82,6 +82,19 @@ class ServiceController < ApplicationController
     driverIds.each do |driverId|
       vehicle=Vehicle.getVehicleDriverId driverId
       vehicle.refreshEtaForDiffPoints
+    end
+
+    render :text=>"OK"
+
+  end
+
+
+  def refreshPositionForDiffPoints
+    driverIds=[986,1017,995,493,644,453]
+
+    driverIds.each do |driverId|
+      vehicle=Vehicle.getVehicleDriverId driverId
+      vehicle.getPositionBetweenPick
     end
 
     render :text=>"OK"
