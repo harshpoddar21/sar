@@ -96,16 +96,26 @@ class CustomercareController < ApplicationController
       bookingFollowA[bo.booking_id]=bo
     end
 
+    allBookingIds=Array.new
+    bookings.each do |boo|
 
-    feedbacks=Feedback.where("booking_id in ("+bookingFollowA.keys.join(",")+")")
+      allBookingIds.push boo["BOOKING_ID"]
+    end
+
+
 
     bookingIdFeedback=Hash.new
 
-    feedbacks.each do |feedback|
+    if allBookingIds.length>0
+      feedbacks=Feedback.where("booking_id in ("+allBookingIds.join(",")+")")
 
-      bookingIdFeedback[feedback.booking_id]=feedback.response
+      feedbacks.each do |feedback|
 
+        bookingIdFeedback[feedback.booking_id]=feedback.response
+
+      end
     end
+
     bookings.each do |booking|
 
 
