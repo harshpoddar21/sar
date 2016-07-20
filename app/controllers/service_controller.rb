@@ -77,7 +77,7 @@ class ServiceController < ApplicationController
   end
 
   def refreshEtaForDiffPoints
-    driverIds=[995,986,493,992,644,1017]
+    driverIds=[986,1017,995,493,644,453]
 
     driverIds.each do |driverId|
       vehicle=Vehicle.getVehicleDriverId driverId

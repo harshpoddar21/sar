@@ -16,6 +16,7 @@ var DriverErrorCode = {
     "TOO_SOON_TO_COMPUTE_ETA": 2
 };
 var currentTime=Math.floor(Date.now() / 1000);
+
 var routeId=0;
 if (currentTime%86400<8*3600){
 
