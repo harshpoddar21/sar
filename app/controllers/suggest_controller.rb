@@ -585,6 +585,7 @@ class SuggestController < ApplicationController
     subId=data["subscriberID"]
     from_mode=""
     to_mode=""
+    promoter_id= data["promoterID"] !=nil ? data["promoterID"] : 0
     from_time=""
     to_time=""
     from_mode=data["commutework"].join(",") if data["commutework"]!=nil
@@ -611,6 +612,7 @@ class SuggestController < ApplicationController
       suggestion.to_str=to_str
       suggestion.repeat_user=repeatUser
       suggestion.to_mode=to_mode
+      suggestion.promoter_id=promoter_id
       suggestion.make_booking=data["makeBooking"]?1:0
       suggestion.route_type=route_type
       suggestion.routeid=routeid
@@ -626,6 +628,19 @@ class SuggestController < ApplicationController
     end
   end
 
+
+  def logPromoterIn
+
+    userName=params[:username]
+    password=params[:password]
+
+    promoter=Promoter.where(:username => userName).where(:password=>password).last
+    if promoter!=nil
+      render :json=>Response.new(true,{"promoterId"=>promoter.id}).to_json
+    else
+      render :json=>Response.new(false,nil).to_json
+    end
+  end
 
 
 

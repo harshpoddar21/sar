@@ -93,8 +93,6 @@ legend{
 }
 .routeCount{
     margin-top: 10px;
-    position: relative;
-    top: 10%;
 }
 .row.social {
     position: absolute;
@@ -991,6 +989,7 @@ body {
     .headText {
         font-size: 15px;
     }
+
 }
 
 @media only screen and (max-device-width: 360px){
@@ -1284,20 +1283,22 @@ body {
 @media only screen and (min-device-width:500px) {
 
     body {
-        font-size: 2.3rem!important;
+        font-size: 2.3rem !important;
     }
-    .confirmed-registrations{
+
+    .confirmed-registrations {
         border: solid 2px #333333;
         padding: 10px;
         position: relative;
-        top:5%;
+        top: 5%;
 
     }
 
-    .select-boarding-point{
+    .select-boarding-point {
 
-        margin-top:25%;
+        margin-top: 25%;
     }
+
     .set-location-button {
         position: relative;
         margin: 2px;
@@ -1333,16 +1334,16 @@ body {
     }
 
     .boarding-point-home, .boarding-point-office {
-        border: solid 1px #ccc;
-        margin: 16px;
-        padding: 10px 16px;
-        display: inline-block;
-        box-shadow: 3px 3px 1px #ccc;
+        /* border: solid 1px #ccc; */
+        /* margin: 16px; */
+        /* padding: 10px 16px; */
+        /* display: inline-block; */
+        /* box-shadow: 3px 3px 1px #ccc; */
     }
 
     .phone-number-form {
         position: relative;
-        top:20%;
+        top: 20%;
     }
 
     .phone-number-input {
@@ -1372,8 +1373,103 @@ body {
         display: none;
     }
 
+    .freecharge-banner {
+        text-align: center;
+        display: none;
+    }
+
+    .mobikwik-banner {
+        text-align: center;
+        display: none;
+    }
+
+    .booking-button {
+        margin-top: 10%;
+    }
 }
 
-.booking-button {
-    margin-top: 10%;
+
+
+label {
+    display: block;
+    color: #999;
+}
+.cf:before,
+.cf:after {
+    content: "";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
+}
+.cf {
+    *zoom: 1;
+}
+:focus {
+    outline: 0;
+}
+.loginform {
+    width: 100%;
+    height: 220px;
+    margin: 50px auto;
+    padding: 25px;
+    background-color: rgba(250,250,250,0.5);
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2),
+    inset 0px 1px 0px 0px rgba(250, 250, 250, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.loginform ul {
+    padding: 0;
+    margin: 0;
+}
+.loginform li {
+    display: inline;
+    float: left;
+}
+.loginform input:not([type=submit]) {
+    padding: 5px;
+    margin-right: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.1),
+    0px 1px 0px 0px rgba(250, 250, 250, 0.5) ;
+}
+.loginform input[type=submit] {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    background: #64c8ef;
+    background: -moz-linear-gradient(top,  #64c8ef 0%, #00a2e2 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#64c8ef), color-stop(100%,#00a2e2));
+    background: -webkit-linear-gradient(top,  #64c8ef 0%,#00a2e2 100%);
+    background: -o-linear-gradient(top,  #64c8ef 0%,#00a2e2 100%);
+    background: -ms-linear-gradient(top,  #64c8ef 0%,#00a2e2 100%);
+    background: linear-gradient(to bottom,  #64c8ef 0%,#00a2e2 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#64c8ef', endColorstr='#00a2e2',GradientType=0 );
+    color: #fff;
+    padding: 5px 15px;
+    margin-right: 0;
+    margin-top: 15px;
+    border-radius: 3px;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
+}
+
+.incorrect-entry {
+    color: red;
+    display: none;
+    margin-top:200px;
+}
+
+
+.logout {
+    position: relative;
+    margin-top: 15px;
+    padding: 10px;
+    border: solid 1px #ccc;
+    box-shadow: 3px 3px 1px #ccc;
+    display: inline-block;
+    width: 35%;
+    border-radius: 10px;
+    z-index: 10000;
 }

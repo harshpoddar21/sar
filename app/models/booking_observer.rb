@@ -103,8 +103,7 @@ class BookingObserver
     end
 
     if phoneNumbersToSend.length>0
-      Feedback.initateFeedbackFromNewUserWithoutBookingId phoneNumbersToSend,"TAB"
-
+      Feedback.initateFeedbackFromNewUserWithoutBookingId phoneNumbersToSend,Feedback::Channel::VIA_CALL
     end
 
   end

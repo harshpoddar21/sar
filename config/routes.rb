@@ -28,7 +28,10 @@ Rails.application.routes.draw do
   get 'suggest/getSlotsWithCoords'
   get 'suggest/sendOtp'
   get 'suggest/verifyOtp'
+  get 'suggest/logPromoterIn'
+  get 'whatsapp/insertData' => 'whatsapp#insertData'
 
+  get 'whatsapp/analyzeWhatsApp' =>'whatsapp#analyzeWhatsApp'
 
   get 'customercare/update_lead_data'
   post 'customercare/update_lead_data'

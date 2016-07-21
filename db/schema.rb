@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160721004831) do
+ActiveRecord::Schema.define(version: 20160721230703) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 20160721004831) do
     t.text     "to_str",          limit: 65535
     t.integer  "make_booking",    limit: 4
     t.integer  "repeat_user",     limit: 4
+    t.integer  "promoter_id",     limit: 4
   end
 
   create_table "graph_coordinates", force: :cascade do |t|
@@ -181,6 +182,13 @@ ActiveRecord::Schema.define(version: 20160721004831) do
     t.datetime "updated_at",             null: false
     t.integer  "offer_price",  limit: 4
     t.integer  "price_single", limit: 4
+  end
+
+  create_table "promoters", force: :cascade do |t|
+    t.text     "username",   limit: 65535
+    t.text     "password",   limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "referral_codes", force: :cascade do |t|
@@ -325,9 +333,9 @@ ActiveRecord::Schema.define(version: 20160721004831) do
 
   create_table "whats_app_data", force: :cascade do |t|
     t.text     "location",   limit: 65535
-    t.text     "data",       limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.text     "data",       limit: 16777215
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
 end

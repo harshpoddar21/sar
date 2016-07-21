@@ -18,6 +18,7 @@ var uploaded = 0;
 var returnToStage;
 
 
+
 var triedOnceAuto=false;
 function initAutocomplete() {
     if ((window.location.search!="" && window.location.search.match(/paths=([^\&]*)/g)!=null && window.location.search.match(/paths=([^\&]*)/g).length>0 && window.location.search.match(/paths=([^\&]*)/g)[0].split("=")[1]!="")){
@@ -195,7 +196,7 @@ var closest = 0;
 var mindist = 99999;
 $(window).resize(function(){
     if($('#gMap').length){
-     //   initMap(responseJson,"OTD");
+        //   initMap(responseJson,"OTD");
     }
 });
 var screenHeight = 100;
@@ -570,26 +571,32 @@ function switchScreen (scrno, obj){
     ga('send', 'event', 'screen_no', scrno);
     switch(scrno){
         case 1:
-         var html = '<div class="col-md-12 text-center" style="height: 100%;position:static;">';
-         html += '<div class="confirmed-registrations"><div>' + registrations_today + '/87 confirmed registrations today </div><div class="ask-refresh">Please press the refresh button below once connected to internet </div></div>';
-         html += '<div class="select-boarding-point"><h3> Select Boarding Points </h3></div>';
-         html += '<div class= "set-location-button home btn btn-default" onclick="set(2)"> SET HOME </div>';
-         html += '<div class = "set-location-button office btn btn-default" onclick="set(3)"> SET OFFICE </div>';
-         html += '<div id = "back" onclick="changeToStage(returnToStage)" class = "back-refresh btn btn-default"> Back </div>';
-         html += '<div id = "refresh" onclick = "refreshData()" class = "back-refresh btn btn-default"> Refresh </div>';
-         html += '<div class="downArr dowfirst"><span class="fa fa-angle-double-down"></span></div>';
 
-         $(obj).html(html)
-         .find('.downArr').hide();
-
-            /*if (registrations_today == uploaded) {
-             //   $('.ask-refresh').hide();
+            if (!localStorage.getItem('promoterID')) {
+                changeToStage(8);
             }
-            else {
-                    $('.ask-refresh').show();
-                }*/
+            else{
+                var html = '<div class="col-md-12 text-center" style="height: 100%;position:static;">';
+                html += '<div class="confirmed-registrations"><div>' + registrations_today + '/87 confirmed registrations today </div><div class="ask-refresh">Please press the refresh button below once connected to internet </div></div>';
+                html += '<div class="select-boarding-point"><h3> Select Boarding Points </h3></div>';
+                html += '<div class= "set-location-button home btn btn-default" onclick="set(2)"> SET HOME </div>';
+                html += '<div class = "set-location-button office btn btn-default" onclick="set(3)"> SET OFFICE </div>';
+                html += '<div id = "back" onclick="changeToStage(returnToStage)" class = "back-refresh btn btn-default"> Back </div>';
+                html += '<div id = "refresh" onclick = "refreshData()" class = "back-refresh btn btn-default"> Refresh </div>';
+                html += '<div onclick = "logOut()" class="btn btn-default logout"> Logout </div>';
+                html += '<div class="downArr dowfirst"><span class="fa fa-angle-double-down"></span></div>';
 
-         break;
+                $(obj).html(html)
+                    .find('.downArr').hide();
+
+                /*if (registrations_today == uploaded) {
+                 //   $('.ask-refresh').hide();
+                 }
+                 else {
+                 $('.ask-refresh').show();
+                 }*/
+            }
+            break;
 
         case 2:
             if (origin && origin=='home'){
@@ -728,7 +735,7 @@ function switchScreen (scrno, obj){
                     $(obj).find('button[data-value = "' + value + '"]').removeClass('btn-default').addClass('btn-info');
                 });
             }
-            
+
             timeCapture();
 
             if (info.reachwork && info.reachwork.length == 0)
@@ -738,7 +745,7 @@ function switchScreen (scrno, obj){
             break;
 
         case 5:
-            
+
             var html = '<div class="upArr"><span class="fa fa-angle-double-up"></span></div>';
             html += '<div class="headText headText2 text-center">And also, what time you <span class="highlight lesshighlight"><br/>#LeaveFromWork</span></div>';
             html += '<div class="col-md-12"><br /><br />';
@@ -821,7 +828,7 @@ function switchScreen (scrno, obj){
             {
                 jQuery('.downArr').hide();
             }
-                break;
+            break;
 
         case 7:
             var html = '<div class="col-md-12 text-center" style="height: 100%;position: static;">';
@@ -852,56 +859,56 @@ function switchScreen (scrno, obj){
             html += '</div></div></div>';
 
 
-           /* var mSlots = '';
-            var emp = '';
-            if(info.reachwork != undefined){
-                $.each(info.reachwork, function(key, value){
-                    if(key != info.reachwork.length-1){
-                        emp = ' & ';
-                    }else{
-                        emp = '';
-                    }
-                    mSlots += '<span class="slots">'+value+'</span>'+emp;
-                });
-            }
-            var eSlots = '';
+            /* var mSlots = '';
+             var emp = '';
+             if(info.reachwork != undefined){
+             $.each(info.reachwork, function(key, value){
+             if(key != info.reachwork.length-1){
+             emp = ' & ';
+             }else{
+             emp = '';
+             }
+             mSlots += '<span class="slots">'+value+'</span>'+emp;
+             });
+             }
+             var eSlots = '';
 
-            if (!(navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1)) {
-                if (window.Notification) {
-                    info.pushSubscriptionStatus = window.Notification.permission;
-                    ga('send', 'event', 'chromeNotificationStatus',window.Notification.permission);
-                }else{
+             if (!(navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1)) {
+             if (window.Notification) {
+             info.pushSubscriptionStatus = window.Notification.permission;
+             ga('send', 'event', 'chromeNotificationStatus',window.Notification.permission);
+             }else{
 
-                    info.pushSubscriptionStatus="weird_browser";
-                }
-            }else{
+             info.pushSubscriptionStatus="weird_browser";
+             }
+             }else{
 
-                info.pushSubscriptionStatus="safari_notpresent";
-            }
-            if(info.leavework != undefined){
-                $.each(info.leavework, function(key, value){
-                    if(key != info.leavework.length-1){
-                        emp = ' & ';
-                    }else{
-                        emp = '';
-                    }
-                    eSlots += '<span class="slots">'+value+'</span>'+emp;
-                });
-            }
+             info.pushSubscriptionStatus="safari_notpresent";
+             }
+             if(info.leavework != undefined){
+             $.each(info.leavework, function(key, value){
+             if(key != info.leavework.length-1){
+             emp = ' & ';
+             }else{
+             emp = '';
+             }
+             eSlots += '<span class="slots">'+value+'</span>'+emp;
+             });
+             }
 
 
-            var topPx = $('.screenWrapper').css('height');
-            topPx = topPx.replace('px', '');
-            topPx = Number(topPx)-100;*/
+             var topPx = $('.screenWrapper').css('height');
+             topPx = topPx.replace('px', '');
+             topPx = Number(topPx)-100;*/
             $(obj).html(html)
                 .find('.home').html(info.homeAddress).end()
                 .find('.office').html(info.officeAddress).end()
                 .find('.office').html(info.officeAddress).end();
-                /*.find('.mslots').html(mSlots).end()
-                .find('.eslots').html(eSlots).end()
-                .find('.social').css('top',topPx).end();*/
+            /*.find('.mslots').html(mSlots).end()
+             .find('.eslots').html(eSlots).end()
+             .find('.social').css('top',topPx).end();*/
 
-/*            jQuery('.bounce').css("display","none");*/
+            /*            jQuery('.bounce').css("display","none");*/
 
             routeSummary();
 
@@ -909,6 +916,17 @@ function switchScreen (scrno, obj){
 
 
             break;
+
+        case 8:
+            var html = '<section class="loginform cf"><form name="login">';
+            html += '<ul><li><label for="username">Username</label><input type="text" name="username" placeholder="Username" required>';
+            html += '</li><li><label for="password">Password</label><input type="password" name="password" placeholder="password" required></li>';
+            html += '<li> <input type="submit" value="Login" onclick="doesUserExist()" style="margin-top:30px">  </li> </ul> </form>';
+            html += '<div class="incorrect-entry"> Incorrect username or password </div></section>';
+            $(obj).html(html);
+
+            break;
+
 
 
         default:
@@ -1171,22 +1189,23 @@ function submitDataToServer() {
     if (!isSubmittingToServer) {
         uploaded=0;
         lastSubmitTime=Math.floor(Date.now());
-      
+
         var leng=0;
         for (var i = 0; i < localStorage.length; i++) {
             var currKey = localStorage.key(i);
             if (! (/data*/.test(currKey))){
-                
+
                 continue;
             }
             leng++;
-            if (localStorage.getItem(currKey) !== 'classic') {
+            if (localStorage.getItem(currKey) !== 'classic' && currKey !== 'promoterID') {
                 isSubmittingToServer=true;
                 $.ajax({
                     url: 'saveNewSuggestionTab',
                     method: 'POST',
                     data: {data1: localStorage.getItem(currKey)}
-                }).done(function (result) {
+                })
+                    .done(function (result) {
                         uploaded++;
                         checkIfUploadingComplete(leng,currKey);
 
@@ -1217,15 +1236,11 @@ function checkIfUploadingComplete(totalLength,currKey) {
 
                     break;
                 }
-
-
             }
-
         }
         uploaded=0;
 
     }
-
 }
 
 
@@ -1239,3 +1254,44 @@ setInterval(function(){
     }
     submitDataToServer();
 }, 5000);
+
+
+function doesUserExist() { // make api call to backend
+
+
+    var userName=jQuery("input[name='username']").val();
+    var password=jQuery("input[name='password']").val();
+    jQuery.ajax({url:"/suggest/logPromoterIn?username="+userName+"&password="+password}).done(function(response){
+        
+        if (response["success"]){
+
+            logIn(response["data"]["promoterId"]);
+            
+        }else{
+            
+            
+            alert("Login Failed");
+
+            $(".incorrect-entry").show();
+        }
+        
+    });
+     // if exists, pass username to the function, else pass null
+}
+
+function logIn(username) {
+    if (username){
+        info.promoterID = username;
+        localStorage.setItem("promoterID", String(info.promoterID));
+        changeToStage(1);
+    }
+    else {
+        $(".incorrect-entry").show();
+    }
+}
+
+function logOut() {
+    info.promoterID = null;
+    localStorage.removeItem('promoterID');
+    changeToStage(8);
+}

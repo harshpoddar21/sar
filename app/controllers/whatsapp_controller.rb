@@ -1,16 +1,22 @@
+require 'open-uri'
 class WhatsappController < ApplicationController
   def analyzeWhatsApp
 
+      doc = Nokogiri::HTML(open("https://myor.shuttl.com/show/vaishali"))
+      messages=doc.xpath("//div[@class=msg")
+      currentTime=0
+      currentAuthor=nil
+      messages.each do |m|
 
-    location=params[:location]
-    data=WhatsAppData.find_by(:location=>location)
-    if data!=nil && data.data!=nil && data.data!=""
-      doc = Nokogiri::HTML(data.data)
-      doc.xpath("")
-    else
-      render :text=>"No data found in DB"
-    end
+        if m.xpath("//*[contains(@class,'message-system')]")
 
+        end
+
+      end
+  end
+
+
+  def insertData
 
 
   end
