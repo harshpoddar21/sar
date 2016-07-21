@@ -50,4 +50,23 @@ class Feedback < ActiveRecord::Base
 
 
   end
+
+  def self.initateFeedbackFromNewUserWithoutBookingId phoneNumbers,channel
+
+
+
+    if phoneNumbers!=nil
+
+      phoneNumbers.each do |phoneNumber|
+
+          Feedback.create(:channel=>channel,:time_sent=>Time.now.to_i,:phone_number=>phoneNumber)
+          user=Hash.new
+          user["PHONE_NUMBER"]=phoneNumber
+          sendFeedbackIvrToUser(user)
+      end
+
+    end
+
+  end
+
 end

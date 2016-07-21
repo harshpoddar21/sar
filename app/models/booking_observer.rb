@@ -76,6 +76,37 @@ class BookingObserver
     end
 
 
+
+    tabLeads=nil
+
+    if Session.getCurrentSessionType==Session::MORNING_SESSION
+      tabLeads=GetSuggestionViaTab.where("unix_timestamp(created_at)<"+(Session.getMorningSessionEndUnixTime).to_s)
+                   .where("unix_timestamp(created_at)>"+(Utils.getTodayMorningUnixTime()).to_s)
+                   .where(:make_booking=>1)
+    else
+      tabLeads=GetSuggestionViaTab.where("unix_timestamp(created_at)>"+(Session.getMorningSessionEndUnixTime).to_s)
+                   .where(:make_booking=>1)
+    end
+
+    phoneNumbersToSend=Array.new
+
+    tabLeads.each do |tabLead|
+
+      if tabLead.created_at.to_i<currentTime-2*Constants::SECONDS_IN_HOUR
+
+        if Feedback.where(:phone_number=>tabLead.customer_number).size==0
+          phoneNumbersToSend.push tabLead.customer_number
+        end
+
+      end
+
+    end
+
+    if phoneNumbersToSend.length>0
+      Feedback.initateFeedbackFromNewUserWithoutBookingId phoneNumbersToSend,"TAB"
+
+    end
+
   end
 
   def sendWelcomeMessageToFirstBookingPeople
