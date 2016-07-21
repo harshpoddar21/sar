@@ -573,7 +573,7 @@ class SuggestController < ApplicationController
     data=JSON.parse params[:data1]
     customer_number=data["phone_number"]
     repeatUser=0
-    if GetSuggestionViaTab.find_by(:customer_number=>customer_number)!=nil
+    if GetSuggestionViaTab.where(:customer_number=>customer_number).where(:make_booking=>1).last!=nil && data["makeBooking"]
       repeatUser=1
       TelephonyManager.sendSms customer_number,"Hi, You have already availed your first free ride. We request you to download the Shuttl App ( http://bit.ly/downloadShuttl ) to continue Shuttling."
     end
