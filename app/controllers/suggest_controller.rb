@@ -617,7 +617,7 @@ class SuggestController < ApplicationController
       suggestion.save
 
       if data["makeBooking"] && repeatUser==0
-        TelephonyManager.sendSms customer_number,"We are excited that you have decided to try Shuttl for your office commute. Your booking id is #{suggestion.id}.We hope that your travel with us is hassle free."
+        TelephonyManager.sendSms customer_number,"We are excited that you have decided to try Shuttl for your office commute. Your booking id is #{suggestion.id} .We hope that your travel with us is hassle free."
       end
       render :text=>"OK"
     else
