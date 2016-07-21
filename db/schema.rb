@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160719102455) do
+ActiveRecord::Schema.define(version: 20160721004831) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 20160719102455) do
     t.datetime "updated_at",                    null: false
     t.text     "to_str",          limit: 65535
     t.integer  "make_booking",    limit: 4
+    t.integer  "repeat_user",     limit: 4
   end
 
   create_table "graph_coordinates", force: :cascade do |t|
@@ -227,7 +228,9 @@ ActiveRecord::Schema.define(version: 20160719102455) do
     t.text     "name",         limit: 65535
     t.text     "route_points", limit: 65535
     t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "updated_at",                 null: false
+    t.text     "fromname",     limit: 65535
+    t.text     "toname",       limit: 65535
   end
 
   create_table "slots", force: :cascade do |t|
@@ -318,6 +321,13 @@ ActiveRecord::Schema.define(version: 20160719102455) do
     t.datetime "updated_at",                null: false
     t.text     "p_link",      limit: 65535
     t.text     "n_link",      limit: 65535
+  end
+
+  create_table "whats_app_data", force: :cascade do |t|
+    t.text     "location",   limit: 65535
+    t.text     "data",       limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
 end

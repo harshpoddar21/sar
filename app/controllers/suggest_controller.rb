@@ -572,7 +572,11 @@ class SuggestController < ApplicationController
     customer_number=params[:phone_number]
     data=JSON.parse params[:data1]
     customer_number=data["phone_number"]
-
+    repeatUser=0
+    if GetSuggestionViaTab.find_by(:customer_number=>customer_number)!=nil
+      repeatUser=1
+      TelephonyManager.sendSms customer_number,"Hi, You have already availed your first free ride. We request you to download the Shuttl App ( http://bit.ly/downloadShuttl ) to continue Shuttling."
+    end
 
     from_str=data["homeAddress"]
     to_str=data["officeAddress"]
@@ -605,14 +609,15 @@ class SuggestController < ApplicationController
       suggestion.from_time=from_time
       suggestion.to_time=to_time
       suggestion.to_str=to_str
+      suggestion.repeat_user=repeatUser
       suggestion.to_mode=to_mode
       suggestion.make_booking=data["makeBooking"]?1:0
       suggestion.route_type=route_type
       suggestion.routeid=routeid
       suggestion.save
 
-      if data["makeBooking"]
-        TelephonyManager.sendSms customer_number,"We are excited that you have decided to try Shuttl for your office commute. Your booking id is #{}.We hope that your travel with us is hassle free."
+      if data["makeBooking"] && repeatUser==0
+        TelephonyManager.sendSms customer_number,"We are excited that you have decided to try Shuttl for your office commute. Your booking id is #{suggestion.id}.We hope that your travel with us is hassle free."
       end
       render :text=>"OK"
     else
@@ -620,6 +625,9 @@ class SuggestController < ApplicationController
       render :text=>"ERROR"
     end
   end
+
+
+
 
 
 
