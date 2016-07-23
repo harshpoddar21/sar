@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160721230703) do
+ActiveRecord::Schema.define(version: 20160723083547) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -336,6 +336,13 @@ ActiveRecord::Schema.define(version: 20160721230703) do
     t.text     "data",       limit: 16777215
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+  end
+
+  create_table "whatsapps", force: :cascade do |t|
+    t.text     "group_name",       limit: 65535
+    t.text     "group_identifier", limit: 65535
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
 end

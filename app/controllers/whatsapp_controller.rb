@@ -44,7 +44,9 @@ class WhatsappController < ApplicationController
           elsif (systemMessage=~/left/) !=nil
 
             newNumber=systemMessage.split("left")
-            newNumber=newNumber[0]
+            newNumber=newNumber[0].strip
+
+            logger.info "newNumber"+newNumber
             event=nil
             if userDetails[newNumber]!=nil
               event=userDetails[newNumber]
@@ -52,8 +54,8 @@ class WhatsappController < ApplicationController
               event=UserEvent.new
               event.phoneNumber=newNumber
               userDetails[newNumber]=event
-              systemEventOccurred[newNumber]=event
             end
+            systemEventOccurred[newNumber]=event
             event.leftTimeBestEstimate=currentTime
           elsif (systemMessage=~/removed/) !=nil
              newNumber=systemMessage.split("removed")
@@ -190,4 +192,16 @@ class WhatsappController < ApplicationController
       end
     end
   end
+
+
+
+  def createWhatsAppGroup
+
+
+    name=params[:groupname]
+
+
+
+  end
+
 end
