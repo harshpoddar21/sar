@@ -10,7 +10,7 @@ class Campaign
 
         if Session.getCurrentSessionType==Session::MORNING_SESSION
 
-          if bif.morningTime - Time.now.to_i < 30 *Constants::SECONDS_IN_HOUR
+          if bif.morningTime - Time.now.to_i < 30 *Constants::SECONDS_IN_MINS
 
             if CampaignManager.where(:phone_number => bif.phoneNumber)
                    .where(:campaign_type => CampaignUser::APP_INSTALL)
@@ -23,7 +23,7 @@ class Campaign
           else
           end
         else
-          if bif.eveningTime - Time.now.to_i < 60 *Constants::SECONDS_IN_HOUR && bif.eveningTime - Time.now.to_i > 0
+          if bif.eveningTime - Time.now.to_i < 60 *Constants::SECONDS_IN_MINS && bif.eveningTime - Time.now.to_i > 0
 
             if CampaignManager.where(:phone_number => bif.phoneNumber)
                    .where(:campaign_type => CampaignUser::APP_INSTALL)
@@ -42,7 +42,7 @@ class Campaign
 
         if Session.getCurrentSessionType==Session::MORNING_SESSION
 
-          if bif.morningTime - Time.now.to_i < 30 *Constants::SECONDS_IN_HOUR && bif.morningTime - Time.now.to_i > 0
+          if bif.morningTime - Time.now.to_i < 30 *Constants::SECONDS_IN_MINS && bif.morningTime - Time.now.to_i > 0
 
             if CampaignManager.where(:phone_number => bif.phoneNumber)
                    .where(:campaign_type => CampaignUser::FIRST_BOOKING)
@@ -55,7 +55,7 @@ class Campaign
           else
           end
         else
-          if bif.eveningTime - Time.now.to_i < 60 *Constants::SECONDS_IN_HOUR && bif.eveningTime - Time.now.to_i > 0
+          if bif.eveningTime - Time.now.to_i < 60 *Constants::SECONDS_IN_MINS && bif.eveningTime - Time.now.to_i > 0
 
             if CampaignManager.where(:phone_number => bif.phoneNumber)
                    .where(:campaign_type => CampaignUser::FIRST_BOOKING)
