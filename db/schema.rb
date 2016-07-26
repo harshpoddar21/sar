@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160723083547) do
+ActiveRecord::Schema.define(version: 20160726030516) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -43,6 +43,17 @@ ActiveRecord::Schema.define(version: 20160723083547) do
     t.integer  "count_link_sent",           limit: 4
     t.integer  "count_clicked_on_positive", limit: 4
     t.integer  "count_clicked_on_negative", limit: 4
+  end
+
+  create_table "campaign_managers", force: :cascade do |t|
+    t.text     "phone_number",          limit: 65535
+    t.integer  "campaign_id",           limit: 4
+    t.integer  "time_sent",             limit: 4
+    t.integer  "positive_link_clicked", limit: 4
+    t.integer  "negative_link_clicked", limit: 4
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.integer  "campaign_type",         limit: 4
   end
 
   create_table "customer_suggestions", force: :cascade do |t|
@@ -329,6 +340,14 @@ ActiveRecord::Schema.define(version: 20160723083547) do
     t.datetime "updated_at",                null: false
     t.text     "p_link",      limit: 65535
     t.text     "n_link",      limit: 65535
+  end
+
+  create_table "user_campaign_statuses", force: :cascade do |t|
+    t.integer  "campaign_id",  limit: 4
+    t.integer  "times_sent",   limit: 4
+    t.integer  "unsubscribed", limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "whats_app_data", force: :cascade do |t|

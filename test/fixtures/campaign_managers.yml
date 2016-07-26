@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  phone_number: MyText
+  campaign_id: 1
+  time_sent: 1
+  positive_link_clicked: 1
+  negative_link_clicked: 1
+
+two:
+  phone_number: MyText
+  campaign_id: 1
+  time_sent: 1
+  positive_link_clicked: 1
+  negative_link_clicked: 1

@@ -28,3 +28,7 @@ end
 every 2.minutes do
   runner "ServiceController.new.refreshPositionForDiffPoints"
 end
+
+every 10.minutes do
+  runner Campaign.new.campaignPlanner
+end
