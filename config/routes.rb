@@ -50,6 +50,9 @@ Rails.application.routes.draw do
   get 'restricted/getDetailsForLead'
   get 'restricted/feedbackReceived'
   get 'restricted/responseReceived'
+  get 'restricted/makeEveningIvrCall'
+  get 'suggest/eveningTime' => "restricted#eveningTime"
+
 
   get 'show/laxminagar' => "shortener#laxminagar"
   get 'show/gazipur' => "shortener#gazipur"

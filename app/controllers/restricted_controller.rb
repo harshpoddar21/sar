@@ -80,4 +80,25 @@ class RestrictedController < ApplicationController
     render :text=>"OK"
   end
 
+
+  def makeEveningIvrCall
+
+    alreadyResponded=Array.new
+    peopleBooked=UmsBooking.where("ROUTE_ID in (831,832,587)").joins(" join USERS on BOOKINGS.USER_ID=USERS.USER_ID").select(:PHONE_NUMBER).map(&:PHONE_NUMBER).uniq
+    responded=EveningTime.all.select(:phone_number).map(&:phone_number).uniq
+    leftPeople=peopleBooked-responded
+    leftPeople.each do |phoneNumber|
+      ConnectionManager.makeHttpRequest "http://obd.solutionsinfini.com/api/v1/index.php?api_key=A08c15a6f74423b20addc4ab5dc2fdedb&method=voice.call&play=12701.ivr&numbers=#{phoneNumber}&format=xml"
+    end
+
+    render :text=> "OK"
+  end
+
+  def eveningTime
+
+    phoneNumber=params[:caller]
+    time=params[:keypress]
+    EveningTime.create(:phone_number=>phoneNumber,:evening_time=>time)
+    render :text=>"OK"
+  end
 end
