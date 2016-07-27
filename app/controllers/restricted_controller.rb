@@ -113,7 +113,7 @@ class RestrictedController < ApplicationController
     responded=EveningTime.all.select(:phone_number).map(&:phone_number).uniq
     leftPeople=peopleBooked-responded
     leftPeople.each do |phoneNumber|
-      if sendToAll==1.to_s || phoneNumber=="8800846150"
+      if sendToAll==1.to_s || phoneNumber.to_s=="8800846150"
       shortenUrl=BitlyUtils.shortenUrl "https://docs.google.com/forms/d/e/1FAIpQLSejTN9XPYBgCRosC8WAkWP2lw5SeUo_yXwnYSUi14kuGQ_rXg/viewform?entry.1826517929=#{phoneNumber}"
       TelephonyManager.sendSms phoneNumber,"To run a Shuttl back to your home at your preferred time go to: #{shortenUrl}"
       end
