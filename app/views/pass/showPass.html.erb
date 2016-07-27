@@ -1,0 +1,49 @@
+
+<div class="container-fluid" id="main-wrapper">
+  <div class="header-container row">
+    <div class="previous col-xs-1 col-sm-1">&lt;</div>
+    <div class="route-title col-xs-10 col-sm-10">East Delhi to Gurgaon</div>
+    <div class="next col-xs-1 col-sm-1">&gt;</div>
+    <br>
+    <div class="route-via">via Kaushambi, Gazipur, I.P. Extension, Preetvihar & Laxminagar</div>
+  </div>
+
+  <div id="greyScreen" class="greyScreen"></div>
+  <div id="morningSlotList" class="morningSlotList">
+    Please select when you'd like to travel to work
+    <form id="morningSlots">
+      <input onclick="routeSelected(1,selectedEveningRoute)" type = "radio" name="morningSlot" value="1"> 07:00 - 08:15 <br>
+      <input onclick="routeSelected(2,selectedEveningRoute)" type = "radio" name="morningSlot" value="2"> 07:20 - 09:00 <br>
+      <input onclick="routeSelected(3,selectedEveningRoute)" type = "radio" name="morningSlot" value="3"> 07:55 - 09:45  <br>
+      <input onclick="routeSelected(4,selectedEveningRoute)" type = "radio" name="morningSlot" value="4"> 08:25 - 10:30 <br>
+    </form>
+    <button type="submit" form="morningSlots" value="Submit"></button>
+  </div>
+
+  <div id="eveningSlotList" class="eveningSlotList">
+    Please select when you'd like to travel back home
+    <form>
+      <input onclick="routeSelected(selectedMorningRoute,1)" type = "radio" name="eveningSlot" value="1"> 17:25 - 19:00 <br>
+      <input onclick="routeSelected(selectedMorningRoute,2)" type = "radio" name="eveningSlot" value="2"> 18:25 - 20:15 <br>
+      <input onclick="routeSelected(selectedMorningRoute,3)" type = "radio" name="eveningSlot" value="3"> 18:55 - 20:30 <br>
+      <input onclick="routeSelected(selectedMorningRoute,4)" type = "radio" name="eveningSlot" value="4"> 19:25 - 21:00 <br>
+    </form>
+  </div>
+  <div id="main-content-container" class="main-content-container row">
+
+
+
+  </div>
+  <div class="info-container row">
+    <div class="select-pass-title" id="select-pass-title-id">Select Pass</div>
+    <div class="rides-info">18 rides @ Rs <span class="strikethrough">99</span> <span class="actual-price">55</span> each</div>
+    <div class="price-total">Rs 999</div>
+    <div class="bottom-info">Good both ways | No expiry | Fully refundable after 1st ride</div>
+  </div>
+  <div class="cta-container row">
+    <div id="btn-make-new-route" class="btn btn-default cta col-xs-6 col-sm-6 "><div class="centerVertical">Make New Route</div></div>
+    <div id="btn-paytm" class="btn btn-default cta col-xs-6 col-sm-6"><div class="centerVertical">Pay Using <span class="paytm-logo"></span></div></div>
+  </div>
+</div>
+
+<%= javascript_include_tag 'script_pass', 'data-turbolinks-track' => true %>

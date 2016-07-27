@@ -1,0 +1,346 @@
+body{
+	font-family: Tahoma, Verdana, Segoe, sans-serif;
+	text-align: center;
+	font-size: 22px;
+}
+
+div#main-wrapper{
+  max-width: 100%;
+  overflow: hidden;
+  overflow-y: scroll ;
+  height: 100%;
+}
+
+div.header-container{
+	background: #ececec;
+	height: 10.7%;
+	padding: 16px;
+	border: 3px solid black;
+}
+
+div.header-container div.previous{
+	font-size: 48px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+div.header-container div.route-title{
+	font-size: 46px;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding-bottom: 16px;
+	display: inline-block;
+}
+
+div.header-container div.next{
+	font-size: 48px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+div.header-container div.route-via{
+	font-size: 27px;
+	display: inline-block;
+}
+
+div.main-content-container{
+	background: white;
+	height: 80%;
+	padding: 16px;
+}
+
+div.main-content-container div.timing{
+	height: 120px;
+}
+
+div.main-content-container div.timing div.location div.location-heading{
+	font-weight: bold;
+	font-size: 29px;
+}
+
+div.main-content-container div.timing div.location div.location-description{
+	font-size: 26px;
+}
+
+div.main-content-container div.timing div.separator-timings div.down-arrow{
+	background: url('/images/down-arrow.png');
+	background-size: cover;
+	width: 48px;
+	height: 54px;
+	padding: 0;
+	margin-left: 30px;
+	margin-right: 5px;
+	top: 10px;
+}
+
+div.main-content-container div.timing div.separator-timings div.up-arrow{
+	background: url('/images/up-arrow.png');
+	background-size: cover;
+	width: 48px;
+	height: 54px;
+	padding: 0;
+	margin-left: 5px;
+	top: 10px;
+}
+
+div.main-content-container div.timing div.separator-timings div.time-value{
+	font-size: 20px;
+	width: 54px;
+	text-align: center;
+	border: 1px solid black;
+}
+
+div.slots-container{
+	height: 11%;
+	}
+
+div.slots-container div.slot{
+	border: 1px solid black;
+	height:100%;
+}
+
+div.slots-container div.slot div.slot-heading{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+div.slots-container div.slot div.slot-timing{
+	padding-bottom: 10px;
+}
+
+div.slots-container div.slot span.slot-time-separator{
+	background: url('/images/GreenRed.png');
+	background-size: cover;
+	width: 80px;
+	height: 22px;
+	display: inline-block;
+	position: relative;
+	top: 2px;
+}
+
+div.slots-container div.slot div.slot-time-value{
+	font-size: 28px
+}
+
+div.info-container{
+	height: 12.4%;
+	text-align: left;
+	padding-bottom: 16px;
+}
+
+div.info-container div.select-pass-title{
+	font-size: 34px;
+	font-weight: bold;
+	margin-left: 15px;
+	margin-top: 14px;
+}
+
+div.info-container div.rides-info{
+	font-size: 34px;
+	margin-left: 25px;
+	margin-top: 12px;
+}
+
+div.info-container div.price-total{
+	font-size: 34px;
+	position: relative;
+	left: 85%;
+	top: -50px;
+}
+
+
+div.info-container div.bottom-info{
+	text-align: center;
+	margin: 0 auto;
+	font-size: 31px;
+	margin-top: -20px;
+	color: gray;
+	font-weight: bold;
+}
+
+div.cta-container{
+	margin-top: 120px;
+	height: 4%;
+}
+
+div#btn-make-new-route{
+	text-transform: uppercase;
+	font-size: 40px;
+	height:120px;
+}
+
+div#btn-paytm{
+	text-transform: uppercase;
+	font-size: 40px;
+	height:120px;
+	background: #00adb7;
+}
+
+div#btn-paytm span.paytm-logo{
+	background: url('/images/paytm-logo.png');
+	background-size: cover;
+	width: 110px;
+	height: 40px;
+	display: inline-block;
+	position: relative;
+	top: 2px;
+}
+
+
+
+.left-location{
+margin-right: 0px;
+}
+
+.right-location {
+	margin-left: 22px;
+}
+
+.left-time-value
+{
+	margin-left: -2px;
+}
+
+
+.right-time-value {
+	margin-right: -2px;
+}
+
+.left-time-value-first, .right-time-value-last {
+	border: 3px solid green!important;
+}
+
+.left-time-value-last, .right-time-value-first {
+	border: 3px solid red!important;
+}
+
+.centerVertical {
+	margin-top:20px;
+}
+
+.even-row {
+	text-align: right;
+}
+
+.odd-row {
+	text-align: left;
+}
+
+.actual-price {
+	color: green;
+	font-weight: bold;
+}
+
+.strikethrough {
+	position: relative;
+}
+.strikethrough:before {
+	position: absolute;
+	content: "";
+	left: 2px;
+	top: 40%;
+	right: 0;
+	border-top: 3px solid ;
+	border-color: red;
+
+	-webkit-transform:rotate(-40deg);
+	-moz-transform:rotate(-40deg);
+	-ms-transform:rotate(-40deg);
+	-o-transform:rotate(-40deg);
+	transform:rotate(-40deg);
+}
+
+
+.slot-time-value {
+	font-size: 28px;
+}
+
+.dropdown-button {
+	position: relative;
+	left: 23%;
+}
+
+.hidden {
+	display:none;
+}
+
+.morningSlotList, .eveningSlotList{
+	font-size: 42px;
+	position: absolute;
+	left: 16%;
+	top: 240px;
+	height: 60%;
+	width: 70%;
+	border: 1px solid black;
+	background: white;
+	z-index: 10;
+	padding: 32px 16px;
+	display: none;
+
+}
+
+input {
+	height: 1em;
+	width: 1em;
+}
+
+.cross-icon {
+	position: absolute;
+	top:30px;
+	right:30px;
+}
+
+.morningSlotList form, .eveningSlotList form {
+	margin-top: 60px;
+}
+
+.greyScreen{
+	height: 100%;
+	width: 100%;
+	background: #000;
+	opacity: 0.7;
+	z-index: 5;
+	display:none;
+}
+
+.payment-successful {
+	margin: 256px 16px 256px 16px;
+	font-size: 46px;
+	font-weight: bold;
+}
+
+div.grey-overlay-screen {
+	position: absolute;
+	top:0;
+	left:0;
+	opacity: 0.87;
+	background: black;
+	height: 88vh;
+	width:100%;
+	z-index: 1000;
+	display: none;
+}
+
+div.payment-successful-container {
+	height: 50vh;
+	width: 75vw;
+	position: absolute;
+	top: 20vh;
+	left: 12.5vw;
+	background: white;
+	z-index: 10000001;
+	text-align: center;
+	display: none;
+}
+
+div.payment-successful-container .payment-successful-message {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 62px;
+
+	padding: 16px;
+	display: none;
+}

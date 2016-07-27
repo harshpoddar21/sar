@@ -101,4 +101,22 @@ class RestrictedController < ApplicationController
     EveningTime.create(:phone_number=>phoneNumber,:evening_time=>time)
     render :text=>"OK"
   end
+
+  def getEveningTime
+
+    alreadyResponded=Array.new
+
+
+    sendToAll=params[:sendToAll]
+
+    peopleBooked=UmsBooking.where("ROUTE_ID in (831,832,587)").joins(" join USERS on BOOKINGS.USER_ID=USERS.USER_ID").select(:PHONE_NUMBER).map(&:PHONE_NUMBER).uniq
+    responded=EveningTime.all.select(:phone_number).map(&:phone_number).uniq
+    leftPeople=peopleBooked-responded
+    leftPeople.each do |phoneNumber|
+      if sendToAll==1.to_s || phoneNumber=="8800846150"
+      shortenUrl=BitlyUtils.shortenUrl "https://docs.google.com/forms/d/e/1FAIpQLSejTN9XPYBgCRosC8WAkWP2lw5SeUo_yXwnYSUi14kuGQ_rXg/viewform?entry.1826517929=#{phoneNumber}"
+      TelephonyManager.sendSms phoneNumber,"To run a Shuttl back to your home at your preferred time go to: #{shortenUrl}"
+      end
+    end
+  end
 end

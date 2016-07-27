@@ -51,6 +51,8 @@ Rails.application.routes.draw do
   get 'restricted/feedbackReceived'
   get 'restricted/responseReceived'
   get 'restricted/makeEveningIvrCall'
+  get 'restricted/getEveningTime'
+
   get 'suggest/eveningTime' => "restricted#eveningTime"
 
 
@@ -106,6 +108,8 @@ get 'suggest/index_orca'
 
   get 'poster/generate' => "poster#generateNewPoster"
 
+
+  get 'pass/showPass'
 
   get 'random/call' =>"randomshit#call"
 
