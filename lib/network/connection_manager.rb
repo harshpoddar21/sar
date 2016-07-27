@@ -4,6 +4,9 @@ module ConnectionManager
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Get.new(uri.request_uri)
+    headers.each do |key,value|
+      request.add_field key,value
+    end
     http.use_ssl = true if  (/^https:/=~url) !=nil
     response = http.request(request)
   end
