@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   get 'suggest/sendOtp'
   get 'suggest/verifyOtp'
   get 'suggest/logPromoterIn'
+
+
   get 'whatsapp/insertData' => 'whatsapp#insertData'
 
   get 'whatsapp/analyzeWhatsApp' =>'whatsapp#analyzeWhatsApp'
@@ -52,6 +54,7 @@ Rails.application.routes.draw do
   get 'restricted/responseReceived'
   get 'restricted/makeEveningIvrCall'
   get 'restricted/getEveningTime'
+  get 'restricted/getDecryptedUserId'
 
   get 'suggest/eveningTime' => "restricted#eveningTime"
 

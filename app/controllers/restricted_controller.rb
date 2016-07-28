@@ -119,4 +119,10 @@ class RestrictedController < ApplicationController
       end
     end
   end
+
+  def getDecryptedUserId
+
+    userid=params[:userid]
+    render :text=>UmsUser.decryptUserId(userid)
+  end
 end
