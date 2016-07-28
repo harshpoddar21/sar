@@ -59,7 +59,7 @@ class UmsUser < ActiveRecord::Base
   def self.decryptUserId userId
 
     userId=userId.scan(/../).map { |x| x.hex.chr }.join
-    userId.split(ENCRYPTION_SALT)
+    userId=userId.split(ENCRYPTION_SALT)
     userId[0]
   end
   class UserType
