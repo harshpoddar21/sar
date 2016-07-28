@@ -398,6 +398,7 @@ class Vehicle
       end
 
     end
+    vehicles
   end
 
 end
