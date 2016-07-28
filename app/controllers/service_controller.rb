@@ -10,8 +10,8 @@ class ServiceController < ApplicationController
       raise CustomError::ParamsException,"Invalid Parameters"
     else
       if [831,832].include? routeId.to_i
-        driverIds=[986,1017,995,493,644,453]
-        vehicleNo=["DL1VB9189","DL1VB9219","DL1VB8928","DL1VB9006","DL1VC2852","DL1VC2900"]
+        driverIds=Vehicle.getDriverIdsForRoute routeId
+        vehicleNo=Vehicle.getVehicleNoForDriver driverIds
         driverPositions=Array.new
         indexDriver=0
         driverIds.each do |driverId|
@@ -77,7 +77,7 @@ class ServiceController < ApplicationController
   end
 
   def refreshEtaForDiffPoints
-    driverIds=[986,1017,995,493,644,453]
+    driverIds=Vehicle.getDriverIdsForRoute 831
 
     driverIds.each do |driverId|
       vehicle=Vehicle.getVehicleDriverId driverId
@@ -90,7 +90,7 @@ class ServiceController < ApplicationController
 
 
   def refreshPositionForDiffPoints
-    driverIds=[986,1017,995,493,644,453]
+    driverIds=Vehicle.getDriverIdsForRoute 831
 
     driverIds.each do |driverId|
       vehicle=Vehicle.getVehicleDriverId driverId

@@ -381,4 +381,23 @@ class Vehicle
   end
 
 
+  def self.getDriverIdsForRoute routeId
+
+    Trip.where(:routeid=>routeId).where("unix_timestamp(created)>"+Utils.getTodayMorningUnixTime().to_s).select(:driverid).map(&:driverid).uniq
+
+  end
+
+
+  def self.getVehicleNoForDriver driverIds
+
+    vehicles=Array.new
+    if driverIds.size>0
+
+      OpVehicle.where("driverid in ("+driverIds.join(",")+")").each do |veh|
+        vehicles[driverIds.find_index(veh.driverid)]=veh.identifies
+      end
+
+    end
+  end
+
 end
