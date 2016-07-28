@@ -35,6 +35,9 @@ class UmsUser < ActiveRecord::Base
     if response!=nil
 
       Rails.logger.info response
+      response=response.body
+      response=JSON.parse response
+
       if response["success"]
         return true,response["data"]["userId"]
       else

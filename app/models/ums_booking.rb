@@ -14,15 +14,15 @@ class UmsBooking < ActiveRecord::Base
     reqParams["userId"]="35363439776879536f4861636b794d79467269656e64"
     #added my user id just to fetch slots
 
-    reqParams={}
     response=ConnectionManager.makeHttpRequest Url::FIND_SLOTS,{'Content-Type' =>'application/json',
                                                        "userId"=>"35363439776879536f4861636b794d79467269656e64"},reqParams
 
     trip=nil
 
     if response!=nil
-      response=response.body
 
+      response=response.body
+      response=JSON.parse response
       if response["success"] && response["data"]!=nil
         slots=response["data"]["slots"]
         if slots!=nil && slots.length>0
@@ -63,6 +63,8 @@ class UmsBooking < ActiveRecord::Base
 
     response=ConnectionManager.makePostHttpRequest Url::PLACE_BOOKING,reqParams,{'Content-Type' =>'application/json',
                                                                                  "userId"=>"35363439776879536f4861636b794d79467269656e64"},true
+
+    response=response.body
 
     response=JSON.parse response
 
