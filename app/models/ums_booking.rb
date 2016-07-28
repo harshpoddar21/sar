@@ -54,7 +54,7 @@ class UmsBooking < ActiveRecord::Base
 
     reqParams=Hash.new
     reqParams["tripId"]=trip.tripId
-    reqParams["boardingTime"]=trip.time
+    reqParams["boardingTime"]=trip.time*1000
     reqParams["fromId"]=fromId
     reqParams["toId"]=toId
     reqParams["routeId"]=routeId
@@ -62,15 +62,26 @@ class UmsBooking < ActiveRecord::Base
     reqParams["partnerId"]=9999999
 
     response=ConnectionManager.makePostHttpRequest Url::PLACE_BOOKING,reqParams,{'Content-Type' =>'application/json',
-                                                                                 "userId"=>"35363439776879536f4861636b794d79467269656e64"},true
+                                                                                 "userId"=>userId,
+                                                                              "platform"=>"web",
+                                                                               "appVersion"=>"230001"
+                                                                               },true
+
+    Rails.logger.info response
 
     response=response.body
 
+
     response=JSON.parse response
 
-    logger.info "Booking Json received"
-    logger.info response.to_json
-    return 1201
+    if response["success"]
+
+      return response["data"]["bookingId"]
+    else
+      Rails.logger.info "place booking failed"
+      return 1201
+    end
+
 
   end
   class Url
