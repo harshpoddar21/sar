@@ -122,8 +122,10 @@ class RestrictedController < ApplicationController
 
   def getDecryptedUserId
 
-    userid=params[:userid]
+    userid=UmsUser.decryptUserId(params[:userid])
     user=Hash.new
+
+
     user["user_id"]=userid
     render :xml=>user.to_xml
   end
