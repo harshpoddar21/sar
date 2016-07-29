@@ -10,7 +10,7 @@ class TabController
     drop=params[:drop]
     drop=JSON.parse drop
     if systemRoute!nil
-      TabPick.where(:routeid=>85).
+      TabPick.where(:routeid=>85)
     end
   end
 
