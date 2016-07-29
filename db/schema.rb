@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160727052843) do
+ActiveRecord::Schema.define(version: 20160729002821) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -111,6 +111,8 @@ ActiveRecord::Schema.define(version: 20160727052843) do
     t.integer  "repeat_user",     limit: 4
     t.integer  "promoter_id",     limit: 4
     t.integer  "fraud_detector",  limit: 4
+    t.integer  "from_id",         limit: 4
+    t.integer  "to_id",           limit: 4
   end
 
   create_table "graph_coordinates", force: :cascade do |t|
@@ -286,6 +288,28 @@ ActiveRecord::Schema.define(version: 20160727052843) do
     t.integer  "routeid",         limit: 4
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+  end
+
+  create_table "tab_drops", force: :cascade do |t|
+    t.integer  "routeid",     limit: 4
+    t.text     "name",        limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "location_id", limit: 4
+  end
+
+  create_table "tab_picks", force: :cascade do |t|
+    t.integer  "routeid",     limit: 4
+    t.text     "name",        limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "location_id", limit: 4
+  end
+
+  create_table "tab_routes", force: :cascade do |t|
+    t.text     "name",       limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "timestamp_suggests", force: :cascade do |t|

@@ -10,7 +10,27 @@
 </div>
 <script>
   var paymentFlow=2;
+    var routeId=<%= @routeId %>;
+ var pickUp=[];
+  <% @pickUp.each do |pick| %>
+    var value={};
+  value["location_id"]="<%=pick.location_id %>";
+  value["name"]="<%=pick.name %>";
+  pickUp.push(value);
+ <% end %>
+  var drop=[];
+  <% @drop.each do |drop| %>
+  var value={};
+  value["location_id"]="<%=drop.location_id %>";
+  value["name"]="<%=drop.name %>";
+  drop.push(value);
+  <% end %>
+
+
+
+
 </script>
+
 <%= javascript_include_tag 'script_tab', 'data-turbolinks-track' => true %>
 <div class="loader_wrapper">
   <div class="loader_inner"></div>

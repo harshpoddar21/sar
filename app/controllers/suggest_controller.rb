@@ -564,6 +564,12 @@ class SuggestController < ApplicationController
 
   def getSuggestionViaTab
 
+    @routeId=params[:routeid] if params[:routeid]!=nil
+
+    @routeId=831 if @routeId==nil
+
+    @pickUp=TabPick.where(:routeid=>@routeId)
+    @drop=TabDrop.where(:routeid=>@routeId)
 
   end
 
@@ -578,8 +584,17 @@ class SuggestController < ApplicationController
       TelephonyManager.sendSms customer_number,"Hi, You have already availed your first free ride. We request you to download the Shuttl App ( http://bit.ly/downloadShuttl ) to continue Shuttling."
     end
 
-    from_str=data["homeAddress"]
-    to_str=data["officeAddress"]
+    if data["homeAddress"].to_i!=0
+      from=TabPick.where(:location_id=>data["homeAddress"].to_i).last
+      from_id=from.location_id
+      to=TabDrop.where(:location_id=>data["officeAddress"].to_i).last
+      to_id=to.location_id
+      from_str=from.name
+      to_str=to.name
+    else
+      from_str=data["homeAddress"]
+      to_str=data["officeAddress"]
+    end
     pushSubStatus=data["pushSubscriptionStatus"]
 
     subId=data["subscriberID"]
@@ -592,7 +607,7 @@ class SuggestController < ApplicationController
     to_mode=data["commutework"].join(",") if data["commutework"]!=nil
     from_time=data["reachwork"].join(",") if data["reachwork"]!=nil
     to_time=data["leavework"].join(",")  if data["leavework"]!=nil
-    routeid=0
+    routeid=data["routeid"]
     if data["route_type"]==Route::ROUTE_DOES_NOT_EXISTS
       route_type=1
       routeid=0
@@ -608,6 +623,8 @@ class SuggestController < ApplicationController
       suggestion.from_str=from_str
       suggestion.from_mode=from_mode
       suggestion.from_time=from_time
+      suggestion.from_id=from_id
+      suggestion.to_id=to_id
       suggestion.to_time=to_time
       suggestion.to_str=to_str
       suggestion.repeat_user=repeatUser
@@ -645,6 +662,12 @@ class SuggestController < ApplicationController
   end
 
 
+  def getPickUpPoints
+    routeid=params[:routeid]
+
+    slots=Slot.where(:routeid=>routeid).joins(" join locations on slots.locationid=locations.id ")
+    render :json=>slots.to_json
+  end
 
 
 

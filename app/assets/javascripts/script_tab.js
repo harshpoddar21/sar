@@ -6,6 +6,8 @@
 var px = 0;
 var refer = {};
 var info = {};
+info["routeid"]=routeId;
+
 var responseJson;
 var slotBtnsM = '';
 var slotBtnsE = '';
@@ -16,7 +18,6 @@ var origin;
 var registrations_today = localStorage.getItem("total_regs")?localStorage.getItem("total_regs"):0;
 var uploaded = 0;
 var returnToStage;
-
 
 
 var triedOnceAuto=false;
@@ -604,11 +605,11 @@ function switchScreen (scrno, obj){
             }
             var html = '<div class="col-md-12" style="height: 100%;">';
             html += '<div class = "select-boarding-point-home text-center"><h3> Select boarding point near home </h3> </div>';
-            html += '<button type="button" class = "boarding-point-home" data-value="Vaishali Metro"> Vaishali Metro </button>';
-            html += '<button type="button" class = "boarding-point-home" data-value="Kaushambi Metro"> Kaushambi Metro </button>';
-            html += '<button type="button" class = "boarding-point-home" data-value="Hassanpur Depot"> Hassanpur Depot </button>';
-            html += '<button type="button" class = "boarding-point-home" data-value="Preetvihar Metro"> Preetvihar Metro </button>';
-            html += '<button type="button" class = "boarding-point-home" data-value="Laxminagar Metro"> Laxminagar Metro </button>';
+            for (var i=0;i<pickUp.length;i++){
+
+                html += '<button type="button" class = "boarding-point-home" data-value="'+pickUp[i].location_id+'"> '+pickUp[i].name+'</button>';
+            }
+
             html += '<div class="downArr dowfirst"><span class="fa fa-angle-double-down"></span></div>';
 
             $(obj).html(html)
@@ -636,6 +637,8 @@ function switchScreen (scrno, obj){
                 }
                 else changeToStage(3);
             });
+
+
             break;
 
         case 3:
@@ -645,12 +648,11 @@ function switchScreen (scrno, obj){
             var html = '<div class="upArr"><span class="fa fa-angle-double-up"></span></div>';
             html += '<div class="col-md-12" style="height: 100%;">';
             html += '<div class = "select-boarding-point-home text-center"><h3> Select office location </h3> </div>';
-            html += '<button type="button" class = "boarding-point-office" data-value="Cyber City"> Cyber City </button>';
-            html += '<button type="button" class = "boarding-point-office" data-value="Udyog Vihar"> Udyog Vihar </button>';
-            html += '<button type="button" class = "boarding-point-office" data-value="Gold Course Road"> Golf Course Road </button>';
-            html += '<button type="button" class = "boarding-point-office" data-value="Gold Course Extention Road"> Golf Course Extention Road </button>';
-            html += '<button type="button" class = "boarding-point-office" data-value="Sohna Road"> Sohna Road </button>';
-            html += '<button type="button" class = "boarding-point-office" data-value="Sector 43-45"> Sector 43-45 </button>';
+            for (var i=0;i<drop.length;i++){
+
+                html += '<button type="button" class = "boarding-point-office" data-value="'+drop[i].location_id+'"> '+drop[i].name+' </button>';
+            }
+      
             html += '<button type="button" class = "boarding-point-office" data-value="Unitech Cyberpark"> Unitech Cyberpark </button>';
             html += '<div class="downArr dowfirst"><span class="fa fa-angle-double-down"></span></div>';
 
@@ -942,7 +944,7 @@ function setToLocalStorage()
 {
     if (typeof(Storage) !== "undefined") {
         // Code for localStorage/sessionStorage.
-        info["routeid"]=831;
+        info["routeid"]=routeId;
         info["route_type"]="Live_route";
         localStorage.setItem('data' + registrations_today, JSON.stringify(info));
         registrations_today++;
@@ -1295,3 +1297,5 @@ function logOut() {
     localStorage.removeItem('promoterID');
     changeToStage(8);
 }
+
+

@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  routeid: 1
+  name: MyText
+
+two:
+  routeid: 1
+  name: MyText
