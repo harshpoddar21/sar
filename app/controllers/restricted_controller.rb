@@ -50,7 +50,7 @@ class RestrictedController < ApplicationController
           status,userId=UmsUser.createNewUserUms phoneNumber,UmsUser::UserType::TAB_NEW_USER
         end
 
-        bookingId=UmsBooking.placeBooking userId,3034,3014,831 if userId!=nil
+        bookingId=UmsBooking.placeBooking userId,sugg.from_id,sugg.to_id,sugg.routeid if userId!=nil
 
         if bookingId==nil
           bookingId="SUGG"+sugg.id.to_s
