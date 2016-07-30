@@ -307,7 +307,17 @@ class SuggestController < ApplicationController
 
 
   end
+  def redirectToPlayStoreP
 
+    if (/iPhone/=~request.user_agent)
+      redirect_to "https://metrozip.typeform.com/to/vXWomE"
+    else
+      redirect_to "http://bit.ly/2aBKlpi"
+    end
+
+
+
+  end
 
 
   def getmapview

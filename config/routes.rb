@@ -91,6 +91,7 @@ get 'suggest/index_orca'
   get 'suggest/index'
   get 'suggest/insertLiveRoutes' =>"suggest#insertLiveRoutes"
   get 'suggest/redirectToPlayStore'
+  get 'suggest/redirectToPlayStoreP'
 
   get 'payment/initiatePayment'
   post 'payment/initiatePayment'
