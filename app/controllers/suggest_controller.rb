@@ -589,7 +589,7 @@ class SuggestController < ApplicationController
     data=JSON.parse params[:data1]
     customer_number=data["phone_number"]
     repeatUser=0
-    if GetSuggestionViaTab.where(:customer_number=>customer_number).last!=nil
+    if GetSuggestionViaTab.where(:customer_number=>customer_number).where("unix_timestamp(created_at)>"+Utils.getTodayMorningUnixTime().to_s).last!=nil
 
       #TelephonyManager.sendSms customer_number,"Hi, You have already availed your first free ride. We request you to download the Shuttl App ( http://bit.ly/downloadShuttl ) to continue Shuttling."
       render :text=>"ALREADY PRESENT"
