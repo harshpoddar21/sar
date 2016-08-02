@@ -1221,6 +1221,7 @@ body {
 
 .select-boarding-point{
     margin-top:20%;
+    clear: both;
 }
 .set-location-button {
     position: relative;
