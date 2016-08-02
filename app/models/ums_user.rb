@@ -51,6 +51,14 @@ class UmsUser < ActiveRecord::Base
   end
 
 
+  def self.userExists? phoneNumber
+
+    user=UmsUser.find_by(:PHONE_NUMBER=>phoneNumber)
+
+    user!=nil
+
+  end
+
   def self.encryptUserId userId
 
     (userId.to_s+ENCRYPTION_SALT+"").each_byte.map { |b| b.to_s(16) }.join
