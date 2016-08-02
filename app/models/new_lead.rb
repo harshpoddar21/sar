@@ -105,11 +105,11 @@ class NewLead < ActiveRecord::Base
       return self[:subscription_status]
     else
 
-      if self.user_id>0 && UmsSubscription.where(:USER_ID=>self.user_id).size>0
+      if self.user_id>0 && UmsSubscription.isSubscribed?(self.user_id,true)
         self.subscription_status=SUBSCRIPTION_BOUGHT
         @subscriptionCached=self.subscription_status
         self.save
-      elsif Transaction.where(:phone_number => self.phone_number).where("status=1").size>0
+      elsif Transaction.isPledged?(self.phone_number)
         self.subscription_status=PLEDGE_BOUGHT
         @subscriptionCached=self.subscription_status
         self.save

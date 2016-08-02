@@ -30,5 +30,13 @@ every 2.minutes do
 end
 
 every 10.minutes do
+  runner "UmsSubscription.refreshSubscribers"
+end
+
+every 10.minutes do
+  runner "Transaction.refreshPledge"
+end
+
+every 10.minutes do
   runner "Campaign.new.campaignPlanner"
 end
