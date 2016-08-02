@@ -9,10 +9,12 @@ class CustomercareController < ApplicationController
     end
     fromDate=params[:fromDate]
     toDate=params[:toDate]
+    routeid=params[:routeid]
 
     leads=Array.new
-    if fromDate!=nil && toDate!=nil
-      customers=GetSuggestionViaTab.where("unix_timestamp(created_at)>=#{fromDate} and unix_timestamp(created_at)<=#{toDate}")
+    if fromDate!=nil && toDate!=nil && routeid!=nil
+
+      customers=GetSuggestionViaTab.where("unix_timestamp(created_at)>=#{fromDate} and unix_timestamp(created_at)<=#{toDate}").where("routeid"=>routeid)
       customers.each do |cust|
         leads.push NewLead.loadOrCreateByCustomer cust,"TAB"
       end
