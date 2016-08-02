@@ -591,7 +591,7 @@ class SuggestController < ApplicationController
     repeatUser=0
     if GetSuggestionViaTab.where(:customer_number=>customer_number).last!=nil
 
-      TelephonyManager.sendSms customer_number,"Hi, You have already availed your first free ride. We request you to download the Shuttl App ( http://bit.ly/downloadShuttl ) to continue Shuttling."
+      #TelephonyManager.sendSms customer_number,"Hi, You have already availed your first free ride. We request you to download the Shuttl App ( http://bit.ly/downloadShuttl ) to continue Shuttling."
       render :text=>"ALREADY PRESENT"
       return
     end
