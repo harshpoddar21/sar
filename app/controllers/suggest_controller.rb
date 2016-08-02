@@ -580,7 +580,7 @@ class SuggestController < ApplicationController
 
     @pickUp=TabPick.where(:routeid=>@routeId)
     @drop=TabDrop.where(:routeid=>@routeId)
-
+    @tabRoute=TabRoute.all
   end
 
   def saveNewSuggestionTab

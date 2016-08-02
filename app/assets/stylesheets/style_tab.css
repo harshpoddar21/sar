@@ -38,7 +38,8 @@
     font-size: 1.8rem;
 }
 .screenWrapper{
-    overflow: hidden;
+    height:100% !important;
+    overflow: scroll;
     position: relative;
 }
 .screen{
@@ -1472,4 +1473,20 @@ label {
     width: 35%;
     border-radius: 10px;
     z-index: 10000;
+}
+
+button.routebutton {
+    padding: 0px;
+    margin: 5px;
+    width: 27%;
+    height: 64px;
+    text-overflow: clip;
+    float: left;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+a.buttonlink {
+    width: 100%;
+    padding: 5px;
 }

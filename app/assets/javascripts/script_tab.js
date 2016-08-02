@@ -579,6 +579,14 @@ function switchScreen (scrno, obj){
             else{
                 var html = '<div class="col-md-12 text-center" style="height: 100%;position:static;">';
                 html += '<div class="confirmed-registrations"><div>' + registrations_today + '/87 confirmed registrations today </div><div class="ask-refresh">Please press the refresh button below once connected to internet </div></div>';
+  html+='<div style="margin-top: 38px;"> <div style="color: #f00;padding: 15px;">Select Route </div> <div>';
+
+      for (var i=0;i<allRoutes.length;i++){
+
+          html+='<button class="routebutton"><a class="buttonlink" href="https://myor.shuttl.com/suggest/getSuggestionViaTab?routeid='+allRoutes[i]["id"]+'">'+allRoutes[i]["name"]+'</a></button>';
+      }
+
+            html+='</div> </div>';
                 html += '<div class="select-boarding-point"><h3> Select Boarding Points </h3></div>';
                 html += '<div class= "set-location-button home btn btn-default" onclick="set(2)"> SET HOME </div>';
                 html += '<div class = "set-location-button office btn btn-default" onclick="set(3)"> SET OFFICE </div>';

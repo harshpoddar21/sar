@@ -26,6 +26,15 @@
   drop.push(value);
   <% end %>
 
+    var allRoutes=[];
+
+    <% @tabRoute.each do |route| %>
+     var value={};
+     value["name"]="<%= route.name %>";
+     value["id"]="<%= route.routeid %>";
+     allRoutes.push(value);
+     <% end %>
+
 
 
 
