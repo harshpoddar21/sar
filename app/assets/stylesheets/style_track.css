@@ -35,7 +35,9 @@ div.footer-container {
 
     padding: 16px 8px 16px 8px;
     font-size: 22px;
+    background: #fff;
     text-align: center;
+    z-index: 1000000;
     position: absolute;
     bottom: 0;
     width: 100%;
