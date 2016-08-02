@@ -205,22 +205,22 @@ function getHumanReadableErrorFor(error){
 
     if (DriverErrorCode.DRIVER_CANNOT_BE_TRACKED==error){
 
-        return "Tracking for this driver is not available now.Please use lett/right arrow to see other shuttl.";
+        return "Tracking for this driver is not available now.Please use left/right arrow to see other shuttl.";
     }else if (DriverErrorCode.GPS_NOT_AVAILABLE==error){
 
-        return "Tracking for this driver is not available now.Please use lett/right arrow to see other shuttl.";
+        return "Tracking for this driver is not available now.Please use left/right arrow to see other shuttl.";
     }else if (DriverErrorCode.NO_TRIP_ALLOCATED==error){
 
-        return "Please come back 30 mins before trip starts to check the status.Please use lett/right arrow to see other shuttl.";
+        return "Please come back 30 mins before trip starts to check the status.Please use left/right arrow to see other shuttl.";
     }else if (DriverErrorCode.TOO_SOON_TO_COMPUTE_ETA==error){
 
-        return "Please come back 30 mins before trip starts to check the status.Please use lett/right arrow to see other shuttl.";
+        return "Please come back 30 mins before trip starts to check the status.Please use left/right arrow to see other shuttl.";
     }else if (DriverErrorCode.TRIP_COMPLETED==error){
 
-        return "Driver has completed the trip.Please use lett/right arrow to see other shuttl.";
+        return "Driver has completed the trip.Please use left/right arrow to see other shuttl.";
     }else if (DriverErrorCode.UNKNOWN_ERROR==error){
 
-        return "Tracking for this driver is not available now.Please use lett/right arrow to see other shuttl.";
+        return "Tracking for this driver is not available now.Please use left/right arrow to see other shuttl.";
     }else {
 
         return "";
