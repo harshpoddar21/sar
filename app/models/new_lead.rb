@@ -13,6 +13,9 @@ class NewLead < ActiveRecord::Base
   CALLED=1
   NOT_CALLED=0
 
+  @subscriptionCached=nil
+  @transactionCached=nil
+
     def self.loadOrCreateByCustomer customer,channel
 
       new_lead=self.find_by(:phone_number=>customer.customer_number)
@@ -93,17 +96,25 @@ class NewLead < ActiveRecord::Base
   end
 
   def subscription_status
+    if @subscriptionCached!=nil
+
+      return @subscriptionCached
+    end
     if self[:subscription_status]==SUBSCRIPTION_BOUGHT || self[:subscription_status]==PLEDGE_BOUGHT
+      @subscriptionCached=self[:subscription_status]
       return self[:subscription_status]
     else
 
       if self.user_id>0 && UmsSubscription.where(:USER_ID=>self.user_id).size>0
         self.subscription_status=SUBSCRIPTION_BOUGHT
+        @subscriptionCached=self.subscription_status
         self.save
       elsif Transaction.where(:phone_number => self.phone_number).where("status=1").size>0
         self.subscription_status=PLEDGE_BOUGHT
+        @subscriptionCached=self.subscription_status
         self.save
       else
+        @subscriptionCached=SUBSCRIPTION_NOT_BOUGHT
         return SUBSCRIPTION_NOT_BOUGHT
       end
     end
