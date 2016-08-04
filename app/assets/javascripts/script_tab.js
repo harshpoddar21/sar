@@ -369,9 +369,14 @@ notInterested();
 
 function newForm()
 {
-    setToLocalStorage();
-    submitDataToServer();
-    changeToStage(2);
+    var isSuc=setToLocalStorage();
+    if (isSuc) {
+        submitDataToServer();
+        changeToStage(2);
+    }else{
+
+        alert("The entry could not be saved!!");
+    }
 }
 
 function clickLogo () {
@@ -950,15 +955,25 @@ function switchScreen (scrno, obj){
 
 function setToLocalStorage()
 {
+
     if (typeof(Storage) !== "undefined") {
         // Code for localStorage/sessionStorage.
         info["routeid"]=routeId;
         info["route_type"]="Live_route";
+        info.promoterID=localStorage.getItem('promoterID');
+        if (!info.promoterID){
+
+            logOut();
+            return false;
+        }
         localStorage.setItem('data' + registrations_today, JSON.stringify(info));
         registrations_today++;
 
         localStorage.setItem("total_regs",registrations_today);
+        return true;
     }
+    return false;
+
 }
 
 
