@@ -32,11 +32,11 @@ class BookingFollow < ActiveRecord::Base
 
   def self.sendSms bookingId,message
 
-    booking=BookingFollow.find_by bookingId
+    booking=BookingFollow.find_by(:booking_id=>bookingId)
 
     if booking==nil
 
-      booking=Booking.new
+      booking=BookingFollow.new
       booking.booking_id=bookingId
 
     end
