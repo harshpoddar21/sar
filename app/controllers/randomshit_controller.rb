@@ -8,4 +8,7 @@ class RandomshitController < ApplicationController
     UmsSubscription.refreshSubscribers
     render :text=>"OK"
   end
+
+
+
 end

@@ -1228,15 +1228,18 @@ function submitDataToServer() {
                 $.ajax({
                     url: 'saveNewSuggestionTab',
                     method: 'POST',
-                    data: {data1: localStorage.getItem(currKey)}
+                    data: {data1: localStorage.getItem(currKey)},
+                    currKey:currKey
                 })
                     .done(function (result) {
                         uploaded++;
-                        checkIfUploadingComplete(leng,currKey);
+                        isSubmittingToServer=false;
+                        localStorage.removeItem(this.currKey);
 
                     })
                     .fail(function (err) {
 
+                        isSubmittingToServer=false;
                     });
             }
         }
@@ -1247,7 +1250,7 @@ function checkIfUploadingComplete(totalLength,currKey) {
 
     if (uploaded==totalLength){
 
-        isSubmittingToServer=false;
+
         var start=0;
         for (var i=0;i<localStorage.length;i++){
 
