@@ -552,7 +552,7 @@ class SuggestController < ApplicationController
           end
         end
 
-        TelephonyManager.sendSms phone_number,"Hello Shuttlr!, Please write "+referralCode.to_s+" on the blank spaces in the poster. Now you can earn 1 free ride for every new customer. Please note that ride will be credited to you after the customer buys a pass."
+        TelephonyManager.sendSms phone_number,"Hello Shuttlr!, Please go to "+Referral::Channel::WhatsApp.getWhatsAppReferralLinkForReferralCode(referralCode)+" to refer Shuttl and get free rides."
 
       else
 
@@ -697,6 +697,8 @@ class SuggestController < ApplicationController
     slots=Slot.where(:routeid=>routeid).joins(" join locations on slots.locationid=locations.id ")
     render :json=>slots.to_json
   end
+
+
 
 
 

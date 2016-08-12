@@ -2283,16 +2283,6 @@ function onForPaymentMobileVerified(phoneNumber){
 
 }
 
-function showLoader(){
-
-    jQuery(".loader_wrapper").show();
-
-}
-function hideLoader(){
-
-    jQuery(".loader_wrapper").hide();
-}
-
 function goToLeaveWorkScreen(obj){
 
     changeToStage(9);

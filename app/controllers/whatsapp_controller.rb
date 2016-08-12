@@ -201,7 +201,17 @@ class WhatsappController < ApplicationController
     name=params[:groupname]
 
 
+  end
 
+  def refer
+
+    @referralCode=params[:rc]
+
+    if ! (Referral.isValidReferralCode? @referralCode)
+
+      render :text=>"Sorry the referral code is invalid"
+    end
+    @referralLink=Referral::Channel::WhatsApp.getWhatsAppReferralLinkForFriendsForReferralCode @referralCode
   end
 
 end

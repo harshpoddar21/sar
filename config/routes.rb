@@ -37,7 +37,9 @@ Rails.application.routes.draw do
   get 'whatsapp/insertData' => 'whatsapp#insertData'
 
   get 'whatsapp/analyzeWhatsApp' =>'whatsapp#analyzeWhatsApp'
+  get 'whatsapp/refer'
 
+  get 'referral/makeTrialReqForUser'
   get 'customercare/update_lead_data'
   post 'customercare/update_lead_data'
   get 'customercare/sendSMS'

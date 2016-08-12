@@ -24,13 +24,20 @@ class Referral
   end
 
 
+  def self.isValidReferralCode? referralCode
+
+    ReferralCode.find_by(:code=>referralCode)!=nil
+
+  end
+
+
   def self.createReferralCodeForUser phoneNumber
 
     if ReferralCode.find_by(:phone_number=>phoneNumber)==nil
 
       iteration=0
       while iteration<100
-        number=rand(100...999)
+        number=rand(100...9999)
         if ReferralCode.find_by(:code => number)==nil
 
           ReferralCode.create(:code=>number,:phone_number=>phoneNumber)
@@ -59,9 +66,28 @@ class Referral
     end
   end
 
+
   class ErrorCode
     USER_ALREADY_REFERRED=1
     INVALID_REFERRAL_CODE=2
   end
 
+
+  class Channel
+
+    class WhatsApp
+
+      def self.getWhatsAppReferralLinkForReferralCode referralCode
+
+        return BitlyUtils.shortenUrl "https://myor.shuttl.com/whatsapp/refer?rc="+referralCode
+
+      end
+
+      def self.getWhatsAppReferralLinkForFriendsForReferralCode referralCode
+
+        return BitlyUtils.shortenUrl "https://myor.shuttl.com/referral/index?rc="+referralCode
+
+      end
+    end
+  end
 end
