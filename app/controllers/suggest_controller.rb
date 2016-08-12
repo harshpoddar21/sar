@@ -603,11 +603,23 @@ class SuggestController < ApplicationController
 
     if data["homeAddress"].to_i!=0
       from=TabPick.where(:location_id=>data["homeAddress"].to_i).last
-      from_id=from.location_id
+
       to=TabDrop.where(:location_id=>data["officeAddress"].to_i).last
-      to_id=to.location_id
-      from_str=from.name
-      to_str=to.name
+      if from!=nil
+        from_id=from.location_id
+        from_str=from.name
+      else
+        from_id=-1
+        from_str=""
+      end
+      if to!=nil
+        to_id=to.location_id
+        to_str=to.name
+      else
+        to_id=-1
+        to_str=""
+      end
+
     else
       from_str=data["homeAddress"]
       to_str=data["officeAddress"]

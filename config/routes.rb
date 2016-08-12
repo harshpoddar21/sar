@@ -31,6 +31,9 @@ Rails.application.routes.draw do
   get 'suggest/logPromoterIn'
 
 
+  get 'referral/index'
+
+
   get 'whatsapp/insertData' => 'whatsapp#insertData'
 
   get 'whatsapp/analyzeWhatsApp' =>'whatsapp#analyzeWhatsApp'
