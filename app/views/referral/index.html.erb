@@ -1,0 +1,109 @@
+<html>
+<head>
+  <!-- Bootstrap compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <!-- Bootstrap theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+
+  <%= stylesheet_link_tag    'font-awesome.min', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'style_refer', media: 'all', 'data-turbolinks-track' => true %>
+
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <!-- Bootstrap compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+  <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+
+<div class="container-fluid" id="main-wrapper">
+  <div class="header-container row">
+    <div class="previous col-xs-1 col-sm-1">&lt;</div>
+    <div class="route-title col-xs-10 col-sm-10">East Delhi to Gurgaon</div>
+    <div class="next col-xs-1 col-sm-1">&gt;</div>
+    <br>
+    <div class="route-via">via Kaushambi, Gazipur, I.P. Extension, Preetvihar & Laxminagar</div>
+  </div>
+
+  <div id="greyScreen" class="greyScreen"></div>
+  <div id="morningSlotList" class="morningSlotList">
+    Please select when you'd like to reach work
+    <form id="morningSlots">
+      <button class="slot" onclick="routeSelected(1, selectedMorningRoute)" value = "1"> 08:15 </button>
+      <button class="slot" onclick="routeSelected(2, selectedMorningRoute)" value = "2"> 09:00 </button>
+      <button class="slot" onclick="routeSelected(3, selectedMorningRoute)" value = "3"> 09:45 </button>
+      <button class="slot" onclick="routeSelected(4, selectedMorningRoute)" value = "4"> 10:30 </button>
+
+      <button class="slot" onclick="routeSelected(1, selectedMorningRoute)" value = "1"> 08:15 </button>
+      <button class="slot" onclick="routeSelected(2, selectedMorningRoute)" value = "2"> 09:00 </button>
+      <button class="slot" onclick="routeSelected(3, selectedMorningRoute)" value = "3"> 09:45 </button>
+      <button class="slot" onclick="routeSelected(4, selectedMorningRoute)" value = "4"> 10:30 </button>
+
+      <button class="slot" onclick="routeSelected(1, selectedMorningRoute)" value = "1"> 08:15 </button>
+      <button class="slot" onclick="routeSelected(2, selectedMorningRoute)" value = "2"> 09:00 </button>
+      <button class="slot" onclick="routeSelected(3, selectedMorningRoute)" value = "3"> 09:45 </button>
+      <button class="slot" onclick="routeSelected(4, selectedMorningRoute)" value = "4"> 10:30 </button>
+
+    </form>
+  </div>
+
+  <div id="eveningSlotList" class="eveningSlotList">
+    Please select when you'd like to leave work
+    <form>
+      <button class="slot" onclick="routeSelected(1, selectedMorningRoute)" value = "1"> 08:15 </button>
+      <button class="slot" onclick="routeSelected(2, selectedMorningRoute)" value = "2"> 09:00 </button>
+      <button class="slot" onclick="routeSelected(3, selectedMorningRoute)" value = "3"> 09:45 </button>
+      <button class="slot" onclick="routeSelected(4, selectedMorningRoute)" value = "4"> 10:30 </button>
+
+      <button class="slot" onclick="routeSelected(1, selectedMorningRoute)" value = "1"> 08:15 </button>
+      <button class="slot" onclick="routeSelected(2, selectedMorningRoute)" value = "2"> 09:00 </button>
+      <button class="slot" onclick="routeSelected(3, selectedMorningRoute)" value = "3"> 09:45 </button>
+      <button class="slot" onclick="routeSelected(4, selectedMorningRoute)" value = "4"> 10:30 </button>
+
+      <button class="slot" onclick="routeSelected(1, selectedMorningRoute)" value = "1"> 08:15 </button>
+      <button class="slot" onclick="routeSelected(2, selectedMorningRoute)" value = "2"> 09:00 </button>
+      <button class="slot" onclick="routeSelected(3, selectedMorningRoute)" value = "3"> 09:45 </button>
+      <button class="slot" onclick="routeSelected(4, selectedMorningRoute)" value = "4"> 10:30 </button>
+    </form>
+  </div>
+  <div id="main-content-container" class="main-content-container row">
+
+
+
+  </div>
+  <div class="info-container row">
+    <div class="select-pass-title" id="select-pass-title-id">Select Pass</div>
+    <div class="rides-info">18 rides @ Rs <span class="strikethrough">99</span> <span class="actual-price">55</span> each</div>
+    <div class="price-total">Rs 999</div>
+    <div class="bottom-info">Good both ways | No expiry | Fully refundable after 1st ride</div>
+  </div>
+  <div class="cta-container row">
+    <div id="btn-try-n-buy" class="btn btn-default cta col-xs-6 col-sm-6" onclick="showPhoneNumberModal()"><div class="centerVertical">TRY 'N' BUY</div></div>
+    <div id="btn-paytm" class="btn btn-default cta col-xs-6 col-sm-6" onclick="showPhoneNumberModal()"><div class="centerVertical">Pay Using <span class="paytm-logo"></span></div></div>
+  </div>
+
+  <div id = phoneModal>
+    <div class="phone-number-modal-background" onclick="hidePhoneNumberModal()"></div>
+    <div class = "phone-number-modal">
+      <div class = "phone-number-box-wrapper">
+        <input class="phone-number-input-box" type="number" placeholder="Enter mobile no." maxlength="10" id="userPhoneNumber" onkeyup="onPhoneNumberEntered()" oninput = "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)">
+        <p class="error"></p><div class="loader"><em>Sending Otp</em></div></div>
+      <div class="otp-entry" style="display: none;"><input type="number" class="col-md-12" placeholder="enter otp" maxlength="5" id="otp" onkeyup="otpentered(this)">
+        <div><button class="btn-primary" onclick="validatePhone();">Resend Otp</button><button class="btn-primary" onclick="changePhoneNumber();">Change Number</button></div></div>
+    </div></div></div>
+</div>
+</div>
+</div>
+</div>
+<%= javascript_include_tag 'script_refer' %>
+<div class="loader_wrapper">
+  <div class="loader_inner"></div>
+</div>
+</body>
+</html>
+
+

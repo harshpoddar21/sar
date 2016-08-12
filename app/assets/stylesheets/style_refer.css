@@ -1,0 +1,471 @@
+body{
+	font-family: Tahoma, Verdana, Segoe, sans-serif;
+	text-align: center;
+	font-size: 22px;
+}
+
+div#main-wrapper{
+  max-width: 100%;
+  overflow: hidden;
+  overflow-y: scroll ;
+  height: 100%;
+}
+
+.otp-entry input{
+
+    width: 287px;
+    padding: 22px;
+}
+
+div.header-container{
+	background: #ececec;
+	height: 10.7%;
+	padding: 16px;
+	border: 3px solid black;
+}
+
+div.header-container div.previous{
+	font-size: 48px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+div.header-container div.route-title{
+	font-size: 46px;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding-bottom: 16px;
+	display: inline-block;
+}
+
+div.header-container div.next{
+	font-size: 48px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+div.header-container div.route-via{
+	font-size: 27px;
+	display: inline-block;
+}
+
+div.main-content-container{
+	background: white;
+	padding: 16px;
+}
+
+div.main-content-container div.timing{
+	display:block;
+	overflow:auto;
+}
+
+div.main-content-container div.timing div.location div.location-heading{
+	font-weight: bold;
+	font-size: 29px;
+}
+
+div.main-content-container div.timing div.location div.location-description{
+	font-size: 26px;
+}
+
+div.main-content-container div.timing div.separator-timings div.down-arrow{
+	background: url('/images/down-arrow.png');
+	background-size: cover;
+	width: 48px;
+	height: 54px;
+	padding: 0;
+	margin-left: 30px;
+	margin-right: 5px;
+	top: 10px;
+}
+
+div.main-content-container div.timing div.separator-timings div.up-arrow{
+	background: url('/images/up-arrow.png');
+	background-size: cover;
+	width: 48px;
+	height: 54px;
+	padding: 0;
+	margin-left: 5px;
+	top: 10px;
+}
+
+div.main-content-container div.timing div.separator-timings div.time-value{
+	font-size: 20px;
+	width: 54px;
+	text-align: center;
+	border: 1px solid black;
+}
+
+div.slots-container{
+	margin-top: 20px;
+	}
+
+div.slots-container div.slot{
+	border: 1px solid black;
+	padding: 16px;
+}
+
+div.slots-container div.slot div.slot-heading{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+div.slots-container div.slot div.slot-timing{
+	padding-bottom: 10px;
+}
+
+div.slots-container div.slot span.slot-time-separator{
+	background: url('/images/GreenRed.png');
+	background-size: cover;
+	width: 80px;
+	height: 22px;
+	display: inline-block;
+	position: relative;
+	top: 2px;
+}
+
+div.slots-container div.slot div.slot-time-value{
+	font-size: 28px
+}
+
+div.info-container{
+	text-align: left;
+	padding-bottom: 16px;
+	display: block;
+	overflow: auto;
+	overflow-x: hidden;
+}
+
+div.info-container .promotion-banner {
+	background: url('/images/banner.png');
+	/*width: 110px;
+	height: 40px;*/
+	display: inline-block;
+	background-size: contain;
+	/* display: inline-block; */
+	height: 20%;
+	width: 100%;
+	background-repeat: no-repeat;
+}
+
+div.info-container div.select-pass-title{
+	font-size: 34px;
+	font-weight: bold;
+	margin-left: 15px;
+	margin-top: 14px;
+}
+
+div.info-container div.rides-info{
+	font-size: 34px;
+	margin-left: 25px;
+	margin-top: 12px;
+}
+
+div.info-container div.price-total{
+	font-size: 34px;
+	position: relative;
+	left: 85%;
+	top: -50px;
+}
+
+
+div.info-container div.bottom-info{
+	text-align: center;
+	margin: 0 auto;
+	font-size: 31px;
+	margin-top: -20px;
+	color: gray;
+	font-weight: bold;
+}
+
+div.cta-container{
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+}
+
+div#btn-try-n-buy {
+	text-transform: uppercase;
+	font-size: 40px;
+    width:100%;
+	height:120px;
+}
+
+div#btn-paytm{
+	text-transform: uppercase;
+	font-size: 40px;
+	height:120px;
+    display:none;
+	background: #00adb7;
+}
+
+div#btn-paytm span.paytm-logo{
+	background: url('/images/paytm-logo.png');
+	background-size: cover;
+	width: 110px;
+	height: 40px;
+	display: inline-block;
+	position: relative;
+	top: 2px;
+}
+
+
+.loader_inner {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #00adb7;
+    border-bottom: 16px solid #00adb7;
+    width: 120px;
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-left: -60px;
+    margin-top: -60px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+.loader_wrapper{
+
+    display: none;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    background: #000;
+    opacity: 0.8;
+    z-index: 10000;
+}
+.left-location{
+margin-right: 0px;
+}
+
+.right-location {
+	margin-left: 22px;
+}
+
+.left-time-value
+{
+	margin-left: -2px;
+}
+
+
+.right-time-value {
+	margin-right: -2px;
+}
+
+.left-time-value-first, .right-time-value-last {
+	border: 3px solid green!important;
+}
+
+.left-time-value-last, .right-time-value-first {
+	border: 3px solid red!important;
+}
+
+.centerVertical {
+	margin-top:20px;
+}
+
+.even-row {
+	text-align: right;
+}
+
+.odd-row {
+	text-align: left;
+}
+
+.actual-price {
+	color: green;
+	font-weight: bold;
+}
+
+.strikethrough {
+	position: relative;
+}
+.strikethrough:before {
+	position: absolute;
+	content: "";
+	left: 2px;
+	top: 40%;
+	right: 0;
+	border-top: 3px solid ;
+	border-color: red;
+
+	-webkit-transform:rotate(-40deg);
+	-moz-transform:rotate(-40deg);
+	-ms-transform:rotate(-40deg);
+	-o-transform:rotate(-40deg);
+	transform:rotate(-40deg);
+}
+
+
+.slot-time-value {
+	font-size: 28px;
+}
+
+.dropdown-button {
+	position: relative;
+	left: 23%;
+}
+
+.hidden {
+	display:none;
+}
+
+.morningSlotList, .eveningSlotList{
+	font-size: 42px;
+	position: absolute;
+	left: 16%;
+	top: 30px;
+	height: 95%;
+	width: 70%;
+	border: 1px solid black;
+	background: white;
+	z-index: 10;
+	padding: 32px 16px;
+	display: none;
+	overflow: scroll;
+}
+
+.morningSlotList input, .eveningSlotList input{
+	margin: 23px;
+	position: relative;
+	top: 7px;
+}
+
+.morningSlotList .slot, .eveningSlotList .slot {
+	border: solid 2px #333333;
+	padding: 15px 20px 15px 20px;
+	margin: 15px;
+	display: inline-block;
+	border-radius: 15px;
+}
+
+input {
+	height: 1em;
+	width: 1em;
+}
+
+.cross-icon {
+	position: absolute;
+	top:30px;
+	right:30px;
+}
+
+.morningSlotList form, .eveningSlotList form {
+	margin-top: 42px;
+}
+
+.greyScreen{
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background: #000;
+	opacity: 0.8;
+	z-index: 5;
+	display:none;
+}
+
+.payment-successful {
+	margin: 256px 16px 256px 16px;
+	font-size: 46px;
+	font-weight: bold;
+}
+
+.otp-entry button{
+	margin-right: 10px;
+	border: 0px;
+	margin-top: 12px;
+}
+
+.otp-entry{
+    padding-bottom: 20px;
+    margin-top: 9px;
+    text-align: center;
+}
+
+div.grey-overlay-screen {
+	position: absolute;
+	top:0;
+	left:0;
+	opacity: 0.87;
+	background: black;
+	height: 100%;
+	width:100%;
+	z-index: 1000;
+	display: none;
+}
+
+div.payment-successful-container, div.try-n-buy-container {
+	height: 60vh;
+	width: 75vw;
+	position: absolute;
+	top: 20vh;
+	left: 12.5vw;
+	background: white;
+	z-index: 10000001;
+	text-align: center;
+	display: none;
+}
+
+div.payment-successful-container .payment-successful-message, div.try-n-buy-container .try-n-buy-message{
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 62px;
+	padding: 16px;
+	display: none;
+}
+
+.btn-primary, .btn-info {
+	background-color: #00adb7!important;
+	border-color: #3c5daa!important;
+}
+
+div#phoneModal {
+	display: none;
+}
+
+div.phone-number-modal-background {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: #000;
+	opacity: 0.7;
+}
+
+div.phone-number-modal {
+	position: absolute;
+	top: 60px;
+	left: 40px;
+	right: 40px;
+    height:265px;
+	background-color: white;
+	border-radius: 6px;
+	-webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
+	box-shadow: 0 3px 9px rgba(0,0,0,.5);
+}
+
+div.phone-number-modal .phone-number-box-wrapper {
+	text-align: center;
+	padding: 35px;
+	height: 100px;
+}
+
+div.phone-number-modal .phone-number-box-wrapper .phone-number-input-box {
+	width: 75%;
+	height: 100px;
+	text-align: center;
+}
+
+div.phone-number-modal .phone-number-box-wrapper .loader {
+	display: none;
+}
