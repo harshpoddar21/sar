@@ -66,6 +66,21 @@ class Referral
     end
   end
 
+  def self.getPhoneNumberForReferralCode referralCode
+
+    referral=ReferralCode.find_by(:code=>referralCode)
+
+    if referral!=nil
+
+      return referral.phone_number
+
+    else
+
+      return nil
+
+    end
+
+  end
 
   class ErrorCode
     USER_ALREADY_REFERRED=1

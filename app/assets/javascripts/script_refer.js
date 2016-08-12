@@ -324,6 +324,7 @@ function validatePhone(){
     var phoneno = /^\d{10}$/;
     if(inputtxt.match(phoneno)) {
         $('#phoneModal .error').html('').hide();
+
         $('.loader').fadeIn();
         showLoader();
         $.ajax({
@@ -386,7 +387,7 @@ function onForTryNBuyVerified(){
     
     showLoader();
     
-    jQuery.ajax({url:"/referral/makeTrialReqForUser?phone_number="+info.phone_nummber}).done(function(response){
+    jQuery.ajax({url:"/referral/makeTrialReqForUser?phone_number="+info.phone_number+"&referral_code="+referralCode}).done(function(response){
         
         if (response["success"]){
             
