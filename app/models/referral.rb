@@ -94,7 +94,7 @@ class Referral
 
       def self.getWhatsAppReferralLinkForReferralCode referralCode
 
-        return BitlyUtils.shortenUrl "https://myor.shuttl.com/whatsapp/refer?rc="+referralCode
+        return BitlyUtils.shortenUrl "https://myor.shuttl.com/whatsapp/refer?rc="+referralCode.to_s
 
       end
 
