@@ -548,10 +548,11 @@ class SuggestController < ApplicationController
 
     message=params[:message]
     if message!=nil
+      message.downcase!
       message.sub! "Shuttl",""
       message.sub! "shuttl",""
       message.gsub!(/\s+/,"")
-      message.downcase!
+
 
       if message=="earn"
         success,referralCode=Referral.getReferralCodeForUser(phone_number)
