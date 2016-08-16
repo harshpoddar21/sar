@@ -137,7 +137,7 @@ function createRoute() {
 
     showLoader();
     $.ajax({
-        url:'getSlots?path='+encodedPoints
+        url:'getSlots?path='+encodedPoints+"&b2b="+b2b
     }).done(function(response){
         responseJson = response;
         hideLoader();
@@ -2604,5 +2604,15 @@ function getContacts() {
                 });
             });
         }
+}
+
+function showLoader(){
+
+    jQuery(".loader_wrapper").show();
+
+}
+function hideLoader(){
+
+    jQuery(".loader_wrapper").hide();
 }
 

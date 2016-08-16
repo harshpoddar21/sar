@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'b/:id/:sign' => "shortener#linkClickedBooking"
 
 
+  get 'suggest/bTb'
   get 'service/tracking' => 'service#tracking'
   post 'service/tracking' => 'service#tracking'
   get 'service/getDriverInfo'

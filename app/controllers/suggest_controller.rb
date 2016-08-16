@@ -4,6 +4,12 @@ class SuggestController < ApplicationController
   
   end
 
+  def bTb
+    @b2b=1
+
+    render template: "suggest/index"
+  end
+
   def index
 
   end
@@ -23,7 +29,13 @@ class SuggestController < ApplicationController
     end
     origin=paths[0]
     destination=paths[1]
-    route=Route::getRouteBetween(origin,destination)
+    route=nil
+    if (params["b2b"]!="1")
+      route=Route::getRouteBetween(origin,destination)
+    else
+      route=Route::getRouteBetween(origin,destination,5)
+    end
+
     result=Hash.new
     originLoc=Hash.new
     destinationLoc=Hash.new

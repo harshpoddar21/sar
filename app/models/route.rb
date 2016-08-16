@@ -38,11 +38,11 @@ class Route
     return pickUpPoint
   end
 
-  def self.getRouteBetween(origin,destination)
+  def self.getRouteBetween(origin,destination,zonal_width=nil)
 
     #check first in route
 
-    routeFound,routeType=getRouteBetweenPoints origin,destination
+    routeFound,routeType=getRouteBetweenPoints origin,destination,zonal_width
     route=nil
 
     if routeFound!=nil
@@ -214,10 +214,10 @@ class Route
 
     totalCoords
   end
-  def self.getRouteBetweenPoints(origin,destination)
-    route=getRouteLiveBetweenPoints origin,destination
+  def self.getRouteBetweenPoints(origin,destination,zonal_width=nil)
+    route=getRouteLiveBetweenPoints origin,destination,zonal_width
     if (route==nil)
-      route=getRouteSuggestedBetweenPoints origin,destination
+      route=getRouteSuggestedBetweenPoints origin,destination,zonal_width
       if (route!=nil)
 
         return route,SUGGESTED_ROUTE
@@ -308,7 +308,7 @@ def self.getPriceForLiveRouteBetween origin,destination
 end
 
 
-  def self.getRouteLiveBetweenPoints(origin,destination)
+  def self.getRouteLiveBetweenPoints(origin,destination,zonal_width=nil)
 
     reqParams=Hash.new
     reqParams["fromLat"]=origin[0]
@@ -393,14 +393,19 @@ end
 
 
 
-  def self.getRouteSuggestedBetweenPoints(origin,destination)
+  def self.getRouteSuggestedBetweenPoints(origin,destination,zonal_width=nil)
+    if zonal_width==nil
+      zonal_width=ZONAL_WIDTH
+    else
+      zonal_width=zonal_width.to_i
+    end
     possibleOriginRoutes=Hash.new
     possibleDestinationRoutes=Hash.new
 
     distance=Hash.new
 
-    (-1*ZONAL_WIDTH..1*ZONAL_WIDTH).each do |offset|
-      (-1*ZONAL_WIDTH..1*ZONAL_WIDTH).each do |offset2|
+    (-1*zonal_width..1*zonal_width).each do |offset|
+      (-1*zonal_width..1*zonal_width).each do |offset2|
         originC=origin.dup
         originC[0]=originC[0]+GRID_RES*offset
         originC[1]=originC[1]+GRID_RES*offset2
