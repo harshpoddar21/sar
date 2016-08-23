@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title></title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <style>
+    body { margin:0; padding:0; }
+    #map { position:absolute; top:0; bottom:0; width:100%; }
+  </style>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.0/mapbox-gl.css' rel='stylesheet' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v1.0.0/mapbox-gl-directions.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v1.0.0/mapbox-gl-directions.css' rel='stylesheet' />
+</head>
+
+<body>
+
+<div id='map'></div>
+
+<script>
+var routes=[];
+  <% @routes.each do |r| %>
+  var route_point=[];
+  <% r.each do |ri| %>
+   route_point.push([<%=ri[0]%>,<%=ri[1]%>]);
+   <% end %>
+   routes.push(route_point);
+  <% end %>
+  mapboxgl.accessToken = 'pk.eyJ1IjoiaGFyc2hwb2RkYXIyMSIsImEiOiJjaXJyazA4eHowaHJoZmFtNmxmMWt0Zm9zIn0.YgGE0-r-xVp1lXdJF1ryRg';
+  var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/harshpoddar21/cis5eedvf001ohhmdp6rcu891', //hosted style id
+
+  });
+
+
+/*
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/harshpoddar21/cis5eedvf001ohhmdp6rcu891'
+  });
+*/
+
+  // Set the origin and destination for the direction and call the routing service
+
+// Defining a polygon here instead of a polyline will connect the
+// endpoints and fill the path.
+// http://leafletjs.com/reference.html#polygon
+
+
+      /*
+       var directions = L.mapbox.directions({
+       profile: 'mapbox.driving'
+       });
+       var route=routes[i];
+       for (var j=0;j<route.length-1;j++){
+
+       directions.setOrigin(L.latLng(route[j][0], route[j][1]));
+       directions.setDestination(L.latLng(route[j+1][0], route[j+1][1]));
+       directions.query();
+       var directionsLayer = L.mapbox.directions.layer(directions).addTo(map);
+       var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
+       .addTo(map);
+
+       }
+       */
+
+
+  map.on("load",function(){
+
+    for (var i=0;i<routes.length;i++){
+
+
+      map.addSource("route"+i, {
+        "type": "geojson",
+        "data": {
+          "type": "Feature",
+          "properties": {},
+          "geometry": {
+            "type": "LineString",
+            "coordinates": routes[i]
+          }
+        }
+      });
+
+      map.addLayer({
+        "id": "route1"+i,
+        "type": "line",
+        "source": "route"+i,
+        "layout": {
+          "line-join": "round",
+          "line-cap": "round"
+        },
+        "paint": {
+          "line-color": "#fff",
+          "line-width": 8
+        }
+      });
+    }
+
+  });
+  map.addControl(new mapboxgl.Directions());
+</script>
+
+</body>
+</html>
