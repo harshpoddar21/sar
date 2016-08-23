@@ -81,4 +81,18 @@ class DelhidataController < ApplicationController
       end
     end
   end
+
+  def referralVis
+
+    polyLine=Array.new
+
+    RouteSuggest.all.each do |route|
+
+      polyLine.push Polylines::Decoder.decode_polyline(route.route_points)
+
+    end
+
+    @routes=polyLine
+
+  end
 end

@@ -129,4 +129,17 @@ class RestrictedController < ApplicationController
     user["user_id"]=userid
     render :xml=>user.to_xml
   end
+
+  def getRoutePointsForAllRoutes
+
+    polyLine=Array.new
+
+    RouteSuggest.each do |route|
+
+      polyLine.push Polylines::Decoder.decode_polyline(route.overviewPolyline)
+
+    end
+
+    @routes=polyLine
+  end
 end

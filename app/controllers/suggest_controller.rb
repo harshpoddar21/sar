@@ -52,7 +52,7 @@ class SuggestController < ApplicationController
        result["destination"]=destinationLoc
        result["route_type"]=route.routeType
        result["points"]=route.routePoints
-      if (route.routeType==Route::SUGGESTED_ROUTE)
+      if route.routeType==Route::SUGGESTED_ROUTE
         result["pick"]=PickUp.where(:routeid=>route.id)
       elsif route.routeType==Route::LIVE_ROUTE
         result["pick"]=Slot.where(:routeid=>route.id).joins("join locations on slots.locationid=locations.id").select("slots.*,locations.lat,locations.lng,locations.name")

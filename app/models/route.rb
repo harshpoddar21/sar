@@ -8,7 +8,7 @@ class Route
   ROUTE_DOES_NOT_EXISTS="route_does_not_exists"
   LIVE_ROUTE="Live_route"
   SUGGESTED_ROUTE="suggested_route"
-  ZONAL_WIDTH=30
+  ZONAL_WIDTH=15
   @@routeExistMap=Hash.new
   @@routeSuggestMap=Hash.new
 
@@ -317,6 +317,7 @@ end
     reqParams["toLng"]=destination[1]
     reqParams["fromLocationName"]="something something"
     reqParams["toLocationName"]="something something"
+    return nil
     response=ConnectionManager.makePostHttpRequest "http://routesuggester.goplus.in/user/getRouteDetails",reqParams,nil,true
     if (response==nil)
       return nil
@@ -338,6 +339,7 @@ end
     else
       return nil
     end
+
 
 
     possibleOriginRoutes=Hash.new
@@ -407,6 +409,7 @@ end
     (-1*zonal_width..1*zonal_width).each do |offset|
       (-1*zonal_width..1*zonal_width).each do |offset2|
         originC=origin.dup
+
         originC[0]=originC[0]+GRID_RES*offset
         originC[1]=originC[1]+GRID_RES*offset2
         if @@routeSuggestMap[getMapKeyFor originC]!=nil
@@ -428,6 +431,7 @@ end
     (-1*ZONAL_WIDTH..1*ZONAL_WIDTH).each do |offset|
       (-1*ZONAL_WIDTH..1*ZONAL_WIDTH).each do |offset2|
         destinationC=destination.dup
+
         destinationC[0]=destinationC[0]+GRID_RES*offset
         destinationC[1]=destinationC[1]+GRID_RES*offset2
         if (@@routeSuggestMap[getMapKeyFor destinationC]!=nil)

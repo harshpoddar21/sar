@@ -2,6 +2,7 @@ class Campaign
 
   def campaignPlanner
 
+    return
     leadsBifurcation=getLeadsBifurcation
 
     leadsBifurcation.each do |bif|
