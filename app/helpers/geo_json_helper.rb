@@ -1,0 +1,2 @@
+module GeoJsonHelper
+end

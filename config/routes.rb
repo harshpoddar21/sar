@@ -31,7 +31,6 @@ Rails.application.routes.draw do
   get 'suggest/verifyOtp'
   get 'suggest/logPromoterIn'
 
-
   get 'referral/index'
 
 
@@ -129,6 +128,10 @@ get 'suggest/index_orca'
   get "delhidata/getDelhiWardData"
 get 'delhidata/referralVis'
   get 'delhidata/delhiPopulationDist'
+
+  get 'shuttl/getRoutePointsGeoJsonByRoutes' => 'geo_json#getRoutePointsGeoJsonByRoutes'
+  get 'shuttl/getStopsGeoJsonByRoutes' => 'geo_json#getStopsGeoJsonByRoutes'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

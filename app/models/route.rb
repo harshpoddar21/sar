@@ -8,6 +8,9 @@ class Route
   ROUTE_DOES_NOT_EXISTS="route_does_not_exists"
   LIVE_ROUTE="Live_route"
   SUGGESTED_ROUTE="suggested_route"
+  RMS_ROUTE_STOPS_API = "http://54.169.209.223/service/rms/getStopsByRoute"
+  RMS_ROUTE_POINTS_API = "http://54.169.209.223/service/rms/getRoutePointsByRoute"
+
   ZONAL_WIDTH=15
   @@routeExistMap=Hash.new
   @@routeSuggestMap=Hash.new
@@ -18,11 +21,11 @@ class Route
     route.routeType=route_type
     route.id=routeId
 
+
     return route
 
 
   end
-
 
   def getPickUpPoints
 
@@ -32,7 +35,25 @@ class Route
     if routeType==SUGGESTED_ROUTE
 
       pickUpPoint=PickUp.where(:routeid => id)
-
+    else
+      url = RMS_ROUTE_STOPS_API
+      hash = Hash.new
+      hash["routeId"]=id.to_i
+      response = ConnectionManager.postRequest(RMS_ROUTE_STOPS_API,hash,8080)
+      if(response != nil)
+        response = JSON.parse(response.body)
+        if(response["stopDTOs"] != nil)
+          arr = Array.new
+          response["stopDTOs"].each do |value|
+            location = Hash.new
+            location[:name]= value["location"]["locationName"]
+            location[:lat]= value["location"]["lat"]
+            location[:lng]= value["location"]["lng"]
+            arr.push(location)
+          end
+          pickUpPoint = arr
+        end
+      end
     end
 
     return pickUpPoint
@@ -45,6 +66,8 @@ class Route
     routeFound,routeType=getRouteBetweenPoints origin,destination,zonal_width
     route=nil
 
+    routeFound=RouteExist.find_by(:id=>84)
+    routeType=LIVE_ROUTE
     if routeFound!=nil
       route=Route.new
 
@@ -52,9 +75,10 @@ class Route
       route.routePoints=routeFound.route_points
       route.name=routeFound.name
       route.id=routeFound.id
+
       if routeType=="Live_route"
-        fare=getPriceForLiveRouteBetween origin,destination
-        route.pricing=[[fare*10,fare*10,fare]]
+        fare=getPriceForLiveRouteBetween origin,destination,routeType,route.id
+        route.pricing=[[fare,fare,fare]]
 
       else
         price=Price.where(:routeid=>route.id)
@@ -279,30 +303,34 @@ class Route
 
 
 
-def self.getPriceForLiveRouteBetween origin,destination
-  reqParams=Hash.new
-  reqParams["fromLat"]=origin[0]
-  reqParams["fromLng"]=origin[1]
-  reqParams["toLat"]=destination[0]
-  reqParams["toLng"]=destination[1]
-  reqParams["fromLocationName"]="something something"
-  reqParams["toLocationName"]="something something"
-  response=ConnectionManager.makePostHttpRequest "http://routesuggester.goplus.in/user/getRouteDetails",reqParams,nil,true
-  if (response==nil)
-    return nil,nil
-  end
+def self.getPriceForLiveRouteBetween origin,destination,routeType,routeId
+  if routeType==SUGGESTED_ROUTE
+    reqParams=Hash.new
+    reqParams["fromLat"]=origin[0]
+    reqParams["fromLng"]=origin[1]
+    reqParams["toLat"]=destination[0]
+    reqParams["toLng"]=destination[1]
+    reqParams["fromLocationName"]="something something"
+    reqParams["toLocationName"]="something something"
+    response=ConnectionManager.makePostHttpRequest "http://routesuggester.goplus.in/user/getRouteDetails",reqParams,nil,true
+    if (response==nil)
+      return nil,nil
+    end
 
-  response=JSON.parse response.body
+    response=JSON.parse response.body
 
 
-  if response["responseCode"]=="SUCCESS"
-    if response["routeDetailsMinResponseDTOList"]!=nil && response["routeDetailsMinResponseDTOList"].size>0 && response["routeDetailsMinResponseDTOList"][0]["fare"]>0
-      return response["routeDetailsMinResponseDTOList"][0]["fare"]
+    if response["responseCode"]=="SUCCESS"
+      if response["routeDetailsMinResponseDTOList"]!=nil && response["routeDetailsMinResponseDTOList"].size>0 && response["routeDetailsMinResponseDTOList"][0]["fare"]>0
+        return response["routeDetailsMinResponseDTOList"][0]["fare"]
+      else
+        return nil,nil
+      end
     else
       return nil,nil
     end
   else
-    return nil,nil
+    return UmsRouteSubscription.where(ROUTE_ID:routeId).where(ACTIVE:true).minimum(:FARE_PER_RIDE).to_f
   end
 
 end
@@ -318,13 +346,13 @@ end
     reqParams["fromLocationName"]="something something"
     reqParams["toLocationName"]="something something"
     return nil
+
     response=ConnectionManager.makePostHttpRequest "http://routesuggester.goplus.in/user/getRouteDetails",reqParams,nil,true
     if (response==nil)
       return nil
     end
 
     response=JSON.parse response.body
-
 
     if response["responseCode"]=="SUCCESS"
       if response["routeDetailsMinResponseDTOList"]!=nil && response["routeDetailsMinResponseDTOList"].size>0 && response["routeDetailsMinResponseDTOList"][0]["fare"]>0 && response["routeDetailsMinResponseDTOList"][0]["sessions"].length>0

@@ -48,3 +48,17 @@ operations:
     username: analytics
     password: analytics@123
     database: shuttl
+
+prms:
+    adapter: mysql2
+    host: 52.221.245.180
+    username: as1009IU
+    password: ZHzLpl9cpuo=
+    database: RMS
+
+qrms:
+    adapter: mysql2
+    host:  52.76.84.56
+    username: stage
+    password: shuttl
+    database: RMS

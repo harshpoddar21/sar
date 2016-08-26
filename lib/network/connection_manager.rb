@@ -22,4 +22,14 @@ module ConnectionManager
     puts res
     res
   end
+
+
+  def self.postRequest(url,data,port)
+    uri = URI.parse(url)
+    https = Net::HTTP.new(uri.host,port)
+    req = Net::HTTP::Post.new(uri.path, initheader = {'Content-Type' => 'application/json'})
+    req.body = data.to_json
+    response = https.request(req)
+    return response
+  end
 end
