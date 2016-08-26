@@ -23,7 +23,7 @@ var routes=[];
   <% @routes.each do |r| %>
   var route_point=[];
   <% r.each do |ri| %>
-   route_point.push([<%=ri[0]%>,<%=ri[1]%>]);
+   route_point.push([<%=ri[1]%>,<%=ri[0]%>]);
    <% end %>
    routes.push(route_point);
   <% end %>

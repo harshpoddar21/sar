@@ -37,6 +37,7 @@ Rails.application.routes.draw do
 
   get 'whatsapp/insertData' => 'whatsapp#insertData'
 
+  get 'restricted/getRoutePoints'
   get 'whatsapp/analyzeWhatsApp' =>'whatsapp#analyzeWhatsApp'
   get 'whatsapp/refer'
 

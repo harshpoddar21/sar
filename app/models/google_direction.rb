@@ -9,7 +9,7 @@ class GoogleDirection
 
     self.pickPoints=points
     self.departureTime=departureTime == nil ? Time.now.to_i : departureTime
-
+    puts points.to_json
   end
 
   def execute
@@ -17,6 +17,7 @@ class GoogleDirection
     url=url+"&destination="+pickPoints[pickPoints.size-1]["lat"].to_s+","+pickPoints[pickPoints.size-1]["lng"].to_s
     if pickPoints.size>2
       url=url+"&waypoints="
+      puts url
       ([1,pickPoints.size-2-22].max..pickPoints.size-2).each do |index|
 
         if(index==1)
@@ -28,12 +29,14 @@ class GoogleDirection
       end
     end
     response=ConnectionManager::makeHttpRequest url
+    puts response.body
     if (response!=nil && response.body!=nil)
       begin
         response=JSON.parse response.body
         parseResponse response
       rescue Exception=>e
         puts "Exception"
+
        # logger.error "error ocurred while parsing google directions"
       end
 
