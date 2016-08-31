@@ -1,0 +1,1916 @@
+.account-page-wrapper {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+.account-page-wrapper .route-details-heading {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+    color: #fff;
+    line-height: 22px;
+    padding-bottom: 20px;
+    position: relative;
+    padding-top: 10px;
+    cursor: pointer;
+}
+.account-page-wrapper .route-details-heading .details-go-back {
+    color: #fff;
+}
+.account-page-wrapper .route-details-main {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    overflow-y: hidden;
+    max-width: 100%;
+    overflow-x: hidden;
+    padding-bottom: 40px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper {
+    background-color: #fff;
+    margin-top: 70px;
+    padding-top: 0;
+    border-radius: 4px;
+    box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.2);
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .detail-progress {
+    margin: 0 auto;
+    width: 90px;
+    height: 90px;
+    background: url("../images/prcntg-circle-level-1-big.png") no-repeat 0 0;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #02b0c2;
+    text-align: center;
+    position: relative;
+    top: -45px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .detail-progress .detail-progress-percentage {
+    padding-top: 34px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .detail-progress .backed-text {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #02b0c2;
+    margin-top: 28px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-motivation {
+    height: 40px;
+    width: 100%;
+    background-color: #384248;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+    line-height: 40px;
+    margin-top: -15px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to {
+    position: relative;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .via-points {
+    margin-top: -90px;
+    padding-left: 20px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .via-points .passes-via {
+    font-size: 12px;
+    color: #b6b6b6;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .via-points .passes-via .passes-via-text {
+    color: #888;
+    padding-left: 15px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .via-points .passes-via .landmarks-icon {
+    font-size: 16px;
+    color: #00adb7;
+    position: relative;
+    top: 3px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .via-points .via-point-names {
+    font-size: 13px;
+    color: #6a6a6a;
+    width: 210px;
+    position: relative;
+    left: 100px;
+    top: -20px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .via-points .via-point-names .via-points-more-less {
+    color: #00adb7;
+    cursor: pointer;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .up-down-icon {
+    color: #b6b6b6;
+    font-size: 20px;
+    line-height: 100px;
+    margin-left: 18px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .from-location-info {
+    position: relative;
+    left: 47px;
+    font-size: 14px;
+    color: #777;
+    top: -84px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .from-to-separator {
+    position: relative;
+    left: 47px;
+    top: -91px;
+    width: 275px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .to-location-info {
+    position: relative;
+    left: 47px;
+    top: -99px;
+    font-size: 14px;
+    color: #777;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-total-supporters {
+    height: 67px;
+    width: 100%;
+    background-color: #02b0c2;
+    color: #fff;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-total-supporters .zero-supporters-message {
+    position: relative;
+    left: 23px;
+    top: 20px;
+    font-size: 16px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-total-supporters .total-supporters-title {
+    position: relative;
+    left: 23px;
+    top: 15px;
+    font-size: 16px;
+    letter-spacing: 0.11em;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-total-supporters .need-more-message {
+    position: relative;
+    left: 23px;
+    top: 14px;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-total-supporters .need-more-big-count {
+    font-size: 40px;
+    position: relative;
+    left: 303px;
+    top: -20px;
+    padding-top: 3px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-profile-pictures {
+    margin-top: 18px;
+    text-align: center;
+    padding-top: 12px;
+    padding-bottom: 30px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-profile-picture {
+    height: 60px;
+    width: 60px;
+    background-color: rgba(0,0,0,0.56);
+    border: 2px solid #fff;
+    border-radius: 40px;
+    display: inline-block;
+    background-size: cover;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .profile-picture-last-overlay {
+    height: 57px;
+    width: 57px;
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 40px;
+    background-color: rgba(0,0,0,0.1);
+    position: absolute;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .more-count {
+    color: #fff;
+    font-size: 18px;
+    margin-top: 20px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-call-to-action {
+    text-align: center;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-call-to-action .route-details-follow-button {
+    height: 50px;
+    width: 300px;
+    background-color: #fab120;
+    border-radius: 25px;
+    margin: 0 auto;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-call-to-action .route-details-follow-button .follow-button-text {
+    line-height: 50px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-call-to-action .route-details-follow-button .interested-icon {
+    font-size: 20px;
+    color: #fff;
+    position: relative;
+    top: 4px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-call-to-action .route-details-follow-explanation {
+    font-size: 12px;
+    color: #b6b6b6;
+    padding-top: 5px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-share-box {
+    height: 55px;
+}
+.account-page-wrapper .route-details-main .route-details-main-white-wrapper .route-details-share-box .route-details-share-message {
+    font-size: 12px;
+    width: 35%;
+    line-height: 16px;
+    color: #505050;
+    margin-left: 3%;
+    position: relative;
+    display: inline-block;
+    text-align: left;
+}
+.share-links-container {
+    height: 70px;
+    display: inline-block;
+    position: relative;
+    top: -15px;
+    float: right;
+}
+.confirmation-profile-picture {
+    height: 80px;
+    width: 80px;
+    background-color: rgba(0,0,0,0.56);
+    border: 2px solid #fff;
+    border-radius: 60px;
+    background-image: url("http://placehold.it/150x150");
+    display: inline-block;
+    margin-left: 30%;
+}
+.whatsapp-share-button {
+    width: 90px;
+    height: 70px;
+    display: inline-block;
+    cursor: pointer;
+    background-color: #25d366;
+    text-align: center;
+    position: relative;
+    left: 5px;
+}
+.whatsapp-share-button .whatsapp-share-icon {
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+    line-height: 70px;
+}
+.facebook-share-button {
+    width: 90px;
+    height: 70px;
+    display: inline-block;
+    cursor: pointer;
+    background-color: #3b5998;
+    text-align: center;
+    border-bottom-right-radius: 4px;
+}
+.facebook-share-button .facebook-share-icon {
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+    line-height: 70px;
+}
+.btn-facebook-login {
+    background-color: #39579a;
+    color: #fff;
+    border-radius: 25px;
+    box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.24), 0px 0px 2px 0px rgba(0,0,0,0.12);
+    margin-bottom: 20px;
+    width: 260px;
+    height: 50px;
+}
+.btn-facebook-login .facebook-logo {
+    width: 14px;
+    display: inline-block;
+    position: relative;
+    left: -20px;
+}
+.modal-post-heading {
+    width: 270px;
+}
+.confirm-button-container {
+    text-align: center;
+    width: 100%;
+}
+.btn-google-login {
+    background-color: #fff;
+    border: 1px solid #ededed;
+    border-radius: 25px;
+    box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.24), 0px 0px 2px 0px rgba(0,0,0,0.12);
+    width: 260px;
+    height: 50px;
+    color: #888;
+}
+.btn-google-login .google-logo {
+    width: 22px;
+    display: inline-block;
+    position: relative;
+    left: -20px;
+}
+.separator-thin-white-cta {
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+}
+#login-form {
+    padding-bottom: 20px;
+}
+#how-it-works {
+    width: 260px;
+    text-align: center;
+    padding: 0;
+}
+#how-it-works .slide-image-main {
+    text-align: center;
+    padding-left: 5px;
+}
+#how-it-works .slide-image-heading {
+    font-size: 16px;
+    color: #505050;
+    text-transform: uppercase;
+    text-align: center;
+    padding-top: 30px;
+}
+#how-it-works .slide-image-description {
+    font-size: 14px;
+    color: #a3a3a3;
+    text-align: center;
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+@media only screen and (min-width: 600px) {
+    body {
+        background-color: #000;
+    }
+    #account-page-wrapper {
+        margin: 0 auto;
+        max-width: 440px;
+    }
+}
+#nprogress .bar {
+    background-color: #008000;
+}
+#nprogress .peg {
+    box-shadow: 0 0 10px #29d, 0 0 5px #29d;
+}
+.landing-top-wrapper {
+    background: #000 url("../images/landing-top-bg-faded.jpg") no-repeat 0 0;
+    background-size: cover;
+}
+.landing-top-wrapper .shuttl-logo {
+    height: 24px;
+    background: url("../images/shuttl-logo.png") no-repeat 0 0;
+    margin-top: 20px;
+    display: inline-block;
+}
+.landing-top-wrapper .separator-thin-white {
+    width: 100%;
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+}
+.landing-top-wrapper .separator-thick-white-center {
+    width: 23%;
+    height: 30px;
+    margin: 0 auto;
+    border-top: 5px solid #fff;
+}
+.landing-top-wrapper .main-app-heading {
+    font-size: 40px;
+}
+.landing-top-wrapper .commute {
+    padding-top: 18px;
+}
+.landing-top-wrapper .landing-content-main {
+    margin-top: 22%;
+}
+.landing-top-wrapper .landing-content-bottom {
+    margin-top: 27%;
+}
+.landing-top-wrapper .down-icon-container {
+    margin-bottom: 0;
+}
+.landing-top-wrapper .scroll-down-arrow {
+    font-size: 24px;
+}
+#down-icon-clickbox {
+    cursor: pointer;
+}
+.landing-first-description {
+    font-size: 14px;
+    color: #8c8c8c;
+}
+.text-continuation {
+    margin-top: -7px;
+    margin-bottom: 0;
+}
+.description-start {
+    margin-top: 25px;
+}
+.landing-middle-wrapper {
+    background-color: #fff;
+}
+.landing-middle-wrapper .landing-content-middle-top {
+    margin-top: 12%;
+}
+.landing-middle-wrapper .landing-content-middle-middle {
+    margin-top: 7%;
+}
+.landing-middle-wrapper .landing-content-middle-bottom {
+    margin-bottom: 10%;
+    text-align: center;
+}
+.address-container {
+    display: block;
+    text-align: center;
+}
+.address-container .address-title-container {
+    height: 40px;
+}
+.address-container .address-title-container .home-symbol {
+    width: 35px;
+    height: 32px;
+    background: url("../images/home-icon.png") no-repeat 0 0;
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    padding-right: 10px;
+}
+.address-container .address-title-container .work-symbol {
+    width: 30px;
+    height: 38px;
+    background: url("../images/work-icon.png") no-repeat 0 0;
+    display: inline-block;
+    padding-right: 10px;
+}
+.address-label {
+    display: inline;
+}
+.border-sky-blue {
+    border: 2px solid #87ceeb;
+}
+.btn-search-routes {
+    margin: 0 auto;
+    border-radius: 25px;
+    font-size: 10px;
+    text-align: center;
+}
+.btn-wide {
+    width: 280px;
+    height: 45px;
+}
+.bottom-slide-first-image {
+    background: url("../images/landing-bottom-slide-1.jpg") no-repeat 0 0;
+    height: 200px;
+    background-size: cover;
+}
+.bottom-slide-second-image {
+    background: url("../images/landing-bottom-slide-2.jpg") no-repeat 0 0;
+    height: 200px;
+    background-size: cover;
+}
+.landing-bottom-wrapper {
+    margin: 0;
+    padding: 0;
+}
+.bottom-slide-headline {
+    font-size: 34px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    margin-top: 40px;
+}
+.bottom-slide-content {
+    font-size: 14px;
+    padding-left: 20px;
+    padding-right: 20px;
+    line-height: 24px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+.time-label {
+    padding-right: 15px;
+}
+select.time-modified-select {
+    -webkit-appearance: none;
+    -webkit-box-shadow: 1px 1px 1px #fff;
+    -webkit-border-radius: 0;
+    padding: 10px;
+    border: none;
+    border-bottom: solid 1px #e1e1e1;
+    -webkit-transition: border 0.3s;
+    transition: border 0.3s;
+    background-color: #fff;
+    position: relative;
+    width: 100%;
+}
+select.time-modified-select:focus {
+    outline: none;
+}
+.landing-slides-wrapper {
+    position: relative;
+    padding: 0;
+}
+.landing-slides-wrapper .landing-slides-container {
+    background-color: #fff;
+    padding: 0;
+}
+.landing-slides-wrapper .landing-slides-container .slide-image-main {
+    text-align: center;
+    padding-left: 5px;
+}
+.landing-slides-wrapper .landing-slides-container .slide-image-heading {
+    font-size: 16px;
+    color: #505050;
+    text-transform: uppercase;
+    text-align: center;
+    padding-top: 30px;
+}
+.landing-slides-wrapper .landing-slides-container .slide-image-description {
+    font-size: 14px;
+    color: #a3a3a3;
+    text-align: center;
+    padding-top: 15px;
+    padding-left: 45px;
+    padding-right: 45px;
+}
+@media only screen and (min-width: 600px) {
+    body {
+        background-color: #000;
+    }
+    #landing-wrapper {
+        margin: 0 auto;
+        max-width: 440px;
+    }
+    .landing-content-bottom-slide-first {
+        background-color: #fff;
+    }
+    .landing-content-bottom-slide-second {
+        background-color: #fff;
+    }
+}
+.route-pledge-wrapper {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+.route-pledge-wrapper .route-pledge-heading {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+    color: #fff;
+    line-height: 22px;
+    padding-bottom: 20px;
+    position: relative;
+    padding-top: 10px;
+    cursor: pointer;
+}
+.route-pledge-wrapper .route-pledge-heading .details-go-back {
+    color: #fff;
+}
+.route-pledge-wrapper .route-pledge-main {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    overflow-y: hidden;
+    max-width: 100%;
+    overflow-x: hidden;
+    padding-bottom: 40px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper {
+    background-color: #fff;
+    margin-top: 20px;
+    padding-top: 0;
+    border-radius: 4px;
+    box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.2);
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .pledge-top-message {
+    font-size: 16px;
+    color: #00adb7;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .boarding-points-wrapper {
+    background-image: url("../images/map-bg.png");
+    background-position: right top;
+    background-repeat: no-repeat;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .boarding-points-wrapper .boarding-points-list {
+    font-size: 16px;
+    color: #a3a3a3;
+    padding-left: 10px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .boarding-points-wrapper .boarding-points-list .boarding-point-container {
+    display: inline-block;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .boarding-points-wrapper .boarding-points-list .boarding-point-container .boarding-point-checkbox {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .boarding-points-wrapper .boarding-points-list .boarding-point-container .boarding-time-selector {
+    padding-left: 35px;
+    color: #a3a3a3 !important;
+    margin: 0;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .boarding-points-wrapper .boarding-points-list .boarding-point-container .boarding-time-selector .boarding-time-slots {
+    margin-left: 15px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .boarding-points-wrapper .boarding-points-list .boarding-point-container .boarding-time-selector .boarding-modified-select {
+    border-radius: 3px;
+    border: solid 1px #a3a3a3;
+    box-shadow: 0px 1px 2px 0px #efefef;
+    -webkit-transition: border 0.3s;
+    transition: border 0.3s;
+    background-color: #fff;
+    display: inline-block;
+    height: 35px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .pledge-options {
+    text-align: center;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .pledge-options .pledge-option {
+    margin-top: 20px;
+    min-width: 300px;
+    width: 90%;
+    display: inline-block;
+    background-color: #f5fcfc;
+    border: 1px solid #a5e2e5;
+    border-radius: 4px;
+    color: #00adb7;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    text-align: left;
+    cursor: pointer;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .pledge-options .pledge-option .amount {
+    font-weight: bold;
+    padding-left: 5px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .pledge-options .pledge-option .back-for {
+    display: inline-block;
+    padding-left: 5px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .pledge-options .pledge-option .back-benefits {
+    font-size: 12px;
+    color: #b6b6b6;
+    max-width: 260px;
+    padding-left: 25px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .route-pledge-call-to-action {
+    text-align: center;
+    margin-top: 25px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .route-pledge-call-to-action .route-pledge-button {
+    height: 50px;
+    width: 300px;
+    background-color: #fab120;
+    border-radius: 25px;
+    margin: 0 auto;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .route-pledge-call-to-action .route-pledge-button .follow-button-text {
+    line-height: 50px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .route-pledge-call-to-action .route-pledge-explanation {
+    font-size: 12px;
+    color: #b6b6b6;
+    padding-top: 5px;
+    margin-top: 10px;
+    padding-bottom: 20px;
+}
+@media only screen and (min-width: 600px) {
+    body {
+        background-color: #000;
+    }
+    #route-pledge-wrapper {
+        margin: 0 auto;
+        max-width: 440px;
+    }
+}
+.route-details-wrapper {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+.route-details-wrapper .route-details-heading {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+    color: #fff;
+    line-height: 22px;
+    padding-bottom: 20px;
+    position: relative;
+    padding-top: 10px;
+    cursor: pointer;
+}
+.route-details-wrapper .route-details-heading .details-go-back {
+    color: #fff;
+}
+.route-details-wrapper .route-details-main {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    overflow-y: hidden;
+    max-width: 100%;
+    overflow-x: hidden;
+    padding-bottom: 40px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper {
+    background-color: #fff;
+    margin-top: 70px;
+    padding-top: 0;
+    border-radius: 4px;
+    box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.2);
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .detail-progress {
+    margin: 0 auto;
+    width: 90px;
+    height: 90px;
+    background: url("../images/prcntg-circle-level-1-big.png") no-repeat 0 0;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #02b0c2;
+    text-align: center;
+    position: relative;
+    top: -45px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .detail-progress .detail-progress-percentage {
+    padding-top: 34px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .detail-progress .backed-text {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #02b0c2;
+    margin-top: 28px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-motivation {
+    height: 40px;
+    width: 100%;
+    background-color: #384248;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+    line-height: 40px;
+    margin-top: -15px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to {
+    position: relative;
+    background-image: url("../images/map-bg.png");
+    background-position: right top;
+    background-repeat: no-repeat;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .from-to-secondary {
+    display: none;
+    margin-top: 0;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .from-to-secondary .all-via-points {
+    margin: 0;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .from-to-secondary .all-via-points li:first-child {
+    color: #777;
+    padding-top: 15px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .from-to-secondary .all-via-points li:last-child {
+    color: #777;
+    padding-bottom: 10px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .from-to-secondary .all-via-points li {
+    font-size: 15px;
+    color: #a3a3a3;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .from-to-secondary .rates-days-info {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #b6b6b6;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .from-to-secondary .rates-days-info .rates-info {
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .from-to-secondary .rates-days-info .active-days-info {
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .from-to-secondary .rates-days-info .blue-text {
+    color: #02b0c2;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .see-map-details {
+    font-size: 14px;
+    color: #00adb7;
+    cursor: pointer;
+    height: 46px;
+    line-height: 46px;
+    padding-left: 20px;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .via-points {
+    margin-top: -90px;
+    padding-left: 20px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .via-points .passes-via {
+    font-size: 12px;
+    color: #b6b6b6;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .via-points .passes-via .passes-via-text {
+    color: #888;
+    padding-left: 15px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .via-points .passes-via .landmarks-icon {
+    font-size: 16px;
+    color: #00adb7;
+    position: relative;
+    top: 3px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .via-points .via-point-names {
+    font-size: 13px;
+    color: #6a6a6a;
+    width: 210px;
+    position: relative;
+    left: 100px;
+    top: -20px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .via-points .via-point-names .via-points-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .via-points .via-point-names .via-points-list li {
+    padding-left: 1em;
+    text-indent: -0.7em;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .via-points .via-point-names .via-points-list li .via-point-name {
+    padding-left: 4px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .via-points .via-point-names .via-points-list li:before {
+    content: "• ";
+    color: #ddd;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .via-points .via-point-names .via-points-more-less {
+    color: #00adb7;
+    cursor: pointer;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .up-down-icon {
+    color: #b6b6b6;
+    font-size: 20px;
+    line-height: 100px;
+    margin-left: 18px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .from-location-info {
+    position: relative;
+    left: 47px;
+    font-size: 14px;
+    color: #777;
+    top: -84px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .from-to-separator {
+    position: relative;
+    left: 47px;
+    top: -91px;
+    width: 275px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-from-to .to-location-info {
+    position: relative;
+    left: 47px;
+    top: -99px;
+    font-size: 14px;
+    color: #777;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-total-supporters {
+    height: 67px;
+    width: 100%;
+    color: #505050;
+    text-align: center;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-total-supporters .zero-supporters-message {
+    position: relative;
+    left: 23px;
+    top: 20px;
+    font-size: 16px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-total-supporters .total-supporters-title {
+    position: relative;
+    left: 23px;
+    top: 15px;
+    font-size: 16px;
+    letter-spacing: 0.11em;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-total-supporters .need-more-message {
+    font-size: 20px;
+    position: relative;
+    top: -5px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-total-supporters .need-more-big-count {
+    font-size: 40px;
+    display: inline-block;
+    margin-right: 7px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-profile-pictures {
+    margin-top: 18px;
+    text-align: center;
+    padding-top: 12px;
+    padding-bottom: 30px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-profile-picture {
+    height: 60px;
+    width: 60px;
+    background-color: rgba(0,0,0,0.56);
+    border: 2px solid #fff;
+    border-radius: 40px;
+    display: inline-block;
+    background-size: cover;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .profile-picture-last-overlay {
+    height: 57px;
+    width: 57px;
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 40px;
+    background-color: rgba(0,0,0,0.1);
+    position: absolute;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .more-count {
+    color: #fff;
+    font-size: 18px;
+    margin-top: 20px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-call-to-action {
+    text-align: center;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-call-to-action .route-details-follow-button {
+    height: 50px;
+    width: 300px;
+    background-color: #fab120;
+    border-radius: 25px;
+    margin: 0 auto;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-call-to-action .route-details-follow-button .follow-button-text {
+    line-height: 50px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-call-to-action .route-details-follow-button .interested-icon {
+    font-size: 20px;
+    color: #fff;
+    position: relative;
+    top: 4px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-call-to-action .route-details-follow-explanation {
+    font-size: 12px;
+    color: #b6b6b6;
+    padding-top: 5px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-share-box {
+    height: 55px;
+}
+.route-details-wrapper .route-details-main .route-details-main-white-wrapper .route-details-share-box .route-details-share-message {
+    font-size: 12px;
+    width: 35%;
+    line-height: 16px;
+    color: #505050;
+    margin-left: 3%;
+    position: relative;
+    display: inline-block;
+    text-align: left;
+}
+.share-links-container {
+    height: 70px;
+    display: inline-block;
+    position: relative;
+    top: -15px;
+    float: right;
+}
+.confirmation-profile-picture {
+    height: 80px;
+    width: 80px;
+    background-color: rgba(0,0,0,0.56);
+    border: 2px solid #fff;
+    border-radius: 60px;
+    background-image: url("http://placehold.it/150x150");
+    display: inline-block;
+    margin-left: 30%;
+}
+.whatsapp-share-button {
+    width: 90px;
+    height: 70px;
+    display: inline-block;
+    cursor: pointer;
+    background-color: #25d366;
+    text-align: center;
+    position: relative;
+    left: 5px;
+}
+.whatsapp-share-button .whatsapp-share-icon {
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+    line-height: 70px;
+}
+.facebook-share-button {
+    width: 90px;
+    height: 70px;
+    display: inline-block;
+    cursor: pointer;
+    background-color: #3b5998;
+    text-align: center;
+    border-bottom-right-radius: 4px;
+}
+.facebook-share-button .facebook-share-icon {
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+    line-height: 70px;
+}
+.btn-facebook-login {
+    background-color: #39579a;
+    color: #fff;
+    border-radius: 25px;
+    box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.24), 0px 0px 2px 0px rgba(0,0,0,0.12);
+    margin-bottom: 20px;
+    width: 260px;
+    height: 50px;
+}
+.btn-facebook-login .facebook-logo {
+    width: 14px;
+    display: inline-block;
+    position: relative;
+    left: -20px;
+}
+.modal-post-heading {
+    width: 270px;
+}
+.confirm-button-container {
+    text-align: center;
+    width: 100%;
+}
+.btn-google-login {
+    background-color: #fff;
+    border: 1px solid #ededed;
+    border-radius: 25px;
+    box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.24), 0px 0px 2px 0px rgba(0,0,0,0.12);
+    width: 260px;
+    height: 50px;
+    color: #888;
+}
+.btn-google-login .google-logo {
+    width: 22px;
+    display: inline-block;
+    position: relative;
+    left: -20px;
+}
+.separator-thin-white-cta {
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+}
+#login-form {
+    padding-bottom: 20px;
+}
+#how-it-works {
+    width: 260px;
+    text-align: center;
+    padding: 0;
+}
+#how-it-works .slide-image-main {
+    text-align: center;
+    padding-left: 5px;
+}
+#how-it-works .slide-image-heading {
+    font-size: 16px;
+    color: #505050;
+    text-transform: uppercase;
+    text-align: center;
+    padding-top: 30px;
+}
+#how-it-works .slide-image-description {
+    font-size: 14px;
+    color: #a3a3a3;
+    text-align: center;
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+@media only screen and (min-width: 600px) {
+    body {
+        background-color: #000;
+    }
+    #route-details-wrapper {
+        margin: 0 auto;
+        max-width: 440px;
+    }
+}
+.route-pledge-wrapper {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+.route-pledge-wrapper .route-pledge-heading {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+    color: #fff;
+    line-height: 22px;
+    padding-bottom: 20px;
+    position: relative;
+    padding-top: 10px;
+    cursor: pointer;
+}
+.route-pledge-wrapper .route-pledge-heading .details-go-back {
+    color: #fff;
+}
+.route-pledge-wrapper .route-pledge-main {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    overflow-y: hidden;
+    max-width: 100%;
+    overflow-x: hidden;
+    padding-bottom: 40px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper {
+    background-color: #fff;
+    margin-top: 20px;
+    padding-top: 0;
+    border-radius: 4px;
+    box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.2);
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .pledge-top-message {
+    font-size: 16px;
+    color: #00adb7;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .boarding-points-wrapper {
+    background-image: url("../images/map-bg.png");
+    background-position: right top;
+    background-repeat: no-repeat;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .boarding-points-wrapper .boarding-points-list {
+    font-size: 16px;
+    color: #a3a3a3;
+    padding-left: 10px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .boarding-points-wrapper .boarding-points-list .boarding-point-container {
+    display: inline-block;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .boarding-points-wrapper .boarding-points-list .boarding-point-container .boarding-point-checkbox {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .boarding-points-wrapper .boarding-points-list .boarding-point-container .boarding-time-selector {
+    padding-left: 35px;
+    color: #a3a3a3 !important;
+    margin: 0;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .boarding-points-wrapper .boarding-points-list .boarding-point-container .boarding-time-selector .boarding-time-slots {
+    margin-left: 15px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .boarding-points-wrapper .boarding-points-list .boarding-point-container .boarding-time-selector .boarding-modified-select {
+    border-radius: 3px;
+    border: solid 1px #a3a3a3;
+    box-shadow: 0px 1px 2px 0px #efefef;
+    -webkit-transition: border 0.3s;
+    transition: border 0.3s;
+    background-color: #fff;
+    display: inline-block;
+    height: 35px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .pledge-options {
+    text-align: center;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .pledge-options .pledge-option {
+    margin-top: 20px;
+    min-width: 300px;
+    width: 90%;
+    display: inline-block;
+    background-color: #f5fcfc;
+    border: 1px solid #a5e2e5;
+    border-radius: 4px;
+    color: #00adb7;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    text-align: left;
+    cursor: pointer;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .pledge-options .pledge-option .amount {
+    font-weight: bold;
+    padding-left: 5px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .pledge-options .pledge-option .back-for {
+    display: inline-block;
+    padding-left: 5px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .pledge-options .pledge-option .back-benefits {
+    font-size: 12px;
+    color: #b6b6b6;
+    max-width: 260px;
+    padding-left: 25px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .route-pledge-call-to-action {
+    text-align: center;
+    margin-top: 25px;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .route-pledge-call-to-action .route-pledge-button {
+    height: 50px;
+    width: 300px;
+    background-color: #fab120;
+    border-radius: 25px;
+    margin: 0 auto;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .route-pledge-call-to-action .route-pledge-button .follow-button-text {
+    line-height: 50px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+}
+.route-pledge-wrapper .route-pledge-main .route-pledge-main-white-wrapper .route-pledge-call-to-action .route-pledge-explanation {
+    font-size: 12px;
+    color: #b6b6b6;
+    padding-top: 5px;
+    margin-top: 10px;
+    padding-bottom: 20px;
+}
+@media only screen and (min-width: 600px) {
+    body {
+        background-color: #000;
+    }
+    #route-pledge-wrapper {
+        margin: 0 auto;
+        max-width: 440px;
+    }
+}
+.route-results-wrapper {
+    background: #f7f7f7;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+.search-results-heading {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+    color: #fff;
+    line-height: 22px;
+    padding-bottom: 10px;
+}
+.search-results-heading .search-go-back {
+    color: #777;
+    font-size: 22px;
+    text-decoration: none;
+}
+.search-results-description-campaign {
+    background-color: #fff !important;
+    border-bottom: 1px solid #d6d6d6;
+}
+.search-results-description {
+    background: #f7f7f7;
+    font-size: 14px;
+    color: #777;
+    padding-left: 20px;
+    line-height: 14px;
+}
+.search-results-description .pre-campaign-smiley {
+    width: 30px;
+    position: relative;
+    top: 15px;
+}
+.search-results-description .not-found-heading {
+    font-size: 20px;
+    color: #505050;
+    display: inline-block;
+    position: relative;
+    top: -20px;
+    left: 45px;
+    margin: 0;
+    max-width: 380px;
+}
+.search-results-description .not-found-heading .not-found-text {
+    font-size: 20px;
+    color: #505050;
+}
+.search-results-description .join-campaign-message {
+    padding-top: 20px;
+    font-size: 14px;
+    color: #b6b6b6;
+    margin-bottom: 0px;
+}
+.search-results-description .message-grey {
+    font-size: 14px;
+    color: #b6b6b6;
+}
+.search-results-description .user-entries {
+    font-size: 14px;
+    color: #a3a3a3;
+}
+.search-results-description .user-entries-campaign {
+    margin: 0;
+}
+.search-results-description .pre-user-entries {
+    font-size: 14px;
+    color: #a3a3a3;
+    text-align: center;
+    margin-bottom: 0;
+}
+.search-results-description .hurray-message {
+    font-size: 20px;
+    color: #505050;
+    margin-bottom: 25px;
+    margin-top: 30px;
+    text-align: center;
+}
+.app-download-motivation {
+    text-align: center;
+    padding-top: 30px;
+}
+.app-download-motivation .app-download-heading {
+    font-size: 18px;
+    text-align: center;
+    color: #505050;
+    padding-bottom: 30px;
+}
+.app-download-motivation .app-download-big-button {
+    height: 266px;
+    width: 202px;
+    background-image: url("../images/mobile.png");
+    background-size: cover;
+    margin: 0 auto;
+    color: #00adb7;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.app-download-motivation .app-download-big-button .app-store-link {
+    display: inline-block;
+}
+.app-download-motivation .app-download-big-button .app-store-link .appstore-icon {
+    color: #00adb7;
+    font-size: 25px;
+    display: inline-block;
+    position: relative;
+    top: 10px;
+    left: -20px;
+}
+.app-download-motivation .app-download-big-button .play-store-link {
+    display: inline-block;
+}
+.app-download-motivation .app-download-big-button .play-store-link .playstore-icon {
+    color: #00adb7;
+    font-size: 22px;
+    display: inline-block;
+    position: relative;
+    top: 10px;
+    left: -10px;
+}
+.app-download-motivation .app-download-big-button .app-download-text {
+    font-size: 14px;
+    display: inline-block;
+    color: #00adb7;
+    position: relative;
+    top: 5px;
+}
+.search-results-container {
+    background-color: #f7f7f7;
+}
+.search-results-container .take-me-there {
+    background-color: #fab120;
+    border-radius: 25px;
+    height: 50px;
+    width: 300px;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #fff;
+    text-align: center;
+    line-height: 50px;
+    margin: 0 auto;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+}
+.search-results-container .suggested-route-data {
+    background-color: #f7f7f7;
+    cursor: pointer;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.27);
+    margin-bottom: 40px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-top {
+    padding-top: 15px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-top .backed-badge {
+    background-color: #7ed321;
+    color: #fff;
+    padding-top: 7px;
+    padding-bottom: 9px;
+    text-align: left;
+    padding-left: 20px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-top .backed-badge .already-backing-icon {
+    margin-right: 10px;
+    position: relative;
+    top: 2px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-top .suggested-up-down-icon {
+    position: relative;
+    left: 17px;
+    line-height: 94px;
+    font-size: 18px;
+    display: inline-block;
+}
+.search-results-container .suggested-route-data .suggested-route-data-top .suggested-to-from-info {
+    position: relative;
+    left: 30px;
+    display: inline-block;
+    top: 20px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-top .suggested-to-from-info .suggested-to-from-separator {
+    width: 224px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-top .suggested-to-from-info .separator-thin-grey {
+    height: 2px;
+    width: 224px;
+    border: 1px solid #e9e9e9;
+}
+.search-results-container .suggested-route-data .suggested-route-data-top .suggested-to-from-info .suggested-to-address-name {
+    font-size: 14px;
+    color: #777;
+    position: relative;
+    top: 5px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-top .suggested-to-from-info .suggested-from-address-name {
+    font-size: 14px;
+    color: #777;
+    position: relative;
+    top: -6px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-top .via-points {
+    position: relative;
+    padding-left: 20px;
+    width: 300px;
+    margin-top: -70px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-top .via-points .passes-via {
+    font-size: 12px;
+    color: #b6b6b6;
+}
+.search-results-container .suggested-route-data .suggested-route-data-top .via-points .passes-via .passes-via-text {
+    padding-left: 15px;
+    color: #888;
+}
+.search-results-container .suggested-route-data .suggested-route-data-top .via-points .passes-via .landmarks-icon {
+    font-size: 16px;
+    color: #00adb7;
+    position: relative;
+    top: 3px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-top .via-points .via-point-names {
+    font-size: 13px;
+    color: #6a6a6a;
+    display: block;
+    position: relative;
+    top: -21px;
+    left: 95px;
+    width: 240px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-top .progress-stats {
+    position: relative;
+    left: 79%;
+    top: -90px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-top .progress-stats .percentage-progress {
+    width: 54px;
+    height: 54px;
+    background: url("../images/prcntg-circle-level-1.png") no-repeat 0 0;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #02b0c2;
+    text-align: center;
+    padding-top: 16px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-top .progress-stats .backed-text {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #02b0c2;
+    margin-top: -10px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-bottom {
+    background: url("../images/bottom-suggested-level-1.png") no-repeat 0 0;
+    background-size: cover;
+    min-height: 91px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-bottom .no-followers-message {
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    line-height: 91px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-bottom .route-card-profile-pictures {
+    margin-left: 3%;
+    position: relative;
+    top: 23px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-bottom .route-card-profile-pictures .route-card-profile-picture {
+    height: 40px;
+    width: 40px;
+    background-color: rgba(0,0,0,0.56);
+    border: 2px solid #fff;
+    border-radius: 40px;
+    display: inline-block;
+    background-size: cover;
+    text-align: center;
+}
+.search-results-container .suggested-route-data .suggested-route-data-bottom .route-card-profile-pictures .profile-picture-last-overlay {
+    height: 37px;
+    width: 37px;
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 40px;
+    background-color: rgba(0,0,0,0.1);
+    position: absolute;
+}
+.search-results-container .suggested-route-data .suggested-route-data-bottom .route-card-profile-pictures .more-count {
+    color: #fff;
+    font-size: 14px;
+    margin-top: 10px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-bottom .supporter-count {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    color: #fff;
+    line-height: 21px;
+    position: relative;
+    left: 74%;
+    top: -27px;
+}
+.search-results-container .suggested-route-data .suggested-route-data-bottom .supporters {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    color: #fff;
+    line-height: 21px;
+    position: relative;
+    left: 74%;
+    top: -22px;
+}
+.search-results-container .existing-route-data {
+    cursor: pointer;
+    background: #fff;
+    border-radius: 6px;
+}
+.search-results-container .existing-route-data .existing-route-data-top {
+    height: 92px;
+}
+.search-results-container .existing-route-data .existing-route-data-top .existing-red-green-symbol {
+    position: relative;
+    left: 17px;
+    margin-top: 25px;
+    width: 10px;
+    height: 49px;
+    background: url("../images/green-red-dots.png") no-repeat 0 0;
+    display: inline-block;
+}
+.search-results-container .existing-route-data .existing-route-data-top .existing-to-from-info {
+    position: relative;
+    left: 40px;
+    top: -64px;
+}
+.search-results-container .existing-route-data .existing-route-data-top .existing-to-from-info .existing-to-from-separator {
+    width: 282px;
+}
+.search-results-container .existing-route-data .existing-route-data-top .existing-to-from-info .separator-thin-grey {
+    height: 2px;
+    width: 224px;
+    border: 1px solid #e9e9e9;
+}
+.search-results-container .existing-route-data .existing-route-data-top .existing-to-from-info .existing-to-address-name {
+    font-size: 14px;
+    color: #777;
+    position: relative;
+    top: 5px;
+}
+.search-results-container .existing-route-data .existing-route-data-top .existing-to-from-info .existing-from-address-name {
+    font-size: 14px;
+    color: #777;
+    position: relative;
+    top: -6px;
+}
+.search-results-container .existing-route-data .existing-route-data-middle {
+    height: 80px;
+}
+.search-results-container .existing-route-data .existing-route-data-middle .timings-icon,
+.search-results-container .existing-route-data .existing-route-data-middle .days-icon {
+    font-size: 20px;
+    color: #b6b6b6;
+    margin-left: 17px;
+}
+.search-results-container .existing-route-data .existing-route-data-middle .timings-info {
+    margin-top: 20px;
+}
+.search-results-container .existing-route-data .existing-route-data-middle .timings-info .field-title {
+    display: inline-block;
+    font-size: 12px;
+    color: #b6b6b6;
+    position: relative;
+    top: -5px;
+    left: 5px;
+}
+.search-results-container .existing-route-data .existing-route-data-middle .timings-info .field-value-blue {
+    color: #02b0c2;
+}
+.search-results-container .existing-route-data .existing-route-data-middle .active-days-info {
+    margin-top: 15px;
+}
+.search-results-container .existing-route-data .existing-route-data-middle .active-days-info .field-title {
+    display: inline-block;
+    font-size: 12px;
+    color: #b6b6b6;
+    position: relative;
+    top: -5px;
+    left: 5px;
+}
+.search-results-container .existing-route-data .existing-route-data-middle .active-days-info .field-value-blue {
+    color: #02b0c2;
+}
+.search-results-container .existing-route-data .existing-route-data-bottom {
+    height: 100px;
+    text-align: center;
+}
+.search-results-container .existing-route-data .existing-route-data-bottom .route-details-expand-button {
+    height: 50px;
+    width: 300px;
+    background-color: #fab120;
+    border-radius: 25px;
+    margin: 0 auto;
+    color: #fff;
+    position: relative;
+    top: 20px;
+}
+.search-results-container .existing-route-data .existing-route-data-details {
+    height: 100px;
+    display: none;
+}
+.search-results-container .existing-route-data .existing-route-data-details .detail-message-temp {
+    color: #b6b6b6;
+    font-size: 12px;
+    padding-left: 10px;
+}
+@media only screen and (min-width: 600px) {
+    body {
+        background-color: #000;
+    }
+    #route-results-wrapper {
+        margin: 0 auto;
+        max-width: 440px;
+    }
+}
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+i {
+    font-family: "shuttl-icons-font";
+}
+.text-capitalise {
+    text-transform: uppercase;
+}
+.text-white {
+    color: #fff;
+}
+.text-center {
+    text-align: center;
+}
+.text-bold {
+    font-weight: bold;
+}
+.text-extra-large {
+    font-size: 28px;
+}
+.text-large {
+    font-size: 24px;
+}
+.text-medium-large {
+    font-size: 22px;
+}
+.text-medium {
+    font-size: 20px;
+}
+.text-small-medium {
+    font-size: 13px;
+}
+.text-small {
+    font-size: 11px;
+}
+.text-light-blue {
+    color: #02b0c2;
+}
+.text-grey {
+    color: #c7c7c7;
+}
+.text-turqoise {
+    color: #03afc2;
+}
+.icon-large {
+    font-size: 48px;
+}
+.modal {
+    width: 280px;
+    min-height: 120px;
+    padding-left: 0;
+}
+.modal-heading {
+    font-size: 22px;
+    border-left: 4px solid #03afc2;
+    position: relative;
+    padding-left: 10%;
+}
+.modal-post-heading {
+    font-size: 12px;
+    line-height: 14px;
+    position: relative;
+    left: 10%;
+    top: 20%;
+}
+.modal-main-content {
+    position: relative;
+    top: 40%;
+    left: 10%;
+}
+.input-top-label {
+    margin: 0;
+}
+.time-input-field {
+    padding-top: 0;
+}
+.align-left {
+    text-align: left;
+}
+.no-whitespace {
+    margin: 0;
+    padding: 0;
+}
+.no-padding {
+    padding: 0;
+}
+.padding-top-20 {
+    padding-top: 20px;
+}
+.full-width {
+    width: 100% !important;
+}
+.no-text-decoration {
+    text-decoration: none;
+}
+.lato-light {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+.lato-regular {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+}
+.lato-bold {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+}
+.lato-super-bold {
+    font-family: 'Lato', sans-serif;
+    font-weight: 900;
+}
+.spinner-container {
+    display: none;
+    text-align: center;
+    width: 100%;
+    height: 400%;
+    background: rgba(0,0,0,0.7);
+    position: absolute;
+    top: 0;
+}
+.spinner {
+    position: fixed;
+    margin-top: 55%;
+}
+.app-based-bus {
+    height: 40px;
+    width: 166px;
+    background-color: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 3px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.8);
+    display: inline-block;
+    text-align: center;
+}
+.app-based-bus .app-based-icon {
+    font-size: 18px;
+    margin-top: 10px;
+    display: inline-block;
+}
+.app-based-bus .app-based-text {
+    display: inline-block;
+    position: relative;
+    top: -5px;
+}
+.slick-arrow {
+    display: none !important;
+}
+.slick-dots {
+    position: relative;
+    top: 10px;
+    padding-bottom: 20px;
+}
+.application__footer {
+    padding: 0;
+}
+.application__footer .footer-wrapper {
+    background-color: #384248;
+    height: 120px;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+.application__footer .footer-wrapper .footer-shuttl-logo {
+    width: 116px;
+    height: 37px;
+    background: url("../images/shuttl-logo-footer.png") no-repeat 0 0;
+    position: relative;
+    top: 30px;
+    left: 24px;
+}
+.application__footer .footer-wrapper .footer-app-link {
+    position: absolute;
+    right: 40px;
+    cursor: pointer;
+}
+.application__footer .footer-wrapper .footer-app-link .app-store-link {
+    display: inline-block;
+    position: relative;
+    left: 80px;
+    top: -20px;
+}
+.application__footer .footer-wrapper .footer-app-link .app-store-link .appstore-icon {
+    color: #bacbd6;
+    font-size: 40px;
+    display: inline-block;
+    margin-top: -14px;
+}
+.application__footer .footer-wrapper .footer-app-link .play-store-link {
+    display: inline-block;
+    position: relative;
+    left: 105px;
+    top: -20px;
+}
+.application__footer .footer-wrapper .footer-app-link .play-store-link .playstore-icon {
+    color: #bacbd6;
+    font-size: 36px;
+    display: inline-block;
+    margin-top: -10px;
+}
+.application__footer .footer-wrapper .app-download-text {
+    font-size: 12px;
+    color: #bacbd6;
+    display: inline-block;
+    margin-top: 33px;
+}
+html,
+body,
+.application {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}

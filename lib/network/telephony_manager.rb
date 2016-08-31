@@ -30,4 +30,12 @@ module TelephonyManager
 
   end
 
+
+  def self.sendIvrCallTo ivrCode,number
+    url="http://obd.solutionsinfini.com/api/v1/index.php?api_key=A0fcc01eb0baa771dffcc02a8c1c55751&method=voice.call&play=#{ivrCode}.ivr&numbers=#{number}&format=xml"
+    ConnectionManager.makeHttpRequest url
+
+
+  end
+
 end

@@ -3,30 +3,58 @@
 <head>
   <meta charset='utf-8' />
   <title></title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
   <style>
+    #bottom_nav{
+
+      bottom:0px;
+      position: absolute;
+      width: 100%;
+      left:0px;
+
+    }
+    .input-container{
+      position: absolute;
+      z-index: 1;
+      background: white;
+      min-width: 326px;
+      padding: 0.7rem;
+      margin: 0.7rem;
+    }
+    .input-container .input-field{
+      padding: 0 0.75rem;
+    }
     body { margin:0; padding:0; }
     #map { position:absolute; top:0; bottom:0; width:100%; }
   </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.0/mapbox-gl.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.0/mapbox-gl.css' rel='stylesheet' />
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v1.0.0/mapbox-gl-directions.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v1.0.0/mapbox-gl-directions.css' rel='stylesheet' />
 </head>
 
 <body>
-
 <div id='map'></div>
 
+<div class="input-container">
+<div class="input-field col s6">
+  <input placeholder="Dwarka Sector 16" id="home_address" type="text" class="validate">
+  <label for="home_address">Home Address</label>
+</div>
+
+<div class="input-field col s6">
+  <input placeholder="Cyber City" id="office_address" type="text" class="validate">
+  <label for="office_address">Office Address</label>
+</div>
+</div>
 <script>
-var routes=[];
-  <% @routes.each do |r| %>
-  var route_point=[];
-  <% r.each do |ri| %>
-   route_point.push([<%=ri[1]%>,<%=ri[0]%>]);
-   <% end %>
-   routes.push(route_point);
-  <% end %>
+
   mapboxgl.accessToken = 'pk.eyJ1IjoiaGFyc2hwb2RkYXIyMSIsImEiOiJjaXJyazA4eHowaHJoZmFtNmxmMWt0Zm9zIn0.YgGE0-r-xVp1lXdJF1ryRg';
   var map = new mapboxgl.Map({
     container: 'map', // container id
@@ -65,43 +93,143 @@ var routes=[];
 
        }
        */
+ var homeAd=null;
+  var officeAd=null;
+  var STATE={
+"ROUTE_SELECTED":1,
+    "ROUTE_NOT_SELECTED":0
 
+  };
+  bottomNav={};
+  bottomNav.visibilityChanged=null;
 
-  map.on("load",function(){
+function initAutoComplete() {
+  var homeAddress = new google.maps.places.Autocomplete(document.getElementById("home_address"));
 
-    for (var i=0;i<routes.length;i++){
+  var officeAddress = new google.maps.places.Autocomplete(document.getElementById("office_address"));
+  homeAddress.addListener('place_changed', function () {
 
+    var place = homeAddress.getPlace();
+    if (!place.geometry) {
 
-      map.addSource("route"+i, {
-        "type": "geojson",
-        "data": {
-          "type": "Feature",
-          "properties": {},
-          "geometry": {
-            "type": "LineString",
-            "coordinates": routes[i]
-          }
-        }
-      });
-
-      map.addLayer({
-        "id": "route1"+i,
-        "type": "line",
-        "source": "route"+i,
-        "layout": {
-          "line-join": "round",
-          "line-cap": "round"
-        },
-        "paint": {
-          "line-color": "#fff",
-          "line-width": 8
-        }
-      });
+      return;
     }
 
+    homeAd=place;
+
+    // If the place has a geometry, then present it on a map.
+    if (place.geometry.viewport) {
+//    map.fitBounds(place.geometry.viewport);
+    } else {
+      //  map.setCenter(place.geometry.location);
+      //map.setZoom(17);  // Why 17? Because it looks good.
+    }
+
+    console.log(place.geometry.location);
+
+    fetchRouteDetails();
   });
-  map.addControl(new mapboxgl.Directions());
+  officeAddress.addListener('place_changed', function () {
+
+    var place = officeAddress.getPlace();
+
+    if (!place.geometry) {
+
+      return;
+    }
+    officeAd=place;
+    // If the place has a geometry, then present it on a map.
+    if (place.geometry.viewport) {
+//    map.fitBounds(place.geometry.viewport);
+    } else {
+      //  map.setCenter(place.geometry.location);
+      //map.setZoom(17);  // Why 17? Because it looks good.
+    }
+
+    fetchRouteDetails();
+    console.log(place.geometry.location);
+
+  });
+
+}
+
+  var mapFilter=["all"];
+  var pickPointFilter=["all"];
+
+    function fetchRouteDetails(){
+
+      if (homeAd!=null && officeAd!=null){
+
+        var poly = new google.maps.Polyline({
+          strokeColor: '#000000',
+          strokeOpacity: 1,
+          strokeWeight: 3
+        });
+        var path=poly.getPath();
+        path.push(homeAd.geometry.location);
+        path.push(officeAd.geometry.location);
+
+        var encodedPoints=google.maps.geometry.encoding.encodePath(path);
+
+        $.ajax({
+          url:'/suggest/getSlots?path='+encodedPoints+"&b2b="+0
+        }).done(function(response){
+          responseJson = response;
+
+          var routeid=85;
+
+          filterMapWithRouteId(routeid);
+          showEntireRoute();
+
+          bottomNav.visibilityChanged(STATE.ROUTE_SELECTED);
+
+          if(response.route_type == 'Live_route' || response.route_type == 'suggested_route') {
+
+            if (bottomNav!=undefined){
+
+            }
+
+          }
+        });
+      }
+    }
+  function filterMapWithRouteId(routeId){
+    mapFilter=["==","routeid",routeId+""];
+
+    pickPointFilter=["==","routeid",routeId];
+    showEntireRoute();
+
+
+  }
+    function showEntireRoute(){
+      map.setFilter("routes",mapFilter);
+      map.setFilter("pick-up-points",pickPointFilter);
+      hideAddressContainer();
+      map.fitBounds([[
+        homeAd.geometry.location.lng(),
+        homeAd.geometry.location.lat()
+      ], [
+        officeAd.geometry.location.lng(),
+        officeAd.geometry.location.lat()
+      ]]);
+    }
+    function hideAddressContainer(){
+
+      jQuery(".input-container").hide();
+
+    }
+    function showAddressContainer(){
+      jQuery(".input-container").show();
+
+    }
 </script>
+
+<script
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2l0w6s0WszboqNqwFOIGPLKPgovaKnZk&amp;libraries=places,geometry&amp;callback=initAutoComplete"
+async="" defer="" ></script>
+<div id="bottom_nav"></div>
+
+<script src="/react/bin/app.bundle.js" ></script>
 
 </body>
 </html>

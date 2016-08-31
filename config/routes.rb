@@ -119,6 +119,9 @@ get 'suggest/index_orca'
   get 'poster/generate' => "poster#generateNewPoster"
 
 
+  get 'restricted/ptCustomerResponse'
+  get 'restricted/sendIVRCall'
+
   get 'pass/showPass'
 
   get 'random/call' =>"randomshit#call"

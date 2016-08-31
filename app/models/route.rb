@@ -348,6 +348,7 @@ end
     return nil
 
     response=ConnectionManager.makePostHttpRequest "http://routesuggester.goplus.in/user/getRouteDetails",reqParams,nil,true
+
     if (response==nil)
       return nil
     end
