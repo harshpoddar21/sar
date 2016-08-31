@@ -184,7 +184,7 @@ class RestrictedController < ApplicationController
     keypress=params[:keypress]
     if phoneNumber!=nil && keypress!=nil
 
-      PtCustomerResponse.create(:phone_number=>phoneNumber,:response=>response)
+      PtCustomerResponse.create(:phone_number=>phoneNumber,:response=>keypress.to_i)
     end
     render :text=>"ok"
 
