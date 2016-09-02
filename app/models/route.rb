@@ -66,8 +66,6 @@ class Route
     routeFound,routeType=getRouteBetweenPoints origin,destination,zonal_width
     route=nil
 
-    routeFound=RouteExist.find_by(:id=>84)
-    routeType=LIVE_ROUTE
     if routeFound!=nil
       route=Route.new
 
@@ -78,14 +76,14 @@ class Route
 
       if routeType=="Live_route"
         fare=getPriceForLiveRouteBetween origin,destination,routeType,route.id
-        route.pricing=[[fare,fare,fare]]
+        route.pricing=[[fare,fare*18.7,fare*30.5]]
 
       else
         price=Price.where(:routeid=>route.id)
 
         route.pricing=Array.new
         price.each do |pri|
-          route.pricing.push [pri.price,pri.offer_price*18.7,pri.price_single*30.8]
+          route.pricing.push [pri.price,pri.offer_price,pri.price_single]
 
         end
       end
