@@ -85,7 +85,8 @@ class Route
 
         route.pricing=Array.new
         price.each do |pri|
-          route.pricing.push [pri.price,pri.offer_price,pri.price_single]
+          route.pricing.push [pri.price,pri.offer_price*18.7,pri.price_single*30.8]
+
         end
       end
 
