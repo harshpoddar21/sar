@@ -14,7 +14,7 @@ default: &default
 
 development:
   <<: *default
-  database: sar_test
+  database: sar
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

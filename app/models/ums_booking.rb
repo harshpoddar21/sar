@@ -14,7 +14,7 @@ class UmsBooking < ActiveRecord::Base
     reqParams["userId"]="35363439776879536f4861636b794d79467269656e64"
     #added my user id just to fetch slots
 
-    response=ConnectionManager.makeHttpRequest Url::FIND_SLOTS,{'Content-Type' =>'application/json',
+    response=ConnectionManager.makeHttpRequest Url::FIND_SLOTS+"?fromLocId=#{fromLocId}&toLocId=#{toLocId}&routeId=#{routeId}",{'Content-Type' =>'application/json',
                                                        "userId"=>"35363439776879536f4861636b794d79467269656e64"},reqParams
 
     trip=nil
@@ -87,7 +87,7 @@ class UmsBooking < ActiveRecord::Base
   class Url
 
     UMS_DOMAIN = Rails.env.production? ? "http://goplus.in" : "http://goplus.in"
-    FIND_SLOTS=UMS_DOMAIN+"/v3/routes/slots/rebookSlots?fromLocId=3034&toLocId=3014&routeId=831"
+    FIND_SLOTS=UMS_DOMAIN+"/v3/routes/slots/rebookSlots"
     PLACE_BOOKING=UMS_DOMAIN+"/v2/booking/createB2B"
   end
 end
