@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ae579d7-318a-429b-8341-3b3ef608ec5a" name="Default" comment="UI Fixes">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/script.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/script.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/route.rb" afterPath="$PROJECT_DIR$/app/models/route.rb" />
     </list>
     <ignored path="sar.iws" />
@@ -22,7 +24,7 @@
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/sar@All_tests_in_fonts__sar.coverage" NAME="All tests in fonts: sar Coverage Results" MODIFIED="1464966109350" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/public/fonts" MODULE_NAME="sar" />
-    <SUITE FILE_PATH="coverage/sar@Development__sar.coverage" NAME="Development: sar Coverage Results" MODIFIED="1472786762310" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="sar" />
+    <SUITE FILE_PATH="coverage/sar@Development__sar.coverage" NAME="Development: sar Coverage Results" MODIFIED="1472829421390" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="sar" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -43,18 +45,38 @@
       <file leaf-file-name="suggest_controller.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/suggest_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="33" column="25" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
+            <state relative-caret-position="495">
+              <caret line="33" column="29" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="route.rb" pinned="false" current-in-tab="true">
+      <file leaf-file-name="referral_controller.rb" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/referral_controller.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="route.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/route.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+            <state relative-caret-position="1215">
+              <caret line="81" column="44" selection-start-line="81" selection-start-column="44" selection-end-line="81" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="123">
+              <caret line="1036" column="12" selection-start-line="1036" selection-start-column="8" selection-end-line="1036" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -70,34 +92,32 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="index1.html.erb" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/suggest/index1.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="connection_manager.rb" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/network/connection_manager.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="styles_pass.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/styles_pass.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="styles_refer.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/styles_refer.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="script_tab.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/script_tab.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -112,32 +132,68 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="script.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="script.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/script.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="20745">
-              <caret line="1383" column="174" selection-start-line="1383" selection-start-column="167" selection-end-line="1383" selection-end-column="174" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="shortener_controller.rb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/shortener_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="routes.rb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/routes.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1830">
-              <caret line="122" column="29" selection-start-line="122" selection-start-column="29" selection-end-line="122" selection-end-column="29" />
-              <folding />
+            <state relative-caret-position="245">
+              <caret line="1638" column="248" selection-start-line="1638" selection-start-column="248" selection-end-line="1638" selection-end-column="248" />
+              <folding>
+                <marker date="1472829421304" expanded="true" signature="5429:5442" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="5670:5683" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="32295:32306" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="35057:35070" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="44740:44753" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="44892:44906" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="46221:46251" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="46279:46288" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="48285:48312" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="51747:51760" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="52373:52386" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="52531:52545" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="53646:53655" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="53757:53777" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="53890:53907" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="54905:54922" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="55276:55303" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="55666:55734" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="55990:55999" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="60228:60296" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="60605:60614" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="63686:63699" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="63838:63852" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="66342:66355" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="66930:66943" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="68357:68383" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="68435:68461" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="68575:68598" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="68630:68649" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="69209:69222" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="69361:69375" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="70871:70881" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="75768:75777" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="75932:75952" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="76697:76710" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="77265:77278" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="78121:78148" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="80261:80270" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="83608:83638" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="83675:83684" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="85684:85711" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="89357:89371" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="89481:89495" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="101442:101468" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="101567:101582" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="101728:101741" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="101754:101772" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="101821:101831" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="101844:101858" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="102044:102055" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="102181:102192" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="102444:102459" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="102582:102596" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="102778:102793" placeholder="..." />
+                <marker date="1472829421304" expanded="true" signature="102918:102932" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -182,7 +238,6 @@
         <option value="$PROJECT_DIR$/lib/custom_error/custom_error.rb" />
         <option value="$PROJECT_DIR$/lib/google/map.rb" />
         <option value="$PROJECT_DIR$/lib/google/google_map.rb" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/script.js" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/style.css" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/style1.css" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/script1.js" />
@@ -195,7 +250,6 @@
         <option value="$PROJECT_DIR$/app/models/route_stops.rb" />
         <option value="$PROJECT_DIR$/app/models/landmark.rb" />
         <option value="$PROJECT_DIR$/app/models/ums_route_subscription.rb" />
-        <option value="$PROJECT_DIR$/config/database.yml" />
         <option value="$PROJECT_DIR$/app/models/route_points.rb" />
         <option value="$PROJECT_DIR$/app/controllers/geo_json_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/delhidata/referralVis.html.erb" />
@@ -207,7 +261,9 @@
         <option value="$PROJECT_DIR$/app/controllers/restricted_controller.rb" />
         <option value="$PROJECT_DIR$/lib/network/connection_manager.rb" />
         <option value="$PROJECT_DIR$/app/models/ums_booking.rb" />
+        <option value="$PROJECT_DIR$/config/database.yml" />
         <option value="$PROJECT_DIR$/app/models/route.rb" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/script.js" />
       </list>
     </option>
   </component>
@@ -225,9 +281,9 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="24" />
+    <option name="y" value="-4" />
     <option name="width" value="1366" />
-    <option name="height" value="744" />
+    <option name="height" value="772" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -254,7 +310,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="RailsProjectView" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -494,9 +550,31 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fonts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="RailsProjectView" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -804,7 +882,10 @@
       <workItem from="1472783799810" duration="672000" />
       <workItem from="1472785889500" duration="1546000" />
       <workItem from="1472800980093" duration="1279000" />
-      <workItem from="1472822325943" duration="531000" />
+      <workItem from="1472822325943" duration="2327000" />
+      <workItem from="1472824951761" duration="1764000" />
+      <workItem from="1472826951482" duration="1903000" />
+      <workItem from="1472829219262" duration="256000" />
     </task>
     <task id="LOCAL-00001" summary="UI Fixes">
       <created>1463684556641</created>
@@ -831,7 +912,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="225854000" />
+    <option name="totallyTimeSpent" value="231573000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -843,28 +924,28 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="24" width="1366" height="744" extended-state="6" />
+    <frame x="0" y="-4" width="1366" height="772" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4072971" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3255814" sideWeight="0.48771408" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3255814" sideWeight="0.5368578" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3255814" sideWeight="0.46314222" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29457363" sideWeight="0.3060313" order="9" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3255814" sideWeight="0.46314222" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29457363" sideWeight="0.6939687" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35813954" sideWeight="0.44229338" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37209302" sideWeight="0.61131793" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3255814" sideWeight="0.46612063" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29457363" sideWeight="0.3708116" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3252149" sideWeight="0.4878788" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930514" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37209302" sideWeight="0.61504096" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -886,24 +967,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="ruby-line">
-          <url>file://$PROJECT_DIR$/app/models/route.rb</url>
-          <line>58</line>
-          <option name="timeStamp" value="127" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="ruby-line">
-          <url>file://$PROJECT_DIR$/app/models/route.rb</url>
-          <line>31</line>
-          <option name="timeStamp" value="130" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="ruby-line">
           <url>file://$PROJECT_DIR$/app/controllers/restricted_controller.rb</url>
           <line>26</line>
           <option name="timeStamp" value="136" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="ruby-line">
-          <url>file://$PROJECT_DIR$/lib/network/connection_manager.rb</url>
-          <line>11</line>
-          <option name="timeStamp" value="139" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="ruby-line">
           <url>file://$PROJECT_DIR$/app/models/ums_booking.rb</url>
@@ -919,25 +985,11 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="142" />
+      <option name="time" value="144" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/style1.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="786" column="1" selection-start-line="786" selection-start-column="1" selection-end-line="786" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/script1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="1937" column="1" selection-start-line="1937" selection-start-column="1" selection-end-line="1937" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/googlemapbutton.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1097,13 +1149,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/react/src/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/react/src/index.js" />
     <entry file="file://$PROJECT_DIR$/app/controllers/service_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1115,7 +1161,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1142,28 +1187,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/network/connection_manager.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/react/src/bottom_navigation_example.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/referral_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/react/src/bottom_navigation_example.js" />
     <entry file="file://$PROJECT_DIR$/app/views/delhidata/referralVis.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3435">
@@ -1178,34 +1202,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/database.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/routes.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1830">
           <caret line="122" column="29" selection-start-line="122" selection-start-column="29" selection-end-line="122" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/suggest/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/styles_pass.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1213,7 +1213,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/shortener_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1227,6 +1233,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/database.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="15" selection-start-line="16" selection-start-column="15" selection-end-line="16" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/script_track.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2325">
@@ -1235,15 +1249,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/script.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20745">
-          <caret line="1383" column="174" selection-start-line="1383" selection-start-column="167" selection-end-line="1383" selection-end-column="174" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/shortener_controller.rb">
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/styles_pass.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1253,17 +1259,121 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/suggest_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="33" column="25" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
+        <state relative-caret-position="495">
+          <caret line="33" column="29" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/referral_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/network/connection_manager.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/route.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+        <state relative-caret-position="1215">
+          <caret line="81" column="44" selection-start-line="81" selection-start-column="44" selection-end-line="81" selection-end-column="44" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="123">
+          <caret line="1036" column="12" selection-start-line="1036" selection-start-column="8" selection-end-line="1036" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/suggest/index1.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/suggest/index.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/script.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="1638" column="248" selection-start-line="1638" selection-start-column="248" selection-end-line="1638" selection-end-column="248" />
+          <folding>
+            <marker date="1472829421304" expanded="true" signature="5429:5442" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="5670:5683" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="32295:32306" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="35057:35070" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="44740:44753" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="44892:44906" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="46221:46251" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="46279:46288" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="48285:48312" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="51747:51760" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="52373:52386" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="52531:52545" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="53646:53655" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="53757:53777" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="53890:53907" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="54905:54922" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="55276:55303" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="55666:55734" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="55990:55999" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="60228:60296" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="60605:60614" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="63686:63699" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="63838:63852" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="66342:66355" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="66930:66943" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="68357:68383" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="68435:68461" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="68575:68598" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="68630:68649" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="69209:69222" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="69361:69375" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="70871:70881" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="75768:75777" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="75932:75952" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="76697:76710" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="77265:77278" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="78121:78148" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="80261:80270" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="83608:83638" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="83675:83684" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="85684:85711" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="89357:89371" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="89481:89495" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="101442:101468" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="101567:101582" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="101728:101741" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="101754:101772" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="101821:101831" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="101844:101858" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="102044:102055" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="102181:102192" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="102444:102459" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="102582:102596" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="102778:102793" placeholder="..." />
+            <marker date="1472829421304" expanded="true" signature="102918:102932" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

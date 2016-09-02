@@ -591,7 +591,7 @@ function nextPrevVlickEvents(){
             }
             if (info.route_type=="Live_route"){
                 
-                changeToStage(6);
+                changeToStage(10);
                 return;
             }else{
                 
@@ -759,7 +759,7 @@ function onMobileVerified(num){
 
             if (info.route_type=="Live_route"){
 
-                stage=6;
+                stage=10;
             }else {
                 stage = 10;
             }
@@ -790,7 +790,7 @@ function onMobileVerified(num){
 
             if (info.route_type=="Live_route"){
 
-                stage=6;
+                stage=10;
             }else {
                 stage = 10;
             }
@@ -1636,8 +1636,8 @@ function switchScreen(scrno, obj){
 			html += '</fieldset>';
             html += '<div class="headText headText4 text-center selecpasstext">Select a pass to travel on this route</div>';
             html += '<div class="item active selecpass">';
-            html += '<button type="button" class="shuttl-pass text-capitalize paynow btn btn-default col-xs-6 setHeight centerVertical centerHorizontal passtype_1" onclick="choosePass(1);" data-value="1"><div>18 rides @ <span class="strike">'+info.pricing[0][0]+'</span><span class="offer_price">&nbsp;'+info.pricing[0][1]+'</span></div></button>';
-            html += '<button type="button" class="shuttl-pass text-capitalize paynow btn btn-default col-xs-6 setHeight centerVertical centerHorizontal passtype_2" onclick="choosePass(2);" data-value="2"><div>40 rides @ <span class="strike">'+info.pricing[1][0]+'</span><span class="offer_price">&nbsp;'+info.pricing[1][1]+'</span></div></button></div>';
+            html += '<button type="button" class="shuttl-pass text-capitalize paynow btn btn-default col-xs-6 setHeight centerVertical centerHorizontal passtype_1" onclick="choosePass(1);" data-value="1"><div>'+(info.route_type=="Live_route"?22:18)+' rides @ <span class="strike">'+info.pricing[0][0]+'</span><span class="offer_price">&nbsp;'+info.pricing[0][1]+'</span></div></button>';
+            html += '<button type="button" class="shuttl-pass text-capitalize paynow btn btn-default col-xs-6 setHeight centerVertical centerHorizontal passtype_2" onclick="choosePass(2);" data-value="2"><div>'+(info.route_type=="Live_route"?22:40)+' rides @ <span class="strike">'+info.pricing[1][0]+'</span><span class="offer_price">&nbsp;'+info.pricing[1][1]+'</span></div></button></div>';
             html += '<div class="passinf selecpass">For more info <a onclick="showRoutePass();">click here</a></div>';
             //html += '<span class="headText headText4 centerHorizontal payTM-click-to-pay"> Click to pay by </span>';
             html += '<div class="payTM-image row social">';

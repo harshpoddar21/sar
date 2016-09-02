@@ -75,9 +75,11 @@ class Route
       route.id=routeFound.id
 
       if routeType=="Live_route"
-        fare=getPriceForLiveRouteBetween origin,destination,routeType,route.id
-        route.pricing=[[fare,fare*18.7,fare*30.5]]
 
+        route.pricing=Array.new
+        fare=getPriceForLiveRouteBetween origin,destination,routeType,route.id
+        route.pricing.push [1870,fare,fare*2]
+        route.pricing.push [1870,fare,fare*2]
       else
         price=Price.where(:routeid=>route.id)
 
@@ -344,7 +346,6 @@ end
     reqParams["toLng"]=destination[1]
     reqParams["fromLocationName"]="something something"
     reqParams["toLocationName"]="something something"
-    return nil
 
     response=ConnectionManager.makePostHttpRequest "http://routesuggester.goplus.in/user/getRouteDetails",reqParams,nil,true
 
@@ -357,7 +358,7 @@ end
     if response["responseCode"]=="SUCCESS"
       if response["routeDetailsMinResponseDTOList"]!=nil && response["routeDetailsMinResponseDTOList"].size>0 && response["routeDetailsMinResponseDTOList"][0]["fare"]>0 && response["routeDetailsMinResponseDTOList"][0]["sessions"].length>0
         routeid=response["routeDetailsMinResponseDTOList"][0]["sessions"][0]["routeId"]
-        if routeid==578 || routeid==586 || routeid==614
+        if routeid!=389 && routeid!=390 && routeid!=472 && routeid!=473
           return nil
         end
         return RouteExist.find_by(:id=>routeid)
