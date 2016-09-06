@@ -435,7 +435,7 @@ class SuggestController < ApplicationController
       end
 
       pricing.each do |pri|
-        if pri.split(";").length==4
+        if pri.split(";").length==5
           pricingA.push pri.split(";")
         else
           raise CustomError::ParamsException,"Invalid pricing"

@@ -13,71 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20160906051840) do
 
-  create_table "CLUSTERS", id: false, force: :cascade do |t|
-    t.integer "USER_ID",      limit: 4
-    t.decimal "LAT",                    precision: 8, scale: 6
-    t.decimal "LON",                    precision: 8, scale: 6
-    t.integer "CREATED_TIME", limit: 4
-    t.integer "CLUSTER_ID",   limit: 4
-  end
-
-  create_table "Route_Suggestion_75", primary_key: "ID", force: :cascade do |t|
-    t.string  "USER_ID",           limit: 20
-    t.string  "PHONE_NUMBER",      limit: 20
-    t.decimal "FROM_LAT",                      precision: 8, scale: 6
-    t.decimal "FROM_LNG",                      precision: 8, scale: 6
-    t.decimal "TO_LAT",                        precision: 8, scale: 6
-    t.decimal "TO_LNG",                        precision: 8, scale: 6
-    t.date    "DATE_CREATED"
-    t.string  "DATA_BASE",         limit: 20
-    t.string  "APP_DOWNLOAD",      limit: 10
-    t.date    "LAST_BOOKING_DATE"
-    t.string  "LAST_ACTIVE_ROUTE", limit: 20
-    t.string  "PLEDGE_AMOUNT",     limit: 20
-    t.string  "ROUTE_TYPE",        limit: 30
-    t.string  "ROUTE_ID",          limit: 20
-    t.string  "HOME_PICKUP",       limit: 255
-    t.string  "OFFICE_DROP",       limit: 255
-  end
-
-  create_table "Route_Suggestion_APP_75", primary_key: "ID", force: :cascade do |t|
-    t.string  "USER_ID",           limit: 20
-    t.string  "PHONE_NUMBER",      limit: 20
-    t.decimal "FROM_LAT",                      precision: 8, scale: 6
-    t.decimal "FROM_LNG",                      precision: 8, scale: 6
-    t.decimal "TO_LAT",                        precision: 8, scale: 6
-    t.decimal "TO_LNG",                        precision: 8, scale: 6
-    t.date    "DATE_CREATED"
-    t.string  "DATA_BASE",         limit: 20
-    t.string  "APP_DOWNLOAD",      limit: 10
-    t.date    "LAST_BOOKING_DATE"
-    t.string  "LAST_ACTIVE_ROUTE", limit: 20
-    t.string  "PLEDGE_AMOUNT",     limit: 20
-    t.string  "ROUTE_TYPE",        limit: 30
-    t.string  "ROUTE_ID",          limit: 20
-    t.string  "HOME_PICKUP",       limit: 255
-    t.string  "OFFICE_DROP",       limit: 255
-  end
-
-  create_table "Route_Suggestion_App", primary_key: "ID", force: :cascade do |t|
-    t.string  "USER_ID",           limit: 20
-    t.string  "PHONE_NUMBER",      limit: 20
-    t.decimal "FROM_LAT",                      precision: 8, scale: 6
-    t.decimal "FROM_LNG",                      precision: 8, scale: 6
-    t.decimal "TO_LAT",                        precision: 8, scale: 6
-    t.decimal "TO_LNG",                        precision: 8, scale: 6
-    t.date    "DATE_CREATED"
-    t.string  "DATA_BASE",         limit: 20
-    t.string  "APP_DOWNLOAD",      limit: 10
-    t.date    "LAST_BOOKING_DATE"
-    t.string  "LAST_ACTIVE_ROUTE", limit: 20
-    t.string  "PLEDGE_AMOUNT",     limit: 20
-    t.string  "ROUTE_TYPE",        limit: 30
-    t.string  "ROUTE_ID",          limit: 20
-    t.string  "HOME_PICKUP",       limit: 255
-    t.string  "OFFICE_DROP",       limit: 255
-  end
-
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
     t.string  "PHONE_NUMBER",      limit: 20
@@ -95,132 +30,6 @@ ActiveRecord::Schema.define(version: 20160906051840) do
     t.string  "ROUTE_ID",          limit: 20
     t.string  "HOME_PICKUP",       limit: 255
     t.string  "OFFICE_DROP",       limit: 255
-  end
-
-  create_table "Route_Suggestion_Combined_HO", primary_key: "ID", force: :cascade do |t|
-    t.string  "USER_ID",           limit: 20
-    t.string  "PHONE_NUMBER",      limit: 20
-    t.decimal "FROM_LAT",                      precision: 8, scale: 6
-    t.decimal "FROM_LNG",                      precision: 8, scale: 6
-    t.decimal "TO_LAT",                        precision: 8, scale: 6
-    t.decimal "TO_LNG",                        precision: 8, scale: 6
-    t.date    "DATE_CREATED"
-    t.string  "DATA_BASE",         limit: 20
-    t.string  "APP_DOWNLOAD",      limit: 10
-    t.date    "LAST_BOOKING_DATE"
-    t.string  "LAST_ACTIVE_ROUTE", limit: 20
-    t.string  "PLEDGE_AMOUNT",     limit: 20
-    t.string  "ROUTE_TYPE",        limit: 30
-    t.string  "ROUTE_ID",          limit: 20
-    t.string  "HOME_PICKUP",       limit: 255
-    t.string  "OFFICE_DROP",       limit: 255
-  end
-
-  create_table "Route_Suggestion_GEO_75", primary_key: "ID", force: :cascade do |t|
-    t.decimal "LAT", precision: 8, scale: 6
-    t.decimal "LNG", precision: 8, scale: 6
-  end
-
-  create_table "Route_Suggestion_HO_75", primary_key: "ID", force: :cascade do |t|
-    t.string  "USER_ID",           limit: 20
-    t.string  "PHONE_NUMBER",      limit: 20
-    t.decimal "FROM_LAT",                      precision: 8, scale: 6
-    t.decimal "FROM_LNG",                      precision: 8, scale: 6
-    t.decimal "TO_LAT",                        precision: 8, scale: 6
-    t.decimal "TO_LNG",                        precision: 8, scale: 6
-    t.date    "DATE_CREATED"
-    t.string  "DATA_BASE",         limit: 20
-    t.string  "APP_DOWNLOAD",      limit: 10
-    t.date    "LAST_BOOKING_DATE"
-    t.string  "LAST_ACTIVE_ROUTE", limit: 20
-    t.string  "PLEDGE_AMOUNT",     limit: 20
-    t.string  "ROUTE_TYPE",        limit: 30
-    t.string  "ROUTE_ID",          limit: 20
-    t.string  "HOME_PICKUP",       limit: 255
-    t.string  "OFFICE_DROP",       limit: 255
-  end
-
-  create_table "Route_Suggestion_ROHIT", primary_key: "ID", force: :cascade do |t|
-    t.string  "USER_ID",           limit: 20
-    t.string  "PHONE_NUMBER",      limit: 20
-    t.decimal "FROM_LAT",                      precision: 8, scale: 6
-    t.decimal "FROM_LNG",                      precision: 8, scale: 6
-    t.decimal "TO_LAT",                        precision: 8, scale: 6
-    t.decimal "TO_LNG",                        precision: 8, scale: 6
-    t.date    "DATE_CREATED"
-    t.string  "DATA_BASE",         limit: 20
-    t.string  "APP_DOWNLOAD",      limit: 10
-    t.date    "LAST_BOOKING_DATE"
-    t.string  "LAST_ACTIVE_ROUTE", limit: 20
-    t.string  "PLEDGE_AMOUNT",     limit: 20
-    t.string  "ROUTE_TYPE",        limit: 30
-    t.string  "ROUTE_ID",          limit: 20
-    t.string  "HOME_PICKUP",       limit: 255
-    t.string  "OFFICE_DROP",       limit: 255
-  end
-
-  create_table "Route_Suggestion_SEARCH_75", primary_key: "ID", force: :cascade do |t|
-    t.string  "USER_ID",           limit: 20
-    t.string  "PHONE_NUMBER",      limit: 20
-    t.decimal "FROM_LAT",                      precision: 8, scale: 6
-    t.decimal "FROM_LNG",                      precision: 8, scale: 6
-    t.decimal "TO_LAT",                        precision: 8, scale: 6
-    t.decimal "TO_LNG",                        precision: 8, scale: 6
-    t.date    "DATE_CREATED"
-    t.string  "DATA_BASE",         limit: 20
-    t.string  "APP_DOWNLOAD",      limit: 10
-    t.date    "LAST_BOOKING_DATE"
-    t.string  "LAST_ACTIVE_ROUTE", limit: 20
-    t.string  "PLEDGE_AMOUNT",     limit: 20
-    t.string  "ROUTE_TYPE",        limit: 30
-    t.string  "ROUTE_ID",          limit: 20
-    t.string  "HOME_PICKUP",       limit: 255
-    t.string  "OFFICE_DROP",       limit: 255
-  end
-
-  create_table "Route_Suggestion_Search", primary_key: "ID", force: :cascade do |t|
-    t.string  "USER_ID",           limit: 20
-    t.string  "PHONE_NUMBER",      limit: 20
-    t.decimal "FROM_LAT",                      precision: 8, scale: 6
-    t.decimal "FROM_LNG",                      precision: 8, scale: 6
-    t.decimal "TO_LAT",                        precision: 8, scale: 6
-    t.decimal "TO_LNG",                        precision: 8, scale: 6
-    t.date    "DATE_CREATED"
-    t.string  "DATA_BASE",         limit: 20
-    t.string  "APP_DOWNLOAD",      limit: 10
-    t.date    "LAST_BOOKING_DATE"
-    t.string  "LAST_ACTIVE_ROUTE", limit: 20
-    t.string  "PLEDGE_AMOUNT",     limit: 20
-    t.string  "ROUTE_TYPE",        limit: 30
-    t.string  "ROUTE_ID",          limit: 20
-    t.string  "HOME_PICKUP",       limit: 255
-    t.string  "OFFICE_DROP",       limit: 255
-  end
-
-  create_table "Route_Suggestion_User_Locations", primary_key: "ID", force: :cascade do |t|
-    t.string  "USER_ID",           limit: 20
-    t.string  "PHONE_NUMBER",      limit: 20
-    t.decimal "FROM_LAT",                      precision: 8, scale: 6
-    t.decimal "FROM_LNG",                      precision: 8, scale: 6
-    t.decimal "TO_LAT",                        precision: 8, scale: 6
-    t.decimal "TO_LNG",                        precision: 8, scale: 6
-    t.date    "DATE_CREATED"
-    t.string  "DATA_BASE",         limit: 20
-    t.string  "APP_DOWNLOAD",      limit: 10
-    t.date    "LAST_BOOKING_DATE"
-    t.string  "LAST_ACTIVE_ROUTE", limit: 20
-    t.string  "PLEDGE_AMOUNT",     limit: 20
-    t.string  "ROUTE_TYPE",        limit: 30
-    t.string  "ROUTE_ID",          limit: 20
-    t.string  "HOME_PICKUP",       limit: 255
-    t.string  "OFFICE_DROP",       limit: 255
-  end
-
-  create_table "booking_drop", id: false, force: :cascade do |t|
-    t.integer  "user_id",      limit: 4
-    t.datetime "created_time"
-    t.text     "to_loc",       limit: 65535
-    t.text     "from_loc",     limit: 65535
   end
 
   create_table "booking_follows", force: :cascade do |t|
@@ -305,19 +114,6 @@ ActiveRecord::Schema.define(version: 20160906051840) do
     t.integer  "from_id",         limit: 4
     t.integer  "to_id",           limit: 4
   end
-
-  create_table "gps_histories", force: :cascade do |t|
-    t.float    "lat",         limit: 24
-    t.float    "lng",         limit: 24
-    t.string   "driverid",    limit: 255
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.integer  "app_version", limit: 4
-    t.integer  "accuracy",    limit: 4
-    t.text     "provider",    limit: 65535
-  end
-
-  add_index "gps_histories", ["driverid"], name: "driverid_idx", using: :btree
 
   create_table "graph_coordinates", force: :cascade do |t|
     t.integer "x",   limit: 4
@@ -604,9 +400,9 @@ ActiveRecord::Schema.define(version: 20160906051840) do
 
   create_table "whats_app_data", force: :cascade do |t|
     t.text     "location",   limit: 65535
-    t.text     "data",       limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.text     "data",       limit: 16777215
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "whatsapps", force: :cascade do |t|
