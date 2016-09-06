@@ -78,15 +78,14 @@ class Route
 
         route.pricing=Array.new
         fare=getPriceForLiveRouteBetween origin,destination,routeType,route.id
-        route.pricing.push [1870,fare,fare*2]
-        route.pricing.push [1870,fare,fare*2]
+        route.pricing.push [1870,fare,fare*2,18]
+        route.pricing.push [1870,fare,fare*2,40]
       else
         price=Price.where(:routeid=>route.id)
 
         route.pricing=Array.new
         price.each do |pri|
-          route.pricing.push [pri.price,pri.offer_price,pri.price_single]
-
+          route.pricing.push [pri.price,pri.offer_price,pri.price_single,pri.no_of_rides]
         end
       end
 
@@ -575,7 +574,7 @@ end
     end
 
     pricing.each do |pri|
-      Price.create :routeid=>route.id,:price=>pri[0],:pass_type=>pri[3],:offer_price=>pri[1],:price_single=>pri[2]
+      Price.create :routeid=>route.id,:price=>pri[0],:pass_type=>pri[3],:offer_price=>pri[1],:price_single=>pri[2],:no_of_rides=>pri[4]
     end
 
     return true,route
