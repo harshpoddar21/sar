@@ -88,7 +88,11 @@ class CustomercareController < ApplicationController
     fromDate=params[:fromDate]
     toDate=params[:toDate]
 
-    bookings=UmsBooking.where("ROUTE_ID in (831,832,586,587)").where(:is_delete=>false).joins(" join USERS on BOOKINGS.USER_ID=USERS.USER_ID").select("BOOKINGS.*,USERS.*")
+    routeIds=params[:route_ids]
+    if (routeIds==nil)
+      routeIds="831,832,586,587"
+    end
+    bookings=UmsBooking.where("ROUTE_ID in (#{routeIds})").where(:is_delete=>false).joins(" join USERS on BOOKINGS.USER_ID=USERS.USER_ID").select("BOOKINGS.*,USERS.*")
 
 
     userBookings=Hash.new

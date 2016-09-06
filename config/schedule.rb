@@ -19,7 +19,7 @@
 
 # Learn more: http://github.com/javan/whenever
 every 3.minutes do
-  runner "BookingObserver.new.checkIfNewBookingHappened([831,832])"
+  runner "BookingObserver.new.checkIfNewBookingHappened([831,832,242,578,579,243])"
 end
 every 2.minutes do
   runner "ServiceController.new.refreshEtaForDiffPoints"
