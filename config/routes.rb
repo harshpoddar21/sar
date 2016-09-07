@@ -126,7 +126,9 @@ get 'suggest/index_orca'
 
   get 'random/call' =>"randomshit#call"
 
+get 'affiliate/registerAffiliate'
 
+  get 'affiliate/submitEntry'
 
   get "delhidata/getDelhiWardData"
 get 'delhidata/referralVis'
