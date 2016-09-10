@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160907023552) do
+ActiveRecord::Schema.define(version: 20160910062307) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20160907023552) do
     t.integer  "agent_id",     limit: 4
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.integer  "is_verified",  limit: 4
   end
 
   create_table "booking_follows", force: :cascade do |t|

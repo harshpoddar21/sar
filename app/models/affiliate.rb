@@ -5,9 +5,9 @@ class Affiliate < ActiveRecord::Base
     self.find_by(:phone_number=>phoneNumber)!=nil
   end
 
-  def self.createANewAffiliate phoneNumber,agentId
+  def self.createANewAffiliate phoneNumber,agentId,isVerified
 
-    self.create(:phone_number=>phoneNumber,:agent_id=>agentId)
+    self.create(:phone_number=>phoneNumber,:agent_id=>agentId,:is_verified => isVerified ? 1 : 0)
 
   end
 
