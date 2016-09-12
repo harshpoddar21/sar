@@ -675,7 +675,16 @@ class SuggestController < ApplicationController
       suggestion.promoter_id=promoter_id
       suggestion.make_booking=data["makeBooking"]?1:0
       suggestion.route_type=route_type
-      suggestion.routeid=routeid
+      if to.route_id!=nil && to.route_id>0
+
+        suggestion.routeid=to.route_id
+        
+      else
+
+        suggestion.routeid=routeid
+
+      end
+
       suggestion.save
 
       if repeatUser==0
