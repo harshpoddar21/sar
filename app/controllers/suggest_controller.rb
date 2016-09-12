@@ -603,6 +603,7 @@ class SuggestController < ApplicationController
     customer_number=data["phone_number"]
     repeatUser=0
 
+
     if GetSuggestionViaTab.where(:customer_number=>customer_number).last!=nil
 
       #TelephonyManager.sendSms customer_number,"Hi, You have already availed your first free ride. We request you to download the Shuttl App ( http://bit.ly/downloadShuttl ) to continue Shuttling."
@@ -649,6 +650,10 @@ class SuggestController < ApplicationController
     from_mode=data["commutework"].join(",") if data["commutework"]!=nil
     to_mode=data["commutework"].join(",") if data["commutework"]!=nil
     from_time=data["reachwork"].join(",") if data["reachwork"]!=nil
+    affiliate=""
+    if data["affiliate"]!=nil
+      affiliate=data["affiliate"]
+    end
     to_time=data["leavework"].join(",")  if data["leavework"]!=nil
     routeid=data["routeid"]
     if data["route_type"]==Route::ROUTE_DOES_NOT_EXISTS
@@ -669,6 +674,7 @@ class SuggestController < ApplicationController
       suggestion.from_id=from_id
       suggestion.to_id=to_id
       suggestion.to_time=to_time
+      suggestion.affiliate=affiliate
       suggestion.to_str=to_str
       suggestion.repeat_user=repeatUser
       suggestion.to_mode=to_mode

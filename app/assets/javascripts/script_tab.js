@@ -257,6 +257,20 @@ function toggleBooking(obj) {
         $(obj).removeClass('btn-info').addClass('btn-default');
     }
 }
+function toggleAffiliate(obj) {
+    if($(obj).hasClass('btn-default')) {
+        var affiliate = prompt("Please enter Affiliate Number", "");
+        if (affiliate!=null && affiliate!="") {
+            info.affiliate = affiliate;
+        }
+        $(obj).removeClass('btn-default').addClass('btn-info');
+    }
+
+    else if($(obj).hasClass('btn-info')){
+        info.affiliate = "";
+        $(obj).removeClass('btn-info').addClass('btn-default');
+    }
+}
 
 function checkState() {
     if (info.makeBooking) {
@@ -831,6 +845,7 @@ function switchScreen (scrno, obj){
             html += '<div class="headText headText2 text-center phone-number-text">To help us contact you when the route is live </div>';
             html += '<div class = "booking-button text-center">';
             html += '<button id = "booking" type="button" class="btn btn-default" onclick="toggleBooking(this)"> Place booking </button>';
+            html += '<br><button id = "affiliate" type="button" class="btn btn-default" onclick="toggleAffiliate(this)"> Enter Affiliate </button>';
             html += '</div>';
             html += '<div class="col-md-12 text-center fullheight" >';
             html += '<form class="phone-number-form"><input class= "phone-number-input text-center" type="number" name="phone-number"  placeholder="Enter Mobile No" maxlength="10" id="userPhoneNumber" onKeyup="onPhoneNumberEntered()"></form>';
@@ -968,7 +983,7 @@ function setToLocalStorage()
         }
         localStorage.setItem('data' + registrations_today, JSON.stringify(info));
         registrations_today++;
-
+        info.affiliate="";
         localStorage.setItem("total_regs",registrations_today);
         return true;
     }
@@ -1238,7 +1253,6 @@ function submitDataToServer() {
 
                     })
                     .fail(function (err) {
-
                         isSubmittingToServer=false;
                     });
             }
