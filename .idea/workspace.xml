@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4ae579d7-318a-429b-8341-3b3ef608ec5a" name="Default" comment="UI Fixes">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/suggest_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/suggest_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
     </list>
     <ignored path="sar.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -104,8 +103,8 @@
       <file leaf-file-name="suggest_controller.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/suggest_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8">
-              <caret line="680" column="8" selection-start-line="680" selection-start-column="8" selection-end-line="680" selection-end-column="8" />
+            <state relative-caret-position="203">
+              <caret line="621" column="6" selection-start-line="621" selection-start-column="6" selection-end-line="621" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -820,7 +819,7 @@
       <workItem from="1473490330163" duration="315000" />
       <workItem from="1473490675708" duration="1821000" />
       <workItem from="1473492671169" duration="55000" />
-      <workItem from="1473640804572" duration="390000" />
+      <workItem from="1473640804572" duration="820000" />
     </task>
     <task id="LOCAL-00001" summary="UI Fixes">
       <created>1463684556641</created>
@@ -847,7 +846,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="273153000" />
+    <option name="totallyTimeSpent" value="273583000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -1200,8 +1199,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/suggest_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8">
-          <caret line="680" column="8" selection-start-line="680" selection-start-column="8" selection-end-line="680" selection-end-column="8" />
+        <state relative-caret-position="203">
+          <caret line="621" column="6" selection-start-line="621" selection-start-column="6" selection-end-line="621" selection-end-column="6" />
           <folding />
         </state>
       </provider>

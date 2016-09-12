@@ -618,7 +618,7 @@ class SuggestController < ApplicationController
     if data["homeAddress"].to_i!=0
       from=TabPick.where(:location_id=>data["homeAddress"].to_i).last
 
-      to=TabDrop.where(:location_id=>data["officeAddress"].to_i).last
+      to=TabDrop.where(:location_id=>data["officeAddress"].to_i).where(:routeid=>data["routeid"].to_i).last
       if from!=nil
         from_id=from.location_id
         from_str=from.name
@@ -678,7 +678,7 @@ class SuggestController < ApplicationController
       if to.route_id!=nil && to.route_id>0
 
         suggestion.routeid=to.route_id
-        
+
       else
 
         suggestion.routeid=routeid
