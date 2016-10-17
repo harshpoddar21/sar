@@ -7,7 +7,7 @@ class CampaignController < ApplicationController
 
     Campaign.unsubscribeFromCampaign phoneNumber
 
-    render :text=>"OK"
+    redirect_to "https://docs.google.com/a/shuttl.com/forms/d/e/1FAIpQLSe95v0C2VakBXZkAFN6tOM5wL2NoyULBdbzeJF0AMuuTr7zCQ/viewform?entry.361896514=#{phoneNumber}"
 
   end
 
