@@ -613,7 +613,7 @@ class SuggestController < ApplicationController
 
     if UmsUser.userExists? customer_number || GetSuggestionViaTab.where(:customer_number=>customer_number).last!=nil
       repeatUser=1
-      TelephonyManager.sendSms customer_number,"Hi, You have already availed your first free ride. We request you to download the Shuttl App ( http://bit.ly/downloadShuttl ) to continue Shuttling."
+      #TelephonyManager.sendSms customer_number,"Hi, You have already availed your first free ride. We request you to download the Shuttl App ( http://bit.ly/downloadShuttl ) to continue Shuttling."
     end
 
     if data["homeAddress"].to_i!=0
@@ -696,7 +696,7 @@ class SuggestController < ApplicationController
       if repeatUser==0
 
         ConnectionManager.makeHttpRequest "http://obd.solutionsinfini.com/api/v1/index.php?api_key=A0fcc01eb0baa771dffcc02a8c1c55751&method=voice.call&play=12365.ivr&numbers=#{customer_number}&format=xml"
-        #TelephonyManager.sendSms customer_number,"We are excited that you have decided to try Shuttl for your office commute. Your booking id is #{suggestion.id} .We hope that your travel with us is hassle free."
+        TelephonyManager.sendSms customer_number,"We are excited that you have decided to try Shuttl for your office commute. Your booking id is #{suggestion.id} .We hope that your travel with us is hassle free."
       end
       render :text=>"OK"
     else

@@ -1,5 +1,29 @@
 class Campaign
 
+
+  def sendSubscriptionCampaignToAcquiredUser targetingStart,targetingEnd,routeId
+
+    if targetingStart==nil
+      targetingStart=(Time.now.to_i/86400)*86400-500*86400
+    end
+    if targetingEnd==nil
+
+      targetingEnd=(Time.now.to_i/86400)*86400+86400
+
+    end
+    if !routeId.is_a?(Array)
+      routeId=Array.new
+    end
+    nonConvertedUsers=Campaign.getNonConvertedUsers targetingStart,targetingEnd,routeId
+
+    puts nonConvertedUsers
+    unsubscribedUsers=UmsSubscription.findUnsubscribedUsers nonConvertedUsers
+    puts unsubscribedUsers
+    unsubscribedUsers=Transaction.findUnsubscribedUsers unsubscribedUsers
+    puts unsubscribedUsers
+
+    Campaign.sendFollowUpCommunication unsubscribedUsers
+  end
   def campaignPlanner
 
     return
@@ -140,6 +164,54 @@ class Campaign
     allLeads
   end
 
+
+
+
+  def self.getNonConvertedUsers targetingStart,targetingEnd,routeIdRestricted
+
+    suggestions=Array.new
+    if targetingStart.is_a?(Fixnum) && targetingEnd.is_a?(Fixnum)
+      if routeIdRestricted.is_a?(Array) && routeIdRestricted.size>0
+
+        suggestions=GetSuggestionViaTab.where("unix_timestamp(created_at)>#{targetingStart}")
+                        .where("unix_timestamp(created_at)<#{targetingEnd}").where("routeid in ("+routeIdRestricted.join(",")+")").where("unsubscribed=0 or unsubscribed is null")
+      else
+        suggestions=GetSuggestionViaTab.where("unix_timestamp(created_at)>#{targetingStart}")
+                        .where("unix_timestamp(created_at)<#{targetingEnd}").where("unsubscribed=0 or unsubscribed is null")
+      end
+    end
+
+    phoneNumbers=Array.new
+
+    suggestions.each do |sugg|
+      phoneNumbers.push sugg["customer_number"]
+    end
+    phoneNumbers
+  end
+
+
+  def self.sendFollowUpCommunication phoneNumbers
+
+    phoneNumbers.each do |number|
+
+      link="https://myor.shuttl.com/campaign/unsubscribeUser?phoneNumber=#{number}"
+      shortenedLink=BitlyUtils.shortenUrl link
+
+      puts shortenedLink
+      TelephonyManager.sendSms(number,"Hello Shuttlr!! We just found out that you have not subscribed to Shuttl. If you need any help or to unsubscribe please click on #{shortenedLink}")
+
+    end
+
+  end
+
+  def self.unsubscribeFromCampaign phone_number
+
+    GetSuggestionViaTab.where("customer_number=#{phone_number}").each do |sugg|
+      sugg.unsubscribed=1
+      sugg.save
+    end
+
+  end
 
   class CampaignUser
 

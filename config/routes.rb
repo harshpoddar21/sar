@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   get 'b/:id/:sign' => "shortener#linkClickedBooking"
 
 
+  get 'campaign/unsubscribeUser'
+  get 'campaign/sendFollowUpToUnsubscriber'
+
   get 'suggest/bTb'
   get 'service/tracking' => 'service#tracking'
   post 'service/tracking' => 'service#tracking'
@@ -93,6 +96,7 @@ get 'suggest/index_orca'
   post 'suggest/makePhoneCall'
   post 'suggest/verifyPhoneCall'
 
+  get 'referral/showReferral'
   get 'suggest/confirmUser'
   get 'suggest/index'
   get 'suggest/insertLiveRoutes' =>"suggest#insertLiveRoutes"
@@ -103,6 +107,7 @@ get 'suggest/index_orca'
   post 'payment/initiatePayment'
   get 'suggest/refreshRouteCache'
 
+  get 'delhidata/theonewithall'
 
   get 'payment/notifyPayment'
   get 'payment/paymentComplete'
@@ -122,6 +127,9 @@ get 'suggest/index_orca'
   get 'restricted/ptCustomerResponse'
   get 'restricted/sendIVRCall'
 
+  get 'randomshit/getOfficeLocations'
+  get 'randomshit/extractDelhiDtc'
+
   get 'pass/showPass'
 
   get 'random/call' =>"randomshit#call"
@@ -133,6 +141,7 @@ get 'affiliate/registerAffiliate'
   get "delhidata/getDelhiWardData"
 get 'delhidata/referralVis'
   get 'delhidata/delhiPopulationDist'
+  get 'delhidata/abc'
 
   get 'shuttl/getRoutePointsGeoJsonByRoutes' => 'geo_json#getRoutePointsGeoJsonByRoutes'
   get 'shuttl/getStopsGeoJsonByRoutes' => 'geo_json#getStopsGeoJsonByRoutes'

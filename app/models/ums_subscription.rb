@@ -27,4 +27,29 @@ class UmsSubscription < ActiveRecord::Base
 
 
 
+
+  def self.findUnsubscribedUsers allUsers
+
+    if allUsers!=nil && allUsers.is_a?(Array)
+      if allUsers.size>0
+        subscribers=Array.new
+        UmsSubscription.joins(" join USERS on USERS.USER_ID=USER_SUBSCRIPTIONS.USER_ID ").where("USERS.PHONE_NUMBER in ("+allUsers.join(",")+")").each do |sub|
+          subscribers.push sub["PHONE_NUMBER"]
+        end
+
+      else
+        return Array.new
+
+      end
+
+    else
+      raise Exception,"Invalid Arguments"
+    end
+
+
+    allUsers-subscribers
+  end
+
+
+
 end
