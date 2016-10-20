@@ -67,7 +67,9 @@ class ReferralController < ApplicationController
 
   end
 
+  def showRef
 
+  end
 
 
 

@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get 'campaign/unsubscribeUser'
   get 'campaign/sendFollowUpToUnsubscriber'
 
+
+  get 'referral/showRef'
   get 'suggest/bTb'
   get 'service/tracking' => 'service#tracking'
   post 'service/tracking' => 'service#tracking'
