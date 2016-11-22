@@ -19,6 +19,7 @@ class FreshdeskTicket < ActiveRecord::Base
 
     end
 
+    ticket.description=ActiveRecord::Base.connection.quote(ticket.description)
 
     ticket.status=json["status"]
     ticket.priority=json["priority"]
