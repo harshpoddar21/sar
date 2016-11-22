@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161122055359) do
+ActiveRecord::Schema.define(version: 20161122070904) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(version: 20161122055359) do
     t.text     "status",          limit: 65535
     t.text     "priority",        limit: 65535
     t.text     "source",          limit: 65535
-    t.text     "type",            limit: 65535
+    t.text     "typi",            limit: 65535
     t.text     "requester_email", limit: 65535
     t.text     "requester_phone", limit: 65535
     t.datetime "created_at",                    null: false

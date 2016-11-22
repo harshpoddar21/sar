@@ -24,7 +24,7 @@ class FreshdeskTicket < ActiveRecord::Base
     ticket.status=json["status"]
     ticket.priority=json["priority"]
     ticket.source=json["source"]
-    ticket.type=json["type"]
+    ticket.typi=json["type"]
     ticket.requester_email=json["requester_email"]
     ticket.requester_phone=json["requester_phone"]
     ticket.created_at=json["created_at"]

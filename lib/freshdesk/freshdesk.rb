@@ -79,7 +79,7 @@ module Freshdesk
           puts "error encountered "
           puts e.message
         end
-        
+
       end
 
     end
