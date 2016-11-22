@@ -32,7 +32,7 @@ class FreshdeskTicket < ActiveRecord::Base
     ticket.category=json["category"]
     ticket.issue=json["issue"]
     ticket.issue_type=json["issue_type"]
-
+    ticket.ticket_id=json["ticket_id"]
     ticket
 
   end
