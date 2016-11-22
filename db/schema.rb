@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161017145433) do
+ActiveRecord::Schema.define(version: 20161122055359) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -120,6 +120,28 @@ ActiveRecord::Schema.define(version: 20161017145433) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.text     "phone_number",   limit: 65535
+  end
+
+  create_table "freshdesk_tickets", force: :cascade do |t|
+    t.text     "subject",         limit: 65535
+    t.text     "description",     limit: 65535
+    t.text     "status",          limit: 65535
+    t.text     "priority",        limit: 65535
+    t.text     "source",          limit: 65535
+    t.text     "type",            limit: 65535
+    t.text     "requester_email", limit: 65535
+    t.text     "requester_phone", limit: 65535
+    t.datetime "created_at",                    null: false
+    t.text     "phone_number",    limit: 65535
+    t.integer  "route_id",        limit: 4
+    t.text     "category",        limit: 65535
+    t.text     "issue",           limit: 65535
+    t.text     "issue_type",      limit: 65535
+    t.integer  "booking_id",      limit: 4
+    t.integer  "ticket_id",       limit: 4
+    t.datetime "updated_at",                    null: false
+    t.text     "feedback",        limit: 65535
+    t.integer  "trip_rating",     limit: 4
   end
 
   create_table "get_suggestion_via_tabs", force: :cascade do |t|

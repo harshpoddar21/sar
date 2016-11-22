@@ -602,6 +602,9 @@ class SuggestController < ApplicationController
     data=JSON.parse params[:data1]
     customer_number=data["phone_number"]
     repeatUser=0
+    if data["officeAddress"]=="Unitech Cyberpark"
+      data["officeAddress"]="10003"
+    end
 
 
     if GetSuggestionViaTab.where(:customer_number=>customer_number).last!=nil

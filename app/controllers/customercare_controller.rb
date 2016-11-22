@@ -198,6 +198,13 @@ class CustomercareController < ApplicationController
   end
 
 
+  def storeFreshDeskTickets
+
+
+
+  end
+
+
 end
 
 

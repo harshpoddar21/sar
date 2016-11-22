@@ -1,0 +1,37 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  subject: MyText
+  description: MyText
+  status: MyText
+  priority: MyText
+  source: MyText
+  type: MyText
+  requester_email: MyText
+  requester_phone: MyText
+  created_at: 2016-11-22 10:05:03
+  phone_number: MyText
+  route_id: 1
+  category: MyText
+  issue: MyText
+  issue_type: MyText
+  booking_id: 1
+  ticket_id: 1
+
+two:
+  subject: MyText
+  description: MyText
+  status: MyText
+  priority: MyText
+  source: MyText
+  type: MyText
+  requester_email: MyText
+  requester_phone: MyText
+  created_at: 2016-11-22 10:05:03
+  phone_number: MyText
+  route_id: 1
+  category: MyText
+  issue: MyText
+  issue_type: MyText
+  booking_id: 1
+  ticket_id: 1

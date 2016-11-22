@@ -9,6 +9,7 @@ module ConnectionManager
     end
     http.use_ssl = true if  (/^https:/=~url) !=nil
     response = http.request(request)
+
     return response
   end
 
