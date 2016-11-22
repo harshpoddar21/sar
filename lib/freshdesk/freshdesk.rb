@@ -29,6 +29,10 @@ module Freshdesk
         end
         response=JSON.parse response.body
 
+        if response.length==0
+          isLastTicketReached=true
+          break
+        end
         response.each do |res|
 
           ticketsProcessed=ticketsProcessed+1
