@@ -37,7 +37,7 @@ every 10.minutes do
   runner "Transaction.refreshPledge"
 end
 every 1.hours do
-  #runner "DataUpdater.refreshFreshDeskData"
+  runner "DataUpdater.refreshFreshDeskData"
 end
 every 10.minutes do
   runner "Campaign.new.campaignPlanner"
