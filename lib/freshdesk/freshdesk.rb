@@ -70,8 +70,16 @@ module Freshdesk
     def self.saveAllTickets tickets
 
 
+      errors=0
       tickets.each do |tic|
-        tic.save
+        begin
+          tic.save
+        rescue =>e
+          errors=errors+1
+          puts "error encountered "
+          puts e.message
+        end
+        
       end
 
     end
