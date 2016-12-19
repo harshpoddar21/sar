@@ -84,7 +84,8 @@ class ReferralController < ApplicationController
 
     if origin!=nil && destination!=nil && phoneNumber!=nil
 
-      BookingReferral.create(:phone_number=>phoneNumber,:destination=>destination,:origin=>origin)
+      booking=BookingReferral.create(:phone_number=>phoneNumber,:destination=>destination,:origin=>origin)
+      TelephonyManager.sendSms phoneNumber,"Ahoy! Your booking id is #{123543+booking.id}. A Shuttl executive will call you shortly to help you board Shuttl."
     else
       raise CustomError::ParamsException,"Invalid Booking"
     end
