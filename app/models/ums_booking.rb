@@ -84,6 +84,27 @@ class UmsBooking < ActiveRecord::Base
 
 
   end
+
+
+  def self.getBookingCountForRouteId from,to,routeIds
+
+
+    result=nil
+
+    if routeIds.is_a? Array
+
+      result=UmsBooking.where("ROUTE_ID in (#{routeIds.join(",")})").where("STATUS in ('CONFIRMED','POSTPONED')").group(:ROUTE_ID).select("ROUTE_ID,count(*) as BOOKING_COUNT").where("BOARDING_TIME>#{from*1000}").where("BOARDING_TIME<#{to*1000}")
+    else
+      raise CustomError::ParamsException,"Invalid Parameters"
+    end
+
+
+    result
+
+
+  end
+
+
   class Url
 
     UMS_DOMAIN = Rails.env.production? ? "http://goplus.in" : "http://goplus.in"

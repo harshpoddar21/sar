@@ -18,6 +18,29 @@ class UmsSubscription < ActiveRecord::Base
   end
 
 
+  def self.findSubscriptionSoldFirstTime routeId
+
+
+    packages=UmsSubscriptionPackage.findSubscriptionPackagesForRouteId routeId
+
+    packageIds=Array.new
+    packages.each do |pa|
+      packageIds.push pa.SUBSCRIPTION_PACKAGE_ID
+    end
+    results=UmsSubscription.joins(" left join USER_SUBSCRIPTIONS as b on USER_SUBSCRIPTIONS.USER_ID=b.USER_ID
+      and USER_SUBSCRIPTIONS.USER_SUBSCRIPTION_ID>b.USER_SUBSCRIPTION_ID")
+        .where(" USER_SUBSCRIPTIONS.SUBSCRIPTION_PACKAGE_ID in (#{packageIds.join(",")})
+         and b.SUBSCRIPTION_PACKAGE_ID is null")
+        .group("bought_date").order("bought_date desc")
+        .select("date(from_unixtime(USER_SUBSCRIPTIONS.CREATED_TIME/1000)) as bought_date,
+         count(distinct(USER_SUBSCRIPTIONS.USER_ID))")
+
+
+    results
+
+  end
+
+
   def self.refreshSubscribers
     @@subscribedPeople=Hash.new
     UmsSubscription.all.each do |subs|

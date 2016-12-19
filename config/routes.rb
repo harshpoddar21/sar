@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   get 'campaign/sendFollowUpToUnsubscriber'
 
 
+  get 'referral/book_shuttl'
+  get 'referral/submitBooking'
+
   get 'referral/showRef'
   get 'suggest/bTb'
   get 'service/tracking' => 'service#tracking'

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Book My Shuttl</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-77497361-2', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+  <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+  <%= stylesheet_link_tag    'bootstrap.min', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'custom', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag    'book_shuttl', 'data-turbolinks-track' => true %>
+
+</head>
+<body>
+	<header>
+		<div class="col-md-4 col-xs-4 logo">
+			<a href="">
+				<img src="/images/logo_shuttl.png">
+			</a>
+		</div>
+		<div class="col-md-8 col-xs-8 nav">
+			<ul>
+				<li style="display: none;"><a href="#">Home</a></li>
+				<li style="display: none;"><a href="#">Contact</a></li>
+			</ul>
+		</div>
+	</header>
+	<div class="col-md-12 col-xs-12 slider">
+		<div class="h1-content">A better way to travel for week</div>
+		<div class="normal-content">AC Bus from Faridabad starting <sup>R</sup>35</div>
+	</div>
+	<div class="section-form">
+		<div class="col-md-12">
+			<h2>Where do you work?</h2>
+			<ul class="city">
+				<li id="gurgaon" data="1" onclick="SELECTION.changeSelection(this)"><img data-unclicked="/images/gurgaon.png" data-clicked="/images/gurgaon_turq.png" src="/images/gurgaon.png"></li>
+				<li id="noida" data="2" onclick="SELECTION.changeSelection(this)"><img data-unclicked="/images/noida.png" data-clicked="/images/noida_turq.png" src="/images/noida.png"></li>
+				<li id="delhi" data="3" onclick="SELECTION.changeSelection(this)"><img data-unclicked="/images/delhi.png" data-clicked="/images/delhi_turq.png" src="/images/delhi.png"></li>
+			</ul>
+			<form method="">
+				<div class="form-area">
+					<div class="text-field">
+						<input required type="text" id="phone_number" name="mobile-number" placeholder="Mobile Number" >
+					</div>
+					<div class="button" onclick="placeBooking()">Book A Free Trial</div>
+					<div class="information">Or Just call us at XXXXXXXXX</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="section-features">
+		<div class="col-md-12">
+			<h2>Where do you work?</h2>
+			<ul class="city">
+				<li>
+					<img src="/images/bus.png">
+					<span>Premium Bus</span>
+				</li>
+				<li>
+					<img src="/images/seat.png">
+					<span>Assured Seat</span>
+				</li>
+				<li>
+					<img src="/images/cashless.png">
+					<span>Cashless Travel</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

@@ -12,7 +12,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'mysql2', '~> 0.3.20'
 gem 'bitly'
 
-
+gem 'prawn-table'
 gem 'whenever', require: true
 
 # Use Uglifier as compressor for JavaScript assets

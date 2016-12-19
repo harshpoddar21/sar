@@ -72,6 +72,26 @@ class ReferralController < ApplicationController
   end
 
 
+  def book_shuttl
+
+  end
+
+  def submitBooking
+
+    origin=params[:origin]
+    destination=params[:destination]
+    phoneNumber=params[:phoneNumber]
+
+    if origin!=nil && destination!=nil && phoneNumber!=nil
+
+      BookingReferral.create(:phone_number=>phoneNumber,:destination=>destination,:origin=>origin)
+    else
+      raise CustomError::ParamsException,"Invalid Booking"
+    end
+
+    render :text=>'OK'
+  end
+
 
 
 end
