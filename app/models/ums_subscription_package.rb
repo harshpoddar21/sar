@@ -6,8 +6,19 @@ class UmsSubscriptionPackage < ActiveRecord::Base
 
   def self.findSubscriptionPackagesForRouteId routeId
 
-    UmsSubscriptionPackage.where("ROUTE_ID = #{routeId}").where("REVERSE_ROUTE_ID = #{routeId}")
+    UmsSubscriptionPackage.where("ROUTE_ID = #{routeId} or RETURN_ROUTE_ID = #{routeId}")
 
+  end
+
+
+  def self.findSubscriptionPackagesIdsForRouteId routeId
+    packages=self.findSubscriptionPackagesForRouteId routeId
+
+    packageIds=Array.new
+    packages.each do |package|
+      packageIds.push package["SUBSCRIPTION_PACKAGE_ID"]
+    end
+    packageIds
   end
 
 

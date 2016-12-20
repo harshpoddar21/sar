@@ -33,7 +33,7 @@ class UmsSubscription < ActiveRecord::Base
          and b.SUBSCRIPTION_PACKAGE_ID is null")
         .group("bought_date").order("bought_date desc")
         .select("date(from_unixtime(USER_SUBSCRIPTIONS.CREATED_TIME/1000)) as bought_date,
-         count(distinct(USER_SUBSCRIPTIONS.USER_ID))")
+         count(distinct(USER_SUBSCRIPTIONS.USER_ID)) as subs_sold")
 
 
     results
@@ -74,5 +74,22 @@ class UmsSubscription < ActiveRecord::Base
   end
 
 
+  def self.findTotalSubscriptionSold routeId
+
+    packageIds=UmsSubscriptionPackage.findSubscriptionPackagesIdsForRouteId routeId
+
+    self.where("SUBSCRIPTION_PACKAGE_ID in (#{packageIds.join(",")})").size
+
+  end
+
+
+  def self.findUniqueSubscriptionSold routeId
+    puts "start"
+    packageIds=UmsSubscriptionPackage.findSubscriptionPackagesIdsForRouteId routeId
+
+
+    self.where("SUBSCRIPTION_PACKAGE_ID in (#{packageIds.join(",")})").select("distinct(USER_ID)").distinct.count("USER_ID")
+
+  end
 
 end
