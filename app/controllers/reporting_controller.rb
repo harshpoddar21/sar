@@ -132,15 +132,15 @@ class ReportingController < ApplicationController
     files.each do |file|
 
 
-      PdfMailer.sendFile("harsh.poddar@shuttl.com","/var/www/Ruby/sar/#{file}",file).deliver_now
+      PdfMailer.sendFile("harsh.poddar@shuttl.com","/var/www/sar/#{file}",file).deliver_now
 
-      PdfMailer.sendFile("guneet.singh@shuttl.com","/var/www/Ruby/sar/#{file}",file).deliver_now
+      PdfMailer.sendFile("guneet.singh@shuttl.com","/var/www/sar/#{file}",file).deliver_now
 
-      PdfMailer.sendFile("nitish.kumar@shuttl.com","/var/www/Ruby/sar/#{file}",file).deliver_now
+      PdfMailer.sendFile("nitish.kumar@shuttl.com","/var/www/sar/#{file}",file).deliver_now
 
-      PdfMailer.sendFile("shantanu.garg.ext@shuttl.com","/var/www/Ruby/sar/#{file}",file).deliver_now
+      PdfMailer.sendFile("shantanu.garg.ext@shuttl.com","/var/www/sar/#{file}",file).deliver_now
 
-      PdfMailer.sendFile("archit.raheja@shuttl.com","/var/www/Ruby/sar/#{file}",file).deliver_now
+      PdfMailer.sendFile("archit.raheja@shuttl.com","/var/www/sar/#{file}",file).deliver_now
 
     end
 

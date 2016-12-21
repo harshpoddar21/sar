@@ -26,7 +26,7 @@ class Report
 
       results=UmsSubscription.findSubscriptionSoldFirstTime routeId
 
-      lastAllowableDate=Utils.getTodayMorningUnixTime-86400*(days-1)
+      lastAllowableDate=Utils.getTodayMorningUnixTime+5*Constants::SECONDS_IN_HOUR+30*Constants::SECONDS_IN_MINS-86400*(days-1)
 
       subsSoldRouteIdWise[routeId]=Array.new
 
@@ -51,7 +51,7 @@ class Report
           break
         end
 
-        dateIndex=(Utils.getTodayMorningUnixTime-result["bought_date"].to_time.to_i)/(Constants::SECONDS_IN_DAY)
+        dateIndex=(Utils.getTodayMorningUnixTime+5*Constants::SECONDS_IN_HOUR+30*Constants::SECONDS_IN_MINS-result["bought_date"].to_time.to_i)/(Constants::SECONDS_IN_DAY)
 
 
         puts dateIndex
@@ -90,13 +90,13 @@ class Report
       result.push 0
     end
 
-    lastDateAllowed=Utils.getTodayMorningUnixTime-(days-1)*Constants::SECONDS_IN_DAY
+    lastDateAllowed=Utils.getTodayMorningUnixTime+5*Constants::SECONDS_IN_HOUR+30*Constants::SECONDS_IN_MINS-(days-1)*Constants::SECONDS_IN_DAY
     newUserCount.each do |userC|
 
       if userC["first_boarding_date"].to_time.to_i<lastDateAllowed
         break
       end
-      index=(Utils.getTodayMorningUnixTime-userC["first_boarding_date"].to_time.to_i)/Constants::SECONDS_IN_DAY
+      index=(Utils.getTodayMorningUnixTime+5*Constants::SECONDS_IN_HOUR+30*Constants::SECONDS_IN_MINS-userC["first_boarding_date"].to_time.to_i)/Constants::SECONDS_IN_DAY
       puts index.to_s+"s"
       result[index]=userC["new_user_count"]
 
