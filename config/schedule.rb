@@ -42,3 +42,9 @@ end
 every 10.minutes do
   runner "Campaign.new.campaignPlanner"
 end
+every 1.day, :at => '5:30 am' do
+  runner "ReportingController.new.postNumbersForRouteIds([960,964,219,136,962,482,983],{960=>[961],219=>[220],964=>[965],136=>[137],962=>[963],482=>[483,993],983=>[984]})"
+end
+every 1.day, :at => '3:32 pm' do
+  runner "ReportingController.new.postNumbersForRouteIds([961,965,220,137,963,482,993,984],{961=>[960],220=>[219],965=>[964],137=>[136],963=>[962],483=>[482],993=>[482],984=>[983]})"
+end
