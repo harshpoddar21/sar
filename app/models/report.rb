@@ -79,4 +79,41 @@ class Report
 
   end
 
+
+  def self.getNewUserCountInLastXDays routeIds,days
+
+    newUserCount=UmsBooking.getNewUserBookingCountForRouteId routeIds
+
+    result=Array.new
+    (1..days).each do
+
+      result.push 0
+    end
+
+    lastDateAllowed=Utils.getTodayMorningUnixTime-(days-1)*Constants::SECONDS_IN_DAY
+    newUserCount.each do |userC|
+
+      if userC["first_boarding_date"].to_time.to_i<lastDateAllowed
+        break
+      end
+      index=(Utils.getTodayMorningUnixTime-userC["first_boarding_date"].to_time.to_i)/Constants::SECONDS_IN_DAY
+      puts index.to_s+"s"
+      result[index]=userC["new_user_count"]
+
+    end
+
+
+    result
+
+
+  end
+
+
+  def self.getBoardingNumberRouteIdWise routeId,from,to
+
+    GetSuggestionViaTab.where("make_booking=1").
+        where("unix_timestamp(created_at)<#{to}").where("unix_timestamp(created_at)>=#{from}")
+        .where("routeid=#{routeId}").size
+  end
+
 end

@@ -93,7 +93,10 @@ class UmsBooking < ActiveRecord::Base
 
     if routeIds.is_a? Array
 
-      result=UmsBooking.where("ROUTE_ID in (#{routeIds.join(",")})").where("STATUS in ('CONFIRMED','POSTPONED')").group(:ROUTE_ID).select("ROUTE_ID,count(*) as BOOKING_COUNT").where("BOARDING_TIME>#{from*1000}").where("BOARDING_TIME<#{to*1000}")
+      result=UmsBooking.where("ROUTE_ID in (#{routeIds.join(",")})")
+                 .where("STATUS in ('CONFIRMED','POSTPONED')")
+                 .group(:ROUTE_ID).select("ROUTE_ID,count(*) as BOOKING_COUNT")
+                 .where("BOARDING_TIME>#{from*1000}").where("BOARDING_TIME<#{to*1000}")
     else
       raise CustomError::ParamsException,"Invalid Parameters"
     end
@@ -103,7 +106,33 @@ class UmsBooking < ActiveRecord::Base
 
 
   end
+  def self.getNewUserBookingCountForRouteId routeIds
 
+
+    result=nil
+
+    if routeIds.is_a? Array
+
+      result=UmsBooking.where("BOOKINGS.ROUTE_ID in (#{routeIds.join(",")})").
+             where("BOOKINGS.STATUS in ('CONFIRMED','POSTPONED')")
+                 .joins(" left join BOOKINGS as b on BOOKINGS.USER_ID=b.USER_ID and b.BOOKING_ID<BOOKINGS.BOOKING_ID")
+      .where("b.BOOKING_ID is null")
+      .where("BOOKINGS.ROUTE_ID in (#{routeIds.join(",")})")
+      .where("b.ROUTE_ID is null or b.ROUTE_ID in (#{routeIds.join(",")})")
+      .group("first_boarding_date").order("first_boarding_date  desc")
+      .select("Date(from_unixtime(BOOKINGS.BOARDING_TIME/1000))  as first_boarding_date,count(*) as new_user_count")
+
+
+
+    else
+      raise CustomError::ParamsException,"Invalid Parameters"
+    end
+
+
+    result
+
+
+  end
 
   class Url
 
