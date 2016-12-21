@@ -115,7 +115,7 @@ class ReportingController < ApplicationController
 
     Prawn::Document.generate("boarding_numbers_#{Time.now.strftime("%F")}.pdf") do |pdf|
 
-      files.push("new_user_booked_numbers_#{Time.now.strftime("%F")}.pdf")
+      files.push("boarding_numbers_#{Time.now.strftime("%F")}.pdf")
       data=[["Boarding Numbers"]]
       data.push(["Route Id","Boarding"])
       routeIds.each do |routeId|
