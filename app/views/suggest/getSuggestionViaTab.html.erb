@@ -1,46 +1,55 @@
-<%= stylesheet_link_tag    'style_tab', media: 'all', 'data-turbolinks-track' => true %>
+<%= stylesheet_link_tag    'style_tab_new', media: 'all', 'data-turbolinks-track' => true %>
 <div class="container_fluid">
-  <div class="header">
-    <div style="display: inline-block;">
-      <img onclick="clickLogo()" src="images/shuttl_logo.png" class="logo" />
+
+  <div class="intro row">Hi <%= @promoter.name  %></div>
+
+  <div class="row">
+
+    <div class="performance col-xs-6">Boardings <%= @promoter.getBoardingsToday %></div>
+
+
+    <div class="peformance col-xs-6">
+
+      Suggestions <%= @promoter.getSuggestionsToday %>
+
     </div>
+
   </div>
-  <div class="screenWrapper fullheight">
+
+  <div class="row">
+    Select Home Location:
   </div>
-</div>
-<script>
-  var paymentFlow=2;
-    var routeId=<%= @routeId %>;
- var pickUp=[];
-  <% @pickUp.each do |pick| %>
-    var value={};
-  value["location_id"]="<%=pick.location_id %>";
-  value["name"]="<%=pick.name %>";
-  pickUp.push(value);
- <% end %>
-  var drop=[];
-  <% @drop.each do |drop| %>
-  var value={};
-  value["location_id"]="<%=drop.location_id %>";
-  value["name"]="<%=drop.name %>";
-  drop.push(value);
-  <% end %>
+  <div class="row">
 
-    var allRoutes=[];
+    <% @pickUp.each do |pick| %>
+     <button class="col-xs-4 pick" data="<%= pick.id %>" onclick="onHomeLocationSelected(<%= pick.id %>);"></button>
+    <% end %>
+  </div>
 
-    <% @tabRoute.each do |route| %>
-     var value={};
-     value["name"]="<%= route.name %>";
-     value["id"]="<%= route.routeid %>";
-     allRoutes.push(value);
-     <% end %>
+  <div class="row">
+    Select Office Location:
+  </div>
+  <div class="row">
 
+    <% @pickUp.each do |pick| %>
+        <button class="col-xs-4 pick" data="<%= pick.id %>" onclick="onOfficeLocationSelected(<%= pick.id %>);"></button>
+    <% end %>
 
+  </div>
 
+  <div class="row">
+    Select Current Mode Of Commute
+  </div>
+  <div class="row">
 
-</script>
+    <% @commute.each do |comm| %>
+        <button class="col-xs-4 commute" data="<%= comm.id %>" onclick="onCommuteSelected(<%= pick.id %>);"></button>
 
-<%= javascript_include_tag 'script_tab', 'data-turbolinks-track' => true %>
-<div class="loader_wrapper">
-  <div class="loader_inner"></div>
+    <% end %>
+  </div>
+
+  <div class="row">
+
+    <button class="button submitButton" onclick="submitData();">Submit</button>
+  </div>
 </div>

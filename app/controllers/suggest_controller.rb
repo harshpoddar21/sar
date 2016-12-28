@@ -587,13 +587,20 @@ class SuggestController < ApplicationController
 
   def getSuggestionViaTab
 
-    @routeId=params[:routeid] if params[:routeid]!=nil
+    @pickUp=TabPickNew.all
 
-    @routeId=831 if @routeId==nil
+    if session["promoterId"]==nil
 
-    @pickUp=TabPick.where(:routeid=>@routeId)
-    @drop=TabDrop.where(:routeid=>@routeId)
-    @tabRoute=TabRoute.all
+      session["promoterId"]=1
+
+    end
+    @promoter=Promoter.find(session["promoterId"])
+    if @promoter==nil
+      raise CustomError::ParamsException,"Invalid Promoter Id"
+    end
+
+
+
   end
 
   def saveNewSuggestionTab
@@ -716,7 +723,9 @@ class SuggestController < ApplicationController
 
     promoter=Promoter.where(:username => userName).where(:password=>password).last
     if promoter!=nil
+      session["promoterId"]=promoter.id
       render :json=>Response.new(true,{"promoterId"=>promoter.id}).to_json
+
     else
       render :json=>Response.new(false,nil).to_json
     end

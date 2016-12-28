@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161219143241) do
+ActiveRecord::Schema.define(version: 20161226012219) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -38,6 +38,14 @@ ActiveRecord::Schema.define(version: 20161219143241) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "is_verified",  limit: 4
+  end
+
+  create_table "boardings", force: :cascade do |t|
+    t.text     "customer_number", limit: 65535
+    t.integer  "booking_id",      limit: 4
+    t.integer  "promoter_id",     limit: 4
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "booking_follows", force: :cascade do |t|
@@ -271,6 +279,7 @@ ActiveRecord::Schema.define(version: 20161219143241) do
     t.text     "password",   limit: 65535
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.text     "name",       limit: 65535
   end
 
   create_table "pt_customer_responses", force: :cascade do |t|
@@ -372,6 +381,13 @@ ActiveRecord::Schema.define(version: 20161219143241) do
     t.datetime "updated_at",                null: false
     t.integer  "location_id", limit: 4
     t.integer  "route_id",    limit: 4
+  end
+
+  create_table "tab_pick_news", force: :cascade do |t|
+    t.integer  "location_id", limit: 4
+    t.text     "name",        limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "tab_picks", force: :cascade do |t|
