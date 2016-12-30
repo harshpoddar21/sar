@@ -10,7 +10,19 @@ class LeadController < ApplicationController
   def submitNewLead
 
 
-    render :json=>{:success=>true}.to_json
+    phoneNumber=params[:phoneNumber]
+    answer=params[:answers]
+    isInterested=params[:isInterested]
+
+    if phoneNumber!=nil && answer!=nil && isInterested!=nil
+
+      LeadConvertor.create(:phone_number=>phoneNumber,:answer=>answer,:is_interested=>isInterested)
+
+      render :json=>{:success=>true}.to_json
+    else
+      render :json=>{:success=>false}.to_json
+    end
+
 
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161226012219) do
+ActiveRecord::Schema.define(version: 20161230145015) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -202,6 +202,15 @@ ActiveRecord::Schema.define(version: 20161226012219) do
     t.integer  "success",      limit: 4
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+  end
+
+  create_table "lead_convertors", force: :cascade do |t|
+    t.text     "phone_number",  limit: 65535
+    t.text     "email",         limit: 65535
+    t.text     "answer",        limit: 65535
+    t.integer  "is_interested", limit: 4
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "leads", force: :cascade do |t|
