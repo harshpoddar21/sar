@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  issue_type: 1
+  phone_number: MyText
+  category_channel_id: MyText
+  channel_id: MyText
+  campaign_id: MyText
+
+two:
+  issue_type: 1
+  phone_number: MyText
+  category_channel_id: MyText
+  channel_id: MyText
+  campaign_id: MyText

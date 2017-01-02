@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  from: MyText
+  to: MyText
+  phone_number: MyText
+  channelId: MyText
+  channelCategoryId: MyText
+  campaignId: MyText
+  requested_boarding_time: 1
+
+two:
+  from: MyText
+  to: MyText
+  phone_number: MyText
+  channelId: MyText
+  channelCategoryId: MyText
+  campaignId: MyText
+  requested_boarding_time: 1

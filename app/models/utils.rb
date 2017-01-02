@@ -9,6 +9,30 @@ class Utils
 
   end
 
+  def hexToDecimal number
 
+    number.to_i(16).to_s(10)
+
+  end
+
+  def decToHex number
+
+    number.to_i(10).to_s(16)
+
+  end
+
+
+  def self.generateBase64 *args
+
+    Base64.urlsafe_encode64(args.join("|"))
+
+  end
+
+
+  def self.decodeBase64Generated encodedValue
+
+    Base64.urlsafe_decode64(encodedValue).split("|")
+
+  end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161230145015) do
+ActiveRecord::Schema.define(version: 20170102054618) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -38,6 +38,21 @@ ActiveRecord::Schema.define(version: 20161230145015) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "is_verified",  limit: 4
+  end
+
+  create_table "boarding_requests", force: :cascade do |t|
+    t.text     "from",                    limit: 65535
+    t.text     "to",                      limit: 65535
+    t.text     "phone_number",            limit: 65535
+    t.text     "channelId",               limit: 65535
+    t.text     "channelCategoryId",       limit: 65535
+    t.text     "campaignId",              limit: 65535
+    t.integer  "requested_boarding_time", limit: 4
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.text     "channel_category_id",     limit: 65535
+    t.text     "channel_id",              limit: 65535
+    t.text     "campaign_id",             limit: 65535
   end
 
   create_table "boardings", force: :cascade do |t|
@@ -202,6 +217,55 @@ ActiveRecord::Schema.define(version: 20161230145015) do
     t.integer  "success",      limit: 4
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+  end
+
+  create_table "l_btl_channels", force: :cascade do |t|
+    t.text     "name",         limit: 65535
+    t.text     "phone_number", limit: 65535
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.text     "channel_id",   limit: 65535
+  end
+
+  create_table "l_channel_categories", force: :cascade do |t|
+    t.text     "name",                limit: 65535
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.text     "channel_category_id", limit: 65535
+  end
+
+  create_table "l_leads", force: :cascade do |t|
+    t.text     "email",               limit: 65535
+    t.text     "phone_number",        limit: 65535
+    t.text     "from",                limit: 65535
+    t.text     "to",                  limit: 65535
+    t.text     "mode_of_comute",      limit: 65535
+    t.text     "answer",              limit: 65535
+    t.text     "prefilled_answer",    limit: 65535
+    t.text     "campaign_id",         limit: 65535
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.integer  "is_interested",       limit: 4
+    t.text     "channel_category_id", limit: 65535
+    t.text     "channel_id",          limit: 65535
+  end
+
+  create_table "l_new_lead_campaigns", force: :cascade do |t|
+    t.text     "name",        limit: 65535
+    t.text     "description", limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  create_table "l_unsubscribes", force: :cascade do |t|
+    t.integer  "issue_type",          limit: 4
+    t.text     "phone_number",        limit: 65535
+    t.text     "category_channel_id", limit: 65535
+    t.text     "channel_id",          limit: 65535
+    t.text     "campaign_id",         limit: 65535
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.text     "issue_id",            limit: 65535
   end
 
   create_table "lead_convertors", force: :cascade do |t|

@@ -103,6 +103,14 @@ get 'suggest/index_orca'
   post 'suggest/makePhoneCall'
   post 'suggest/verifyPhoneCall'
 
+  get 'boarding/unsubscribe'
+
+  get 'boarding/getBoardingDetails'
+  post 'boarding/submitBoarding'
+
+  get 'btl/updatePromoterList'
+  post 'btl/updatePromoterList'
+
   get 'referral/showReferral'
   get 'suggest/confirmUser'
   get 'suggest/index'
