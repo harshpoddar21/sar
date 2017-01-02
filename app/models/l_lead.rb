@@ -29,7 +29,7 @@ class LLead < ActiveRecord::Base
   def self.isValidLead? phoneNumber
 
 
-    self.find_by_phone_number phoneNumber==nil
+    self.find_by_phone_number(phoneNumber)==nil
 
   end
 
