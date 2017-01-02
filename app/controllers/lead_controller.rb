@@ -28,7 +28,7 @@ class LeadController < ApplicationController
     if phoneNumber!=nil && answer!=nil && isInterested!=nil && LLead.isValidLead?(phoneNumber)
 
 
-      lead=LLead.constructLeadFromAnswer answer,isInterested,prefilledAnswer,channelCategory,channelId,from,to,modeOfCommute,campaignId
+      lead=LLead.constructLeadFromAnswer phoneNumber,answer,isInterested,prefilledAnswer,channelCategory,channelId,from,to,modeOfCommute,campaignId
 
       lead.save
 

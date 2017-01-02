@@ -2,10 +2,11 @@ class LLead < ActiveRecord::Base
 
 
 
-  def self.constructLeadFromAnswer answer,isInterested,prefilledAnswer,channelCategory,channelId,from,to,modeOfCommute,campaignId
+  def self.constructLeadFromAnswer phoneNumber,answer,isInterested,prefilledAnswer,channelCategory,channelId,from,to,modeOfCommute,campaignId
 
 
     lead=LLead.new
+    lead.phone_number=phoneNumber
     lead.is_interested=isInterested
     lead.prefilled_answer=prefilledAnswer
     lead.channel_category_id=channelCategory
