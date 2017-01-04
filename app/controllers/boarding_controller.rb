@@ -125,7 +125,7 @@ class BoardingController < ApplicationController
     if from!=nil && to!=nil
 
       message="Please call customer at #{phoneNumber} going from #{from} to #{to}"
-    elsif route_id!=nil
+    elsif routeId!=nil
 
       message="Please call customer at #{phoneNumber} going on route #{routeId}"
     else
