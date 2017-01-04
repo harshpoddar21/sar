@@ -19,6 +19,21 @@ class BoardingCampaign
   end
 
 
+  def self.generateAppBoardingMessageForCampaign from,to,channelCategory,channelId,campaignId,phoneNumber
+
+    response= "Hi We are very excited to help you in making your office commute hassle free. Please use the coupon code TRIAL for a free ride. To download app click here. http://bity.ly/downloadShuttl"
+
+    response
+
+  end
+  def self.sendAppBoardingRequestViaSms phoneNumber,from,to,channelCategoryId,channelId,campaignId
+
+
+    message=self.generateAppBoardingMessageForCampaign from,to,channelCategoryId,channelId,campaignId,phoneNumber
+    TelephonyManager.sendSms phoneNumber,message
+
+  end
+
 
 
 end

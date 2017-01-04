@@ -85,6 +85,12 @@ Rails.application.routes.draw do
   root 'suggest#base'
 get 'payment/paymentDone'
 
+  get 'lcustomer/getDate' => "lcustomer#getData"
+  get 'lcustomer/updateLeadData' =>"lcustomer#updateLeadData"
+
+  post 'lcustomer/getDate' => "lcustomer#getData"
+  post 'lcustomer/updateLeadData' =>"lcustomer#updateLeadData"
+
   get 'payment/makePayment'
   post 'payment/makePayment'
 post 'suggest/createRoute'

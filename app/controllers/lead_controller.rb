@@ -25,15 +25,13 @@ class LeadController < ApplicationController
 
 
 
-    if phoneNumber!=nil && answer!=nil && isInterested!=nil && LLead.isValidLead?(phoneNumber)
+
+    if phoneNumber!=nil && answer!=nil && isInterested!=nil
 
 
-      lead=LLead.constructLeadFromAnswer phoneNumber,answer,isInterested,prefilledAnswer,channelCategory,channelId,from,to,modeOfCommute,campaignId
+      result=LNewLeadCampaign.saveNewLeadAndAttemptBoarding phoneNumber,answer,isInterested,prefilledAnswer,channelCategory,channelId,from,to,modeOfCommute,campaignId
 
-      lead.save
-
-      BoardingCampaign.sendBoardingRequestViaSms phoneNumber,from,to,channelCategory,channelId,campaignId
-      render :json=>{:success=>true}.to_json
+      render :json=>result.to_json
     else
       render :json=>{:success=>false,:message=>"You have already applied for a free trial"}.to_json
     end

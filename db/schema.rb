@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170102054618) do
+ActiveRecord::Schema.define(version: 20170104063738) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20170102054618) do
     t.text     "channel_category_id",     limit: 65535
     t.text     "channel_id",              limit: 65535
     t.text     "campaign_id",             limit: 65535
+    t.integer  "ums_booking_id",          limit: 4
   end
 
   create_table "boardings", force: :cascade do |t|
@@ -234,6 +235,12 @@ ActiveRecord::Schema.define(version: 20170102054618) do
     t.text     "channel_category_id", limit: 65535
   end
 
+  create_table "l_lead_routes", force: :cascade do |t|
+    t.integer  "route_id",   limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
   create_table "l_leads", force: :cascade do |t|
     t.text     "email",               limit: 65535
     t.text     "phone_number",        limit: 65535
@@ -248,6 +255,9 @@ ActiveRecord::Schema.define(version: 20170102054618) do
     t.integer  "is_interested",       limit: 4
     t.text     "channel_category_id", limit: 65535
     t.text     "channel_id",          limit: 65535
+    t.integer  "route_id",            limit: 4
+    t.integer  "no_of_rides",         limit: 4
+    t.integer  "subscription_bought", limit: 4
   end
 
   create_table "l_new_lead_campaigns", force: :cascade do |t|
@@ -255,6 +265,16 @@ ActiveRecord::Schema.define(version: 20170102054618) do
     t.text     "description", limit: 65535
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+  end
+
+  create_table "l_queries", force: :cascade do |t|
+    t.text     "phone_number",        limit: 65535
+    t.text     "query",               limit: 65535
+    t.text     "campaign_id",         limit: 65535
+    t.text     "channel_id",          limit: 65535
+    t.text     "channel_category_id", limit: 65535
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   create_table "l_unsubscribes", force: :cascade do |t|

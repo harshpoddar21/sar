@@ -92,4 +92,20 @@ class UmsSubscription < ActiveRecord::Base
 
   end
 
+  def self.filterUsersBoughtSubscriptionAmongUserIds userIds
+
+    if userIds!=nil && userIds.size>0
+      res=self.where("USER_ID in (#{userIds.join(",")})").select("distinct(USER_ID) as user_id")
+      bSubs=[]
+      res.each do |boughtUserId|
+        bSubs.push boughtUserId["user_id"]
+      end
+      bSubs
+    else
+
+      return []
+    end
+
+  end
+
 end

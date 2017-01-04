@@ -57,7 +57,8 @@ class BoardingController < ApplicationController
       details=getParametersFromDataField(params[:data])
       if details!=nil
 
-        LUnsubscribe.create(:phone_number=>details["phoneNumber"],:issue_id=>"unsubsribed_by_user",:campaign_id=>details["campaignId"],:category_channel_id=>details["channelCategoryId"],:channel_id=>details["channelId"])
+        LUnsubscribe.createIssueForLead details["phoneNumber"],"unsubscribed_by_user",details["channel_category_id"],details["channel_id"],details["campaign_id"]
+
 
       end
     end
