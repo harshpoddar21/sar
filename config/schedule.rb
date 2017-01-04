@@ -19,14 +19,14 @@
 
 # Learn more: http://github.com/javan/whenever
 every 3.minutes do
-  runner "BookingObserver.new.checkIfNewBookingHappened([831,832,242,578,579,243])"
+  #runner "BookingObserver.new.checkIfNewBookingHappened([831,832,242,578,579,243])"
 end
 every 2.minutes do
-  runner "ServiceController.new.refreshEtaForDiffPoints"
+  #runner "ServiceController.new.refreshEtaForDiffPoints"
 end
 
 every 2.minutes do
-  runner "ServiceController.new.refreshPositionForDiffPoints"
+  #runner "ServiceController.new.refreshPositionForDiffPoints"
 end
 
 every 10.minutes do
@@ -34,7 +34,7 @@ every 10.minutes do
 end
 
 every 10.minutes do
-  runner "Transaction.refreshPledge"
+  #runner "Transaction.refreshPledge"
 end
 every 1.hours do
   runner "DataUpdater.refreshFreshDeskData"
@@ -48,3 +48,22 @@ end
 every 1.day, :at => '3:32 pm' do
   runner "ReportingController.new.postNumbersForRouteIds([961,965,220,137,963,482,993,984],{961=>[960],220=>[219],965=>[964],137=>[136],963=>[962],483=>[482],993=>[482],984=>[983]})"
 end
+
+every 5.minues do
+  runner "LNewLeadCampaign.getOrganicLeads"
+end
+
+every 1.day, :at => '4:30 am' do
+  runner "LLead.updateRideCount"
+end
+every 1.day, :at => '10:30 am' do
+  runner "LLead.updateRideCount"
+end
+every 1.day, :at => '4:30 am' do
+  runner "LLead.updateSubscriptionStatus"
+end
+every 1.day, :at => '10:30 am' do
+  runner "LLead.updateSubscriptionStatus"
+end
+
+
