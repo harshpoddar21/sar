@@ -207,8 +207,17 @@ function renderLeadsOnSheet(leads){
 
 }
 
+function wrapTrackingInPayload(payload){
+
+
+    payload["channel_id"]=getActiveSheet().getRange(1,5,1,1).getValue();
+    payload["campaign_id"]="cc_calling";
+    payload["channel_category_id"]="call";
+    return payload;
+}
 
 function sendHttpPost(UrlNewLead,payload) {
+    payload=  wrapTrackingInPayload();
 
     Logger.log(JSON.stringify(payload));
     // Because payload is a JavaScript object, it will be interpreted as
@@ -223,7 +232,7 @@ function sendHttpPost(UrlNewLead,payload) {
         "payload" : payload
     };
 
-    resp=UrlNewLeadFetchApp.fetch(UrlNewLead, options);
+    resp=UrlFetchApp.fetch(UrlNewLead, options);
     return resp;
     /*
      var i=0;

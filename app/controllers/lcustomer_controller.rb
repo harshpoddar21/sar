@@ -49,7 +49,7 @@ class LcustomerController < ApplicationController
     end
     if boardingReq!=nil
       lead=LLead.find_by_phone_number phoneNumber
-      from=lead.from ? lead.from : "Home"
+      from= lead.from ? lead.from : "Home"
       to=lead.to ? lead.to : "Office"
       BoardingCampaign.sendAppBoardingRequestViaSms phoneNumber,from,to,channelCategoryId,channelId,campaignId
     end

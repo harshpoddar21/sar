@@ -21,7 +21,7 @@ class LNewLeadCampaign < ActiveRecord::Base
   end
   def self.saveNewLeadAndAttemptBoarding phoneNumber,answer,isInterested,prefilledAnswer,channelCategory,channelId,from,to,modeOfCommute,campaignId
 
-    response=Result.new
+    result=Result.new
 
 
 
@@ -36,8 +36,10 @@ class LNewLeadCampaign < ActiveRecord::Base
         lead.save
 
         BoardingCampaign.sendBoardingRequestViaSms phoneNumber,from,to,channelCategory,channelId,campaignId
+        result.success=true
 
       else
+
         result.success=false
         result.message="You have already taken a travel ride with us"
 
@@ -51,6 +53,8 @@ class LNewLeadCampaign < ActiveRecord::Base
 
 
     end
+
+    result
 
   end
 
