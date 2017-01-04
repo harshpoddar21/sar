@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  phone_number: MyText
+  from: MyText
+  to: MyText
+  route_id: 1
+  exec_no: MyText
+
+two:
+  phone_number: MyText
+  from: MyText
+  to: MyText
+  route_id: 1
+  exec_no: MyText

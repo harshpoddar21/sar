@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170104063738) do
+ActiveRecord::Schema.define(version: 20170104150929) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -38,6 +38,17 @@ ActiveRecord::Schema.define(version: 20170104063738) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "is_verified",  limit: 4
+  end
+
+  create_table "boarding_assistances", force: :cascade do |t|
+    t.text     "owner_phone_number", limit: 65535
+    t.text     "from",               limit: 65535
+    t.text     "to",                 limit: 65535
+    t.integer  "route_id",           limit: 4
+    t.text     "exec_no",            limit: 65535
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.text     "lead_phone_number",  limit: 65535
   end
 
   create_table "boarding_requests", force: :cascade do |t|
@@ -347,6 +358,13 @@ ActiveRecord::Schema.define(version: 20170104063738) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.text     "landmark",   limit: 65535
+  end
+
+  create_table "point_owners", force: :cascade do |t|
+    t.text     "from",               limit: 65535
+    t.text     "owner_phone_number", limit: 65535
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   create_table "poster_referrals", force: :cascade do |t|

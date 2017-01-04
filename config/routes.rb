@@ -111,6 +111,8 @@ get 'suggest/index_orca'
 
   get 'boarding/unsubscribe'
 
+  get 'boarding/assistBoarding'
+
   get 'boarding/getBoardingDetails'
   post 'boarding/submitBoarding'
 

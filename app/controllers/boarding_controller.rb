@@ -90,4 +90,54 @@ class BoardingController < ApplicationController
     headers['Access-Control-Allow-Origin'] = '*'
   end
 
+
+  def assistBoarding
+
+    phoneNumber=params[:clid]
+
+    lead=LLead.find_by_phone_number phoneNumber
+    owner=nil
+    from=nil
+    to=nil
+    routeId=nil
+
+
+    if lead!=nil
+
+      owner=PointOwner.find_by_from lead.from ? lead.from : "default"
+      if owner==nil
+        owner=PointOwner.find_by_from "default"
+      end
+      from= lead.from
+      to=lead.to
+      routeId=lead.route_id
+
+
+    else
+
+      owner=PointOwner.find_by_from "default"
+    end
+
+
+    message=""
+    BoardingAssistance.create(:lead_phone_number=>phoneNumber,:from=>from,:owner_phone_number=>owner.owner_phone_number,:route_id=>routeId)
+    if from!=nil && to!=nil
+
+      message="Please call customer at #{phoneNumber} going from #{from} to #{to}"
+    elsif route_id!=nil
+
+      message="Please call customer at #{phoneNumber} going on route #{routeId}"
+    else
+
+      message="Please call customer at #{phoneNumber}"
+
+    end
+
+    TelephonyManager.sendSms owner.owner_phone_number,message
+    TelephonyManager.sendSms phoneNumber,"Thank you for contacing Shuttl. You will get a callback from our side in next 10 mins."
+
+    render :text=>"OK"
+
+  end
+
 end
