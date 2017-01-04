@@ -42,6 +42,7 @@ class BoardingController < ApplicationController
       boarding=BoardingRequest.create(:phone_number=>phoneNumber,:requested_boarding_time=>requestedBoardingTime,:from=>from,:to=>to,:channel_category_id=>channelCategoryId,:channel_id=>channelId,:campaign_id=>campaignId)
       response[:success]=true
       TelephonyManager.sendSms phoneNumber,"Your Shuttl booking id is #{123043+boarding.id}. Please show this booking id to driver to board the Shuttl. You may also call on 01133147040 for any assistance required to board the Shuttl."
+      TelephonyManager.sendSms phoneNumber,"01133147040"
     else
       response[:success]=false
     end
