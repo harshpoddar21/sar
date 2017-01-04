@@ -49,7 +49,7 @@ every 1.day, :at => '3:32 pm' do
   runner "ReportingController.new.postNumbersForRouteIds([961,965,220,137,963,482,993,984],{961=>[960],220=>[219],965=>[964],137=>[136],963=>[962],483=>[482],993=>[482],984=>[983]})"
 end
 
-every 5.minues do
+every 5.minutes do
   runner "LNewLeadCampaign.getOrganicLeads"
 end
 
