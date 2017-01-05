@@ -65,28 +65,60 @@ class LLead < ActiveRecord::Base
 
 
     leadPhoneNumbers=Array.new
-
+    leadGenerated=Hash.new
     LLead.all.each do |ll|
 
-      leadPhoneNumbers.push ll.phone_number
+
+      leadGenerated[ll.phone_number.to_s]=ll
+      leadPhoneNumbers.push ll.phone_number.to_s
+
     end
 
     routesServed=LLeadRoute.getAllRouteIds
 
 
     result=UmsBooking.where("ROUTE_ID in (#{routesServed.join(",")})")
-               .where("PHONE_NUMBER in (#{leadPhoneNumbers.join(",")})").group("PHONE_NUMBER")
-               .select("PHONE_NUMBER,count(*) as BOOKING_COUNT").joins("join USERS on BOOKINGS.USER_ID=USERS.USER_ID")
+               .where("PHONE_NUMBER in (#{leadPhoneNumbers.join(",")})")
+               .joins("join USERS on BOOKINGS.USER_ID=USERS.USER_ID")
+                .where("BOARDING_TIME>#{(1483563778-86400*5)*1000}").select("PHONE_NUMBER,BOARDING_TIME")
+
+    resultFinal=Hash.new
 
     result.each do |res|
+      phoneNumber=res["PHONE_NUMBER"].to_s
+      boardingTime=(res["BOARDING_TIME"]/1000)
+      if !leadGenerated[phoneNumber.to_s]
+        puts "not found"
+        next
+      end
+      if boardingTime>((leadGenerated[phoneNumber.to_s]).created_at.to_i-600)
+        if resultFinal[phoneNumber]==nil
+          resultFinal[phoneNumber]=1
+        else
+          resultFinal[phoneNumber]=resultFinal[phoneNumber]+1
+        end
+      end
+    end
 
-      llead=LLead.find_by_phone_number res["PHONE_NUMBER"]
-      llead.no_of_rides=res["BOOKING_COUNT"]
-      llead.save
+    resultFinal.each do |phoneNumber,totalRidesAfterLead|
 
+      if totalRidesAfterLead>leadGenerated[phoneNumber].no_of_rides
+        self.updateRideCountForLead phoneNumber,totalRidesAfterLead
+      end
     end
   end
 
+
+  def self.updateRideCountForLead phoneNumber,rides
+
+    lead=LLead.find_by_phone_number phoneNumber
+    if lead.no_of_rides<rides
+      lead.no_of_rides=rides
+      lead.save
+
+    end
+
+  end
 
   def self.updateSubscriptionStatus
 
@@ -94,24 +126,41 @@ class LLead < ActiveRecord::Base
 
     leadPhoneNumbers=Array.new
 
-    LLead.all.each do |ll|
+    leadGenerated=Hash.new
 
+    LLead.all.each do |ll|
+      leadGenerated[ll.phone_number.to_s]=ll
       leadPhoneNumbers.push ll.phone_number
     end
 
     result=UmsSubscription.where("PHONE_NUMBER in (#{leadPhoneNumbers.join(",")})")
-        .joins(" join USERS on USERS.USER_ID=USER_SUBSCRIPTIONS.USER_ID").select("PHONE_NUMBER")
+        .joins(" join USERS on USERS.USER_ID=USER_SUBSCRIPTIONS.USER_ID").select("PHONE_NUMBER,USER_SUBSCRIPTIONS.CREATED_TIME")
 
     result.each do |res|
 
-      llead=self.find_by_phone_number res["PHONE_NUMBER"]
-      llead.subscription_bought=1
-      llead.save
+      if !leadGenerated[res["PHONE_NUMBER"].to_s]
+
+        puts "Not Found"
+        next
+      end
+
+      if (res["CREATED_TIME"]/1000)>(leadGenerated[res["PHONE_NUMBER"].to_s].created_at.to_i-86400)
+
+        self.changeSubscriptionBoughtStatus res["PHONE_NUMBER"].to_s,1
+      end
 
     end
 
   end
 
+  def self.changeSubscriptionBoughtStatus phoneNumber,status
+    llead=self.find_by_phone_number phoneNumber
+    if llead.subscription_bought==0
+      llead.subscription_bought=1
+      llead.save
+    end
+
+  end
 
   def self.findAllLeadsStartingFromAndTo from,to
 
