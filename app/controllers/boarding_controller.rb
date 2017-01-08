@@ -128,6 +128,8 @@ class BoardingController < ApplicationController
 
     if phoneNumber!=nil && requestedBoardingTime!=nil && from!=nil && to!=nil && channelCategoryId!=nil && channelId!=nil && campaignId!=nil
 
+
+
       BoardingCampaign.createBoardingRequest phoneNumber,requestedBoardingTime,from,to,channelCategoryId,channelId,campaignId
       response[:success]=true
 

@@ -29,7 +29,13 @@ class LeadController < ApplicationController
     if phoneNumber!=nil && answer!=nil && isInterested!=nil
 
 
-      result=LNewLeadCampaign.saveNewLeadAndAttemptBoarding phoneNumber,answer,isInterested,prefilledAnswer,channelCategory,channelId,from,to,modeOfCommute,campaignId
+      lastBooking=UmsBooking.joins(" join USERS on USERS.USER_ID=BOOKINGS.USER_ID").where("PHONE_NUMBER=#{phoneNumber}").last
+
+      if lastBooking==nil || (lastBooking["BOARDING_TIME"]/1000)<(Time.now.to_i-30*86400)
+        result=LNewLeadCampaign.saveNewLeadAndAttemptBoarding phoneNumber,answer,isInterested,prefilledAnswer,channelCategory,channelId,from,to,modeOfCommute,campaignId
+      else
+        result={:success=>false,:message=>"Sorry this is only valid for new user"}
+      end
 
       render :json=>result.to_json
     else
