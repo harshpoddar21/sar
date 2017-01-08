@@ -85,6 +85,16 @@ Rails.application.routes.draw do
   root 'suggest#base'
 get 'payment/paymentDone'
 
+
+  get 'boarding/submitBoardingMessage'
+  post 'boarding/submitBoardingMessage'
+
+  get 'route/submitPickUpPointClusterMapping'
+  post 'route/submitPickUpPointClusterMapping'
+
+  get 'route/submitLeadRoutes'
+  post 'route/submitLeadRoutes'
+
   get 'lcustomer/getDate' => "lcustomer#getData"
   get 'lcustomer/updateLeadData' =>"lcustomer#updateLeadData"
 

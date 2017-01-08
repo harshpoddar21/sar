@@ -7,4 +7,11 @@ class LUnsubscribe < ActiveRecord::Base
 
   end
 
+
+  def self.isNumberUnsubscribed? phoneNumber
+
+    self.find_by_phone_number(phoneNumber)!=nil
+
+  end
+
 end

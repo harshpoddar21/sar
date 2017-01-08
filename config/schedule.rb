@@ -67,3 +67,14 @@ every 1.day, :at => '10:30 am' do
 end
 
 
+every 2.minutes do
+  runner "BoardingCampaign.boardingReminder"
+end
+
+every 1.day, :at => '2:00 am' do
+runner "BoardingCampaign.boardingSmsCampaignToPeopleWithNoAppRides"
+end
+
+every 1.day, :at => '11:00 am' do
+  runner "BoardingCampaign.boardingSmsCampaignToPeopleWithNoAppRides"
+end

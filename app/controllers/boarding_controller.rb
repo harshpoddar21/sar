@@ -2,21 +2,84 @@ class BoardingController < ApplicationController
 
   def getBoardingDetails
 
+
+
+
+    currentTime=Time.now.to_i
     data=params[:data]
     response=Hash.new
     decodedValue=Utils.decodeBase64Generated data
     if decodedValue.length==6
       response["success"]=true
       response["data"]=getParametersFromDataField data
-      bookingButtons=Array.new
-      if Utils.getTodayMorningUnixTime+11*3600>Time.now.to_i
-        bookingButtons.push({"unixTime"=>Time.now.to_i+300,"label"=>"Today morning"})
-        bookingButtons.push({"unixTime"=>Time.now.to_i+17*3600,"label"=>"Today evening"})
+      sessions=Array.new
+
+
+      if Time.at(currentTime).wday!=0 && Time.at(currentTime).wday!=6
+        if (Utils.getTodayMorningUnixTime+11*3600)>currentTime
+          a={:label=>"Today Morning"}
+          a[:slots]=Array.new
+
+          firstTime= currentTime>(Utils.getTodayMorningUnixTime+7*3600) ? currentTime:Utils.getTodayMorningUnixTime+7*3600
+
+          lastTime=Utils.getTodayMorningUnixTime+11*3600
+
+          (firstTime..lastTime).step(600).each do |time|
+            a[:slots].push({:unixTime=>time,:label=>Time.at(time+5*3600+1800).strftime("%H:%M")})
+          end
+          sessions.push(a)
+          a={:label=>"Today Evening"}
+          a[:slots]=Array.new
+
+          firstTime=Utils.getTodayMorningUnixTime+16*3600
+          lastTime=Utils.getTodayMorningUnixTime+20*3600
+          ((firstTime)..lastTime).step(600).each do |time|
+            a[:slots].push({:unixTime=>time,:label=>Time.at(time+5*3600+1800).strftime("%H:%M")})
+          end
+          sessions.push a
+        else
+          a={:label=>"Today Evening"}
+          a[:slots]=Array.new
+          firstTime= currentTime>(Utils.getTodayMorningUnixTime+16*3600) ? currentTime:Utils.getTodayMorningUnixTime+16*3600
+          lastTime=Utils.getTodayMorningUnixTime+20*3600
+          (firstTime..lastTime).step(600).each do |time|
+            a[:slots].push({:unixTime=>time,:label=>Time.at(time+5*3600+1800).strftime("%H:%M")})
+          end
+          sessions.push(a)
+          a={:label=>"Tomorrow Morning"}
+          a[:slots]=Array.new
+
+          lastTime=Utils.getTodayMorningUnixTime+11*3600+86400
+          (((Utils.getTodayMorningUnixTime+7*3600+86400))..lastTime).step(600).each do |time|
+            a[:slots].push({:unixTime=>time,:label=>Time.at(time+5*3600+1800).strftime("%H:%M")})
+          end
+          sessions.push(a)
+        end
       else
-        bookingButtons.push({:unixTime=>Time.now.to_i+17*3600,:label=>"Today evening"})
-        bookingButtons.push({:unixTime=>Time.now.to_i+31.5*3600,:label=>"Tomorrow morning"})
+
+        a={:label=>"Monday Morning"}
+        a[:slots]=Array.new
+        deltaDay=Time.at(currentTime).wday==0 ? 1:2
+
+        lastTime=Utils.getTodayMorningUnixTime+deltaDay*86400+11*3600
+        firstTime=Utils.getTodayMorningUnixTime+deltaDay*86400+7*3600
+        (firstTime..lastTime).step(600).each do |time|
+          a[:slots].push({:unixTime=>time,:label=>Time.at(time+5*3600+1800).strftime("%H:%M")})
+        end
+        sessions.push(a)
+        a={:label=>"Monday Evening"}
+        a[:slots]=Array.new
+
+        lastTime=Utils.getTodayMorningUnixTime+deltaDay*86400+20*3600
+        firstTime=Utils.getTodayMorningUnixTime+deltaDay*86400+16*3600
+        (firstTime..lastTime).step(600).each do |time|
+          a[:slots].push({:unixTime=>time,:label=>Time.at(time+5*3600+1800).strftime("%H:%M")})
+        end
+        sessions.push(a)
+
       end
-      response["bookingButtons"]=bookingButtons
+
+      response["sessions"]=sessions
     else
       response["success"]=false
     end
@@ -26,10 +89,35 @@ class BoardingController < ApplicationController
   end
 
 
+  def submitBoardingMessage
+
+    data=params[:data]
+
+    if data!=nil
+
+      data.each do |boardingMessage|
+
+        from=boardingMessage["From"]
+        to=boardingMessage["To"]
+        message=boardingMessage["Message"]
+
+        if from==nil || to==nil || message==nil
+          raise CustomError::ParamsException,"Invalid Params"
+        end
+        BoardingSmsCampaignMessage.insertMessage from,to,message
+      end
+
+    end
+
+    render :text=>"OK"
+
+  end
+
+
   def submitBoarding
 
     phoneNumber=params["result"]["data"]["phoneNumber"]
-    requestedBoardingTime=params["optionSelected"]
+    requestedBoardingTime=params["timeSlotSelected"]
     from=params["result"]["data"]["from"]
     to=params["result"]["data"]["to"]
     channelCategoryId=params["result"]["data"]["channelCategoryId"]
@@ -39,10 +127,11 @@ class BoardingController < ApplicationController
     response=Hash.new
 
     if phoneNumber!=nil && requestedBoardingTime!=nil && from!=nil && to!=nil && channelCategoryId!=nil && channelId!=nil && campaignId!=nil
-      boarding=BoardingRequest.create(:phone_number=>phoneNumber,:requested_boarding_time=>requestedBoardingTime,:from=>from,:to=>to,:channel_category_id=>channelCategoryId,:channel_id=>channelId,:campaign_id=>campaignId)
+
+      BoardingCampaign.createBoardingRequest phoneNumber,requestedBoardingTime,from,to,channelCategoryId,channelId,campaignId
       response[:success]=true
-      TelephonyManager.sendSms phoneNumber,"Your Shuttl booking id is #{123043+boarding.id}. Please show this booking id to driver to board the Shuttl. You may also call on 01133147040 for any assistance required to board the Shuttl."
-      TelephonyManager.sendSms phoneNumber,"01133147040"
+
+
     else
       response[:success]=false
     end
@@ -140,5 +229,8 @@ class BoardingController < ApplicationController
     render :text=>"OK"
 
   end
+
+
+
 
 end

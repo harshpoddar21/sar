@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170104150929) do
+ActiveRecord::Schema.define(version: 20170108111504) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -65,6 +65,15 @@ ActiveRecord::Schema.define(version: 20170104150929) do
     t.text     "channel_id",              limit: 65535
     t.text     "campaign_id",             limit: 65535
     t.integer  "ums_booking_id",          limit: 4
+    t.integer  "reminder_sent",           limit: 4
+  end
+
+  create_table "boarding_sms_campaign_messages", force: :cascade do |t|
+    t.text     "from",       limit: 65535
+    t.text     "to",         limit: 65535
+    t.text     "message",    limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "boardings", force: :cascade do |t|
@@ -247,9 +256,11 @@ ActiveRecord::Schema.define(version: 20170104150929) do
   end
 
   create_table "l_lead_routes", force: :cascade do |t|
-    t.integer  "route_id",   limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.integer  "route_id",         limit: 4
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.integer  "is_reverse_route", limit: 4
+    t.text     "name",             limit: 65535
   end
 
   create_table "l_leads", force: :cascade do |t|
@@ -348,6 +359,14 @@ ActiveRecord::Schema.define(version: 20170104150929) do
     t.text     "phone_number", limit: 65535
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+  end
+
+  create_table "pick_up_point_cluster_mappings", force: :cascade do |t|
+    t.text     "name",       limit: 65535
+    t.integer  "from_id",    limit: 4
+    t.text     "cluster",    limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "pick_ups", force: :cascade do |t|

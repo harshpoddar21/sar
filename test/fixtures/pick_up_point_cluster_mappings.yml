@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyText
+  from_id: 1
+  cluster: MyText
+
+two:
+  name: MyText
+  from_id: 1
+  cluster: MyText
