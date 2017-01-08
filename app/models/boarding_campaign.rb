@@ -80,10 +80,10 @@ class BoardingCampaign
   def self.sendBoardingAssistanceMessage phoneNumber,from,to
 
     message="If you have any queries regarding "+
-     "pick up point/timings or any other assistance for boarding the Shuttl, please add +91-9015122792 to your whatsapp. "+
+     "pick up point/timings or any other assistance for boarding the Shuttl, please add 9015122792 to your whatsapp. "+
      "You can whatsapp us 24/7 for immediate resolution. We also have ground executives wearing Shuttl branded T-Shirts at pick up point to assist you in boarding Shuttl."
     TelephonyManager.sendSms phoneNumber,message
-    TelephonyManager.sendSms phoneNumber,"+91-9015122792"
+    TelephonyManager.sendSms phoneNumber,"9015122792"
   end
 
 
