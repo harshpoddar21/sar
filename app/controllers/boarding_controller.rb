@@ -24,7 +24,7 @@ class BoardingController < ApplicationController
 
           lastTime=Utils.getTodayMorningUnixTime+11*3600
 
-          (firstTime..lastTime).step(600).each do |time|
+          (firstTime..lastTime).step(900).each do |time|
             a[:slots].push({:unixTime=>time,:label=>Time.at(time+5*3600+1800).strftime("%H:%M")})
           end
           sessions.push(a)
@@ -33,7 +33,7 @@ class BoardingController < ApplicationController
 
           firstTime=Utils.getTodayMorningUnixTime+16*3600
           lastTime=Utils.getTodayMorningUnixTime+20*3600
-          ((firstTime)..lastTime).step(600).each do |time|
+          ((firstTime)..lastTime).step(900).each do |time|
             a[:slots].push({:unixTime=>time,:label=>Time.at(time+5*3600+1800).strftime("%H:%M")})
           end
           sessions.push a
@@ -42,7 +42,7 @@ class BoardingController < ApplicationController
           a[:slots]=Array.new
           firstTime= currentTime>(Utils.getTodayMorningUnixTime+16*3600) ? currentTime:Utils.getTodayMorningUnixTime+16*3600
           lastTime=Utils.getTodayMorningUnixTime+20*3600
-          (firstTime..lastTime).step(600).each do |time|
+          (firstTime..lastTime).step(900).each do |time|
             a[:slots].push({:unixTime=>time,:label=>Time.at(time+5*3600+1800).strftime("%H:%M")})
           end
           sessions.push(a)
@@ -63,7 +63,7 @@ class BoardingController < ApplicationController
 
         lastTime=Utils.getTodayMorningUnixTime+deltaDay*86400+11*3600
         firstTime=Utils.getTodayMorningUnixTime+deltaDay*86400+7*3600
-        (firstTime..lastTime).step(600).each do |time|
+        (firstTime..lastTime).step(900).each do |time|
           a[:slots].push({:unixTime=>time,:label=>Time.at(time+5*3600+1800).strftime("%H:%M")})
         end
         sessions.push(a)
@@ -72,7 +72,7 @@ class BoardingController < ApplicationController
 
         lastTime=Utils.getTodayMorningUnixTime+deltaDay*86400+20*3600
         firstTime=Utils.getTodayMorningUnixTime+deltaDay*86400+16*3600
-        (firstTime..lastTime).step(600).each do |time|
+        (firstTime..lastTime).step(900).each do |time|
           a[:slots].push({:unixTime=>time,:label=>Time.at(time+5*3600+1800).strftime("%H:%M")})
         end
         sessions.push(a)
