@@ -75,8 +75,8 @@
       <file leaf-file-name="boarding_campaign.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/boarding_campaign.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="86" column="5" selection-start-line="86" selection-start-column="5" selection-end-line="86" selection-end-column="5" />
+            <state relative-caret-position="105">
+              <caret line="10" column="79" selection-start-line="10" selection-start-column="79" selection-end-line="10" selection-end-column="79" />
               <folding />
             </state>
           </provider>
@@ -990,7 +990,7 @@
       <workItem from="1483889091597" duration="365000" />
       <workItem from="1483890070790" duration="857000" />
       <workItem from="1483891820659" duration="39000" />
-      <workItem from="1483891883684" duration="882000" />
+      <workItem from="1483891883684" duration="1162000" />
     </task>
     <task id="LOCAL-00001" summary="UI Fixes">
       <created>1463684556641</created>
@@ -1020,7 +1020,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="581894000" />
+    <option name="totallyTimeSpent" value="582174000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -1463,8 +1463,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/boarding_campaign.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="86" column="5" selection-start-line="86" selection-start-column="5" selection-end-line="86" selection-end-column="5" />
+        <state relative-caret-position="105">
+          <caret line="10" column="79" selection-start-line="10" selection-start-column="79" selection-end-line="10" selection-end-column="79" />
           <folding />
         </state>
       </provider>

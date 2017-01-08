@@ -7,14 +7,8 @@ class BoardingCampaign
 
     if !(LUnsubscribe.isNumberUnsubscribed?(phoneNumber))
 
-      if Time.now.to_i>Utils.getTodayMorningUnixTime+11*3600
-        fromM=to
-        toM=from
-      else
-        fromM=from
-        toM=to
-      end
-      message=BoardingSmsCampaignMessage.getBoardingMessage phoneNumber,fromM,toM,channelCategoryId,channelId,campaignId
+
+      message=BoardingSmsCampaignMessage.getBoardingMessage phoneNumber,from,to,channelCategoryId,channelId,campaignId
       TelephonyManager.sendSms phoneNumber,message
     else
 
