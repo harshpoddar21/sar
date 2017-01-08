@@ -89,7 +89,7 @@ class BoardingCampaign
 
   def self.createBoardingRequest phoneNumber,requestedBoardingTime,from,to,channelCategoryId,channelId,campaignId
 
-    boarding=BoardingRequest.createBoardingRequest(:phone_number=>phoneNumber,:requested_boarding_time=>requestedBoardingTime,:from=>from,:to=>to,:channel_category_id=>channelCategoryId,:channel_id=>channelId,:campaign_id=>campaignId)
+    boarding=BoardingRequest.createBoardingRequest phoneNumber,requestedBoardingTime,from,to,channelCategoryId,channelId,campaignId
     TelephonyManager.sendSms phoneNumber,"Your Shuttl Boooking id is #{12034+boarding.id}. Please show this booking id to driver to board Shuttl."
     self.sendBoardingAssistanceMessage phoneNumber,from,to
 
