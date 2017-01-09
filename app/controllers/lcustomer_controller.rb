@@ -7,6 +7,15 @@ class LcustomerController < ApplicationController
 
     allLeads=LLead.findAllLeadsStartingFromAndTo from,to
 
+    boardingRequestLast=Hash.new
+
+    BoardingRequest.all.each do |board|
+
+      if boardingRequestLast[board.phone_number]==nil || boardingRequestLast[board.phone_number]<board.requested_boarding_time
+        boardingRequestLast[board.phone_number]=board.requested_boarding_time
+      end
+
+    end
     queriesResult=Array.new
     phoneNumbers=Array.new
     allLeads.each do |lead|
@@ -28,6 +37,7 @@ class LcustomerController < ApplicationController
       else
         lead["past_response"]=queries[lead["phone_number"]]
       end
+      lead["requested_boarding_time"]=boardingRequestLast[lead["phone_number"]]
     end
 
     render :json=>allLeads.to_json
