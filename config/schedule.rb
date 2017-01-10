@@ -78,3 +78,10 @@ end
 every 1.day, :at => '11:00 am' do
   runner "BoardingCampaign.boardingSmsCampaignToPeopleWithNoAppRides"
 end
+
+every 10.minutes do
+  runner "Analytics.updateSubscriptionData"
+end
+every 10.minutes do
+  runner "Analytics.updateBookingData"
+end

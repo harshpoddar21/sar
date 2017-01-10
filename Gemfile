@@ -14,6 +14,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'mysql2', '~> 0.3.20'
 gem 'bitly'
 
+gem 'rest-client'
 gem 'prawn-table'
 gem 'whenever', require: true
 
@@ -28,6 +29,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
