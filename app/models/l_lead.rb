@@ -112,7 +112,7 @@ class LLead < ActiveRecord::Base
   def self.updateRideCountForLead phoneNumber,rides
 
     lead=LLead.find_by_phone_number phoneNumber
-    if lead.no_of_rides<rides
+    if lead.no_of_rides==nil || lead.no_of_rides<rides
       lead.no_of_rides=rides
       lead.save
 
