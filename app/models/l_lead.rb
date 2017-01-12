@@ -102,7 +102,7 @@ class LLead < ActiveRecord::Base
 
     resultFinal.each do |phoneNumber,totalRidesAfterLead|
 
-      if totalRidesAfterLead>leadGenerated[phoneNumber].no_of_rides
+      if leadGenerated[phoneNumber].no_of_rides==nil || totalRidesAfterLead>leadGenerated[phoneNumber].no_of_rides
         self.updateRideCountForLead phoneNumber,totalRidesAfterLead
       end
     end
