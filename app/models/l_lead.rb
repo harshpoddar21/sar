@@ -155,8 +155,8 @@ class LLead < ActiveRecord::Base
 
   def self.changeSubscriptionBoughtStatus phoneNumber,status
     llead=self.find_by_phone_number phoneNumber
-    if llead.subscription_bought==0
-      llead.subscription_bought=1
+    if llead.subscription_bought!=status
+      llead.subscription_bought=status
       llead.save
     end
 
