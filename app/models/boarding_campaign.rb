@@ -47,7 +47,7 @@ class BoardingCampaign
 
   def self.boardingSmsCampaignToPeopleWithNoAppRides
 
-    leads=LLead.where(:no_of_rides => 0)
+    leads=LLead.where("no_of_rides = 0 or no_of_rides is null")
 
     boardingRequestedNumbers=Array.new
     BoardingRequest.all.each do |boardingReq|
