@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170110045904) do
+ActiveRecord::Schema.define(version: 20170116014119) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -260,6 +260,14 @@ ActiveRecord::Schema.define(version: 20170110045904) do
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.text     "channel_category_id", limit: 65535
+  end
+
+  create_table "l_lead_feedbacks", force: :cascade do |t|
+    t.text     "response",         limit: 65535
+    t.text     "phone_number",     limit: 65535
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.text     "feedback_channel", limit: 65535
   end
 
   create_table "l_lead_routes", force: :cascade do |t|

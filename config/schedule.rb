@@ -85,3 +85,12 @@ end
 every 10.minutes do
   runner "Analytics.updateBookingData"
 end
+
+
+every 1.day, :at => '6:00 am' do
+  runner "LLeadFeedback.generateLeadFeedback"
+end
+
+every 1.day, :at => '3:00 pm' do
+  runner "LLeadFeedback.generateLeadFeedback"
+end

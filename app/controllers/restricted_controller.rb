@@ -81,6 +81,21 @@ class RestrictedController < ApplicationController
   end
 
 
+
+  def leadFeedbackReceived
+
+    phoneNumber=params[:caller]
+    response=params[:input]
+
+    isSuccess=LLeadFeedback.createLeadFeedback phoneNumber,LLeadFeedback::Channel::VIA_CALL,response
+
+    if !isSuccess
+      logger.error "Cannot save feedback from caller "+phoneNumber.to_s+" and response "+response
+
+    end
+
+    render :text=>"OK"
+  end
   def makeEveningIvrCall
 
     alreadyResponded=Array.new
