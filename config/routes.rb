@@ -64,7 +64,7 @@ Rails.application.routes.draw do
   get 'customercare/sendSmsForBooking'
   post 'customercare/sendSmsForBooking'
 
-
+  get 'restricted/leadFeedbackReceived'
   get 'restricted/getDetailsForLead'
   get 'restricted/feedbackReceived'
   get 'restricted/responseReceived'
