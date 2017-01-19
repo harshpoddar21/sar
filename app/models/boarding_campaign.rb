@@ -114,4 +114,24 @@ class BoardingCampaign
   end
 
 
+  def self.boardingIVRCampaign
+
+    self.sendBoardingIVRCampaignWithFromTo "ballabhgarh","Sector 62",17522
+
+  end
+
+  def self.sendBoardingIVRCampaignWithFromTo from,to,ivrCode
+
+    LLead.where(:from=>from).where(:to=>to)
+        .where("phone_number not in (select phone_number
+    from boarding_requests where `from`='#{from}' and `to`='#{to}')").where("`from`='#{from}' and `to`='#{to}'").each do |llead|
+
+      TelephonyManager.sendIvrCallTo ivrCode,llead.phone_number
+
+    end
+
+  end
+
+
+
 end

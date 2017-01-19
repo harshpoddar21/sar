@@ -67,6 +67,7 @@ Rails.application.routes.draw do
   get 'restricted/leadFeedbackReceived'
   get 'restricted/getDetailsForLead'
   get 'restricted/feedbackReceived'
+  get 'restricted/boardingRequestReceived'
   get 'restricted/responseReceived'
   get 'restricted/makeEveningIvrCall'
   get 'restricted/getEveningTime'

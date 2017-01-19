@@ -96,6 +96,20 @@ class RestrictedController < ApplicationController
 
     render :text=>"OK"
   end
+  def boardingRequestReceived
+
+    phoneNumber=params[:caller]
+    response=params[:input]
+
+    isSuccess=BoardingIvrResponse.saveResponse phoneNumber,response
+
+    if !isSuccess
+      logger.error "Cannot save boarding from caller "+phoneNumber.to_s+" and response "+response
+
+    end
+
+    render :text=>"OK"
+  end
   def makeEveningIvrCall
 
     alreadyResponded=Array.new
