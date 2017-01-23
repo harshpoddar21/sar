@@ -17,8 +17,10 @@ class BoardingIvrResponse < ActiveRecord::Base
           puts "lead not found"
         end
 
-      else response.to_i==2
+      elsif response.to_i==2
         LUnsubscribe.createIssueForLead phoneNumber,"unsubscribed by user","ivr","ivr_calling","automated_ivr_boarding"
+      else
+        puts "response is 3"
       end
 
     true
