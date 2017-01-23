@@ -7,7 +7,7 @@ class RouteMapping < ActiveRecord::Base
     if mapping!=nil
       mapping.route_id=routeId
     else
-      self.create(:from=>from,:to=>to,:routeId=>routeId)
+      self.create(:from=>from,:to=>to,:route_id=>routeId)
     end
   end
 end
