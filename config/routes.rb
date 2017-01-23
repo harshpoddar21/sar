@@ -73,6 +73,9 @@ Rails.application.routes.draw do
   get 'restricted/getEveningTime'
   get 'restricted/getDecryptedUserId'
 
+
+  get 'route/submitRouteMapping'
+
   get 'suggest/eveningTime' => "restricted#eveningTime"
 
 

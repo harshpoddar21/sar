@@ -46,4 +46,27 @@ class RouteController < ApplicationController
     render :text=>"OK"
 
   end
+
+  def submitRouteMapping
+    data=params[:data]
+
+    if data!=nil
+
+      data.each do |mapping|
+
+        from=mapping["From"]
+        to=mapping["To"]
+        routeId=mapping["Route Id"]
+
+        if routeId==nil || from==nil || to==nil
+          raise CustomError::ParamsException,"Invalid Params"
+        end
+        RouteMapping.insertRouteMapping routeId,from,to
+      end
+
+    end
+
+    render :text=>"OK"
+
+  end
 end
