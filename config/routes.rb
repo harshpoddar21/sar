@@ -76,6 +76,8 @@ Rails.application.routes.draw do
 
   get 'route/submitRouteMapping'
 
+  post 'route/submitRouteMapping'
+
   get 'suggest/eveningTime' => "restricted#eveningTime"
 
 
