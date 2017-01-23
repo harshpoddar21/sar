@@ -233,6 +233,13 @@ class BoardingController < ApplicationController
   end
 
 
+  def sendBoardingIVRRequest
+
+    BoardingCampaign.boardingIVRCampaign
+
+  end
+
+
 
 
 end

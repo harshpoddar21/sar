@@ -78,6 +78,9 @@ Rails.application.routes.draw do
 
   post 'route/submitRouteMapping'
 
+
+  get 'boarding/sendBoardingIVRRequest'
+
   get 'suggest/eveningTime' => "restricted#eveningTime"
 
 

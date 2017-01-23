@@ -116,7 +116,12 @@ class BoardingCampaign
 
   def self.boardingIVRCampaign
 
-    self.sendBoardingIVRCampaignWithFromTo "ballabhgarh","Sector 62",17522
+
+    RouteMapping.where("route_id in (1034,1038,1046)").each do |mapping|
+
+      self.sendBoardingIVRCampaignWithFromTo mapping.from,mapping.to,12365
+
+    end
 
   end
 
@@ -126,7 +131,11 @@ class BoardingCampaign
         .where("phone_number not in (select phone_number
     from boarding_requests where `from`='#{from}' and `to`='#{to}')").where("`from`='#{from}' and `to`='#{to}'").each do |llead|
 
-      TelephonyManager.sendIvrCallTo ivrCode,llead.phone_number
+      if !(LUnsubscribe.isNumberUnsubscribed? llead.phone_number)
+
+        TelephonyManager.sendIvrCallTo ivrCode,llead.phone_number
+
+      end
 
     end
 
