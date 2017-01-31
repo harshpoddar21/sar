@@ -230,6 +230,46 @@ class RestrictedController < ApplicationController
       TelephonyManager.sendIvrCallTo ivrCode,number.to_s
 
     end
+
+  end
+
+
+  def autoBookingReceived
+
+    phoneNumber=params[:from]
+    message=params[:message]
+    if message!=nil
+      bookingId=message[/\d+/]
+      if bookingId=="101"
+
+        if !(AutoBooking.find_by_booking_id bookingId)
+
+          AutoBooking.create(:booking_id=>bookingId,:phone_number=>phoneNumber)
+          TelephonyManager.sendSms phoneNumber,"Congratulations!! You have been registered as Shuttl Certified Auto. If you have any query you can call us at 9015122792."
+        else
+
+          TelephonyManager.sendSms phoneNumber,"You are already registered as Shuttl Certified Auto."
+        end
+
+      elsif bookingId!=nil
+
+        if !(AutoBooking.find_by_booking_id bookingId)
+          TelephonyManager.sendSms phoneNumber,"Your boarding request #{bookingId} has been recorded. We thank you for being a valuable Shuttl Partner. If you have any query you can call us at 9015122792"
+          AutoBooking.create(:booking_id=>bookingId,:phone_number=>phoneNumber)
+        else
+
+          TelephonyManager.sendSms phoneNumber,"This boarding request is already recorded with us."
+        end
+
+      else
+        TelephonyManager.sendSms phoneNumber,"Invalid booking id. If you have any query please call on 9015122792."
+      end
+    else
+      TelephonyManager.sendSms phoneNumber,"Invalid Message. If you have any query please call on 9015122792."
+    end
+
+
+    render :text=>"OK"
   end
 
 

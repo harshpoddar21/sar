@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170123173332) do
+ActiveRecord::Schema.define(version: 20170131074222) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -45,6 +45,13 @@ ActiveRecord::Schema.define(version: 20170123173332) do
     t.text     "value",      limit: 65535
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+  end
+
+  create_table "auto_bookings", force: :cascade do |t|
+    t.integer  "booking_id",   limit: 4
+    t.text     "phone_number", limit: 65535
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "boarding_assistances", force: :cascade do |t|
