@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   get 'campaign/sendFollowUpToUnsubscriber'
 
 
+
+  get 'welcomeNewRes' =>"ambassador#landing"
+
   get 'lead/submitNewLead'
   post 'lead/submitNewLead'
   get 'book_shuttl'=>'referral#book_shuttl'
