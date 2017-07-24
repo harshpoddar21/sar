@@ -96,6 +96,13 @@ class RouteController < ApplicationController
 
       (depTime.to_i+1.5*3600..depTime.to_i+16*3600).step(1800).each do |depTimeI|
 
+        entry=RouteTimeAndDistance.where(:route_id => routeId).where(:departure_time=>depTimeI)
+
+        if entry.size>0
+
+          next
+
+        end
 
         go=GoogleDirection.new routeDetail[routeId],depTimeI.to_i,"pessimistic"
         go.execute
@@ -111,5 +118,42 @@ class RouteController < ApplicationController
 
   end
 
+  def calculateDeadDistanceAndTimeBetweenRoutes
+
+    routeDetail=Hash.new
+
+    RouteDetail.all.each do |det|
+
+      if routeDetail[det.route_id]==nil
+        routeDetail[det.route_id]=Array.new
+      end
+
+      routeDetail[det.route_id].push({ "lat" => det.lat , "lng" => det.lng})
+
+
+      routeDetail.each do |routeId,details|
+
+        routeDetail.each do |routeId2,details2|
+
+
+          (depTime.to_i+1.5*3600..depTime.to_i+16*3600).step(1800).each do |depTimeI|
+
+
+            go=GoogleDirection.new [routeDetail[routeId][routeDetail[routeId].size-1],routeDetail[routeId2][0]],depTimeI.to_i,"pessimistic"
+            go.execute
+            duration=go.duration_in_traffic
+            distance=go.distance
+            RouteDeadTimeAndDistance.create(:route_id_1=>routeId,:route_id_2=>routeId2,:time=>duration,:distance=>distance,:departure_time=>depTimeI)
+
+          end
+
+        end
+
+      end
+
+    end
+
+
+  end
 
 end
