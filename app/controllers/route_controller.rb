@@ -137,16 +137,16 @@ class RouteController < ApplicationController
         routeDetail.each do |routeId2,details2|
 
 
-          (depTime.to_i+1.5*3600..depTime.to_i+16*3600).step(1800).each do |depTimeI|
 
 
-            go=GoogleDirection.new [details[details.size-1],details2[0]],depTimeI.to_i,"pessimistic"
+
+            go=GoogleDirection.new [details[details.size-1],details2[0]],depTime.to_i+3*3600,"pessimistic"
             go.execute
             duration=go.duration_in_traffic
             distance=go.distance
-            RouteDeadTimeAndDistance.create(:route_id_1=>routeId,:route_id_2=>routeId2,:time=>duration,:distance=>distance,:dep_time=>depTimeI)
+            RouteDeadTimeAndDistance.create(:route_id_1=>routeId,:route_id_2=>routeId2,:time=>duration,:distance=>distance,:dep_time=>depTime.to_i+3*3600)
 
-          end
+
 
         end
 
@@ -154,6 +154,48 @@ class RouteController < ApplicationController
 
 
 
+
+  end
+
+
+
+  def parseDeadDistance
+
+    a=File.read("/var/www/Ruby/sar/allOps.json")
+    deadJson=JSON.parse a
+
+    RmsRoute.all.each do |routeDetail|
+
+      RmsRoute.all.each do |routeDetail2|
+
+
+        startRoute=routeDetail2
+        endRoute=routeDetail
+
+
+        if deadJson[endRoute.end_location]==nil
+
+          puts endRoute.end_location+" not found"
+          next
+
+        end
+        if deadJson[endRoute.end_location][startRoute.start_location]==nil
+
+          puts startRoute.start_location+" is not found in "+endRoute.end_location
+          next
+
+        end
+        deadJson[endRoute.end_location][startRoute.start_location]["tripCompare"].each do |trip|
+
+          RouteDeadTimeAndDistance.create(:route_id_1=>endRoute.route_id,:route_id_2=>startRoute.route_id,:distance=>trip["distance"],:dep_time=>trip["startTimeA"],:time=>trip["eta"])
+
+        end
+
+
+
+      end
+
+    end
 
   end
 

@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  route_id: 1
+  name: MyText
+  is_b2b: 1
+  reverse_route_id: 1
+  start_time_in_secs: 1
+  start_latitude: 1.5
+  start_longitude: 1.5
+  end_latitude: 1.5
+  end_longitude: 1.5
+  distance: 1
+  start_location: MyText
+  end_location: MyText
+
+two:
+  route_id: 1
+  name: MyText
+  is_b2b: 1
+  reverse_route_id: 1
+  start_time_in_secs: 1
+  start_latitude: 1.5
+  start_longitude: 1.5
+  end_latitude: 1.5
+  end_longitude: 1.5
+  distance: 1
+  start_location: MyText
+  end_location: MyText

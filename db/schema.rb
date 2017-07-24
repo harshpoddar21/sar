@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724111336) do
+ActiveRecord::Schema.define(version: 20170724141135) do
 
   create_table "Route_Suggestion_Combined", primary_key: "ID", force: :cascade do |t|
     t.string  "USER_ID",           limit: 20
@@ -460,6 +460,23 @@ ActiveRecord::Schema.define(version: 20170724111336) do
     t.integer  "referral_code", limit: 4
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+  end
+
+  create_table "rms_routes", force: :cascade do |t|
+    t.integer  "route_id",           limit: 4
+    t.text     "name",               limit: 65535
+    t.integer  "is_b2b",             limit: 4
+    t.integer  "reverse_route_id",   limit: 4
+    t.integer  "start_time_in_secs", limit: 4
+    t.float    "start_latitude",     limit: 24
+    t.float    "start_longitude",    limit: 24
+    t.float    "end_latitude",       limit: 24
+    t.float    "end_longitude",      limit: 24
+    t.integer  "distance",           limit: 4
+    t.text     "start_location",     limit: 65535
+    t.text     "end_location",       limit: 65535
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   create_table "route_cybercity", primary_key: "cord_id", force: :cascade do |t|
