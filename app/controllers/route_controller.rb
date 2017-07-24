@@ -69,4 +69,47 @@ class RouteController < ApplicationController
     render :text=>"OK"
 
   end
+
+
+  def calculateRouteLengthAndTimeTaken
+
+
+    routeDetail=Hash.new
+
+    RouteDetail.all.each do |det|
+
+      if routeDetail[det.route_id]==nil
+        routeDetail[det.route_id]=Array.new
+      end
+
+      routeDetail[det.route_id].push({ "lat" => det.lat , "lng" => det.lng})
+
+
+
+    end
+
+    puts routeDetail
+
+    depTime=Time.utc 2017,07,26
+
+    routeDetail.each do |routeId,details|
+
+      (depTime.to_i+1.5*3600..depTime.to_i+16*3600).step(1800).each do |depTimeI|
+
+
+        go=GoogleDirection.new routeDetail[routeId],depTimeI.to_i,"pessimistic"
+        go.execute
+        duration=go.duration_in_traffic
+        distance=0
+        RouteTimeAndDistance.create(:route_id=>routeId,:time=>duration,:distance=>distance,:departure_time=>depTimeI)
+
+      end
+
+    end
+
+
+
+  end
+
+
 end

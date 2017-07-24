@@ -274,4 +274,12 @@ class RestrictedController < ApplicationController
 
 
 
+
+  def getDistanceAndTimeForRoutes
+
+
+
+  end
+
+
 end

@@ -1,19 +1,20 @@
 class GoogleDirection
 
-  attr_accessor :overviewPolyline,:pickPoints,:duration_in_traffic,:departureTime
+  attr_accessor :overviewPolyline,:pickPoints,:duration_in_traffic,:departureTime,:model
 
-  GOOGLE_BASE_URL="https://maps.googleapis.com/maps/api/directions/json?sensor=false&units=metric&mode=driving&key=AIzaSyBvaX6apQloHSxGg6XHmY-l_LbUjyIIUkA&traffic_model=best_guess&departure_time="
+  GOOGLE_BASE_URL="https://maps.googleapis.com/maps/api/directions/json?sensor=false&units=metric&mode=driving&key=AIzaSyBvaX6apQloHSxGg6XHmY-l_LbUjyIIUkA&departure_time="
 
 
-  def initialize(points,departureTime=Time.now.to_i)
+  def initialize(points,departureTime=Time.now.to_i,model="best_guess")
 
     self.pickPoints=points
+    self.model =  model
     self.departureTime=departureTime == nil ? Time.now.to_i : departureTime
     puts points.to_json
   end
 
   def execute
-    url=GOOGLE_BASE_URL+departureTime.to_s+"&origin="+pickPoints[0]["lat"].to_s+","+pickPoints[0]["lng"].to_s
+    url=GOOGLE_BASE_URL+departureTime.to_s+"&traffic_model="+model+"&origin="+pickPoints[0]["lat"].to_s+","+pickPoints[0]["lng"].to_s
     url=url+"&destination="+pickPoints[pickPoints.size-1]["lat"].to_s+","+pickPoints[pickPoints.size-1]["lng"].to_s
     if pickPoints.size>2
       url=url+"&waypoints="
