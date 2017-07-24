@@ -100,7 +100,7 @@ class RouteController < ApplicationController
         go=GoogleDirection.new routeDetail[routeId],depTimeI.to_i,"pessimistic"
         go.execute
         duration=go.duration_in_traffic
-        distance=0
+        distance=go.distance
         RouteTimeAndDistance.create(:route_id=>routeId,:time=>duration,:distance=>distance,:departure_time=>depTimeI)
 
       end

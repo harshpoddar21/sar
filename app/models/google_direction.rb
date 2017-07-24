@@ -1,6 +1,6 @@
 class GoogleDirection
 
-  attr_accessor :overviewPolyline,:pickPoints,:duration_in_traffic,:departureTime,:model
+  attr_accessor :overviewPolyline,:pickPoints,:duration_in_traffic,:departureTime,:model,:distance
 
   GOOGLE_BASE_URL="https://maps.googleapis.com/maps/api/directions/json?sensor=false&units=metric&mode=driving&key=AIzaSyBvaX6apQloHSxGg6XHmY-l_LbUjyIIUkA&departure_time="
 
@@ -49,6 +49,8 @@ class GoogleDirection
 
     self.overviewPolyline=response["routes"][0]["overview_polyline"]["points"]
     self.duration_in_traffic=response["routes"][0]["legs"][0]["duration_in_traffic"]["value"]
+
+    self.distance=response["routes"][0]["legs"][0]["distance"]["value"]
 
   end
 
