@@ -161,7 +161,7 @@ class RouteController < ApplicationController
 
   def parseDeadDistance
 
-    a=File.read("/var/www/Ruby/sar/allOps.json")
+    a=File.read("/var/www/sar/allOps.json")
     deadJson=JSON.parse a
 
     RmsRoute.all.each do |routeDetail|
