@@ -129,7 +129,8 @@ class RouteController < ApplicationController
       end
 
       routeDetail[det.route_id].push({ "lat" => det.lat , "lng" => det.lng})
-
+    end
+      depTime=Time.utc 2017,07,26
 
       routeDetail.each do |routeId,details|
 
@@ -139,11 +140,11 @@ class RouteController < ApplicationController
           (depTime.to_i+1.5*3600..depTime.to_i+16*3600).step(1800).each do |depTimeI|
 
 
-            go=GoogleDirection.new [routeDetail[routeId][routeDetail[routeId].size-1],routeDetail[routeId2][0]],depTimeI.to_i,"pessimistic"
+            go=GoogleDirection.new [details[details.size-1],details2[0]],depTimeI.to_i,"pessimistic"
             go.execute
             duration=go.duration_in_traffic
             distance=go.distance
-            RouteDeadTimeAndDistance.create(:route_id_1=>routeId,:route_id_2=>routeId2,:time=>duration,:distance=>distance,:departure_time=>depTimeI)
+            RouteDeadTimeAndDistance.create(:route_id_1=>routeId,:route_id_2=>routeId2,:time=>duration,:distance=>distance,:dep_time=>depTimeI)
 
           end
 
@@ -151,7 +152,7 @@ class RouteController < ApplicationController
 
       end
 
-    end
+
 
 
   end
