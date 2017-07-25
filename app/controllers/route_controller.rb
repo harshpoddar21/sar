@@ -161,7 +161,12 @@ class RouteController < ApplicationController
 
   def parseDeadDistance
 
-    a=File.read("/var/www/sar/allOps.json")
+    if !Rails.env.production?
+      a=File.read("/var/www/Ruby/sar/allOps.json")
+    else
+      a=File.read("/var/www/sar/allOps.json")
+    end
+
     deadJson=JSON.parse a
 
     RmsRoute.all.each do |routeDetail|
@@ -182,6 +187,11 @@ class RouteController < ApplicationController
         if deadJson[endRoute.end_location][startRoute.start_location]==nil
 
           puts startRoute.start_location+" is not found in "+endRoute.end_location
+          next
+
+        end
+        if RouteDeadTimeAndDistance.where(:route_id_1 => endRoute.route_id).where(:route_id_2=>startRoute.route_id).size>0
+
           next
 
         end
