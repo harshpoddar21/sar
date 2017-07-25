@@ -209,4 +209,34 @@ class RouteController < ApplicationController
 
   end
 
+  def parseDeadDistance1
+
+    if !Rails.env.production?
+      a=File.read("/var/www/Ruby/sar/allOps.json")
+    else
+      a=File.read("/var/www/sar/allOps.json")
+    end
+
+    deadJson=JSON.parse a
+
+    deadJson.each do |endPoint,startPoints|
+
+
+      startPoints.each do |startPoint,detail|
+
+
+        detail["tripCompare"].each do |trip|
+
+          DeadBetweenPoint.create(:start_point=>startPoint,:end_point=>endPoint,:departure_time=>trip["startTimeA"],:distance=>trip["distance"],:eta=>trip["eta"])
+
+        end
+
+      end
+
+
+    end
+
+
+  end
+
 end

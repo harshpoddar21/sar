@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_point: 1
+  end_point: 1
+  eta: 1
+  distance: 1
+  departure_time: 1
+
+two:
+  start_point: 1
+  end_point: 1
+  eta: 1
+  distance: 1
+  departure_time: 1
