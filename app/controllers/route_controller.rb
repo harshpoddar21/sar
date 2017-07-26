@@ -130,21 +130,33 @@ class RouteController < ApplicationController
 
       routeDetail[det.route_id].push({ "lat" => det.lat , "lng" => det.lng})
     end
-      depTime=Time.utc 2017,07,26
+      depTime=Time.utc 2017,07,27
 
       routeDetail.each do |routeId,details|
 
         routeDetail.each do |routeId2,details2|
 
+        if   (![367,369,869,976,985,986,990,1026,1027,1103,1112,1129,1131,1156,1162,1229,1198,1199,1210].include?(routeId) && ![367,369,869,976,985,986,990,1026,1027,1103,1112,1129,1131,1156,1162,1229,1198,1199,1210].include?(routeId2))
 
+         next
 
-
+        end
 
             go=GoogleDirection.new [details[details.size-1],details2[0]],depTime.to_i+3*3600,"pessimistic"
             go.execute
             duration=go.duration_in_traffic
             distance=go.distance
+            route1=RmsRoute.find_by_route_id routeId
+            route2=RmsRoute.find_by_route_id routeId2
             RouteDeadTimeAndDistance.create(:route_id_1=>routeId,:route_id_2=>routeId2,:time=>duration,:distance=>distance,:dep_time=>depTime.to_i+3*3600)
+            DeadBetweenPoint.create(:start_point=>route2.start_location,:end_point=>route1.end_location,:eta=>duration,:distance=>distance,:departure_time=>depTime)
+
+            go=GoogleDirection.new [details[details.size-1],details2[0]],depTime.to_i+13*3600,"pessimistic"
+            go.execute
+            duration=go.duration_in_traffic
+            distance=go.distance
+
+            DeadBetweenPoint.create(:start_point=>route2.start_location,:end_point=>route1.end_location,:eta=>duration,:distance=>distance,:departure_time=>depTime)
 
 
 
@@ -211,7 +223,7 @@ class RouteController < ApplicationController
 
   def parseDeadDistance1
 
-    if !Rails.env.production?
+    if !Rails.env.production? || true
       a=File.read("/var/www/Ruby/sar/allOps.json")
     else
       a=File.read("/var/www/sar/allOps.json")
