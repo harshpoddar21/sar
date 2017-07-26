@@ -225,6 +225,11 @@ class RouteController < ApplicationController
       startPoints.each do |startPoint,detail|
 
 
+        if DeadBetweenPoint.where(:start_point => startPoint).where(:end_point=>endPoint).size>0
+
+          next
+
+        end
         detail["tripCompare"].each do |trip|
 
           DeadBetweenPoint.create(:start_point=>startPoint,:end_point=>endPoint,:departure_time=>trip["startTimeA"],:distance=>trip["distance"],:eta=>trip["eta"])
