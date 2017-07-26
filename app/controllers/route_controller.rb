@@ -142,6 +142,12 @@ class RouteController < ApplicationController
 
         end
 
+        if RouteDeadTimeAndDistance.where(:route_id_1 => routeId).where(:route_id_2=>routeId2).size>0
+
+          next
+
+        end
+
             go=GoogleDirection.new [details[details.size-1],details2[0]],depTime.to_i+3*3600,"pessimistic"
             go.execute
             duration=go.duration_in_traffic
