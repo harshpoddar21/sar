@@ -217,6 +217,14 @@ class RouteController < ApplicationController
       a=File.read("/var/www/sar/allOps.json")
     end
 
+    done=Hash.new
+
+    DeadBetweenPoint.all.each do|dead1|
+
+        done[dead1.end_point+","+dead1.start_point]=1
+
+    end
+
     deadJson=JSON.parse a
 
     deadJson.each do |endPoint,startPoints|
@@ -225,16 +233,28 @@ class RouteController < ApplicationController
       startPoints.each do |startPoint,detail|
 
 
-        if DeadBetweenPoint.where(:start_point => startPoint).where(:end_point=>endPoint).size>0
+        if done[endPoint+","+startPoint]
 
           next
 
         end
+
+        maxTime=0
+        maxDistance=0
+        depTime=0
+
         detail["tripCompare"].each do |trip|
 
-          DeadBetweenPoint.create(:start_point=>startPoint,:end_point=>endPoint,:departure_time=>trip["startTimeA"],:distance=>trip["distance"],:eta=>trip["eta"])
+          if trip["eta"]>maxTime
+
+            maxTime=trip["eta"]
+            maxDistance=trip["distance"]
+            depTime=trip["startTimeA"]
+
+          end
 
         end
+        DeadBetweenPoint.create(:start_point=>startPoint,:end_point=>endPoint,:departure_time=>depTime,:distance=>maxDistance,:eta=>maxTime)
 
       end
 
