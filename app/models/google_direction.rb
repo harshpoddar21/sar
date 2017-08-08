@@ -2,7 +2,7 @@ class GoogleDirection
 
   attr_accessor :overviewPolyline,:pickPoints,:duration_in_traffic,:departureTime,:model,:distance
 
-  GOOGLE_BASE_URL="https://maps.googleapis.com/maps/api/directions/json?sensor=false&units=metric&mode=driving&key=AIzaSyCLVshuBmW-UvxYLG-QGIH7zfJuesnnJBk&departure_time="
+  GOOGLE_BASE_URL="https://maps.googleapis.com/maps/api/directions/json?sensor=false&units=metric&mode=driving&key=AIzaSyBac5U_sztRipjxZzTUHwR9Z6axbfA4rfE&departure_time="
 
 
   def initialize(points,departureTime=Time.now.to_i,model="best_guess")

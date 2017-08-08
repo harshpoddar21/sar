@@ -811,6 +811,7 @@ class RouteController < ApplicationController
 
         DeadBetweenPoint.create(:start_point=>route2.start_location,:end_point=>route1.end_location,:eta=>duration,:distance=>distance,:departure_time=>depTime)
 
+        next
         go=GoogleDirection.new [details[details.size-1],details2[0]],depTime.to_i+13*3600,"pessimistic"
         go.execute
         duration=go.duration_in_traffic
