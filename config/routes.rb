@@ -191,6 +191,7 @@ get 'delhidata/referralVis'
   get 'delhidata/delhiPopulationDist'
   get 'delhidata/abc'
 
+  get 'route/calculateDeadDistanceAndTimeBetweenRoutes1'
   get 'route/calculateDeadDistanceAndTimeBetweenRoutes'
   get 'route/calculateRouteLengthAndTimeTaken'
   get 'shuttl/getRoutePointsGeoJsonByRoutes' => 'geo_json#getRoutePointsGeoJsonByRoutes'
